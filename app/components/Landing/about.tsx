@@ -2,7 +2,7 @@ export default function About() {
   const About = {
     About1: "John Renz B.",
     About2:
-      "I’m John Renz Bandianon, an IT student with a strong interest in frontend web development and graphic design. I enjoy creating clean, responsive, and user-friendly interfaces, focusing on both functionality and visual design to deliver a good user experience.",
+      "I’m John Renz Bandianon, an IT student with a strong interest in frontend web development and UI/UX design. I enjoy creating clean, responsive, and user-friendly interfaces, focusing on both functionality and visual design to deliver a good user experience.",
     About3:
       "I am currently strengthening my skills through academic projects such as my Capstone and individual builds, which help improve my problem-solving and development workflow. While my main focus is frontend development, I also have basic experience with backend concepts and am eager to learn more through hands-on experience as an IT intern.",
   };
