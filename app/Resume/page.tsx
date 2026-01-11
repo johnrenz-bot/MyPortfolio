@@ -87,7 +87,7 @@ export default function Resume() {
           </h1>
 
           <div className="mt-4 flex flex-wrap justify-center gap-6 text-[13px]">
-            <span>0966 798 7702</span>
+            <span>+63  966 798 7702</span>
             <a href="mailto:johnrenzbandianon9@gmail.com" className="underline">
               johnrenzbandianon9@gmail.com
             </a>
@@ -100,9 +100,10 @@ export default function Resume() {
             PROFILE SUMMARY
           </h2>
           <p className="text-[13px] leading-relaxed">
-            I am an intermediate full-stack student developer with a strong focus on building modern, responsive, and user-centered web interfaces. I continuously strengthen my skills through capstone and personal projects, improving my problem-solving ability, design thinking, and development workflow. While frontend development is my primary strength, I steadily explore backend technologies and remain open to learning and growth as a developer.
-          </p>
-        </section>
+I’m John Renz Bandianon, an IT student with a strong interest in frontend web development and graphic design. I enjoy creating clean, responsive, and user-friendly interfaces, focusing on both functionality and visual design to deliver a good user experience.          </p>
+          <p className="text-[13px] leading-relaxed mt-5">
+I am currently strengthening my skills through academic projects such as my Capstone and individual builds, which help improve my problem-solving and development workflow. While my main focus is frontend development, I also have basic experience with backend concepts and am eager to learn more through hands-on experience as an IT intern.
+    </p>      </section>    
 
         <section className="mb-6">
           <h2 className="text-xs font-bold tracking-[0.35em] uppercase border-b pb-1 mb-3">
