@@ -3,12 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export default function Main() {
+interface MainProps {
+  mobile?: boolean;
+}
+
+export default function Main({ mobile }: MainProps) {
   const [theme, setTheme] = useState("light");
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  // Theme setup
   useEffect(() => {
     const saved = localStorage.getItem("theme");
     if (saved) {
@@ -29,7 +32,6 @@ export default function Main() {
     localStorage.setItem("theme", newTheme);
   };
 
-  // User and socials
   const user = {
     name: "John Renz Bandianon",
     role: "WEB DEVELOPER (FRONTEND DEVELOPER) / UI DESIGNER",
@@ -40,13 +42,12 @@ export default function Main() {
     { url: "https://github.com/johnrenz-bot", label: "GitHub" },
   ];
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(user.name);
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Modal setup
   useEffect(() => {
     const visited = localStorage.getItem("visited");
     if (!visited) {
@@ -64,12 +65,10 @@ export default function Main() {
 
   return (
     <main className="min-h-screen w-full flex flex-col px-4 sm:px-6 lg:px-12 bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
-
-      {/* Header */}
       <header className="h-16 sm:h-20 w-full flex items-center justify-between">
         <button
           onClick={toggleTheme}
-          className="border border-[var(--border)] bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 transition px-4 py-1 rounded-3xl text-sm font-semibold hover:scale-105 transition"
+          className="border border-[var(--border)] bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 transition px-4 py-1 rounded-3xl text-sm font-semibold hover:scale-105"
         >
           {theme === "dark" ? "Light Mode" : "Dark Mode"}
         </button>
@@ -91,16 +90,13 @@ export default function Main() {
 
       <section className="flex-1 flex justify-center items-center">
         <div className="w-full max-w-5xl flex flex-col items-center gap-10">
-
-          <div className={`h-36 w-36 rounded-full overflow-hidden border border-[var(--border)] ${shadowClass}`}>
-            <img
-              src="/Image/me.jpg"
-              alt="Profile"
-              className="h-full w-full object-cover"
-            />
+          <div
+            className={`h-36 w-36 rounded-full overflow-hidden border border-[var(--border)] ${shadowClass}`}
+          >
+            <img src="/Image/me.jpg" alt="Profile" className="h-full w-full object-cover" />
           </div>
 
-          <div className={`px-8 py-3 rounded-3xl border-b border-[var(--border)]  ${shadowClass}`}>
+          <div className={`px-8 py-3 rounded-3xl border-b border-[var(--border)] ${shadowClass}`}>
             <p className="text-2xl font-semibold text-center">{user.name}</p>
           </div>
 
@@ -108,10 +104,10 @@ export default function Main() {
 
           <div className="flex gap-6">
             <button
-              onClick={handleCopy}
+              onClick={handleCopyLink}
               className={`border border-[var(--border)] px-6 py-2 rounded-3xl hover:font-semibold ${shadowClass}`}
             >
-              {copied ? "Copied!" : "Copy"}
+              {copied ? "Link Copied!" : "Copy Link"}
             </button>
 
             <Link
@@ -121,7 +117,6 @@ export default function Main() {
               Resume
             </Link>
           </div>
-
         </div>
       </section>
 
@@ -129,28 +124,16 @@ export default function Main() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="bg-[var(--bg)] text-[var(--text)] rounded-2xl p-6 max-w-md w-full shadow-lg flex flex-col gap-4">
             <h2 className="text-xl font-semibold text-center">Welcome!</h2>
-
             <div className="text-sm text-left space-y-2">
               <p>This website showcases my portfolio and skills. Here's what you can do:</p>
               <ul className="list-disc ml-5 space-y-1">
-                <li>
-                  <strong>Dark/Light Mode:</strong> Toggle between dark and light themes using the button on the top left.
-                </li>
-                <li>
-                  <strong>Copy Name:</strong> Easily copy my full name using the Copy button.
-                </li>
-                <li>
-                  <strong>Resume:</strong> Click the Resume button to view/download my resume.
-                </li>
-                <li>
-                  <strong>Social Links:</strong> Access my LinkedIn and GitHub profiles from the top right links.
-                </li>
-                <li>
-                  <strong>Explore:</strong> Check other sections for projects, contact info, and more.
-                </li>
+                <li><strong>Dark/Light Mode:</strong> Toggle between dark and light themes using the button on the top left.</li>
+                <li><strong>Copy Link:</strong> Easily copy the page URL using the Copy Link button.</li>
+                <li><strong>Resume:</strong> Click the Resume button to view/download my resume.</li>
+                <li><strong>Social Links:</strong> Access my LinkedIn and GitHub profiles from the top right links.</li>
+                <li><strong>Explore:</strong> Check other sections for projects, contact info, and more.</li>
               </ul>
             </div>
-
             <button
               onClick={closeModal}
               className="mt-2 self-center px-6 py-2 bg-blue-600 text-white rounded-3xl font-semibold hover:bg-blue-700 transition"
@@ -160,7 +143,6 @@ export default function Main() {
           </div>
         </div>
       )}
-
     </main>
   );
 }

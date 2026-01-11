@@ -28,7 +28,7 @@ const webProjects: Item[] = [
     id: "2",
     title: "DinoVerse",
     description: "A personal project exploring dinosaurs through interactive content such as species profiles, fun facts, habitats, quizzes, and timelines. This project demonstrates creative frontend design and user-friendly layouts.",
-    url: "/"
+    url: "https://dinoverse-buce.vercel.app/"
   },
   {
     id: "3",

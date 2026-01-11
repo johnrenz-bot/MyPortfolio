@@ -45,7 +45,9 @@ export default function Home() {
             key={section}
             href={`#${section}`}
             className={`text-sm font-semibold pb-1 border-b-2 border-transparent transition-all duration-300 ${
-              activeSection === section ? "opacity-100 border-[var(--text)]" : "opacity-50"
+              activeSection === section
+                ? "opacity-100 border-[var(--text)]"
+                : "opacity-50"
             }`}
           >
             {section.toUpperCase()}
@@ -54,14 +56,24 @@ export default function Home() {
       </nav>
 
       {sections.map((section, idx) => {
-        const Component =
-          section === "main"
-            ? Main
-            : section === "about"
-            ? About
-            : section === "project"
-            ? Project
-            : Contact;
+        let Component;
+        switch (section) {
+          case "main":
+            Component = Main;
+            break;
+          case "about":
+            Component = About;
+            break;
+          case "project":
+            Component = Project;
+            break;
+          case "contact":
+            Component = Contact;
+            break;
+          default:
+            Component = () => null;
+        }
+
         return (
           <section
             key={section}
@@ -73,6 +85,7 @@ export default function Home() {
           </section>
         );
       })}
+
       <style jsx>{`
         @keyframes fadeIn {
           from {
