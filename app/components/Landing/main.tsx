@@ -88,8 +88,8 @@ export default function Main({ mobile }: MainProps) {
         </ul>
       </header>
 
-      <section className="flex-1 flex justify-center items-center">
-        <div className="w-full max-w-5xl flex flex-col items-center gap-10">
+      <section className="flex-1 flex justify-center items-center py-10">
+        <div className="w-full max-w-5xl flex flex-col items-center gap-8">
           <div
             className={`h-36 w-36 rounded-full overflow-hidden border border-[var(--border)] ${shadowClass}`}
           >
@@ -100,22 +100,44 @@ export default function Main({ mobile }: MainProps) {
             <p className="text-2xl font-semibold text-center">{user.name}</p>
           </div>
 
-          <p className="text-lg font-semibold text-center">{user.role}</p>
+          <p className="text-lg font-semibold text-center opacity-80">{user.role}</p>
 
-          <div className="flex gap-6">
+          <div className="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
             <button
               onClick={handleCopyLink}
-              className={`border border-[var(--border)] px-6 py-2 rounded-3xl hover:font-semibold ${shadowClass}`}
+              className={`w-48 border border-[var(--border)] px-6 py-2 rounded-3xl hover:font-semibold ${shadowClass}`}
             >
               {copied ? "Link Copied!" : "Copy Link"}
             </button>
 
             <Link
               href="/Resume"
-              className={`border border-[var(--border)] px-6 py-2 bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 transition rounded-3xl hover:font-semibold ${shadowClass}`}
+              className={`w-48 border border-[var(--border)] px-6 py-2 bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 transition rounded-3xl text-center hover:font-semibold ${shadowClass}`}
             >
-              Resume
+              Full Resume
             </Link>
+          </div>
+
+          <div className="w-full max-w-xs h-px bg-[var(--border)] opacity-20 my-2" />
+
+          <div className="flex flex-col items-center gap-4">
+            <span className="text-xs font-bold tracking-[0.2em] uppercase opacity-50">UI Portfolio Asset</span>
+            <div className="flex gap-4">
+              <a
+                href="/Image/UiPortolio.png" 
+                target="_blank"
+                className={`border border-blue-500/50 px-5 py-2 rounded-3xl text-sm font-medium hover:bg-blue-500 hover:text-white transition-all ${shadowClass}`}
+              >
+                View Portfolio
+              </a>
+              <a
+                href="/Image/UiPortolio.png"
+                download="UiPortolio.png"
+                className={`border border-[var(--border)] px-5 py-2 rounded-3xl text-sm font-medium hover:bg-[var(--text)] hover:text-[var(--bg)] transition-all ${shadowClass}`}
+              >
+                Download UI
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -127,11 +149,9 @@ export default function Main({ mobile }: MainProps) {
             <div className="text-sm text-left space-y-2">
               <p>This website showcases my portfolio and skills. Here's what you can do:</p>
               <ul className="list-disc ml-5 space-y-1">
-                <li><strong>Dark/Light Mode:</strong> Toggle between dark and light themes using the button on the top left.</li>
-                <li><strong>Copy Link:</strong> Easily copy the page URL using the Copy Link button.</li>
-                <li><strong>Resume:</strong> Click the Resume button to view/download my resume.</li>
-                <li><strong>Social Links:</strong> Access my LinkedIn and GitHub profiles from the top right links.</li>
-                <li><strong>Explore:</strong> Check other sections for projects, contact info, and more.</li>
+                <li><strong>UI Portfolio:</strong> Quickly view or download my UI design showcase.</li>
+                <li><strong>Dark/Light Mode:</strong> Toggle themes at the top left.</li>
+                <li><strong>Resume:</strong> Access my full IT resume via the main button.</li>
               </ul>
             </div>
             <button

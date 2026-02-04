@@ -100,10 +100,11 @@ export default function Resume() {
             PROFILE SUMMARY
           </h2>
           <p className="text-[13px] leading-relaxed">
-I’m John Renz Bandianon, an IT student with a strong interest in frontend web development and UI/UX Designer. I enjoy creating clean, responsive, and user-friendly interfaces, focusing on both functionality and visual design to deliver a good user experience.          </p>
+            I’m John Renz Bandianon, an IT student with a strong interest in frontend web development and UI/UX Designer. I enjoy creating clean, responsive, and user-friendly interfaces, focusing on both functionality and visual design to deliver a good user experience.          </p>
           <p className="text-[13px] leading-relaxed mt-5">
-I am currently strengthening my skills through academic projects such as my Capstone and individual builds, which help improve my problem-solving and development workflow. While my main focus is frontend development, I also have basic experience with backend concepts and am eager to learn more through hands-on experience as an IT intern.
-    </p>      </section>    
+            I am currently strengthening my skills through academic projects such as my Capstone and individual builds, which help improve my problem-solving and development workflow. While my main focus is frontend development, I also have basic experience with backend concepts and am eager to learn more through hands-on experience as an IT intern.
+          </p>
+        </section>
 
         <section className="mb-6">
           <h2 className="text-xs font-bold tracking-[0.35em] uppercase border-b pb-1 mb-3">
@@ -153,11 +154,12 @@ I am currently strengthening my skills through academic projects such as my Caps
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8 text-[13px]">
-            <div>
-              <p><strong>Frontend:</strong> HTML, CSS, Tailwind CSS, Bootstrap, React</p>
-              <p><strong>Backend:</strong> Node.js, PHP, Java, Laravel, Express</p>
-              <p><strong>Databases:</strong> PostgreSQL, MySQL</p>
-              <p><strong>Tools:</strong> Git, Prisma</p>
+            <div className="space-y-1">
+              <p><strong>Frontend:</strong> HTML, CSS, Tailwind CSS, Bootstrap, JavaScript, TypeScript, React, Next.js</p>
+              <p><strong>Backend:</strong> Node.js, Express, PHP, Laravel, Java</p>
+              <p><strong>Database:</strong> PostgreSQL, MySQL</p>
+              <p><strong>Design:</strong> Figma, Canva, Adobe Creative Cloud, Photoshop, PowerPoint</p>
+              <p><strong>Tools:</strong> GitHub, Prisma, VS Code</p>
             </div>
 
             <ul className="list-disc list-inside space-y-1">
