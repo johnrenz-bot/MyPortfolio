@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface MainProps {
   mobile?: boolean;
@@ -14,14 +15,14 @@ export default function Main({ mobile }: MainProps) {
 
   useEffect(() => {
     const saved = localStorage.getItem("theme");
-    if (saved) {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    } else {
-      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const initial = systemDark ? "dark" : "light";
-      setTheme(initial);
-      document.documentElement.setAttribute("data-theme", initial);
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initial = saved || (systemDark ? "dark" : "light");
+    
+    setTheme(initial);
+    document.documentElement.setAttribute("data-theme", initial);
+    
+    if (!localStorage.getItem("visited")) {
+      setShowModal(true);
     }
   }, []);
 
@@ -48,29 +49,22 @@ export default function Main({ mobile }: MainProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  useEffect(() => {
-    const visited = localStorage.getItem("visited");
-    if (!visited) {
-      setShowModal(true);
-    }
-  }, []);
-
   const closeModal = () => {
     setShowModal(false);
     localStorage.setItem("visited", "true");
   };
 
-  const shadowClass =
-    "shadow-[inset_0_1px_2px_rgba(255,255,255,0.6),0_12px_30px_rgba(0,0,0,0.12)] hover:-translate-y-1 transition";
+  const shadowClass = "shadow-[inset_0_1px_2px_rgba(255,255,255,0.6),0_12px_30px_rgba(0,0,0,0.12)] hover:-translate-y-1 transition-all duration-300";
 
   return (
-    <main className="min-h-screen w-full flex flex-col px-4 sm:px-6 lg:px-12 bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
-      <header className="h-16 sm:h-20 w-full flex items-center justify-between">
+    <main className="min-h-screen w-full flex flex-col px-4 sm:px-6 lg:px-12 bg-[var(--bg)] text-[var(--text)] transition-colors duration-500 overflow-x-hidden">
+      
+      <header className="h-16 sm:h-20 w-full flex items-center justify-between animate-in fade-in slide-in-from-top-4 duration-700">
         <button
           onClick={toggleTheme}
-          className="border border-[var(--border)] bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 transition px-4 py-1 rounded-3xl text-sm font-semibold hover:scale-105"
+          className="border border-[var(--border)] bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 px-5 py-1.5 rounded-full text-xs font-black tracking-widest uppercase hover:scale-105 transition-all"
         >
-          {theme === "dark" ? "Light Mode" : "Dark Mode"}
+          {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
         </button>
 
         <ul className="flex gap-6 sm:gap-10">
@@ -80,7 +74,7 @@ export default function Main({ mobile }: MainProps) {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm sm:text-lg font-semibold hover:underline transition"
+              className="text-xs sm:text-sm font-bold tracking-widest uppercase hover:opacity-50 transition"
             >
               {social.label}
             </a>
@@ -88,54 +82,61 @@ export default function Main({ mobile }: MainProps) {
         </ul>
       </header>
 
-      <section className="flex-1 flex justify-center items-center py-10">
+      <section className="flex-1 flex justify-center items-center py-10 animate-in fade-in zoom-in-95 duration-1000">
         <div className="w-full max-w-5xl flex flex-col items-center gap-8">
-          <div
-            className={`h-36 w-36 rounded-full overflow-hidden border border-[var(--border)] ${shadowClass}`}
-          >
-            <img src="/Image/me.jpg" alt="Profile" className="h-full w-full object-cover" />
+          
+          <div className="relative">
+            <div className={`h-40 w-40 rounded-full overflow-hidden border-2 border-[var(--text)]/10 ${shadowClass}`}>
+              <img src="/Image/me.jpg" alt="Profile" className="h-full w-full object-cover" />
+            </div>
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-green-500 text-white text-[10px] font-bold rounded-full shadow-lg whitespace-nowrap animate-pulse">
+              ● AVAILABLE FOR Internship
+            </div>
           </div>
 
-          <div className={`px-8 py-3 rounded-3xl border-b border-[var(--border)] ${shadowClass}`}>
-            <p className="text-2xl font-semibold text-center">{user.name}</p>
+          <div className="space-y-4 flex flex-col items-center">
+            <div className={`px-10 py-4 rounded-[2rem] border border-[var(--border)] bg-[var(--text)]/5 backdrop-blur-sm ${shadowClass}`}>
+              <h1 className="text-2xl sm:text-4xl font-black tracking-tighter text-center">{user.name}</h1>
+            </div>
+            <p className="text-[10px] sm:text-xs font-black tracking-[0.4em] uppercase opacity-40 text-center">
+              {user.role}
+            </p>
           </div>
-
-          <p className="text-lg font-semibold text-center opacity-80">{user.role}</p>
 
           <div className="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
             <button
               onClick={handleCopyLink}
-              className={`w-48 border border-[var(--border)] px-6 py-2 rounded-3xl hover:font-semibold ${shadowClass}`}
+              className={`w-52 border border-[var(--border)] px-8 py-3 rounded-2xl font-bold text-sm bg-transparent hover:bg-[var(--text)]/5 ${shadowClass}`}
             >
-              {copied ? "Link Copied!" : "Copy Link"}
+              {copied ? "✓ Link Copied" : "🔗 Copy Link"}
             </button>
 
             <Link
               href="/Resume"
-              className={`w-48 border border-[var(--border)] px-6 py-2 bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 transition rounded-3xl text-center hover:font-semibold ${shadowClass}`}
+              className={`w-52 border border-[var(--border)] px-8 py-3 bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 rounded-2xl text-center font-bold text-sm ${shadowClass}`}
             >
               Full Resume
             </Link>
           </div>
 
-          <div className="w-full max-w-xs h-px bg-[var(--border)] opacity-20 my-2" />
+          <div className="w-48 h-px bg-gradient-to-r from-transparent via-[var(--border)] to-transparent opacity-30 my-4" />
 
-          <div className="flex flex-col items-center gap-4">
-            <span className="text-xs font-bold tracking-[0.2em] uppercase opacity-50">UI Portfolio Asset</span>
+          <div className="flex flex-col items-center gap-6">
+            <span className="text-[10px] font-black tracking-[0.3em] uppercase opacity-30 italic">UI Portfolio Assets</span>
             <div className="flex gap-4">
               <a
                 href="/Image/UiPortolio.png" 
                 target="_blank"
-                className={`border border-blue-500/50 px-5 py-2 rounded-3xl text-sm font-medium hover:bg-blue-500 hover:text-white transition-all ${shadowClass}`}
+                className={`flex items-center gap-2 border border-blue-500/40 text-blue-500 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all ${shadowClass}`}
               >
-                View Portfolio
+                👁 View
               </a>
               <a
                 href="/Image/UiPortolio.png"
                 download="UiPortolio.png"
-                className={`border border-[var(--border)] px-5 py-2 rounded-3xl text-sm font-medium hover:bg-[var(--text)] hover:text-[var(--bg)] transition-all ${shadowClass}`}
+                className={`flex items-center gap-2 border border-[var(--border)] px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[var(--text)] hover:text-[var(--bg)] transition-all ${shadowClass}`}
               >
-                Download UI
+                ↓ Download
               </a>
             </div>
           </div>
@@ -143,22 +144,33 @@ export default function Main({ mobile }: MainProps) {
       </section>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-[var(--bg)] text-[var(--text)] rounded-2xl p-6 max-w-md w-full shadow-lg flex flex-col gap-4">
-            <h2 className="text-xl font-semibold text-center">Welcome!</h2>
-            <div className="text-sm text-left space-y-2">
-              <p>This website showcases my portfolio and skills. Here's what you can do:</p>
-              <ul className="list-disc ml-5 space-y-1">
-                <li><strong>UI Portfolio:</strong> Quickly view or download my UI design showcase.</li>
-                <li><strong>Dark/Light Mode:</strong> Toggle themes at the top left.</li>
-                <li><strong>Resume:</strong> Access my full IT resume via the main button.</li>
-              </ul>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="bg-[var(--bg)] text-[var(--text)] rounded-[2.5rem] p-8 max-w-md w-[90%] shadow-2xl flex flex-col gap-6 border border-white/10">
+            <div className="text-center space-y-2">
+              <h2 className="text-3xl font-black tracking-tighter">Welcome!</h2>
+              <p className="text-xs uppercase tracking-widest opacity-40 font-bold">Portfolio Guide</p>
             </div>
+            
+            <div className="text-xs sm:text-sm space-y-4 opacity-80">
+              <div className="flex gap-4 items-start">
+                <span className="text-blue-500 font-bold">01</span>
+                <p><strong>UI Portfolio:</strong> High-resolution design assets ready for view/download.</p>
+              </div>
+              <div className="flex gap-4 items-start">
+                <span className="text-blue-500 font-bold">02</span>
+                <p><strong>Adaptive UI:</strong> Supports system-level dark and light preferences.</p>
+              </div>
+              <div className="flex gap-4 items-start">
+                <span className="text-blue-500 font-bold">03</span>
+                <p><strong>Full Resume:</strong> Comprehensive background and technical stack details.</p>
+              </div>
+            </div>
+
             <button
               onClick={closeModal}
-              className="mt-2 self-center px-6 py-2 bg-blue-600 text-white rounded-3xl font-semibold hover:bg-blue-700 transition"
+              className="mt-4 w-full py-4 bg-blue-600 text-white rounded-2xl font-black tracking-widest uppercase text-xs hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition-all active:scale-95"
             >
-              Okay
+              Continue to Site
             </button>
           </div>
         </div>

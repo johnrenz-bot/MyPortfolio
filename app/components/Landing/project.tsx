@@ -4,12 +4,34 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  SiPhp, SiJavascript, SiReact, SiLaravel, SiHtml5, SiCss3, SiBootstrap,
-  SiTailwindcss, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiMysql,
-  SiPrisma, SiTypescript, SiNextdotjs, SiFigma, SiCanva, SiAdobephotoshop,
-  SiAdobecreativecloud
+  SiPhp,
+  SiJavascript,
+  SiReact,
+  SiLaravel,
+  SiHtml5,
+  SiCss3,
+  SiBootstrap,
+  SiTailwindcss,
+  SiGithub,
+  SiNodedotjs,
+  SiExpress,
+  SiPostgresql,
+  SiMysql,
+  SiPrisma,
+  SiTypescript,
+  SiNextdotjs,
+  SiFigma,
+  SiCanva,
+  SiAdobephotoshop,
+  SiAdobecreativecloud,
+  SiGit,
+  SiHostinger,
+  SiVercel,
+  SiXampp,
+  SiSap
 } from "react-icons/si";
 import { FaJava, FaFilePowerpoint } from "react-icons/fa";
+import { TbBrandCSharp } from "react-icons/tb";
 import { DiVisualstudio } from "react-icons/di";
 
 type Item = {
@@ -36,7 +58,7 @@ const WEB_PROJECTS: Item[] = [
     image: "/Image/Groove.png",
     description: "A Bulacan all-in-one performing arts hub with smart chat support.",
     techStack: ["React", "Next.js", "Tailwind", "Laravel", "MySQL", "Prisma"],
-    github: "https://github.com/username/groove"
+    github: "https://github.com/johnrenz-bot/groove"
   },
   {
     id: "w1",
@@ -45,7 +67,7 @@ const WEB_PROJECTS: Item[] = [
     image: "/Image/Simon.png",
     description: "Classic Simon memory game with animations and sound effects.",
     techStack: ["JavaScript", "HTML", "CSS"],
-    github: "https://github.com/username/simon-game"
+    github: "https://github.com/johnrenz-bot/simon-game"
   },
   {
     id: "w2",
@@ -54,7 +76,7 @@ const WEB_PROJECTS: Item[] = [
     image: "/Image/WeekndSoundtrip.png",
     description: "Interactive music experience inspired by The Weeknd.",
     techStack: ["React", "Tailwind", "JavaScript"],
-    github: "https://github.com/username/weeknd-soundtrip"
+    github: "https://github.com/johnrenz-bot/weeknd-soundtrip"
   },
   {
     id: "w3",
@@ -63,7 +85,7 @@ const WEB_PROJECTS: Item[] = [
     image: "/Image/Dinoverse.png",
     description: "Educational dinosaur exploration web app.",
     techStack: ["React", "Next.js", "CSS"],
-    github: "https://github.com/username/dinoverse"
+    github: "https://github.com/johnrenz-bot/dinoverse"
   },
   {
     id: "w4",
@@ -72,7 +94,7 @@ const WEB_PROJECTS: Item[] = [
     image: "/Image/EduGuide.png",
     description: "Educational platform to guide students through courses.",
     techStack: ["React", "Tailwind", "JavaScript"],
-    github: "https://github.com/username/eduguide"
+    github: "https://github.com/johnrenz-bot/eduguide"
   },
   {
     id: "w5",
@@ -81,7 +103,16 @@ const WEB_PROJECTS: Item[] = [
     image: "/Image/Kiyoto.png",
     description: "Personal portfolio website with interactive UI.",
     techStack: ["React", "Tailwind", "Next.js"],
-    github: "https://github.com/username/kiyoto"
+    github: "https://github.com/johnrenz-bot/kiyoto"
+  },
+  {
+    id: "w6",
+    title: "Windbreaker",
+    href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/",
+    image: "/Image/windbreaker.png",
+    description: "A digital home for street riders to track progress and connect with crews.",
+    techStack: ["Next.js", "Tailwind"],
+    github: "https://github.com/johnrenz-bot/Windbreaker"
   }
 ];
 
@@ -102,31 +133,49 @@ const CERTS: Item[] = [
 
 const TECH_DATA: Record<string, Tech[]> = {
   Frontend: [
-    { name: "HTML", Icon: SiHtml5 }, { name: "CSS", Icon: SiCss3 }, { name: "Tailwind", Icon: SiTailwindcss },
-    { name: "Bootstrap", Icon: SiBootstrap }, { name: "JavaScript", Icon: SiJavascript },
-    { name: "TypeScript", Icon: SiTypescript }, { name: "React", Icon: SiReact }, { name: "Next.js", Icon: SiNextdotjs }
+    { name: "HTML", Icon: SiHtml5 },
+    { name: "CSS", Icon: SiCss3 },
+    { name: "Tailwind", Icon: SiTailwindcss },
+    { name: "Bootstrap", Icon: SiBootstrap },
+    { name: "JavaScript", Icon: SiJavascript },
+    { name: "TypeScript", Icon: SiTypescript },
+    { name: "React", Icon: SiReact },
+    { name: "Next.js", Icon: SiNextdotjs }
   ],
   Backend: [
-    { name: "Node.js", Icon: SiNodedotjs }, { name: "Express", Icon: SiExpress },
-    { name: "PHP", Icon: SiPhp }, { name: "Laravel", Icon: SiLaravel }, { name: "Java", Icon: FaJava }
+    { name: "Node.js", Icon: SiNodedotjs },
+    { name: "Express", Icon: SiExpress },
+    { name: "PHP", Icon: SiPhp },
+    { name: "Laravel", Icon: SiLaravel },
+    { name: "Java", Icon: FaJava },
+    { name: "C#", Icon: TbBrandCSharp }
   ],
   Database: [
-    { name: "PostgreSQL", Icon: SiPostgresql }, { name: "MySQL", Icon: SiMysql }
+    { name: "PostgreSQL", Icon: SiPostgresql },
+    { name: "MySQL", Icon: SiMysql },
+    { name: "Prisma", Icon: SiPrisma },
+    { name: "XAMPP", Icon: SiXampp }
+  ],
+  Enterprise: [
+    { name: "SAP", Icon: SiSap }
   ],
   Design: [
     { name: "Figma", Icon: SiFigma },
     { name: "Canva", Icon: SiCanva },
-    { name: "Adobe", Icon: SiAdobecreativecloud },
+    { name: "Adobe CC", Icon: SiAdobecreativecloud },
     { name: "Photoshop", Icon: SiAdobephotoshop },
     { name: "PowerPoint", Icon: FaFilePowerpoint }
   ],
-  Tools: [
-    { name: "GitHub", Icon: SiGithub }, { name: "Prisma", Icon: SiPrisma },
-    { name: "VS Code", Icon: DiVisualstudio }
+  Development: [
+    { name: "VS Code", Icon: DiVisualstudio },
+    { name: "Git", Icon: SiGit },
+    { name: "GitHub", Icon: SiGithub },
+    { name: "Vercel", Icon: SiVercel },
+    { name: "Hostinger", Icon: SiHostinger }
   ]
 };
 
-const CARD_STYLE = "shadow-[inset_0_1px_2px_rgba(255,255,255,0.6),0_12px_30px_rgba(0,0,0,0.12)] hover:-translate-y-1 transition duration-300";
+const CARD_STYLE = "shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/5";
 
 export default function PortfolioSection() {
   const [tab, setTab] = useState<"projects" | "tech" | "cert">("projects");
@@ -140,39 +189,41 @@ export default function PortfolioSection() {
   }, [selectedUI]);
 
   return (
-    <section className="w-full flex justify-center py-24 bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
-      <div className="w-full max-w-6xl px-4 space-y-20">
-        
-        <nav className="flex justify-center gap-14 text-xs font-semibold tracking-[0.3em]">
+    <section className="w-full flex justify-center py-20 bg-[var(--bg)] text-[var(--text)]">
+      <div className="w-full max-w-6xl px-6 space-y-16">
+        <nav className="flex justify-center gap-8 md:gap-16 text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase border-b border-[var(--text)]/10 pb-4">
           {(["projects", "tech", "cert"] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`relative px-2 pb-1 transition-colors duration-200 ${
-                tab === t ? "border-b-2 border-[var(--text)]" : "text-[var(--text)]/50 hover:text-[var(--text)]"
-              }`}
+              className={`relative px-4 transition-all duration-300 ${tab === t ? "text-[var(--text)]" : "text-[var(--text)]/40 hover:text-[var(--text)]"}`}
             >
-              {t.toUpperCase()}
+              {t}
+              {tab === t && <span className="absolute -bottom-[18px] left-0 w-full h-1 bg-[var(--text)] rounded-t-full" />}
             </button>
           ))}
         </nav>
 
         {tab === "projects" && (
-          <div className="space-y-16">
-            <section className="flex flex-col gap-6">
-              <h2 className="text-2xl font-semibold mb-4">Featured Project</h2>
+          <div className="space-y-20 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <section>
+              <h2 className="text-3xl font-bold mb-8 flex items-center gap-4">
+                Featured Work <span className="h-px flex-1 bg-[var(--text)]/10" />
+              </h2>
               <Link href={WEB_PROJECTS[0].href}>
-                <div className={`relative h-[360px] rounded-3xl overflow-hidden group ${CARD_STYLE}`}>
-                  <Image src={WEB_PROJECTS[0].image} alt={WEB_PROJECTS[0].title} fill className="object-cover" />
-                  <div className="absolute top-4 left-4 px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white backdrop-blur-sm">
-                    Groove Capstone
-                  </div>
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-8">
-                    <h3 className="text-2xl font-semibold text-white">{WEB_PROJECTS[0].title}</h3>
-                    <p className="text-sm text-white/80 mt-2">{WEB_PROJECTS[0].description}</p>
-                    <div className="flex flex-wrap gap-2 mt-4">
+                <div className={`relative h-[450px] rounded-[2rem] overflow-hidden group ${CARD_STYLE}`}>
+                  <Image src={WEB_PROJECTS[0].image} alt={WEB_PROJECTS[0].title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent flex flex-col justify-end p-10">
+                    <span className="w-fit px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 mb-4">
+                      Primary Project
+                    </span>
+                    <h3 className="text-3xl font-bold text-white mb-3">{WEB_PROJECTS[0].title}</h3>
+                    <p className="max-w-2xl text-white/70 mb-6 line-clamp-2">{WEB_PROJECTS[0].description}</p>
+                    <div className="flex flex-wrap gap-2">
                       {WEB_PROJECTS[0].techStack?.map((tech) => (
-                        <span key={tech} className="text-xs px-2 py-1 bg-white/20 rounded-full text-white">{tech}</span>
+                        <span key={tech} className="text-[10px] px-3 py-1 bg-white/10 rounded-lg text-white/90 backdrop-blur-sm border border-white/10 uppercase font-semibold">
+                          {tech}
+                        </span>
                       ))}
                     </div>
                   </div>
@@ -180,18 +231,20 @@ export default function PortfolioSection() {
               </Link>
             </section>
 
-            <section className="flex flex-col gap-6">
-              <h2 className="text-2xl font-semibold mb-4">Web Systems & Frontend</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <section>
+              <h2 className="text-2xl font-bold mb-8">Web Systems & Frontend</h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {WEB_PROJECTS.slice(1).map((p) => (
                   <Link key={p.id} href={p.href}>
-                    <div className={`relative h-[220px] rounded-3xl overflow-hidden group ${CARD_STYLE}`}>
-                      <Image src={p.image} alt={p.title} fill className="object-cover" />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-5">
-                        <h3 className="text-sm font-semibold text-white">{p.title}</h3>
-                        <div className="flex flex-wrap gap-1 mt-2">
+                    <div className={`relative h-[280px] rounded-3xl overflow-hidden group ${CARD_STYLE}`}>
+                      <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 className="text-lg font-bold text-white mb-2">{p.title}</h3>
+                        <div className="flex flex-wrap gap-1.5">
                           {p.techStack?.map((tech) => (
-                            <span key={tech} className="text-[10px] px-2 py-0.5 bg-white/20 rounded-full text-white">{tech}</span>
+                            <span key={tech} className="text-[9px] px-2 py-0.5 bg-white/20 rounded-md text-white font-medium">
+                              {tech}
+                            </span>
                           ))}
                         </div>
                       </div>
@@ -201,22 +254,22 @@ export default function PortfolioSection() {
               </div>
             </section>
 
-            <section className="flex flex-col gap-6">
-              <h2 className="text-2xl font-semibold mb-4">UI Design</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <section>
+              <h2 className="text-2xl font-bold mb-8">UI & Visual Design</h2>
+              <div className="grid md:grid-cols-3 gap-6">
                 {UI_PROJECTS.map((p) => (
                   <div
                     key={p.id}
                     onClick={() => setSelectedUI(p)}
-                    className={`relative h-[260px] rounded-3xl overflow-hidden cursor-pointer group ${CARD_STYLE}`}
+                    className={`relative h-[300px] rounded-2xl overflow-hidden cursor-pointer group ${CARD_STYLE}`}
                   >
-                    <Image src={p.image} alt={p.title} fill className="object-cover" />
-                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex flex-col justify-end p-5 text-white">
-                      <h3 className="font-semibold">{p.title}</h3>
-                      <div className="flex gap-2 mt-2">
+                    <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-all flex flex-col justify-end p-6 text-white">
+                      <h3 className="font-bold text-sm mb-3">{p.title}</h3>
+                      <div className="flex gap-2">
                         {p.uiTools?.map((tool) => (
-                          <span key={tool} className="text-xs px-2 py-1 bg-white/20 rounded-full flex items-center gap-1">
-                            {tool === "Figma" ? <SiFigma /> : <SiCanva />} {tool}
+                          <span key={tool} className="text-[10px] px-2 py-1 bg-white/20 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
+                            {tool === "Figma" ? <SiFigma size={12} /> : <SiCanva size={12} />} {tool}
                           </span>
                         ))}
                       </div>
@@ -229,18 +282,18 @@ export default function PortfolioSection() {
         )}
 
         {tab === "tech" && (
-          <div className="space-y-16">
+          <div className="space-y-12 animate-in fade-in zoom-in-95 duration-500">
             {Object.entries(TECH_DATA).map(([group, list]) => (
-              <div key={group}>
-                <h3 className="text-xs font-semibold tracking-widest mb-6 opacity-60">{group.toUpperCase()}</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+              <div key={group} className="space-y-6">
+                <h3 className="text-[10px] font-black tracking-[0.3em] uppercase opacity-40 px-2">{group}</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
                   {list.map((t) => (
                     <div
                       key={t.name}
-                      className={`h-[120px] rounded-3xl bg-[var(--text)] text-[var(--bg)] flex flex-col items-center justify-center gap-3 ${CARD_STYLE}`}
+                      className="group p-6 rounded-2xl bg-[var(--text)]/5 hover:bg-[var(--text)] hover:text-[var(--bg)] transition-all duration-300 flex flex-col items-center gap-4 border border-[var(--text)]/5"
                     >
-                      <t.Icon className="text-3xl" />
-                      <span className="text-xs font-medium">{t.name}</span>
+                      <t.Icon className="text-3xl group-hover:scale-110 transition-transform duration-300" />
+                      <span className="text-[10px] font-bold uppercase tracking-wider">{t.name}</span>
                     </div>
                   ))}
                 </div>
@@ -250,13 +303,13 @@ export default function PortfolioSection() {
         )}
 
         {tab === "cert" && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-top-4 duration-500">
             {CERTS.map((c) => (
-              <a key={c.id} href={c.href} target="_blank" rel="noopener noreferrer" className={`rounded-3xl overflow-hidden group ${CARD_STYLE}`}>
-                <div className="relative h-[200px]">
-                  <Image src={c.image} alt={c.title} fill className="object-cover" />
+              <a key={c.id} href={c.href} target="_blank" rel="noopener noreferrer" className={`group rounded-3xl overflow-hidden bg-black/5 ${CARD_STYLE}`}>
+                <div className="relative h-[220px]">
+                  <Image src={c.image} alt={c.title} fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
                 </div>
-                <div className="p-5 text-sm font-medium bg-[var(--text)] text-[var(--bg)] group-hover:opacity-90 transition">
+                <div className="p-6 text-xs font-bold tracking-wider text-center uppercase">
                   {c.title}
                 </div>
               </a>
@@ -269,16 +322,19 @@ export default function PortfolioSection() {
         <div
           ref={modalRef}
           onClick={() => setSelectedUI(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl animate-in fade-in duration-300"
         >
-          <div className="relative max-w-5xl w-full h-full flex items-center justify-center">
+          <div className="relative w-full max-w-4xl max-h-[85vh]">
             <Image
               src={selectedUI.image}
               alt={selectedUI.title}
-              width={1200}
-              height={800}
-              className="max-h-[90vh] w-auto rounded-2xl shadow-2xl object-contain"
+              width={1600}
+              height={1000}
+              className="rounded-xl shadow-2xl object-contain w-full h-full"
             />
+            <button className="absolute -top-12 right-0 text-white text-[10px] font-black tracking-widest uppercase opacity-70 hover:opacity-100 transition-opacity">
+              Close [x]
+            </button>
           </div>
         </div>
       )}
