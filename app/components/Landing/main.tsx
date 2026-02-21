@@ -142,7 +142,7 @@ export default function Main({ mobile }: MainProps) {
           </div>
 
       <Link href="/new">
-  <div className="w-75 h-35 absolute right-7 bottom-7 bg-white/10 backdrop-blur-md rounded-lg flex  justify-center items-center overflow-hidden border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 cursor-pointer">
+  <div className="w-75 h-35 absolute right-7 bottom-7  backdrop-blur-md rounded-lg flex  justify-center items-center overflow-hidden border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 cursor-pointer">
     <div className="px-2 py-1 text-center">
       <h4 className="text-xs font-bold  uppercase tracking-wider">UI Page</h4>
     
