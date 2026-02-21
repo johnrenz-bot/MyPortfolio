@@ -149,7 +149,7 @@ export default function ProjectsPage() {
 
             <nav className="relative z-20 w-full flex justify-center items-center py-6 mb-20">
                 <motion.div className="w-[10%] flex justify-center items-center p-3" initial="hidden" animate="visible" variants={logoVariants}>
-                    <img src="/Image/vector.png" alt="John Renz" className="h-[5vh] object-contain" />
+                    <img src="/Image/Vector.png" alt="John Renz" className="h-[5vh] object-contain" />
                 </motion.div>
                 <div className="w-[90%] flex justify-evenly items-center text-2xl font-semibold gap-8">
                     {["Home", "About"].map((item, i) => (
