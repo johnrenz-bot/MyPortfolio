@@ -76,7 +76,7 @@ export default function Contact() {
                     animate="visible"
                     variants={logoVariants}
                 >
-                    <img src="/Image/vector.png" alt="John Renz Logo" className="h-[5vh] object-contain" />
+                    <img src="/Image/Vector.png" alt="John Renz Logo" className="h-[5vh] object-contain" />
                 </motion.div>
 
                 <div className="w-[90%] flex justify-evenly items-center text-2xl font-semibold gap-8">
