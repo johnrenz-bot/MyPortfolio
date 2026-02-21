@@ -17,10 +17,8 @@ export default function Main({ mobile }: MainProps) {
     const saved = localStorage.getItem("theme");
     const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const initial = saved || (systemDark ? "dark" : "light");
-    
     setTheme(initial);
     document.documentElement.setAttribute("data-theme", initial);
-    
     if (!localStorage.getItem("visited")) {
       setShowModal(true);
     }
@@ -83,8 +81,8 @@ export default function Main({ mobile }: MainProps) {
       </header>
 
       <section className="flex-1 flex justify-center items-center py-10 animate-in fade-in zoom-in-95 duration-1000">
-        <div className="w-full max-w-5xl flex flex-col items-center gap-8">
-          
+        <div className="w-full max-w-5xl flex flex-col items-center gap-8 ">
+
           <div className="relative">
             <div className={`h-40 w-40 rounded-full overflow-hidden border-2 border-[var(--text)]/10 ${shadowClass}`}>
               <img src="/Image/me.jpg" alt="Profile" className="h-full w-full object-cover" />
@@ -139,8 +137,26 @@ export default function Main({ mobile }: MainProps) {
                 ↓ Download
               </a>
             </div>
+
+
           </div>
+
+      <Link href="/new">
+  <div className="w-75 h-35 absolute right-7 bottom-7 bg-white/10 backdrop-blur-md rounded-lg flex  justify-center items-center overflow-hidden border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 cursor-pointer">
+    <div className="px-2 py-1 text-center">
+      <h4 className="text-xs font-bold  uppercase tracking-wider">UI Page</h4>
+    
+    </div>
+    <img
+      src="/Image/page2.png"
+      alt="Avatar"
+      className="w-full h-2/3 object-cover rounded-t-md"
+    />
+  </div>
+</Link>
         </div>
+
+        
       </section>
 
       {showModal && (

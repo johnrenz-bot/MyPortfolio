@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useEffect, useState } from "react";
 import Main from "./components/Landing/main";
 import About from "./components/Landing/about";
@@ -70,9 +72,16 @@ export default function Home() {
           case "contact":
             Component = Contact;
             break;
+
+            
           default:
             Component = () => null;
+
+            
+          
         }
+
+        
 
         return (
           <section

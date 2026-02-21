@@ -1,22 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import {
-  FaGithub,
-  FaLinkedin,
-  FaInstagram,
-  FaFacebook,
-  FaThreads,
+  FaGithub, FaLinkedin, FaInstagram, FaFacebook,
+  FaThreads, FaRedditAlien, FaXTwitter
 } from "react-icons/fa6";
-import { FaRedditAlien, FaXTwitter } from "react-icons/fa6";
 import { SiGlassdoor } from "react-icons/si";
 
 export default function Contact() {
-  const TITLE = {
-    header: "Let’s Connect",
-    description:
-      "Open to opportunities, collaborations, and meaningful conversations. Feel free to reach out anytime.",
-  };
-
   const PERSONAL = {
     address: "Grand Villas, Loma de Gato, Marilao, Bulacan",
     phone: "+63 966 798 7702",
@@ -26,103 +17,100 @@ export default function Contact() {
   const socials = [
     { icon: <FaGithub />, url: "https://github.com/johnrenz-bot", label: "GitHub" },
     { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/john-renz-96a77728b/", label: "LinkedIn" },
-    { icon: <SiGlassdoor />, url: "https://www.glassdoor.com/member/profile", label: "Glassdoor" },
     { icon: <FaInstagram />, url: "https://www.instagram.com/wiieidjxhdshehe/", label: "Instagram" },
-    { icon: <FaThreads />, url: "https://www.threads.net/@wiieidjxhdshehe", label: "Threads" },
     { icon: <FaFacebook />, url: "https://www.facebook.com/john.r.bandianon/", label: "Facebook" },
-    { icon: <FaXTwitter />, url: "https://x.com/JohnRen94949414/", label: "Twitter X" },
-    { icon: <FaRedditAlien />, url: "https://www.reddit.com/user/Aware-Scratch8897/", label: "Reddit" },
   ];
 
-  const glass =
-    "relative rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.25)] transition-all duration-500";
-
-  const card =
-    "group relative flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-white/90 to-white/70 text-black hover:from-white hover:to-white hover:-translate-y-1 transition-all duration-300 shadow-lg";
-
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-[var(--bg)] text-[var(--text)] px-4 sm:px-8 py-28">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-indigo-500/20 blur-[120px]" />
-        <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-fuchsia-500/20 blur-[120px]" />
+    <main className="relative min-h-screen w-full bg-black text-white font-sans uppercase overflow-x-hidden">
+      
+      {/* Background Watermark */}
+      <div className="fixed inset-0 flex flex-col justify-center items-center leading-none select-none pointer-events-none z-0 opacity-5">
+        <h2 className="text-[15vw] font-black tracking-tighter text-gray-500">JOHN RENZ</h2>
+        <h2 className="text-[18vw] font-black tracking-tighter text-gray-600 -mt-10">BANDANON</h2>
       </div>
 
-      <div className="relative mx-auto max-w-6xl flex flex-col gap-20">
-        <section className="text-center space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-700">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight bg-gradient-to-br from-white to-white/60 bg-clip-text text-transparent">
-            {TITLE.header}
-          </h1>
-          <p className="mx-auto max-w-2xl text-base sm:text-lg lg:text-xl opacity-80 leading-relaxed">
-            {TITLE.description}
-          </p>
-        </section>
+      {/* Navigation */}
+      <nav className="relative z-20 w-full flex justify-between items-center px-12 py-8">
+        <div className="w-12 h-12">
+          <img src="/Image/vector.png" alt="Logo" className="h-full object-contain invert" />
+        </div>
 
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          <div className={`${glass} p-8 sm:p-10 flex flex-col gap-8`}>
-            <h2 className="text-xs font-black tracking-[0.35em] uppercase opacity-50 text-center">
-              Contact Details
-            </h2>
+        <div className="flex items-center gap-12 text-xl font-bold tracking-widest">
+          <Link href="/new" className="hover:text-red-500 transition">HOME</Link>
+          <Link href="/new/Aboutme" className="hover:text-red-500 transition">ABOUT</Link>
+          
+          <div className="w-14 h-14 rounded-full border-2 border-zinc-700 overflow-hidden bg-zinc-900 mx-4 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            <img src="/Image/general.png" alt="profile" className="w-full h-full object-cover" />
+          </div>
 
-            <div className="grid gap-4">
-              <div className={`${card} h-32 text-center`}>
-                <span className="text-[10px] font-bold tracking-widest uppercase opacity-60">
-                  Address
-                </span>
-                <span className="text-base sm:text-lg font-semibold px-4">
-                  {PERSONAL.address}
-                </span>
+          <Link href="/new/Projects" className="hover:text-red-500 transition">PROJECTS</Link>
+          <Link href="/new/Contact" className="text-red-500 underline underline-offset-8">CONTACT</Link>
+        </div>
+        
+        <div className="w-12" /> {/* Spacer for balance */}
+      </nav>
+
+      {/* Main Content Container */}
+      <div className="relative z-10 max-w-7xl mx-auto px-12 pt-16 grid grid-cols-1 lg:grid-cols-2 gap-16">
+        
+        {/* Left Side: Info */}
+        <div className="space-y-12">
+          {/* Section Header with Slant Effect */}
+          <div className="relative inline-block">
+            <div className="absolute inset-0 bg-gradient-to-r from-zinc-800 to-red-900/20 -skew-x-12 transform translate-x-4"></div>
+            <h1 className="relative text-7xl font-black italic tracking-tighter px-6 py-2 border-l-4 border-red-600">
+              CONTACT
+            </h1>
+          </div>
+
+          <div className="space-y-8 normal-case font-serif text-zinc-300">
+            <div className="space-y-2">
+              <h3 className="uppercase font-sans font-bold text-white text-xl tracking-widest">Let's Connect</h3>
+              <p className="text-lg max-w-md italic leading-relaxed">
+                Open to opportunities, collaborations, and meaningful conversations. Feel free to reach out anytime.
+              </p>
+            </div>
+
+            <div className="space-y-6 pt-4">
+              <h3 className="uppercase font-sans font-bold text-white tracking-widest text-sm opacity-60">Contact Details</h3>
+              
+              <div className="space-y-4">
+                <p className="flex flex-col">
+                  <span className="font-sans text-xs uppercase font-black text-zinc-500">Address</span>
+                  <span className="text-lg">{PERSONAL.address}</span>
+                </p>
+                <p className="flex flex-col">
+                  <span className="font-sans text-xs uppercase font-black text-zinc-500">Phone</span>
+                  <span className="text-lg tracking-wider">{PERSONAL.phone}</span>
+                </p>
+                <p className="flex flex-col">
+                  <span className="font-sans text-xs uppercase font-black text-zinc-500">Email</span>
+                  <a href={`mailto:${PERSONAL.email}`} className="text-lg text-red-500 underline hover:text-white transition decoration-1">
+                    {PERSONAL.email}
+                  </a>
+                </p>
               </div>
+            </div>
+          </div>
 
-              <div className={`${card} h-32 text-center`}>
-                <span className="text-[10px] font-bold tracking-widest uppercase opacity-60">
-                  Phone
-                </span>
-                <span className="text-xl sm:text-2xl font-black">
-                  {PERSONAL.phone}
-                </span>
-              </div>
-
-              <a
-                href={`https://mail.google.com/mail/?view=cm&to=${PERSONAL.email}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${card} h-32 text-center`}
-              >
-                <span className="text-[10px] font-bold tracking-widest uppercase opacity-60">
-                  Email
-                </span>
-                <span className="text-base sm:text-lg font-bold break-all px-4">
-                  {PERSONAL.email}
-                </span>
+          {/* Social Icons */}
+          <div className="flex gap-6 pt-4">
+            {socials.map((social, i) => (
+              <a key={i} href={social.url} className="text-2xl hover:text-red-500 transition-transform hover:-translate-y-1">
+                {social.icon}
               </a>
-            </div>
+            ))}
           </div>
+        </div>
 
-          <div className={`${glass} p-8 sm:p-10 flex flex-col gap-8`}>
-            <h2 className="text-xs font-black tracking-[0.35em] uppercase opacity-50 text-center">
-              Social Presence
-            </h2>
+        {/* Right Side: The Box (Map or Form placeholder) */}
+        <div className="w-full aspect-square lg:aspect-auto lg:h-[60vh] bg-zinc-900/50 border border-white/5 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm">
+           <div className="w-full h-full bg-gradient-to-br from-zinc-800/50 to-black flex items-center justify-center">
+              <p className="uppercase tracking-[1em] text-zinc-700 text-xs rotate-90 lg:rotate-0">Direct Message Area</p>
+           </div>
+        </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {socials.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${card} h-36`}
-                >
-                  <span className="text-3xl group-hover:scale-125 transition-transform duration-300">
-                    {social.icon}
-                  </span>
-                  <span className="text-[10px] font-bold tracking-widest uppercase">
-                    {social.label}
-                  </span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
       </div>
     </main>
   );
