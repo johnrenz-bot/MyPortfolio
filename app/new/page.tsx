@@ -48,7 +48,7 @@ export default function New() {
 
             <nav className="relative z-20 w-full flex justify-center items-center py-6 mb-20">
                 <div className="w-[10%] flex justify-center">
-                    <img src="/Image/vector.png" alt="John Renz Logo" className="h-[5vh] object-contain" />
+                    <img src="/Image/Vector.png" alt="John Renz Logo" className="h-[5vh] object-contain" />
                 </div>
                 <div className="w-[90%] flex justify-evenly items-center text-2xl font-semibold gap-8">
                     {navItems.map((item, index) => (
