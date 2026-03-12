@@ -1,196 +1,154 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
-interface MainProps {
-  mobile?: boolean;
-}
+const carouselItems = [
+  { id: 1, src: "/Image/Groove.png",          alt: "Groove",           href: "/Groove" },
+  { id: 2, src: "/Image/Simon.png",           alt: "Simon Game",       href: "https://simon-game2-gamma.vercel.app/" },
+  { id: 3, src: "/Image/WeekndSoundtrip.png", alt: "Weeknd Soundtrip", href: "https://weeknd-soundtrip.vercel.app/" },
+  { id: 4, src: "/Image/Dinoverse.png",       alt: "DinoVerse",        href: "https://dinoverse-buce.vercel.app/" },
+  { id: 5, src: "/Image/EduGuide.png",        alt: "EduGuide",         href: "https://edu-guide-three.vercel.app/" },
+  { id: 6, src: "/Image/Kiyoto.png",          alt: "Kiyoto",           href: "https://kiyoto.vercel.app/" },
+  { id: 7, src: "/Image/windbreaker.png",     alt: "Windbreaker",      href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/" },
 
-export default function Main({ mobile }: MainProps) {
-  const [theme, setTheme] = useState("light");
-  const [copied, setCopied] = useState(false);
+  { id: 8,  src: "/Image/UI/1.jpg",  alt: "The Price of Sugar",      href: "" },
+  { id: 9,  src: "/Image/UI/2.jpg",  alt: "Clay Cuneiform Tables",  href: "" },
+  { id: 10, src: "/Image/UI/3.jpg",  alt: "Weeknd UI Concept",      href: "" },
+
+  { id: 11, src: "/Image/UI/4.png",  alt: "XREAPER Hoodie",         href: "" },
+  { id: 12, src: "/Image/UI/5.jpg",  alt: "BATTLE",                 href: "" },
+  { id: 13, src: "/Image/UI/6.png",  alt: "Mazda",                  href: "" },
+
+  { id: 14, src: "/Image/UI/7.png",  alt: "McLaren",                href: "" },
+  { id: 15, src: "/Image/UI/8.png",  alt: "McLaren Alt",            href: "" },
+  { id: 16, src: "/Image/UI/9.png",  alt: "McLaren Shirt",          href: "" },
+  { id: 17, src: "/Image/UI/10.png", alt: "McLaren Shirt Alt",      href: "" },
+];
+const socials = [
+  { url: "https://www.linkedin.com/in/john-renz-96a77728b/", label: "LinkedIn" },
+  { url: "https://github.com/johnrenz-bot", label: "GitHub" },
+];
+
+export default function Main() {
   const [showModal, setShowModal] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial = saved || (systemDark ? "dark" : "light");
-    setTheme(initial);
-    document.documentElement.setAttribute("data-theme", initial);
-    if (!localStorage.getItem("visited")) {
-      setShowModal(true);
-    }
+    document.documentElement.setAttribute("data-theme", "dark");
+    if (!localStorage.getItem("visited")) setShowModal(true);
   }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
-
-  const user = {
-    name: "John Renz Bandianon",
-    role: "WEB DEVELOPER (FRONTEND DEVELOPER) / UI DESIGNER",
-  };
-
-  const socials = [
-    { url: "https://www.linkedin.com/in/john-renz-96a77728b/", label: "LinkedIn" },
-    { url: "https://github.com/johnrenz-bot", label: "GitHub" },
-  ];
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const closeModal = () => {
     setShowModal(false);
     localStorage.setItem("visited", "true");
   };
 
-  const shadowClass = "shadow-[inset_0_1px_2px_rgba(255,255,255,0.6),0_12px_30px_rgba(0,0,0,0.12)] hover:-translate-y-1 transition-all duration-300";
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (!trackRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - trackRef.current.offsetLeft);
+    setScrollLeft(trackRef.current.scrollLeft);
+  };
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !trackRef.current) return;
+    e.preventDefault();
+    trackRef.current.scrollLeft = scrollLeft - (e.pageX - trackRef.current.offsetLeft - startX);
+  };
+  const onMouseUp = () => setIsDragging(false);
 
   return (
-    <main className="min-h-screen w-full flex flex-col px-4 sm:px-6 lg:px-12 bg-[var(--bg)] text-[var(--text)] transition-colors duration-500 overflow-x-hidden">
-      
-      <header className="h-16 sm:h-20 w-full flex items-center justify-between animate-in fade-in slide-in-from-top-4 duration-700">
-        <button
-          onClick={toggleTheme}
-          className="border border-[var(--border)] bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 px-5 py-1.5 rounded-full text-xs font-black tracking-widest uppercase hover:scale-105 transition-all"
-        >
-          {theme === "dark" ? "🌙 Dark" : "☀️ Light"}
-        </button>
+    <>
+      <div className="min-h-screen flex flex-col bg-[#0a0a0a] text-[#e8e4dc] overflow-x-hidden">
 
-        <ul className="flex gap-6 sm:gap-10">
-          {socials.map((social, index) => (
-            <a
-              key={index}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs sm:text-sm font-bold tracking-widest uppercase hover:opacity-50 transition"
-            >
-              {social.label}
+        <nav className="flex justify-end gap-10 px-12 py-7">
+          {socials.map((s, i) => (
+            <a key={i} href={s.url} target="_blank" rel="noopener noreferrer"
+              className="text-[0.62rem] font-bold tracking-[0.28em] uppercase opacity-75 hover:opacity-35 transition-opacity">
+              {s.label}
             </a>
           ))}
-        </ul>
-      </header>
+        </nav>
 
-      <section className="flex-1 flex justify-center items-center py-10 animate-in fade-in zoom-in-95 duration-1000">
-        <div className="w-full max-w-5xl flex flex-col items-center gap-8 ">
-
-          <div className="relative">
-            <div className={`h-40 w-40 rounded-full overflow-hidden border-2 border-[var(--text)]/10 ${shadowClass}`}>
-              <img src="/Image/me.jpg" alt="Profile" className="h-full w-full object-cover" />
-            </div>
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 bg-green-500 text-white text-[10px] font-bold rounded-full shadow-lg whitespace-nowrap animate-pulse">
-              ● AVAILABLE FOR Internship
-            </div>
-          </div>
-
-          <div className="space-y-4 flex flex-col items-center">
-            <div className={`px-10 py-4 rounded-[2rem] border border-[var(--border)] bg-[var(--text)]/5 backdrop-blur-sm ${shadowClass}`}>
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tighter text-center">{user.name}</h1>
-            </div>
-            <p className="text-[10px] sm:text-xs font-black tracking-[0.4em] uppercase opacity-40 text-center">
-              {user.role}
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
-            <button
-              onClick={handleCopyLink}
-              className={`w-52 border border-[var(--border)] px-8 py-3 rounded-2xl font-bold text-sm bg-transparent hover:bg-[var(--text)]/5 ${shadowClass}`}
-            >
-              {copied ? "✓ Link Copied" : "🔗 Copy Link"}
-            </button>
-
-            <Link
-              href="/Resume"
-              className={`w-52 border border-[var(--border)] px-8 py-3 bg-[var(--text)] text-[var(--bg)] hover:bg-[var(--text)]/90 rounded-2xl text-center font-bold text-sm ${shadowClass}`}
-            >
+        <section className="flex-1 flex flex-col items-center justify-center text-center px-8 gap-4 py-12">
+          <h1 className="font-[Cormorant_Garamond] text-[clamp(3.2rem,9vw,6.5rem)] font-light tracking-[0.4em] uppercase leading-none animate-[fadeUp_0.9s_ease_0.05s_forwards] opacity-0">
+            John Renz
+          </h1>
+          <p className="text-[clamp(0.5rem,1.1vw,0.68rem)] font-bold tracking-[0.4em] uppercase opacity-45 max-w-lg leading-loose animate-[fadeUp_0.9s_ease_0.2s_forwards] opacity-0">
+            UI/UX Developer, Graphic Design,<br />Frontend Developer
+          </p>
+          <p className="text-[0.58rem] tracking-[0.22em] uppercase opacity-25 max-w-sm leading-loose animate-[fadeUp_0.9s_ease_0.35s_forwards] opacity-0">
+            Building clean, interactive web experiences with a passion for UI design and modern frontend stacks.
+          </p>
+          <div className="flex gap-4 mt-3 animate-[fadeUp_0.9s_ease_0.5s_forwards] opacity-0">
+            <Link href="/Resume"
+              className="text-[0.58rem] font-bold tracking-[0.3em] uppercase px-9 py-3 bg-[#e8e4dc] text-[#0a0a0a] border border-[#e8e4dc] hover:opacity-85 transition-opacity">
               Full Resume
             </Link>
+            <a href="/Image/UiPortolio.png" target="_blank"
+              className="text-[0.58rem] font-bold tracking-[0.3em] uppercase px-9 py-3 border border-[rgba(232,228,220,0.25)] hover:bg-[rgba(232,228,220,0.07)] transition-colors">
+              UI Portfolio
+            </a>
           </div>
+        </section>
 
-          <div className="w-48 h-px bg-gradient-to-r from-transparent via-[var(--border)] to-transparent opacity-30 my-4" />
-
-          <div className="flex flex-col items-center gap-6">
-            <span className="text-[10px] font-black tracking-[0.3em] uppercase opacity-30 italic">UI Portfolio Assets</span>
-            <div className="flex gap-4">
-              <a
-                href="/Image/UiPortolio.png" 
-                target="_blank"
-                className={`flex items-center gap-2 border border-blue-500/40 text-blue-500 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all ${shadowClass}`}
-              >
-                👁 View
+        <div className="w-full pt-10 pb-4 animate-[fadeUp_0.9s_ease_0.65s_forwards] opacity-0">
+          <div
+            ref={trackRef}
+            className={`flex gap-2.5 overflow-x-auto scrollbar-hide select-none px-8 pb-4 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+            style={{ scrollbarWidth: "none" }}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseUp}
+          >
+            {carouselItems.map((item) => (
+              <a key={item.id} href={item.href} target="_blank" rel="noopener noreferrer"
+                className="flex-none w-[clamp(130px,20vw,250px)] aspect-[4/3] bg-[#161616] border border-[rgba(232,228,220,0.08)] overflow-hidden hover:-translate-y-1.5 transition-transform">
+                <img src={item.src} alt={item.alt} draggable={false}
+                  className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity pointer-events-none"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
               </a>
-              <a
-                href="/Image/UiPortolio.png"
-                download="UiPortolio.png"
-                className={`flex items-center gap-2 border border-[var(--border)] px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[var(--text)] hover:text-[var(--bg)] transition-all ${shadowClass}`}
-              >
-                ↓ Download
-              </a>
-            </div>
-
-
+            ))}
           </div>
-
-      <Link href="/new">
-  <div className="w-75 h-35 absolute right-7 bottom-7  backdrop-blur-md rounded-lg flex  justify-center items-center overflow-hidden border border-white/20 transition-all duration-300 hover:scale-105 hover:bg-white/20 cursor-pointer">
-    <div className="px-2 py-1 text-center">
-      <h4 className="text-xs font-bold  uppercase tracking-wider">UI Page</h4>
-    
-    </div>
-    <img
-      src="/Image/page2.png"
-      alt="Avatar"
-      className="w-full h-2/3 object-cover rounded-t-md"
-    />
-  </div>
-</Link>
         </div>
 
-        
-      </section>
+      </div>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="bg-[var(--bg)] text-[var(--text)] rounded-[2.5rem] p-8 max-w-md w-[90%] shadow-2xl flex flex-col gap-6 border border-white/10">
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-black tracking-tighter">Welcome!</h2>
-              <p className="text-xs uppercase tracking-widest opacity-40 font-bold">Portfolio Guide</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xl">
+          <div className="bg-[#0f0f0f] border border-[rgba(232,228,220,0.1)] p-11 max-w-md w-[90%] flex flex-col gap-7">
+            <div className="text-center">
+              <p className="text-[0.52rem] tracking-[0.35em] uppercase opacity-25 font-bold mb-2">Portfolio Guide</p>
+              <h2 className="font-[Cormorant_Garamond] text-[2.2rem] font-light tracking-[0.25em] uppercase">Welcome!</h2>
             </div>
-            
-            <div className="text-xs sm:text-sm space-y-4 opacity-80">
-              <div className="flex gap-4 items-start">
-                <span className="text-blue-500 font-bold">01</span>
-                <p><strong>UI Portfolio:</strong> High-resolution design assets ready for view/download.</p>
-              </div>
-              <div className="flex gap-4 items-start">
-                <span className="text-blue-500 font-bold">02</span>
-                <p><strong>Adaptive UI:</strong> Supports system-level dark and light preferences.</p>
-              </div>
-              <div className="flex gap-4 items-start">
-                <span className="text-blue-500 font-bold">03</span>
-                <p><strong>Full Resume:</strong> Comprehensive background and technical stack details.</p>
-              </div>
+            <div className="flex flex-col gap-4">
+              {[
+                ["01", "UI Portfolio:", "High-resolution design assets ready to view."],
+                ["02", "Carousel:", "Drag to browse through all project screenshots."],
+                ["03", "Full Resume:", "Complete background, skills, and tech stack details."],
+              ].map(([num, label, text]) => (
+                <div key={num} className="flex gap-4 items-start">
+                  <span className="text-[0.6rem] font-bold opacity-35 mt-0.5">{num}</span>
+                  <p className="text-[0.72rem] leading-relaxed opacity-65"><strong>{label}</strong> {text}</p>
+                </div>
+              ))}
             </div>
-
-            <button
-              onClick={closeModal}
-              className="mt-4 w-full py-4 bg-blue-600 text-white rounded-2xl font-black tracking-widest uppercase text-xs hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition-all active:scale-95"
-            >
+            <button onClick={closeModal}
+              className="w-full py-4 bg-[#e8e4dc] text-[#0a0a0a] text-[0.58rem] font-bold tracking-[0.32em] uppercase hover:opacity-82 transition-opacity">
               Continue to Site
             </button>
           </div>
         </div>
       )}
-    </main>
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap');
+        @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+      `}</style>
+    </>
   );
 }
