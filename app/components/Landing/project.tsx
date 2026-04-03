@@ -59,7 +59,6 @@ const PHOTOSHOP_PROJECTS: Item[] = [
   { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren automotive graphic design.", category: "graphic design" },
   { id: "ps2", title: "Me GA", href: "", image: "/Image/UI/8.png", uiTools: ["Photoshop"], description: "Alternative McLaren composition.", category: "graphic design" },
   { id: "ps3", title: "GA design poster", href: "", image: "/Image/UI/poster.png", uiTools: ["Photoshop"], description: "Graphic design poster for new arrival soon.", category: "graphic design" },
-  { id: "ps11", title: "Life Quote", href: "", image: "/Image/Qoutes/life.png", uiTools: ["Photoshop"], description: "Typography quote design about life.", category: "graphic design" },
   { id: "ps12", title: "Life’s Quote", href: "", image: "/Image/Qoutes/lifes.png", uiTools: ["Photoshop"], description: "Minimal typography quote composition.", category: "graphic design" },
   { id: "ps13", title: "One Quote", href: "", image: "/Image/Qoutes/One.png", uiTools: ["Photoshop"], description: "Creative typography quote layout.", category: "graphic design" },
 
