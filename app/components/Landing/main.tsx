@@ -1,213 +1,177 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 
-const carouselItems = [
-  { id: 1,  src: "/Image/Groove.png",              alt: "Groove",             href: "/Groove" },
-  { id: 2,  src: "/Image/Simon.png",               alt: "Simon Game",         href: "https://simon-game2-gamma.vercel.app/" },
-  { id: 3,  src: "/Image/WeekndSoundtrip.png",     alt: "Weeknd Soundtrip",   href: "https://weeknd-soundtrip.vercel.app/" },
-  { id: 4,  src: "/Image/Dinoverse.png",           alt: "DinoVerse",          href: "https://dinoverse-buce.vercel.app/" },
-  { id: 5,  src: "/Image/EduGuide.png",            alt: "EduGuide",           href: "https://edu-guide-three.vercel.app/" },
-  { id: 6,  src: "/Image/Kiyoto.png",              alt: "Kiyoto",             href: "https://kiyoto.vercel.app/" },
-  { id: 7,  src: "/Image/windbreaker.png",         alt: "Windbreaker",        href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/" },
-  { id: 8,  src: "/Image/UI/1.jpg",                alt: "The Price of Sugar", href: "" },
-  { id: 9,  src: "/Image/UI/2.jpg",                alt: "Clay Cuneiform Tables", href: "" },
-  { id: 10, src: "/Image/UI/3.jpg",                alt: "Weeknd UI Concept",  href: "" },
-  { id: 11, src: "/Image/UI/4.png",                alt: "XREAPER Hoodie",     href: "" },
-  { id: 12, src: "/Image/UI/5.jpg",                alt: "BATTLE",             href: "" },
-  { id: 13, src: "/Image/UI/6.png",                alt: "Mazda",              href: "" },
-  { id: 14, src: "/Image/UI/7.png",                alt: "McLaren",            href: "" },
-  { id: 15, src: "/Image/UI/8.png",                alt: "McLaren Alt",        href: "" },
-  { id: 16, src: "/Image/UI/9.png",                alt: "McLaren Shirt",      href: "" },
-  { id: 17, src: "/Image/UI/10.png",               alt: "McLaren Shirt Alt",  href: "" },
-];
-
-const socials = [
-  { url: "https://www.linkedin.com/in/john-renz-96a77728b/", label: "LinkedIn" },
-  { url: "https://github.com/johnrenz-bot",                  label: "GitHub" },
-];
-
-const guideItems = [
-  ["01", "UI Portfolio", "High resolution design assets ready to view."],
-  ["02", "Carousel",     "Drag or let it auto scroll through projects."],
-  ["03", "Resume",       "Complete background skills and stack."],
-];
-
-const SPEED = 0.25;
-const LOOP_THRESHOLD = 2000;
+const NavBtn = ({ label, href, primary }: { label: string; href: string; primary?: boolean }) => (
+  <a
+    href={href}
+    className={`px-10 py-2.5 rounded-xl border text-sm font-medium transition-all ${
+      primary
+        ? "bg-[#EAEAEA] border-gray-300 shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]"
+        : "bg-white border-gray-200 hover:bg-gray-50"
+    }`}
+  >
+    {label}
+  </a>
+);
 
 export default function Main() {
   const [showModal, setShowModal] = useState(false);
-  const [dragging, setDragging]   = useState(false);
-  const [startX, setStartX]       = useState(0);
-  const [translate, setTranslate] = useState(0);
-
-  const trackRef = useRef<HTMLDivElement>(null);
-  const items    = [...carouselItems, ...carouselItems];
+  const [ready, setReady] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "dark");
+    const t = setTimeout(() => setReady(true), 80);
     if (!localStorage.getItem("visited")) setShowModal(true);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    let frame: number;
-
-    const animate = () => {
-      if (!dragging) {
-        setTranslate((prev) => {
-          const next = prev - SPEED;
-          return Math.abs(next) >= LOOP_THRESHOLD ? 0 : next;
+    const els = containerRef.current?.querySelectorAll(".aos");
+    if (!els) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("aos-in");
+          else entry.target.classList.remove("aos-in");
         });
-      }
-      frame = requestAnimationFrame(animate);
-    };
+      },
+      { threshold: 0.1 }
+    );
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
 
-    animate();
-    return () => cancelAnimationFrame(frame);
-  }, [dragging]);
-
-  const closeModal = () => {
-    setShowModal(false);
-    localStorage.setItem("visited", "true");
-  };
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    setDragging(true);
-    setStartX(e.clientX);
-  };
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!dragging) return;
-    const walk = e.clientX - startX;
-    setStartX(e.clientX);
-    setTranslate((prev) => prev + walk);
-  };
-
-  const onMouseUp = () => setDragging(false);
+  const g = ready ? "go" : "";
 
   return (
     <>
-      <div className="min-h-screen flex flex-col bg-[#0a0a0a] text-[#e8e4dc] overflow-x-hidden">
-
-        <nav className="flex justify-end gap-12 px-14 py-9">
-          {socials.map((s, i) => (
-            <a
-              key={i}
-              href={s.url}
-              target="_blank"
-              className="text-[0.85rem] font-bold tracking-[0.35em] uppercase opacity-70 hover:opacity-40 transition"
-            >
-              {s.label}
-            </a>
-          ))}
-        </nav>
-
-        <section className="flex-1 flex flex-col items-center justify-center text-center px-10 gap-6 py-20">
-          <h1 className="font-[Cormorant_Garamond] text-[clamp(4rem,10vw,8rem)] font-light tracking-[0.45em] uppercase leading-none [animation:fadeUp_1s_ease_0.1s_forwards] opacity-0">
-            John Renz Bandianon
-          </h1>
-
-          <p className="text-[clamp(0.8rem,1.2vw,1rem)] font-semibold tracking-[0.45em] uppercase opacity-50 max-w-xl [animation:fadeUp_1s_ease_0.3s_forwards] opacity-0">
-            UI / UX Developer • Graphic Designer • Frontend Developer
-          </p>
-
-          <p className="text-[0.85rem] tracking-[0.25em] uppercase opacity-30 max-w-md leading-relaxed [animation:fadeUp_1s_ease_0.45s_forwards] opacity-0">
-            Building clean interactive web experiences focused on modern UI design and thoughtful user interaction.
-          </p>
-
-          <div className="flex gap-6 mt-5 [animation:fadeUp_1s_ease_0.6s_forwards] opacity-0">
-            <Link
-              href="/Resume"
-              className="text-[0.75rem] font-bold tracking-[0.35em] uppercase px-12 py-4 bg-[#e8e4dc] text-[#0a0a0a] hover:opacity-85 transition"
-            >
-              Full Resume
-            </Link>
-
-            <a
-              href="/Image/UiPortolio.png"
-              target="_blank"
-              className="text-[0.75rem] font-bold tracking-[0.35em] uppercase px-12 py-4 border border-[rgba(232,228,220,0.25)] hover:bg-[rgba(232,228,220,0.06)] transition"
-            >
-              UI Portfolio
-            </a>
-          </div>
-        </section>
-
-        <div className="w-full pt-10 pb-12 overflow-hidden">
-          <div
-            ref={trackRef}
-            className={`flex gap-5 px-10 select-none ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
-            style={{ transform: `translateX(${translate}px)` }}
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-            onMouseLeave={onMouseUp}
-          >
-            {items.map((item, i) => (
-              <a
-                key={i}
-                href={item.href}
-                target="_blank"
-                className="group flex-none w-[clamp(140px,16vw,220px)] aspect-[4/3] bg-[#141414] border border-[rgba(232,228,220,0.08)] overflow-hidden hover:-translate-y-1 hover:scale-[1.03] transition duration-500"
-              >
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  draggable={false}
-                  className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition duration-500"
-                />
-              </a>
-            ))}
-          </div>
-        </div>
-
-      </div>
-
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xl">
-          <div className="bg-[#0f0f0f] border border-[rgba(232,228,220,0.1)] p-12 max-w-lg w-[92%] flex flex-col gap-8">
-
-            <div className="text-center">
-              <p className="text-[0.65rem] tracking-[0.4em] uppercase opacity-30 font-bold mb-3">
-                Portfolio Guide
-              </p>
-              <h2 className="font-[Cormorant_Garamond] text-[2.6rem] font-light tracking-[0.25em] uppercase">
-                Welcome
-              </h2>
-            </div>
-
-            <div className="flex flex-col gap-5">
-              {guideItems.map(([n, l, t]) => (
-                <div key={n} className="flex gap-4">
-                  <span className="text-[0.7rem] font-bold opacity-40 mt-[3px]">{n}</span>
-                  <p className="text-[0.9rem] opacity-70 leading-relaxed">
-                    <strong>{l}:</strong> {t}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={closeModal}
-              className="w-full py-4 bg-[#e8e4dc] text-[#0a0a0a] text-[0.7rem] font-bold tracking-[0.35em] uppercase hover:opacity-85 transition"
-            >
-              Enter Portfolio
-            </button>
-
-          </div>
-        </div>
-      )}
-
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap');
+        @keyframes smoothUp {
+          0%   { opacity:0; transform:translateY(28px); filter:blur(4px); }
+          100% { opacity:1; transform:translateY(0);    filter:blur(0);   }
+        }
+        @keyframes smoothIn {
+          0%   { opacity:0; transform:scale(0.96) translateY(16px); filter:blur(6px); }
+          100% { opacity:1; transform:scale(1)    translateY(0);    filter:blur(0);   }
+        }
 
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
+        .a { opacity:0; animation:smoothUp 1.1s cubic-bezier(.22,1,.36,1) forwards paused; }
+        .a.go { animation-play-state:running; }
+        .d1{animation-delay:.05s} .d2{animation-delay:.22s} .d3{animation-delay:.38s}
+        .d4{animation-delay:.54s} .d5{animation-delay:.70s} .d6{animation-delay:.86s}
+
+        .aos {
+          opacity:0;
+          transform:translateY(36px);
+          filter:blur(5px);
+          transition:
+            opacity 1s cubic-bezier(.22,1,.36,1),
+            transform 1s cubic-bezier(.22,1,.36,1),
+            filter 1s cubic-bezier(.22,1,.36,1);
+        }
+        .aos-in { opacity:1; transform:translateY(0); filter:blur(0); }
+        .sd1{transition-delay:.05s} .sd2{transition-delay:.15s} .sd3{transition-delay:.25s}
+        .sd4{transition-delay:.35s} .sd5{transition-delay:.45s}
+
+        .modal-card { animation:smoothIn .9s cubic-bezier(.22,1,.36,1) forwards; }
+
+        .hero-title { font-size:clamp(48px,9vw,110px); }
+
+        .nav-wrap  { padding:40px 64px; }
+        .foot-wrap { padding:40px 64px; }
+
+        @media(max-width:479px){
+          .nav-wrap  { padding:20px 20px; }
+          .foot-wrap { padding:24px 20px; }
+          .hero-title { font-size:clamp(40px,13vw,64px); }
+          .nav-btns a { padding:6px 14px !important; font-size:11px !important; }
+          .ctas { flex-direction:column; width:100%; max-width:280px; }
+          .ctas a { text-align:center; justify-content:center; }
+        }
+        @media(min-width:480px) and (max-width:767px){
+          .nav-wrap  { padding:24px 32px; }
+          .foot-wrap { padding:28px 32px; }
+          .hero-title { font-size:clamp(44px,11vw,72px); }
+        }
+        @media(min-width:768px) and (max-width:1023px){
+          .nav-wrap  { padding:28px 48px; }
+          .foot-wrap { padding:32px 48px; }
+          .hero-title { font-size:clamp(52px,8vw,88px); }
         }
       `}</style>
+
+      <div ref={containerRef} className="relative min-h-screen text-black font-sans flex flex-col selection:bg-black selection:text-white overflow-hidden">
+        <div className="fixed inset-0 -z-20" />
+
+        <nav className={`a d1 ${g} nav-wrap relative z-10 flex justify-between items-center`}>
+          <div className="text-4xl font-light tracking-[-0.15em] uppercase scale-y-125 select-none">
+            RΣNZ
+          </div>
+          <div className="nav-btns flex gap-4">
+            <NavBtn label="LinkedIn" href="https://www.linkedin.com/in/john-renz-96a77728b/" primary />
+            <NavBtn label="Github" href="https://github.com/johnrenz-bot" />
+          </div>
+        </nav>
+
+        <main className="relative z-10 flex-grow flex items-center justify-center px-6 text-center">
+          <div className="flex flex-col items-center gap-8 max-w-4xl w-full">
+            <div className="group">
+              <h1 className={`a d2 ${g} hero-title font-black leading-[0.85] tracking-tighter uppercase mb-4 transition-transform duration-500 group-hover:scale-[1.01]`}>
+                John Renz <br /> Bandianon
+              </h1>
+              <p className={`a d3 ${g} text-[10px] font-black tracking-[0.2em] opacity-80 uppercase`}>
+                UI / UX Designer • Graphic Designer • Frontend Developer
+              </p>
+            </div>
+
+            <p className={`a d4 ${g} text-base md:text-lg font-medium leading-relaxed tracking-tight max-w-md opacity-80`}>
+              Building clean interactive web experiences focused on modern UI design and thoughtful user interaction.
+            </p>
+
+            <div className={`a d5 ${g} ctas flex gap-4`}>
+              <a
+                href="#project"
+                className="px-10 py-4 bg-[#222] text-white rounded-full text-sm font-serif italic hover:bg-black transition-all shadow-lg flex items-center"
+              >
+                view work <span className="ml-2 not-italic">↗</span>
+              </a>
+              <a
+                href="#contact"
+                className="px-10 py-4 bg-white/50 backdrop-blur-md border border-white/20 text-[#333] rounded-full text-sm font-medium hover:bg-white transition-all"
+              >
+                Get in touch
+              </a>
+            </div>
+          </div>
+        </main>
+
+        <footer className={`a d6 ${g} foot-wrap relative z-10 opacity-20 text-[9px] uppercase tracking-[1em] text-center`}>
+          EST 2026
+        </footer>
+
+        {showModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/5 backdrop-blur-2xl transition-all">
+            <div className="modal-card bg-white/80 backdrop-blur-md border border-white/40 shadow-2xl p-12 max-w-sm w-full rounded-[40px] text-center">
+              <h2 className="aos sd1 text-xl font-light mb-1 uppercase tracking-[0.4em]">
+                Welcome
+              </h2>
+              <p className="aos sd2 text-gray-400 text-[8px] mb-10 uppercase tracking-widest font-black">
+                Portfolio Guide
+              </p>
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                  localStorage.setItem("visited", "true");
+                }}
+                className="aos sd3 w-full py-4 bg-black text-white rounded-2xl text-[10px] uppercase tracking-widest font-bold hover:opacity-80 transition-all"
+              >
+                Enter Portfolio
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }

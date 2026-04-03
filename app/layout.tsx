@@ -16,7 +16,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors duration-300`}
         style={{
-          backgroundColor: "var(--bg)",
           color: "var(--text)",
         }}
       >

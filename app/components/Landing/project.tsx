@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -13,6 +13,7 @@ import {
 import { FaJava, FaFilePowerpoint } from "react-icons/fa";
 import { TbBrandCSharp } from "react-icons/tb";
 import { DiVisualstudio } from "react-icons/di";
+import { HiOutlineSquares2X2 } from "react-icons/hi2";
 
 type Item = {
   id: string;
@@ -23,6 +24,7 @@ type Item = {
   techStack?: string[];
   github?: string;
   uiTools?: string[];
+  category?: string;
 };
 
 type Tech = {
@@ -32,7 +34,7 @@ type Tech = {
 };
 
 const WEB_PROJECTS: Item[] = [
-  { id: "capstone", title: "Groove (Capstone Project)", href: "/Groove", image: "/Image/Groove.png", description: "A Bulacan all-in-one performing arts hub with smart chat support.", techStack: ["React", "Next.js", "Tailwind", "Laravel", "MySQL", "Prisma"], github: "https://github.com/johnrenz-bot/groove" },
+  { id: "capstone", title: "Groove (Capstone Project)", href: "/Groove", image: "/Image/Groove.png", description: "A Bulacan all-in-one performing arts hub with smart chat support.", techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"], github: "https://github.com/johnrenz-bot/groove" },
   { id: "w1", title: "Simon Game", href: "https://simon-game2-gamma.vercel.app/", image: "/Image/Simon.png", description: "Classic Simon memory game with animations and sound effects.", techStack: ["JavaScript", "HTML", "CSS"] },
   { id: "w2", title: "Weeknd Soundtrip", href: "https://weeknd-soundtrip.vercel.app/", image: "/Image/WeekndSoundtrip.png", description: "Interactive music experience inspired by The Weeknd.", techStack: ["React", "Tailwind", "JavaScript"] },
   { id: "w3", title: "DinoVerse", href: "https://dinoverse-buce.vercel.app/", image: "/Image/Dinoverse.png", description: "Educational dinosaur exploration web app.", techStack: ["React", "Next.js", "CSS"] },
@@ -42,22 +44,34 @@ const WEB_PROJECTS: Item[] = [
 ];
 
 const CANVA_PROJECTS: Item[] = [
-  { id: "cv1", title: "The Price of Sugar", href: "", image: "/Image/UI/1.jpg", uiTools: ["Canva"], description: "Graphic design poster made with Canva." },
-  { id: "cv2", title: "Clay Cuneiform Tables", href: "", image: "/Image/UI/2.jpg", uiTools: ["Canva"], description: "Informational graphic design piece." },
-  { id: "cv3", title: "Weeknd UI Concept", href: "", image: "/Image/UI/3.jpg", uiTools: ["Canva"], description: "UI concept inspired by The Weeknd's aesthetic." },
+  { id: "cv1", title: "The Price of Sugar", href: "", image: "/Image/UI/1.jpg", uiTools: ["Canva"], description: "Graphic design poster made with Canva.", category: "graphic design" },
+  { id: "cv2", title: "Clay Cuneiform Tables", href: "", image: "/Image/UI/2.jpg", uiTools: ["Canva"], description: "Informational graphic design piece.", category: "graphic design" },
+  { id: "cv3", title: "Weeknd UI Concept", href: "", image: "/Image/UI/3.jpg", uiTools: ["Canva"], description: "UI concept inspired by The Weeknd's aesthetic.", category: "graphic design" },
 ];
 
 const FIGMA_PROJECTS: Item[] = [
-  { id: "fg1", title: "XREAPER Hoodie", href: "", image: "/Image/UI/4.png", uiTools: ["Figma"], description: "Streetwear hoodie mockup and branding." },
-  { id: "fg2", title: "BATTLE", href: "", image: "/Image/UI/5.jpg", uiTools: ["Figma"], description: "Bold editorial-style graphic layout." },
-  { id: "fg3", title: "Mazda", href: "", image: "/Image/UI/6.png", uiTools: ["Figma"], description: "Automotive brand UI concept." },
+  { id: "fg1", title: "XREAPER Hoodie", href: "", image: "/Image/UI/4.png", uiTools: ["Figma"], description: "Streetwear hoodie mockup and branding.", category: "tshirt design" },
+  { id: "fg2", title: "BATTLE", href: "", image: "/Image/UI/5.jpg", uiTools: ["Figma"], description: "Bold editorial-style graphic layout.", category: "graphic design" },
+  { id: "fg3", title: "Mazda", href: "", image: "/Image/UI/6.png", uiTools: ["Figma"], description: "Automotive brand UI concept.", category: "graphic design" },
 ];
 
 const PHOTOSHOP_PROJECTS: Item[] = [
-  { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren automotive graphic design." },
-  { id: "ps2", title: "McLaren Alt", href: "", image: "/Image/UI/8.png", uiTools: ["Photoshop"], description: "Alternative McLaren composition." },
-  { id: "ps3", title: "McLaren Shirt", href: "", image: "/Image/UI/9.png", uiTools: ["Photoshop"], description: "Custom T-shirt design featuring McLaren branding." },
-  { id: "ps4", title: "McLaren Shirt Alt", href: "", image: "/Image/UI/10.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design." },
+  { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren automotive graphic design.", category: "graphic design" },
+  { id: "ps2", title: "Me GA", href: "", image: "/Image/UI/8.png", uiTools: ["Photoshop"], description: "Alternative McLaren composition.", category: "graphic design" },
+  { id: "ps3", title: "GA design poster", href: "", image: "/Image/UI/poster.png", uiTools: ["Photoshop"], description: "Graphic design poster for new arrival soon.", category: "graphic design" },
+  { id: "ps11", title: "Life Quote", href: "", image: "/Image/Qoutes/life.png", uiTools: ["Photoshop"], description: "Typography quote design about life.", category: "graphic design" },
+  { id: "ps12", title: "Life’s Quote", href: "", image: "/Image/Qoutes/lifes.png", uiTools: ["Photoshop"], description: "Minimal typography quote composition.", category: "graphic design" },
+  { id: "ps13", title: "One Quote", href: "", image: "/Image/Qoutes/One.png", uiTools: ["Photoshop"], description: "Creative typography quote layout.", category: "graphic design" },
+
+  { id: "ps4", title: "Alien Shirt", href: "", image: "/Image/UI/alien.png", uiTools: ["Photoshop"], description: "Custom T-shirt design featuring Reefer branding.", category: "tshirt design" },
+  { id: "ps5", title: "Chest Shirt", href: "", image: "/Image/UI/11.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design.", category: "tshirt design" },
+  { id: "ps6", title: "Devine Outcast Shirt", href: "", image: "/Image/UI/12.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
+  { id: "ps7", title: "Visionless Shirt", href: "", image: "/Image/UI/13.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design.", category: "tshirt design" },
+  { id: "ps8", title: "Last hope Shirt", href: "", image: "/Image/UI/14.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
+  { id: "ps9", title: "hiphop Shirt", href: "", image: "/Image/UI/15.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
+    { id: "ps10", title: "hiphop Shirt", href: "", image: "/Image/UI/Cmytk.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
+
+  
 ];
 
 const CERTS: Item[] = [
@@ -67,536 +81,324 @@ const CERTS: Item[] = [
   { id: "c4", title: "Canva Graphic Design Certificate", href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df", image: "/Image/Certificate/Canva.png", description: "" },
 ];
 
-const CERT_ACCENT: Record<string, string> = {
-  c1: "#a100ff",
-  c2: "#f89820",
-  c3: "#f80000",
-  c4: "#00c4cc",
-};
-
 const TECH_DATA: Record<string, Tech[]> = {
   Frontend: [
-    { name: "HTML",       Icon: SiHtml5,         color: "#e34f26" },
-    { name: "CSS",        Icon: SiCss3,          color: "#1572b6" },
-    { name: "Tailwind",   Icon: SiTailwindcss,   color: "#06b6d4" },
-    { name: "Bootstrap",  Icon: SiBootstrap,     color: "#7952b3" },
-    { name: "JavaScript", Icon: SiJavascript,    color: "#f7df1e" },
-    { name: "TypeScript", Icon: SiTypescript,    color: "#3178c6" },
-    { name: "React",      Icon: SiReact,         color: "#61dafb" },
-    { name: "Next.js",    Icon: SiNextdotjs,     color: "#ffffff" },
+    { name: "HTML", Icon: SiHtml5, color: "#e34f26" },
+    { name: "CSS", Icon: SiCss3, color: "#1572b6" },
+    { name: "Tailwind", Icon: SiTailwindcss, color: "#06b6d4" },
+    { name: "Bootstrap", Icon: SiBootstrap, color: "#7952b3" },
+    { name: "JavaScript", Icon: SiJavascript, color: "#f7df1e" },
+    { name: "TypeScript", Icon: SiTypescript, color: "#3178c6" },
+    { name: "React", Icon: SiReact, color: "#61dafb" },
+    { name: "Next.js", Icon: SiNextdotjs, color: "#ffffff" },
   ],
   Backend: [
-    { name: "Node.js",  Icon: SiNodedotjs, color: "#339933" },
-    { name: "Express",  Icon: SiExpress,   color: "#ffffff" },
-    { name: "PHP",      Icon: SiPhp,       color: "#777bb4" },
-    { name: "Laravel",  Icon: SiLaravel,   color: "#ff2d20" },
-    { name: "Java",     Icon: FaJava,      color: "#f89820" },
-    { name: "C#",       Icon: TbBrandCSharp, color: "#239120" },
+    { name: "Node.js", Icon: SiNodedotjs, color: "#339933" },
+    { name: "Express", Icon: SiExpress, color: "#ffffff" },
+    { name: "PHP", Icon: SiPhp, color: "#777bb4" },
+    { name: "Laravel", Icon: SiLaravel, color: "#ff2d20" },
+    { name: "Java", Icon: FaJava, color: "#f89820" },
+    { name: "C#", Icon: TbBrandCSharp, color: "#239120" },
   ],
   Database: [
     { name: "PostgreSQL", Icon: SiPostgresql, color: "#4169e1" },
-    { name: "MySQL",      Icon: SiMysql,      color: "#4479a1" },
-    { name: "Prisma",     Icon: SiPrisma,     color: "#2d3748" },
-    { name: "XAMPP",      Icon: SiXampp,      color: "#fb7a24" },
+    { name: "MySQL", Icon: SiMysql, color: "#4479a1" },
+    { name: "Prisma", Icon: SiPrisma, color: "#2d3748" },
+    { name: "XAMPP", Icon: SiXampp, color: "#fb7a24" },
   ],
-  Enterprise: [
-    { name: "SAP", Icon: SiSap, color: "#0faaff" },
-  ],
+  Enterprise: [{ name: "SAP", Icon: SiSap, color: "#0faaff" }],
   Design: [
-    { name: "Figma",       Icon: SiFigma,            color: "#f24e1e" },
-    { name: "Canva",       Icon: SiCanva,            color: "#00c4cc" },
-    { name: "Photoshop",   Icon: SiAdobephotoshop,   color: "#31a8ff" },
+    { name: "Figma", Icon: SiFigma, color: "#f24e1e" },
+    { name: "Canva", Icon: SiCanva, color: "#00c4cc" },
+    { name: "Photoshop", Icon: SiAdobephotoshop, color: "#31a8ff" },
     { name: "Illustrator", Icon: SiAdobeillustrator, color: "#ff9a00" },
-    { name: "PowerPoint",  Icon: FaFilePowerpoint,   color: "#d24726" },
+    { name: "PowerPoint", Icon: FaFilePowerpoint, color: "#d24726" },
   ],
   "Dev Tools": [
-    { name: "VS Code",    Icon: DiVisualstudio, color: "#007acc" },
-    { name: "Git",        Icon: SiGit,          color: "#f05032" },
-    { name: "GitHub",     Icon: SiGithub,       color: "#ffffff" },
-    { name: "Vercel",     Icon: SiVercel,       color: "#ffffff" },
-    { name: "Hostinger",  Icon: SiHostinger,    color: "#673de6" },
+    { name: "VS Code", Icon: DiVisualstudio, color: "#007acc" },
+    { name: "Git", Icon: SiGit, color: "#f05032" },
+    { name: "GitHub", Icon: SiGithub, color: "#ffffff" },
+    { name: "Vercel", Icon: SiVercel, color: "#ffffff" },
+    { name: "Hostinger", Icon: SiHostinger, color: "#673de6" },
   ],
-};
-
-const TOOL_COLOR: Record<string, string> = {
-  Figma: "#f24e1e",
-  Canva: "#00c4cc",
-  Photoshop: "#31a8ff",
 };
 
 const MAIN_TABS = [
-  { key: "projects", label: "Projects",   sub: "Web & UI work",      accent: "#a78bfa" },
-  { key: "tech",     label: "Tech Stack", sub: "Tools & languages",  accent: "#34d399" },
-  { key: "cert",     label: "Certificates", sub: "Credentials",      accent: "#f472b6" },
+  { key: "projects", label: "Projects", sub: "Web & UI work" },
+  { key: "tech", label: "Tech Stack", sub: "Tools & languages" },
+  { key: "cert", label: "Certificates", sub: "Credentials" },
 ] as const;
 
-const PROJECT_CATS = [
-  { key: "web",    label: "Web Projects",      sub: "React · Next.js · more" },
-  { key: "design", label: "Graphic & UI Design", sub: "Canva · Figma · Photoshop" },
-] as const;
+const DESIGN_TOOL_ICONS = {
+  gallery: HiOutlineSquares2X2,
+  canva: SiCanva,
+  figma: SiFigma,
+  photoshop: SiAdobephotoshop
+};
 
-const DESIGN_TOOLS = [
-  { key: "canva",      label: "Canva",      sub: "Graphic Design",    color: "#00c4cc", Icon: SiCanva },
-  { key: "figma",      label: "Figma",      sub: "UI Design",         color: "#f24e1e", Icon: SiFigma },
-  { key: "photoshop",  label: "Photoshop",  sub: "Graphics & Shirts", color: "#31a8ff", Icon: SiAdobephotoshop },
-] as const;
-
-function GlowCursor() {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const move = (e: MouseEvent) => {
-      if (ref.current) {
-        ref.current.style.transform = `translate(${e.clientX - 200}px, ${e.clientY - 200}px)`;
-      }
-    };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
+function SectionHeader({ label, className = "" }: { label: string; className?: string }) {
   return (
-    <div
-      ref={ref}
-      className="pointer-events-none fixed top-0 left-0 w-[400px] h-[400px] rounded-full z-0 transition-transform duration-700 ease-out"
-      style={{ background: "radial-gradient(circle, rgba(167,139,250,0.055) 0%, transparent 70%)" }}
-    />
-  );
-}
-
-function FloatingOrbs() {
-  return (
-    <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
-      <div className="absolute top-[8%]  left-[5%]  w-72 h-72 rounded-full"
-        style={{ background: "radial-gradient(circle, #a78bfa, transparent 70%)", opacity: 0.04, animation: "orbFloat 15s ease-in-out infinite" }} />
-      <div className="absolute top-[50%] right-[4%] w-96 h-96 rounded-full"
-        style={{ background: "radial-gradient(circle, #34d399, transparent 70%)", opacity: 0.03, animation: "orbFloat 20s ease-in-out infinite reverse" }} />
-      <div className="absolute bottom-[8%] left-[35%] w-56 h-56 rounded-full"
-        style={{ background: "radial-gradient(circle, #f472b6, transparent 70%)", opacity: 0.03, animation: "orbFloat 12s ease-in-out infinite 4s" }} />
+    <div className={`flex items-center gap-4 sm:gap-6 mb-10 group ${className}`}>
+      <h2 className="text-[0.5rem] sm:text-[0.55rem] font-black tracking-[0.3em] sm:tracking-[0.5em] uppercase text-[var(--text)]/40 group-hover:text-[var(--text)]/80 transition-colors" style={{ fontFamily: "'DM Mono', monospace" }}>
+        {label}
+      </h2>
+      <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--text)]/20 via-[var(--text)]/5 to-transparent" />
     </div>
-  );
-}
-
-function MarqueeStrip() {
-  const items = ["Web Development", "UI / UX Design", "Full-Stack Projects", "React & Next.js", "Laravel & PHP", "Graphic Design"];
-  const repeated = [...items, ...items];
-  return (
-    <div className="relative w-full overflow-hidden border-y border-[var(--text)]/8 py-2.5">
-      <div className="flex gap-10 whitespace-nowrap" style={{ animation: "marquee 24s linear infinite" }}>
-        {repeated.map((item, i) => (
-          <span
-            key={i}
-            className="text-[0.44rem] font-bold tracking-[0.45em] uppercase text-[var(--text)]/25 flex-shrink-0 flex items-center gap-4"
-            style={{ fontFamily: "'DM Mono', monospace" }}
-          >
-            {item}
-            <span className="w-1 h-1 rounded-full bg-[var(--text)]/15 inline-block" />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function SectionHeader({ label }: { label: string }) {
-  return (
-    <h2
-      className="text-[0.48rem] font-bold tracking-[0.45em] uppercase text-[var(--text)]/70 mb-5 flex items-center gap-4"
-      style={{ fontFamily: "'DM Mono', monospace" }}
-    >
-      {label}
-      <span className="h-px flex-1" style={{ background: "linear-gradient(90deg, rgba(var(--text-raw),0.2), transparent)" }} />
-    </h2>
-  );
-}
-
-function TechCard({ t }: { t: Tech }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="group relative flex flex-col items-center gap-3 py-6 rounded-2xl border transition-all duration-400 overflow-hidden cursor-default"
-      style={{
-        borderColor: hovered ? `${t.color}55` : "rgba(var(--text-raw),0.18)",
-        background: hovered ? `${t.color}08` : "transparent",
-        transform: hovered ? "translateY(-2px)" : "translateY(0)",
-      }}
-    >
-      <div
-        className="absolute inset-0 rounded-2xl transition-opacity duration-400"
-        style={{ opacity: hovered ? 1 : 0, background: `radial-gradient(ellipse at 50% 110%, ${t.color}18, transparent 65%)` }}
-      />
-      <t.Icon
-        className="relative text-2xl transition-all duration-300"
-        style={{ color: t.color, opacity: hovered ? 1 : 0.75, filter: hovered ? `drop-shadow(0 0 7px ${t.color}80)` : "none", transform: hovered ? "scale(1.2)" : "scale(1)" }}
-      />
-      <span
-        className="relative text-[0.45rem] font-bold uppercase tracking-[0.22em] transition-colors duration-300"
-        style={{ color: hovered ? "rgba(var(--text-raw),1)" : "rgba(var(--text-raw),0.65)", fontFamily: "'DM Mono', monospace" }}
-      >
-        {t.name}
-      </span>
-    </div>
-  );
-}
-
-function UIGrid({ items, onSelect }: { items: Item[]; onSelect: (item: Item) => void }) {
-  return (
-    <div className="grid md:grid-cols-3 gap-4">
-      {items.map((p) => (
-        <div
-          key={p.id}
-          onClick={() => onSelect(p)}
-          className="relative h-[260px] rounded-2xl overflow-hidden cursor-pointer group shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/20 hover:border-white/40"
-        >
-          <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-          <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all flex flex-col justify-end p-5 text-white">
-            <h3 className="font-bold text-sm mb-2 text-white">{p.title}</h3>
-            <p className="text-[0.58rem] text-white/80 mb-3 leading-relaxed">{p.description}</p>
-            <div className="flex gap-2 flex-wrap">
-              {p.uiTools?.map((tool) => (
-                <span
-                  key={tool}
-                  className="text-[0.45rem] px-2 py-1 bg-white/15 rounded-full flex items-center gap-1.5 uppercase font-bold tracking-wider text-white/90"
-                  style={{ border: `1px solid ${TOOL_COLOR[tool]}60` }}
-                >
-                  <span style={{ color: TOOL_COLOR[tool] }}>●</span> {tool}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function SubNavBtn({ active, onClick, label, sub }: { active: boolean; onClick: () => void; label: string; sub: string }) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex flex-col items-center gap-1.5 px-6 py-3.5 rounded-xl border transition-all duration-300"
-      style={{
-        borderColor: active ? "rgba(var(--text-raw),0.5)" : "rgba(var(--text-raw),0.18)",
-        background: active ? "rgba(var(--text-raw),0.08)" : "transparent",
-        color: active ? "rgba(var(--text-raw),1)" : "rgba(var(--text-raw),0.65)",
-      }}
-    >
-      <span className="text-[0.58rem] font-bold tracking-[0.28em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>{label}</span>
-      <span className="text-[0.43rem] tracking-[0.18em] uppercase" style={{ opacity: active ? 0.65 : 0.4, fontFamily: "'DM Mono', monospace" }}>{sub}</span>
-    </button>
   );
 }
 
 export default function PortfolioSection() {
   const [tab, setTab] = useState<"projects" | "tech" | "cert">("projects");
   const [projectCat, setProjectCat] = useState<"web" | "design">("web");
-  const [designTool, setDesignTool] = useState<"canva" | "figma" | "photoshop">("canva");
+  const [designTool, setDesignTool] = useState<"gallery" | "photoshop" | "canva" | "figma" >("gallery");
   const [selectedUI, setSelectedUI] = useState<Item | null>(null);
-  const modalRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (selectedUI && modalRef.current) {
-      modalRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, [selectedUI]);
 
   const designItems =
-    designTool === "canva" ? CANVA_PROJECTS
-    : designTool === "figma" ? FIGMA_PROJECTS
-    : PHOTOSHOP_PROJECTS;
+    designTool === "gallery" ? [...PHOTOSHOP_PROJECTS, ...CANVA_PROJECTS, ...FIGMA_PROJECTS] :
+      designTool === "canva" ? CANVA_PROJECTS :
+        designTool === "figma" ? FIGMA_PROJECTS :
+          PHOTOSHOP_PROJECTS;
 
-  const activeTabAccent = MAIN_TABS.find(t => t.key === tab)?.accent ?? "#a78bfa";
+  const graphicDesignItems = designItems.filter(item => item.category === "graphic design");
+  const tshirtDesignItems = designItems.filter(item => item.category === "tshirt design");
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Mono:wght@300;400&display=swap');
-
-        @keyframes fadeUp   { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes orbFloat { 0%,100% { transform:translateY(0) scale(1); } 50% { transform:translateY(-26px) scale(1.04); } }
-        @keyframes marquee  { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-        @keyframes scanIn   { from { opacity:0; transform:scaleY(0.94); } to { opacity:1; transform:scaleY(1); } }
-        @keyframes shimmer  { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
-
-        .portfolio-fade { animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards; opacity:0; }
-
-        .noise-bg::before {
-          content:'';
-          position:fixed;
-          inset:0;
-          background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-          opacity:0.02;
-          pointer-events:none;
-          z-index:0;
-        }
-
-        .tab-underline {
-          position: absolute;
-          bottom: -2px;
-          left: 50%;
-          transform: translateX(-50%);
-          height: 2px;
-          width: 40%;
-          border-radius: 9999px;
-          transition: all 0.4s ease;
-        }
-
-        .featured-shimmer {
-          background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
-          background-size: 200% 100%;
-          animation: shimmer 3.5s ease-in-out infinite;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Mono:wght@300;400;500&display=swap');
+        .container-3d { transform-style: preserve-3d; perspective: 1000px; }
+        .card-3d { transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease; transform: translateZ(0); }
+        .card-3d:hover { transform: translateZ(20px) translateY(-8px) rotateX(2deg); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5); }
+        .btn-modern { position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateZ(0); }
+        .btn-modern::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); transform: translateX(-100%); transition: transform 0.6s; }
+        .btn-modern:hover::after { transform: translateX(100%); }
+        .active-tab-glow { box-shadow: inset 0 0 15px rgba(255,255,255,0.05), 0 10px 20px -10px rgba(0,0,0,0.3); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
-      <GlowCursor />
-      <FloatingOrbs />
-
-      <section className="noise-bg relative z-10 w-full flex justify-center py-20 bg-[var(--bg)] text-[var(--text)]">
-        <div className="w-full max-w-6xl px-6 space-y-10">
-
-          <div className="portfolio-fade" style={{ animationDelay: "0.05s" }}>
-            <nav className="flex justify-center gap-3 md:gap-4">
+      <section className="relative z-10 w-full flex justify-center py-12 sm:py-24 bg-transparent text-[var(--text)]">
+        <div className="w-full max-w-6xl px-4 sm:px-6">
+          <div className="flex justify-center mb-12 sm:mb-20">
+            <nav className="inline-flex p-1 sm:p-1.5 bg-[var(--text)]/5 rounded-2xl sm:rounded-[2rem] border border-[var(--text)]/10 backdrop-blur-md w-full sm:w-auto overflow-x-auto no-scrollbar">
               {MAIN_TABS.map((t) => (
                 <button
                   key={t.key}
                   onClick={() => setTab(t.key)}
-                  className="relative flex flex-col items-center gap-1.5 px-8 py-4 rounded-2xl border transition-all duration-400"
-                  style={{
-                    borderColor: tab === t.key ? `${t.accent}60` : "rgba(var(--text-raw),0.2)",
-                    background: tab === t.key ? `${t.accent}0d` : "transparent",
-                    color: tab === t.key ? "rgba(var(--text-raw),1)" : "rgba(var(--text-raw),0.65)",
-                    boxShadow: tab === t.key ? `0 0 20px ${t.accent}18` : "none",
-                  }}
+                  className={`btn-modern relative flex flex-col items-center flex-1 sm:flex-none min-w-[90px] sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-[1.8rem] transition-all ${tab === t.key
+                    ? "bg-[var(--bg)] border border-[var(--text)]/10 text-[var(--text)] active-tab-glow"
+                    : "text-[var(--text)]/40 hover:text-[var(--text)]/70"
+                    }`}
                 >
-                  <span className="text-[0.65rem] font-bold tracking-[0.3em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>{t.label}</span>
-                  <span className="text-[0.45rem] tracking-[0.22em] uppercase" style={{ opacity: tab === t.key ? 0.65 : 0.42, fontFamily: "'DM Mono', monospace" }}>{t.sub}</span>
+                  <span className="text-[0.55rem] sm:text-[0.6rem] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase mb-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>{t.label}</span>
+                  <span className="text-[0.35rem] sm:text-[0.4rem] tracking-[0.1em] sm:tracking-[0.15em] uppercase opacity-50 whitespace-nowrap" style={{ fontFamily: "'DM Mono', monospace" }}>{t.sub}</span>
                   {tab === t.key && (
-                    <span className="tab-underline" style={{ background: t.accent }} />
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_8px_white]" />
                   )}
                 </button>
               ))}
             </nav>
           </div>
 
-          <div className="portfolio-fade" style={{ animationDelay: "0.15s" }}>
-            <MarqueeStrip />
-          </div>
-
           {tab === "projects" && (
-            <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <div className="grid grid-cols-2 gap-3">
-                {PROJECT_CATS.map((c) => (
-                  <SubNavBtn key={c.key} active={projectCat === c.key} onClick={() => setProjectCat(c.key)} label={c.label} sub={c.sub} />
+            <div className="space-y-12 sm:space-y-16 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                {["web", "design"].map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setProjectCat(cat as any)}
+                    className={`btn-modern px-6 sm:px-8 py-3 rounded-xl border text-[0.5rem] sm:text-[0.55rem] font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase ${projectCat === cat
+                      ? "bg-[var(--text)]/10 border-[var(--text)]/20 text-[var(--text)]"
+                      : "border-transparent text-[var(--text)]/30 hover:text-[var(--text)]/60"
+                      }`}
+                    style={{ fontFamily: "'DM Mono', monospace" }}
+                  >
+                    {cat === "web" ? "Digital Development" : "Visual Identity"}
+                  </button>
                 ))}
               </div>
 
               {projectCat === "web" && (
-                <div className="flex flex-col gap-14">
-                  <section>
-                    <SectionHeader label="Featured" />
-                    <Link href={WEB_PROJECTS[0].href}>
-                      <div className="relative h-[450px] rounded-3xl overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-600 hover:-translate-y-2 border border-white/15 hover:border-white/35">
-                        <Image src={WEB_PROJECTS[0].image} alt={WEB_PROJECTS[0].title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                        <div className="featured-shimmer absolute inset-0" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-transparent flex flex-col justify-end p-10">
-                          <div className="flex items-center gap-3 mb-4">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#a78bfa]" style={{ boxShadow: "0 0 8px #a78bfa" }} />
-                            <span
-                              className="text-[0.47rem] font-bold uppercase tracking-[0.4em] px-3 py-1 rounded-full border border-[rgba(167,139,250,0.45)] text-[#a78bfa]"
-                              style={{ fontFamily: "'DM Mono', monospace" }}
-                            >
-                              Capstone Project
-                            </span>
-                          </div>
-                          <h3 className="text-3xl font-light tracking-[0.1em] text-white mb-3" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                            {WEB_PROJECTS[0].title}
-                          </h3>
-                          <p className="max-w-2xl text-white/85 mb-6 line-clamp-2 text-sm leading-relaxed">{WEB_PROJECTS[0].description}</p>
-                          <div className="flex flex-wrap gap-2">
-                            {WEB_PROJECTS[0].techStack?.map((tech) => (
-                              <span key={tech} className="text-[9px] px-3 py-1 rounded-full bg-white/15 text-white/90 border border-white/25 uppercase font-semibold tracking-wide"
-                                style={{ fontFamily: "'DM Mono', monospace" }}>
-                                {tech}
-                              </span>
-                            ))}
+                <div className="space-y-8 sm:space-y-12">
+                  <SectionHeader label="Web Projects" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 container-3d">
+                    {WEB_PROJECTS.map((p, index) => (
+                      <Link
+                        key={p.id}
+                        href={p.href}
+                        className={`card-3d group relative rounded-2xl sm:rounded-[2rem] overflow-hidden border border-[var(--text)]/10 ${index === 0 ? "sm:col-span-2 lg:col-span-3 aspect-video sm:aspect-[21/9]" : "aspect-[4/5]"
+                          }`}
+                      >
+                        <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                        <div className="absolute inset-0 p-4 sm:p-8 flex flex-col justify-end transform transition-transform duration-500 group-hover:translate-y-[-4px]">
+                          <div className="space-y-2 sm:space-y-4">
+                            <div className="flex flex-wrap gap-1 sm:gap-2">
+                              {p.techStack?.slice(0, index === 0 ? 6 : 3).map(tech => (
+                                <span key={tech} className="text-[8px] sm:text-[10px] px-2 sm:px-3 py-0.5 sm:py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/10 text-white/80 uppercase font-medium tracking-tighter">
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                            <h3 className={`${index === 0 ? 'text-2xl sm:text-4xl' : 'text-xl sm:text-2xl'} font-light text-white tracking-wide`} style={{ fontFamily: "'Cormorant Garamond', serif" }}>{p.title}</h3>
+                            <p className={`text-[0.6rem] sm:text-[0.65rem] text-white/50 leading-relaxed ${index === 0 ? 'max-w-md' : 'max-w-xs'} group-hover:text-white/80 transition-colors line-clamp-2`}>{p.description}</p>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  </section>
-
-                  <section>
-                    <SectionHeader label="Web Projects" />
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                      {WEB_PROJECTS.slice(1).map((p, i) => (
-                        <Link key={p.id} href={p.href} target="_blank">
-                          <div
-                            className="relative h-[260px] rounded-2xl overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/15 hover:border-white/35"
-                            style={{ animationDelay: `${i * 0.05}s` }}
-                          >
-                            <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
-                            <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
-                              <h3 className="text-sm font-light tracking-wide text-white mb-1" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{p.title}</h3>
-                              <p className="text-[0.58rem] text-white/80 mb-3 leading-relaxed">{p.description}</p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {p.techStack?.map((tech) => (
-                                  <span key={tech} className="text-[8px] px-2 py-0.5 rounded-full bg-white/15 border border-white/30 text-white font-bold uppercase tracking-wide"
-                                    style={{ fontFamily: "'DM Mono', monospace" }}>
-                                    {tech}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </section>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
 
               {projectCat === "design" && (
-                <div className="flex flex-col gap-8">
-                  <div className="grid grid-cols-3 gap-3">
-                    {DESIGN_TOOLS.map((dt) => (
-                      <button
-                        key={dt.key}
-                        onClick={() => setDesignTool(dt.key)}
-                        className="relative flex flex-col items-center gap-2 py-5 rounded-2xl border transition-all duration-400 overflow-hidden"
-                        style={{
-                          borderColor: designTool === dt.key ? `${dt.color}70` : "rgba(var(--text-raw),0.18)",
-                          background: designTool === dt.key ? `${dt.color}0d` : "transparent",
-                          boxShadow: designTool === dt.key ? `0 0 18px ${dt.color}14` : "none",
-                        }}
-                      >
-                        {designTool === dt.key && (
-                          <div className="absolute inset-0 rounded-2xl" style={{ background: `radial-gradient(ellipse at 50% 100%, ${dt.color}14, transparent 65%)` }} />
-                        )}
-                        <dt.Icon
-                          className="relative text-xl transition-all duration-300"
-                          style={{ color: dt.color, opacity: designTool === dt.key ? 1 : 0.5, filter: designTool === dt.key ? `drop-shadow(0 0 7px ${dt.color}80)` : "none" }}
-                        />
-                        <span className="relative text-[0.58rem] font-bold tracking-[0.28em] uppercase text-[var(--text)]/80" style={{ fontFamily: "'DM Mono', monospace" }}>{dt.label}</span>
-                        <span className="relative text-[0.42rem] tracking-[0.18em] uppercase text-[var(--text)]/45" style={{ fontFamily: "'DM Mono', monospace" }}>{dt.sub}</span>
-                      </button>
-                    ))}
+                <div className="space-y-8 sm:space-y-12">
+                  <div className="grid grid-cols-2 sm:flex sm:justify-center gap-3 sm:gap-6">
+                    {["gallery", "canva", "figma", "photoshop"].map((tool) => {
+                      const Icon = DESIGN_TOOL_ICONS[tool as keyof typeof DESIGN_TOOL_ICONS];
+                      const isActive = designTool === tool;
+                      return (
+                        <button
+                          key={tool}
+                          onClick={() => setDesignTool(tool as any)}
+                          className={`btn-modern min-w-0 sm:min-w-[140px] px-4 sm:px-6 py-4 sm:py-5 rounded-xl sm:rounded-2xl border transition-all duration-500 flex flex-col items-center gap-2 sm:gap-3 ${isActive
+                            ? "bg-white/10 border-white/30 translate-y-[-4px] shadow-xl"
+                            : "bg-white/5 border-white/5 opacity-40 hover:opacity-100"
+                            }`}
+                        >
+                          <Icon className={`text-lg sm:text-xl transition-transform duration-500 ${isActive ? 'scale-110 sm:scale-125' : ''}`} />
+                          <div className="flex items-center gap-1.5 sm:gap-2">
+                            <div className={`w-1 h-1 rounded-full transition-all duration-500 ${isActive ? 'bg-white scale-150 shadow-[0_0_8px_white]' : 'bg-white/20'}`} />
+                            <span className="text-[0.45rem] sm:text-[0.55rem] font-bold tracking-[0.1em] sm:tracking-[0.2em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>{tool}</span>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
-                  <div key={designTool} className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-                    <SectionHeader label={
-                      designTool === "canva" ? "Canva — Graphic Design"
-                      : designTool === "figma" ? "Figma — UI Design"
-                      : "Photoshop — Graphics & T-Shirt Design"
-                    } />
-                    <UIGrid items={designItems} onSelect={setSelectedUI} />
-                  </div>
+
+                  {graphicDesignItems.length > 0 && (
+                    <div className="space-y-6 sm:space-y-8">
+                      <SectionHeader label="Graphic Design" />
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 container-3d">
+                        {graphicDesignItems.map((item) => (
+                          <div key={item.id} onClick={() => setSelectedUI(item)} className="card-3d relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden border border-white/5 cursor-pointer group">
+                            <Image src={item.image} alt={item.title} fill className="object-cover" />
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-4 text-center">
+                              <span className="text-[0.45rem] sm:text-[0.5rem] font-bold tracking-[0.2em] sm:tracking-[0.5em] uppercase text-white mb-1 sm:mb-2">{item.title}</span>
+                              <span className="text-[0.35rem] sm:text-[0.4rem] tracking-[0.1em] sm:tracking-[0.2em] uppercase text-white/50">{item.category}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {tshirtDesignItems.length > 0 && (
+                    <div className="space-y-6 sm:space-y-8">
+                      <SectionHeader label="T-Shirt Design" />
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 container-3d">
+                        {tshirtDesignItems.map((item) => (
+                          <div key={item.id} onClick={() => setSelectedUI(item)} className="card-3d relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden border border-white/5 cursor-pointer group">
+                            <Image src={item.image} alt={item.title} fill className="object-cover" />
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-4 text-center">
+                              <span className="text-[0.45rem] sm:text-[0.5rem] font-bold tracking-[0.2em] sm:tracking-[0.5em] uppercase text-white mb-1 sm:mb-2">{item.title}</span>
+                              <span className="text-[0.35rem] sm:text-[0.4rem] tracking-[0.1em] sm:tracking-[0.2em] uppercase text-white/50">{item.category}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           )}
 
           {tab === "tech" && (
-            <div className="space-y-12 animate-in fade-in zoom-in-95 duration-500">
-              {Object.entries(TECH_DATA).map(([group, list]) => (
-                <div key={group} className="space-y-4">
-                  <h3
-                    className="text-[0.47rem] font-bold tracking-[0.45em] uppercase text-[var(--text)]/70 flex items-center gap-4"
-                    style={{ fontFamily: "'DM Mono', monospace" }}
-                  >
-                    {group}
-                    <span className="h-px flex-1" style={{ background: "linear-gradient(90deg, rgba(var(--text-raw),0.2), transparent)" }} />
-                  </h3>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-                    {list.map((t) => <TechCard key={t.name} t={t} />)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {tab === "cert" && (
-            <div className="animate-in fade-in slide-in-from-top-4 duration-500 space-y-5">
-              <h3
-                className="text-[0.47rem] font-bold tracking-[0.45em] uppercase text-[var(--text)]/70 flex items-center gap-4"
-                style={{ fontFamily: "'DM Mono', monospace" }}
-              >
-                Credentials
-                <span className="h-px flex-1" style={{ background: "linear-gradient(90deg, rgba(var(--text-raw),0.2), transparent)" }} />
-              </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {CERTS.map((c) => (
-                  <a
-                    key={c.id}
-                    href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group overflow-hidden rounded-2xl border border-white/15 hover:border-white/40 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
-                    style={{ boxShadow: undefined }}
-                  >
-                    <div className="relative h-[200px] overflow-hidden">
-                      <Image
-                        src={c.image}
-                        alt={c.title}
-                        fill
-                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-600 group-hover:scale-105"
-                      />
-                      <div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-35 transition-opacity duration-500"
-                        style={{ background: `radial-gradient(ellipse at center, ${CERT_ACCENT[c.id]}, transparent 70%)` }}
-                      />
-                    </div>
-                    <div className="px-4 py-3 border-t border-white/15 group-hover:border-white/35 transition-colors">
-                      <div className="flex items-center gap-2.5">
+            <div className="text-gray-300 sm:p-8 rounded-2xl animate-in fade-in zoom-in-95 duration-1000">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-12 sm:gap-y-16">
+                {Object.entries(TECH_DATA).map(([group, list]) => (
+                  <div key={group} className="space-y-6 sm:space-y-8">
+                    <SectionHeader label={group} className="text-gray-300" />
+                    <div className="grid grid-cols-4 gap-3 sm:gap-4">
+                      {list.map((t) => (
                         <div
-                          className="w-1.5 h-1.5 rounded-full transition-all duration-300"
-                          style={{ background: CERT_ACCENT[c.id], boxShadow: `0 0 0 0 ${CERT_ACCENT[c.id]}` }}
-                        />
-                        <p
-                          className="text-[0.52rem] font-bold tracking-[0.22em] uppercase text-[var(--text)]/70 group-hover:text-[var(--text)] transition-colors"
-                          style={{ fontFamily: "'DM Mono', monospace" }}
+                          key={t.name}
+                          className="group relative aspect-square flex flex-col items-center justify-center rounded-xl sm:rounded-2xl border border-[var(--text)]/5 hover:border-[var(--text)]/20 transition-all bg-zinc-800 duration-500 hover:bg-zinc-700 cursor-default"
                         >
-                          {c.title}
-                        </p>
-                      </div>
+                          <t.Icon className="text-lg sm:text-xl mb-2 sm:mb-3 transition-all duration-500 group-hover:scale-110" style={{ color: t.color }} />
+                          <span className="text-[0.35rem] sm:text-[0.45rem] font-md uppercase tracking-[0.1em] sm:tracking-widest text-gray-300 group-hover:text-white px-1 text-center" style={{ fontFamily: "'DM Mono', monospace" }}>
+                            {t.name}
+                          </span>
+                        </div>
+                      ))}
                     </div>
-                  </a>
+                  </div>
                 ))}
               </div>
             </div>
           )}
 
+          {tab === "cert" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 animate-in fade-in slide-in-from-top-8 duration-1000">
+              {CERTS.map((c) => (
+                <a
+                  key={c.id}
+                  href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block rounded-xl sm:rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105"
+                >
+                  <div className="relative w-full aspect-[4/3] bg-white">
+                    <Image src={c.image} alt={c.title} fill className="object-cover sm:grayscale sm:group-hover:grayscale-0 transition-all duration-700" />
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
       {selectedUI && (
         <div
-          ref={modalRef}
           onClick={() => setSelectedUI(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/96 backdrop-blur-2xl"
-          style={{ animation: "scanIn 0.35s cubic-bezier(0.16,1,0.3,1) forwards" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-3xl bg-black/95 animate-in fade-in duration-300 overflow-hidden"
         >
-          <div className="relative w-full max-w-4xl max-h-[85vh]">
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <div className="h-px w-12" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3))" }} />
-              <p
-                className="text-[0.48rem] font-bold tracking-[0.5em] uppercase text-white/70"
+          <div
+            className="relative w-full max-w-5xl flex flex-col items-center justify-center"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="relative w-full h-[60vh] sm:h-[70vh] flex items-center justify-center">
+              <div className="relative w-full h-full rounded-2xl sm:rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl flex items-center justify-center">
+                <Image
+                  src={selectedUI.image}
+                  alt={selectedUI.title}
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 sm:mt-8 flex flex-col items-center text-center space-y-2">
+              <h2 className="text-white text-2xl sm:text-3xl font-light tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                {selectedUI.title}
+              </h2>
+              <div className="flex items-center gap-3">
+                <div className="w-6 sm:w-8 h-[1px] bg-white/20" />
+                <p className="text-white/50 text-[0.5rem] sm:text-[0.6rem] tracking-[0.2em] sm:tracking-[0.4em] uppercase font-bold" style={{ fontFamily: "'DM Mono', monospace" }}>
+                  {selectedUI.category}
+                </p>
+                <div className="w-6 sm:w-8 h-[1px] bg-white/20" />
+              </div>
+
+              <button
+                onClick={() => setSelectedUI(null)}
+                className="mt-6 sm:mt-8 px-10 sm:px-14 py-3 sm:py-4 rounded-full border border-white/10 bg-white/5 text-[0.5rem] sm:text-[0.55rem] font-black tracking-[0.4em] sm:tracking-[0.6em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
                 style={{ fontFamily: "'DM Mono', monospace" }}
               >
-                {selectedUI.title}
-              </p>
-              <div className="h-px w-12" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.3), transparent)" }} />
+                Close Viewer
+              </button>
             </div>
-            <Image
-              src={selectedUI.image}
-              alt={selectedUI.title}
-              width={1600}
-              height={1000}
-              className="object-contain w-full rounded-2xl border border-white/20"
-            />
-            <button
-              className="mt-5 block mx-auto text-[0.48rem] font-bold tracking-[0.5em] uppercase text-white/55 hover:text-white transition-colors px-6 py-2 rounded-full border border-white/15 hover:border-white/35"
-              style={{ fontFamily: "'DM Mono', monospace" }}
-            >
-              ✕ Close
-            </button>
           </div>
         </div>
       )}
