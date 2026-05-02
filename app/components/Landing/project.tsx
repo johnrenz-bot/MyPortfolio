@@ -43,6 +43,13 @@ const WEB_PROJECTS: Item[] = [
   { id: "w6", title: "Windbreaker", href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/", image: "/Image/windbreaker.png", description: "A digital home for street riders to track progress and connect with crews.", techStack: ["Next.js", "Tailwind"] },
 ];
 
+const COMING_SOON_PROJECT = {
+  id: "groove-cs",
+  title: "Groove — Case Study",
+  description: "An in-depth case study of the Groove Performing Arts Platform. Covering UX research with 152 participants, system architecture, full-stack implementation, and deployment. Coming soon.",
+  tags: ["Case Study", "UI/UX Research", "Full-Stack", "Laravel"],
+};
+
 const CANVA_PROJECTS: Item[] = [
   { id: "cv1", title: "The Price of Sugar", href: "", image: "/Image/UI/1.jpg", uiTools: ["Canva"], description: "Graphic design poster made with Canva.", category: "graphic design" },
   { id: "cv2", title: "Clay Cuneiform Tables", href: "", image: "/Image/UI/2.jpg", uiTools: ["Canva"], description: "Informational graphic design piece.", category: "graphic design" },
@@ -59,16 +66,13 @@ const PHOTOSHOP_PROJECTS: Item[] = [
   { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren automotive graphic design.", category: "graphic design" },
   { id: "ps2", title: "Me GA", href: "", image: "/Image/UI/8.png", uiTools: ["Photoshop"], description: "Alternative McLaren composition.", category: "graphic design" },
   { id: "ps3", title: "GA design poster", href: "", image: "/Image/UI/poster.png", uiTools: ["Photoshop"], description: "Graphic design poster for new arrival soon.", category: "graphic design" },
-
   { id: "ps4", title: "Alien Shirt", href: "", image: "/Image/UI/alien.png", uiTools: ["Photoshop"], description: "Custom T-shirt design featuring Reefer branding.", category: "tshirt design" },
   { id: "ps5", title: "Chest Shirt", href: "", image: "/Image/UI/11.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design.", category: "tshirt design" },
   { id: "ps6", title: "Devine Outcast Shirt", href: "", image: "/Image/UI/12.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
   { id: "ps7", title: "Visionless Shirt", href: "", image: "/Image/UI/13.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design.", category: "tshirt design" },
   { id: "ps8", title: "Last hope Shirt", href: "", image: "/Image/UI/14.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
   { id: "ps9", title: "hiphop Shirt", href: "", image: "/Image/UI/15.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
-    { id: "ps10", title: "hiphop Shirt", href: "", image: "/Image/UI/Cmytk.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
-
-  
+  { id: "ps10", title: "hiphop Shirt", href: "", image: "/Image/UI/Cmytk.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
 ];
 
 const CERTS: Item[] = [
@@ -130,16 +134,51 @@ const DESIGN_TOOL_ICONS = {
   gallery: HiOutlineSquares2X2,
   canva: SiCanva,
   figma: SiFigma,
-  photoshop: SiAdobephotoshop
+  photoshop: SiAdobephotoshop,
 };
 
-function SectionHeader({ label, className = "" }: { label: string; className?: string }) {
+const ALL_DESIGN_ITEMS = [...PHOTOSHOP_PROJECTS, ...CANVA_PROJECTS, ...FIGMA_PROJECTS];
+const TOTAL_WEB = WEB_PROJECTS.length;
+const TOTAL_DESIGN = ALL_DESIGN_ITEMS.length;
+const TOTAL_CERTS = CERTS.length;
+
+function SectionHeader({ label, count, className = "" }: { label: string; count?: number; className?: string }) {
   return (
     <div className={`flex items-center gap-4 sm:gap-6 mb-10 group ${className}`}>
-      <h2 className="text-[0.5rem] sm:text-[0.55rem] font-black tracking-[0.3em] sm:tracking-[0.5em] uppercase text-[var(--text)]/40 group-hover:text-[var(--text)]/80 transition-colors" style={{ fontFamily: "'DM Mono', monospace" }}>
+      <h2
+        className="text-[0.5rem] sm:text-[0.55rem] font-black tracking-[0.3em] sm:tracking-[0.5em] uppercase text-[var(--text)]/40 group-hover:text-[var(--text)]/80 transition-colors"
+        style={{ fontFamily: "'DM Mono', monospace" }}
+      >
         {label}
       </h2>
+      {count !== undefined && (
+        <span
+          className="text-[0.38rem] sm:text-[0.42rem] font-black tracking-[0.2em] uppercase px-2 py-0.5 rounded-full border border-[var(--text)]/10 text-[var(--text)]/30"
+          style={{ fontFamily: "'DM Mono', monospace" }}
+        >
+          {String(count).padStart(2, "0")}
+        </span>
+      )}
       <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--text)]/20 via-[var(--text)]/5 to-transparent" />
+    </div>
+  );
+}
+
+function CountBadge({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <span
+        className="text-2xl sm:text-3xl font-black text-[var(--text)] tabular-nums"
+        style={{ fontFamily: "'DM Mono', monospace" }}
+      >
+        {String(value).padStart(2, "0")}
+      </span>
+      <span
+        className="text-[0.38rem] sm:text-[0.42rem] font-bold tracking-[0.25em] uppercase text-[var(--text)]/30"
+        style={{ fontFamily: "'DM Mono', monospace" }}
+      >
+        {label}
+      </span>
     </div>
   );
 }
@@ -147,17 +186,18 @@ function SectionHeader({ label, className = "" }: { label: string; className?: s
 export default function PortfolioSection() {
   const [tab, setTab] = useState<"projects" | "tech" | "cert">("projects");
   const [projectCat, setProjectCat] = useState<"web" | "design">("web");
-  const [designTool, setDesignTool] = useState<"gallery" | "photoshop" | "canva" | "figma" >("gallery");
+  const [designTool, setDesignTool] = useState<"gallery" | "photoshop" | "canva" | "figma">("gallery");
   const [selectedUI, setSelectedUI] = useState<Item | null>(null);
+  const [showComingSoonAlert, setShowComingSoonAlert] = useState(false);
 
   const designItems =
-    designTool === "gallery" ? [...PHOTOSHOP_PROJECTS, ...CANVA_PROJECTS, ...FIGMA_PROJECTS] :
-      designTool === "canva" ? CANVA_PROJECTS :
-        designTool === "figma" ? FIGMA_PROJECTS :
-          PHOTOSHOP_PROJECTS;
+    designTool === "gallery" ? ALL_DESIGN_ITEMS :
+    designTool === "canva" ? CANVA_PROJECTS :
+    designTool === "figma" ? FIGMA_PROJECTS :
+    PHOTOSHOP_PROJECTS;
 
-  const graphicDesignItems = designItems.filter(item => item.category === "graphic design");
-  const tshirtDesignItems = designItems.filter(item => item.category === "tshirt design");
+  const graphicDesignItems = designItems.filter((item) => item.category === "graphic design");
+  const tshirtDesignItems = designItems.filter((item) => item.category === "tshirt design");
 
   return (
     <>
@@ -172,23 +212,43 @@ export default function PortfolioSection() {
         .active-tab-glow { box-shadow: inset 0 0 15px rgba(255,255,255,0.05), 0 10px 20px -10px rgba(0,0,0,0.3); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .soon-pulse { animation: soonPulse 3s ease-in-out infinite; }
+        @keyframes soonPulse { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
+        .soon-border { animation: soonBorder 4s linear infinite; }
+        @keyframes soonBorder { 0%{border-color:rgba(255,255,255,0.05)} 50%{border-color:rgba(255,255,255,0.18)} 100%{border-color:rgba(255,255,255,0.05)} }
+        .alert-in { animation: alertIn 0.35s cubic-bezier(0.2,0.8,0.2,1) both; }
+        @keyframes alertIn { from{opacity:0;transform:scale(0.92) translateY(16px)} to{opacity:1;transform:scale(1) translateY(0)} }
       `}</style>
 
       <section className="relative z-10 w-full flex justify-center py-12 sm:py-24 bg-transparent text-[var(--text)]">
         <div className="w-full max-w-6xl px-4 sm:px-6">
+
+          <div className="flex justify-center gap-8 sm:gap-16 mb-12 sm:mb-16 py-6 sm:py-8 border-y border-[var(--text)]/5">
+            <CountBadge value={TOTAL_WEB + 1} label="Web Projects" />
+            <div className="w-[1px] bg-[var(--text)]/10" />
+            <CountBadge value={TOTAL_DESIGN} label="Design Works" />
+            <div className="w-[1px] bg-[var(--text)]/10" />
+            <CountBadge value={TOTAL_CERTS} label="Certificates" />
+          </div>
+
           <div className="flex justify-center mb-12 sm:mb-20">
             <nav className="inline-flex p-1 sm:p-1.5 bg-[var(--text)]/5 rounded-2xl sm:rounded-[2rem] border border-[var(--text)]/10 backdrop-blur-md w-full sm:w-auto overflow-x-auto no-scrollbar">
               {MAIN_TABS.map((t) => (
                 <button
                   key={t.key}
                   onClick={() => setTab(t.key)}
-                  className={`btn-modern relative flex flex-col items-center flex-1 sm:flex-none min-w-[90px] sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-[1.8rem] transition-all ${tab === t.key
-                    ? "bg-[var(--bg)] border border-[var(--text)]/10 text-[var(--text)] active-tab-glow"
-                    : "text-[var(--text)]/40 hover:text-[var(--text)]/70"
-                    }`}
+                  className={`btn-modern relative flex flex-col items-center flex-1 sm:flex-none min-w-[90px] sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-[1.8rem] transition-all ${
+                    tab === t.key
+                      ? "bg-[var(--bg)] border border-[var(--text)]/10 text-[var(--text)] active-tab-glow"
+                      : "text-[var(--text)]/40 hover:text-[var(--text)]/70"
+                  }`}
                 >
-                  <span className="text-[0.55rem] sm:text-[0.6rem] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase mb-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>{t.label}</span>
-                  <span className="text-[0.35rem] sm:text-[0.4rem] tracking-[0.1em] sm:tracking-[0.15em] uppercase opacity-50 whitespace-nowrap" style={{ fontFamily: "'DM Mono', monospace" }}>{t.sub}</span>
+                  <span className="text-[0.55rem] sm:text-[0.6rem] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase mb-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>
+                    {t.label}
+                  </span>
+                  <span className="text-[0.35rem] sm:text-[0.4rem] tracking-[0.1em] sm:tracking-[0.15em] uppercase opacity-50 whitespace-nowrap" style={{ fontFamily: "'DM Mono', monospace" }}>
+                    {t.sub}
+                  </span>
                   {tab === t.key && (
                     <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_8px_white]" />
                   )}
@@ -203,11 +263,12 @@ export default function PortfolioSection() {
                 {["web", "design"].map((cat) => (
                   <button
                     key={cat}
-                    onClick={() => setProjectCat(cat as any)}
-                    className={`btn-modern px-6 sm:px-8 py-3 rounded-xl border text-[0.5rem] sm:text-[0.55rem] font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase ${projectCat === cat
-                      ? "bg-[var(--text)]/10 border-[var(--text)]/20 text-[var(--text)]"
-                      : "border-transparent text-[var(--text)]/30 hover:text-[var(--text)]/60"
-                      }`}
+                    onClick={() => setProjectCat(cat as "web" | "design")}
+                    className={`btn-modern px-6 sm:px-8 py-3 rounded-xl border text-[0.5rem] sm:text-[0.55rem] font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase ${
+                      projectCat === cat
+                        ? "bg-[var(--text)]/10 border-[var(--text)]/20 text-[var(--text)]"
+                        : "border-transparent text-[var(--text)]/30 hover:text-[var(--text)]/60"
+                    }`}
                     style={{ fontFamily: "'DM Mono', monospace" }}
                   >
                     {cat === "web" ? "Digital Development" : "Visual Identity"}
@@ -217,32 +278,72 @@ export default function PortfolioSection() {
 
               {projectCat === "web" && (
                 <div className="space-y-8 sm:space-y-12">
-                  <SectionHeader label="Web Projects" />
+                  <SectionHeader label="Web Projects" count={TOTAL_WEB + 1} />
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 container-3d">
                     {WEB_PROJECTS.map((p, index) => (
                       <Link
                         key={p.id}
                         href={p.href}
-                        className={`card-3d group relative rounded-2xl sm:rounded-[2rem] overflow-hidden border border-[var(--text)]/10 ${index === 0 ? "sm:col-span-2 lg:col-span-3 aspect-video sm:aspect-[21/9]" : "aspect-[4/5]"
-                          }`}
+                        className={`card-3d group relative rounded-2xl sm:rounded-[2rem] overflow-hidden border border-[var(--text)]/10 ${
+                          index === 0 ? "sm:col-span-2 lg:col-span-3 aspect-video sm:aspect-[21/9]" : "aspect-[4/5]"
+                        }`}
                       >
                         <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
                         <div className="absolute inset-0 p-4 sm:p-8 flex flex-col justify-end transform transition-transform duration-500 group-hover:translate-y-[-4px]">
                           <div className="space-y-2 sm:space-y-4">
                             <div className="flex flex-wrap gap-1 sm:gap-2">
-                              {p.techStack?.slice(0, index === 0 ? 6 : 3).map(tech => (
+                              {p.techStack?.slice(0, index === 0 ? 6 : 3).map((tech) => (
                                 <span key={tech} className="text-[8px] sm:text-[10px] px-2 sm:px-3 py-0.5 sm:py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/10 text-white/80 uppercase font-medium tracking-tighter">
                                   {tech}
                                 </span>
                               ))}
                             </div>
-                            <h3 className={`${index === 0 ? 'text-2xl sm:text-4xl' : 'text-xl sm:text-2xl'} font-light text-white tracking-wide`} style={{ fontFamily: "'Cormorant Garamond', serif" }}>{p.title}</h3>
-                            <p className={`text-[0.6rem] sm:text-[0.65rem] text-white/50 leading-relaxed ${index === 0 ? 'max-w-md' : 'max-w-xs'} group-hover:text-white/80 transition-colors line-clamp-2`}>{p.description}</p>
+                            <h3
+                              className={`${index === 0 ? "text-2xl sm:text-4xl" : "text-xl sm:text-2xl"} font-light text-white tracking-wide`}
+                              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                            >
+                              {p.title}
+                            </h3>
+                            <p className={`text-[0.6rem] sm:text-[0.65rem] text-white/50 leading-relaxed ${index === 0 ? "max-w-md" : "max-w-xs"} group-hover:text-white/80 transition-colors line-clamp-2`}>
+                              {p.description}
+                            </p>
                           </div>
                         </div>
                       </Link>
                     ))}
+
+                    <button
+                      onClick={() => setShowComingSoonAlert(true)}
+                      className="soon-border card-3d group relative sm:col-span-2 lg:col-span-3 aspect-video sm:aspect-[21/9] rounded-2xl sm:rounded-[2rem] overflow-hidden border border-white/5 bg-white/[0.02] flex flex-col items-center justify-center gap-6 cursor-pointer hover:bg-white/[0.04] transition-colors duration-500"
+                    >
+                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)]" />
+                      <div className="flex flex-col items-center gap-4 relative z-10 p-8 text-center">
+                        <div className="soon-pulse flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]" />
+                          <span className="text-[0.42rem] sm:text-[0.48rem] font-black tracking-[0.35em] uppercase text-amber-400/80" style={{ fontFamily: "'DM Mono', monospace" }}>
+                            Coming Soon
+                          </span>
+                        </div>
+                        <h3
+                          className="text-2xl sm:text-4xl font-light text-white/60 group-hover:text-white/90 tracking-wide transition-colors duration-500"
+                          style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                        >
+                          {COMING_SOON_PROJECT.title}
+                        </h3>
+                        <p className="text-[0.55rem] sm:text-[0.6rem] text-white/25 leading-relaxed max-w-md group-hover:text-white/50 transition-colors duration-500" style={{ fontFamily: "'DM Mono', monospace" }}>
+                          {COMING_SOON_PROJECT.description}
+                        </p>
+                        <div className="flex flex-wrap justify-center gap-2 mt-2">
+                          {COMING_SOON_PROJECT.tags.map((tag) => (
+                            <span key={tag} className="text-[7px] sm:text-[9px] px-2.5 py-1 bg-white/5 rounded-full border border-white/8 text-white/30 uppercase font-medium tracking-tighter">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    </button>
                   </div>
                 </div>
               )}
@@ -250,22 +351,25 @@ export default function PortfolioSection() {
               {projectCat === "design" && (
                 <div className="space-y-8 sm:space-y-12">
                   <div className="grid grid-cols-2 sm:flex sm:justify-center gap-3 sm:gap-6">
-                    {["gallery", "canva", "figma", "photoshop"].map((tool) => {
-                      const Icon = DESIGN_TOOL_ICONS[tool as keyof typeof DESIGN_TOOL_ICONS];
+                    {(["gallery", "canva", "figma", "photoshop"] as const).map((tool) => {
+                      const Icon = DESIGN_TOOL_ICONS[tool];
                       const isActive = designTool === tool;
                       return (
                         <button
                           key={tool}
-                          onClick={() => setDesignTool(tool as any)}
-                          className={`btn-modern min-w-0 sm:min-w-[140px] px-4 sm:px-6 py-4 sm:py-5 rounded-xl sm:rounded-2xl border transition-all duration-500 flex flex-col items-center gap-2 sm:gap-3 ${isActive
-                            ? "bg-white/10 border-white/30 translate-y-[-4px] shadow-xl"
-                            : "bg-white/5 border-white/5 opacity-40 hover:opacity-100"
-                            }`}
+                          onClick={() => setDesignTool(tool)}
+                          className={`btn-modern min-w-0 sm:min-w-[140px] px-4 sm:px-6 py-4 sm:py-5 rounded-xl sm:rounded-2xl border transition-all duration-500 flex flex-col items-center gap-2 sm:gap-3 ${
+                            isActive
+                              ? "bg-white/10 border-white/30 translate-y-[-4px] shadow-xl"
+                              : "bg-white/5 border-white/5 opacity-40 hover:opacity-100"
+                          }`}
                         >
-                          <Icon className={`text-lg sm:text-xl transition-transform duration-500 ${isActive ? 'scale-110 sm:scale-125' : ''}`} />
+                          <Icon className={`text-lg sm:text-xl transition-transform duration-500 ${isActive ? "scale-110 sm:scale-125" : ""}`} />
                           <div className="flex items-center gap-1.5 sm:gap-2">
-                            <div className={`w-1 h-1 rounded-full transition-all duration-500 ${isActive ? 'bg-white scale-150 shadow-[0_0_8px_white]' : 'bg-white/20'}`} />
-                            <span className="text-[0.45rem] sm:text-[0.55rem] font-bold tracking-[0.1em] sm:tracking-[0.2em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>{tool}</span>
+                            <div className={`w-1 h-1 rounded-full transition-all duration-500 ${isActive ? "bg-white scale-150 shadow-[0_0_8px_white]" : "bg-white/20"}`} />
+                            <span className="text-[0.45rem] sm:text-[0.55rem] font-bold tracking-[0.1em] sm:tracking-[0.2em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
+                              {tool}
+                            </span>
                           </div>
                         </button>
                       );
@@ -274,7 +378,7 @@ export default function PortfolioSection() {
 
                   {graphicDesignItems.length > 0 && (
                     <div className="space-y-6 sm:space-y-8">
-                      <SectionHeader label="Graphic Design" />
+                      <SectionHeader label="Graphic Design" count={graphicDesignItems.length} />
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 container-3d">
                         {graphicDesignItems.map((item) => (
                           <div key={item.id} onClick={() => setSelectedUI(item)} className="card-3d relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden border border-white/5 cursor-pointer group">
@@ -291,7 +395,7 @@ export default function PortfolioSection() {
 
                   {tshirtDesignItems.length > 0 && (
                     <div className="space-y-6 sm:space-y-8">
-                      <SectionHeader label="T-Shirt Design" />
+                      <SectionHeader label="T-Shirt Design" count={tshirtDesignItems.length} />
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 container-3d">
                         {tshirtDesignItems.map((item) => (
                           <div key={item.id} onClick={() => setSelectedUI(item)} className="card-3d relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden border border-white/5 cursor-pointer group">
@@ -315,7 +419,7 @@ export default function PortfolioSection() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-12 sm:gap-y-16">
                 {Object.entries(TECH_DATA).map(([group, list]) => (
                   <div key={group} className="space-y-6 sm:space-y-8">
-                    <SectionHeader label={group} className="text-gray-300" />
+                    <SectionHeader label={group} count={list.length} className="text-gray-300" />
                     <div className="grid grid-cols-4 gap-3 sm:gap-4">
                       {list.map((t) => (
                         <div
@@ -336,20 +440,23 @@ export default function PortfolioSection() {
           )}
 
           {tab === "cert" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 animate-in fade-in slide-in-from-top-8 duration-1000">
-              {CERTS.map((c) => (
-                <a
-                  key={c.id}
-                  href={c.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block rounded-xl sm:rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105"
-                >
-                  <div className="relative w-full aspect-[4/3] bg-white">
-                    <Image src={c.image} alt={c.title} fill className="object-cover sm:grayscale sm:group-hover:grayscale-0 transition-all duration-700" />
-                  </div>
-                </a>
-              ))}
+            <div className="space-y-8 sm:space-y-12 animate-in fade-in slide-in-from-top-8 duration-1000">
+              <SectionHeader label="Certificates & Credentials" count={TOTAL_CERTS} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                {CERTS.map((c) => (
+                  <a
+                    key={c.id}
+                    href={c.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block rounded-xl sm:rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105"
+                  >
+                    <div className="relative w-full aspect-[4/3] bg-white">
+                      <Image src={c.image} alt={c.title} fill className="object-cover sm:grayscale sm:group-hover:grayscale-0 transition-all duration-700" />
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -360,22 +467,12 @@ export default function PortfolioSection() {
           onClick={() => setSelectedUI(null)}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-3xl bg-black/95 animate-in fade-in duration-300 overflow-hidden"
         >
-          <div
-            className="relative w-full max-w-5xl flex flex-col items-center justify-center"
-            onClick={e => e.stopPropagation()}
-          >
+          <div className="relative w-full max-w-5xl flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
             <div className="relative w-full h-[60vh] sm:h-[70vh] flex items-center justify-center">
               <div className="relative w-full h-full rounded-2xl sm:rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl flex items-center justify-center">
-                <Image
-                  src={selectedUI.image}
-                  alt={selectedUI.title}
-                  fill
-                  className="object-contain"
-                  priority
-                />
+                <Image src={selectedUI.image} alt={selectedUI.title} fill className="object-contain" priority />
               </div>
             </div>
-
             <div className="mt-6 sm:mt-8 flex flex-col items-center text-center space-y-2">
               <h2 className="text-white text-2xl sm:text-3xl font-light tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 {selectedUI.title}
@@ -387,7 +484,6 @@ export default function PortfolioSection() {
                 </p>
                 <div className="w-6 sm:w-8 h-[1px] bg-white/20" />
               </div>
-
               <button
                 onClick={() => setSelectedUI(null)}
                 className="mt-6 sm:mt-8 px-10 sm:px-14 py-3 sm:py-4 rounded-full border border-white/10 bg-white/5 text-[0.5rem] sm:text-[0.55rem] font-black tracking-[0.4em] sm:tracking-[0.6em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
@@ -396,6 +492,51 @@ export default function PortfolioSection() {
                 Close Viewer
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showComingSoonAlert && (
+        <div
+          onClick={() => setShowComingSoonAlert(false)}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-6 backdrop-blur-2xl bg-black/80 animate-in fade-in duration-300"
+        >
+          <div
+            className="alert-in relative w-full max-w-md rounded-3xl border border-white/10 bg-[#0d0d0d] p-8 sm:p-10 flex flex-col items-center text-center gap-5 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-400/20 bg-amber-400/5">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_10px_#fbbf24] soon-pulse" />
+              <span className="text-[0.42rem] sm:text-[0.48rem] font-black tracking-[0.35em] uppercase text-amber-400" style={{ fontFamily: "'DM Mono', monospace" }}>
+                Work In Progress
+              </span>
+            </div>
+
+            <h3 className="text-white text-2xl sm:text-3xl font-light tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Groove — Case Study
+            </h3>
+
+            <p className="text-white/40 text-[0.52rem] sm:text-[0.58rem] leading-relaxed tracking-wide" style={{ fontFamily: "'DM Mono', monospace" }}>
+              This case study is currently being written. It will cover the full story of Groove — from user research with 152 participants to system deployment. Check back soon for the complete breakdown.
+            </p>
+
+            <div className="w-full h-[1px] bg-white/5" />
+
+            <div className="flex flex-wrap justify-center gap-2">
+              {COMING_SOON_PROJECT.tags.map((tag) => (
+                <span key={tag} className="text-[7px] sm:text-[9px] px-3 py-1 bg-white/5 rounded-full border border-white/8 text-white/30 uppercase font-medium tracking-tight">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setShowComingSoonAlert(false)}
+              className="mt-2 px-10 py-3 rounded-full border border-white/10 bg-white/5 text-[0.48rem] sm:text-[0.52rem] font-black tracking-[0.4em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
+              style={{ fontFamily: "'DM Mono', monospace" }}
+            >
+              Got It
+            </button>
           </div>
         </div>
       )}
