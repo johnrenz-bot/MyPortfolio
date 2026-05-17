@@ -28,6 +28,8 @@ type Item = {
   uiTools?: string[];
   category?: string;
   workType?: string;
+  featured?: boolean;
+  tags?: string[];
 };
 
 type Tech = {
@@ -37,11 +39,11 @@ type Tech = {
 };
 
 const WEB_DEVELOPMENT: Item[] = [
-  { id: "capstone", title: "Groove (Capstone Project)", href: "/Groove", image: "/Image/Groove.png", description: "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.", techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"], github: "https://github.com/johnrenz-bot/groove", workType: "web-development" },
+  { id: "capstone", title: "Groove (Capstone Project)", href: "/Groove", image: "/Image/Groove.png", description: "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.", techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"], github: "https://github.com/johnrenz-bot/groove", workType: "web-development", featured: true, tags: ["Agency"] },
 ];
 
 const WEBSITE_DESIGN: Item[] = [
-  { id: "w5", title: "Kiyoto", href: "https://kiyoto.vercel.app/", image: "/Image/Kiyoto.png", description: "Personal portfolio website with interactive UI and smooth animations throughout.", techStack: ["React", "Tailwind", "Next.js"], workType: "website-design" },
+  { id: "w5", title: "Kiyoto", href: "https://kiyoto.vercel.app/", image: "/Image/Kiyoto.png", description: "Personal portfolio website with interactive UI and smooth animations throughout.", techStack: ["React", "Tailwind", "Next.js"], workType: "website-design", featured: true, tags: ["Design"] },
   { id: "w2", title: "Weeknd Soundtrip", href: "https://weeknd-soundtrip.vercel.app/", image: "/Image/WeekndSoundtrip.png", description: "Interactive music experience inspired by The Weeknd with immersive design.", techStack: ["React", "Tailwind", "JavaScript"], workType: "website-design" },
   { id: "w3", title: "DinoVerse", href: "https://dinoverse-buce.vercel.app/", image: "/Image/Dinoverse.png", description: "Educational dinosaur exploration web app with interactive learning modules.", techStack: ["React", "Next.js", "CSS"], workType: "website-design" },
   { id: "w4", title: "EduGuide", href: "https://edu-guide-three.vercel.app/", image: "/Image/EduGuide.png", description: "Educational platform to guide students through interactive courses with progress tracking.", techStack: ["React", "Tailwind", "JavaScript"], workType: "web-development" },
@@ -49,7 +51,7 @@ const WEBSITE_DESIGN: Item[] = [
 ];
 
 const UI_UX_DESIGNS: Item[] = [
-  { id: "ui1", title: "Reefer", href: "/Reefer", image: "/Image/UI/Reefer.png", uiTools: ["Figma"], description: "Modern mobile application interface with intuitive user experience design.", category: "UI/UX", workType: "ui-ux" },
+  { id: "ui1", title: "Reefer", href: "/Reefer", image: "/Image/UI/Reefer.png", uiTools: ["Figma"], description: "Modern mobile application interface with intuitive user experience design.", category: "UI/UX", workType: "ui-ux", featured: true, tags: ["Design Systems"] },
 ];
 
 const DEVICE_MOCKUPS: Item[] = [
@@ -66,16 +68,13 @@ const POSTERS: Item[] = [
   { id: "Tech3", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech3.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
   { id: "Tech4", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech4.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
   { id: "Tech5", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech5.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
-
   { id: "STEM1", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM1.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-    { id: "STEM2", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM2.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
+  { id: "STEM2", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM2.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
   { id: "STEM3", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM3.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
   { id: "STEM4", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM4.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
   { id: "STEM5", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM5.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
   { id: "STEM6", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM6.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
   { id: "STEM7", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM7.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-
-
   { id: "cv1", title: "The Price of Sugar", href: "", image: "/Image/UI/1.jpg", uiTools: ["Canva"], description: "Graphic design poster exploring visual storytelling.", category: "Poster", workType: "poster" },
   { id: "ps3", title: "GA design poster", href: "", image: "/Image/UI/poster.png", uiTools: ["Photoshop"], description: "Graphic design poster for new arrival campaign.", category: "Poster", workType: "poster" },
 ];
@@ -91,14 +90,13 @@ const MERCHANDISE_DESIGNS: Item[] = [
 ];
 
 const GRAPHIC_DESIGNS: Item[] = [
-  { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren-inspired luxury automotive branding concept showcasing high-performance visual identity design.", category: "Graphic Design", workType: "graphic-design" },
+  { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren-inspired luxury automotive branding concept showcasing high-performance visual identity design.", category: "Graphic Design", workType: "graphic-design", featured: true, tags: ["Branding"] },
   { id: "ps2", title: "Me GA", href: "", image: "/Image/UI/8.png", uiTools: ["Photoshop"], description: "Experimental McLaren variation exploring alternative automotive branding composition and visual direction.", category: "Graphic Design", workType: "graphic-design" },
   { id: "cv3", title: "Weeknd UI Concept", href: "", image: "/Image/UI/3.jpg", uiTools: ["Canva"], description: "The Weeknd-inspired UI concept focused on moody aesthetics, atmospheric tone, and expressive visual storytelling.", category: "Graphic Design", workType: "graphic-design" },
   { id: "dm1", title: "Reefer Hoodie", href: "", image: "/Image/UI/4.png", uiTools: ["Figma"], description: "Reefer hoodie product concept design featuring a clean, modern layout for apparel presentation.", category: "Graphic Design", workType: "graphic-design" },
   { id: "dm2", title: "Fliptop Poster", href: "", image: "/Image/UI/5.jpg", uiTools: ["Figma"], description: "FlipTop event poster design emphasizing bold typography and strong visual hierarchy for digital display.", category: "Graphic Design", workType: "graphic-design" },
   { id: "dm3", title: "UI Mazda Figma", href: "", image: "/Image/UI/6.png", uiTools: ["Figma"], description: "Mazda-inspired automotive dashboard UI concept with a sleek, modern, and user-focused interface design.", category: "Graphic Design", workType: "graphic-design" },
   { id: "cv2", title: "Clay Cuneiform Tables", href: "", image: "/Image/UI/2.jpg", uiTools: ["Canva"], description: "Informational graphic design piece with historical significance.", category: "Poster", workType: "poster" },
-
 ];
 
 const CERTS: Item[] = [
@@ -199,6 +197,45 @@ function CountBadge({ value, label, icon: Icon }: { value: number; label: string
   );
 }
 
+function FeaturedCaseStudy({ item, onClick }: { item: Item; onClick: () => void }) {
+  return (
+    <div
+      onClick={onClick}
+      className="group cursor-pointer relative overflow-hidden rounded-2xl sm:rounded-3xl border border-[var(--text)]/5 hover:border-[var(--text)]/15 transition-all bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent hover:shadow-xl"
+    >
+      <div className="relative w-full aspect-video bg-[var(--text)]/[0.03] overflow-hidden">
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          priority={false}
+        />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+      </div>
+      
+      <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="flex flex-wrap gap-2">
+          {item.tags?.map((tag) => (
+            <span key={tag} className="text-[0.65rem] sm:text-xs px-2 sm:px-3 py-1 bg-white/20 backdrop-blur-sm rounded-lg text-white font-medium">
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="space-y-3 sm:space-y-4">
+          <h3 className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+            {item.title}
+          </h3>
+          <div className="flex items-center gap-2 text-white text-xs sm:text-sm font-medium">
+            <span>View Project</span>
+            <RxArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PortfolioSection() {
   const [tab, setTab] = useState<"portfolio" | "tech" | "cert">("portfolio");
   const [workCategory, setWorkCategory] = useState<"web-dev" | "website-design" | "ui-ux" | "mockups" | "posters" | "merchandise" | "graphic-design">("web-dev");
@@ -219,7 +256,7 @@ export default function PortfolioSection() {
 
   const currentItems = getWorkItems(workCategory);
   const totalWorks = WEB_DEVELOPMENT.length + WEBSITE_DESIGN.length + UI_UX_DESIGNS.length + DEVICE_MOCKUPS.length + POSTERS.length + MERCHANDISE_DESIGNS.length + GRAPHIC_DESIGNS.length;
-  const isSingleItem = currentItems.length === 1;
+  const featuredItems = currentItems.filter(item => item.featured);
 
   return (
     <>
@@ -339,20 +376,35 @@ export default function PortfolioSection() {
           }
         }
         
-        .single-item-container {
+        .featured-grid {
           display: grid;
-          grid-template-columns: 1fr;
-          place-items: center;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
         }
         
-        .single-item-card {
-          max-width: 500px;
-          width: 100%;
-          margin: 0 auto;
+        @media (max-width: 768px) {
+          .featured-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
         }
         
-        @media (max-width: 640px) {
-          .single-item-card { max-width: 100%; }
+        .featured-grid > div:nth-child(1) {
+          grid-column: span 1;
+        }
+        
+        .featured-grid > div:nth-child(2) {
+          grid-column: span 1;
+        }
+        
+        .featured-grid > div:nth-child(3) {
+          grid-column: span 2;
+        }
+        
+        @media (max-width: 768px) {
+          .featured-grid > div:nth-child(3) {
+            grid-column: span 1;
+          }
         }
       `}</style>
 
@@ -430,32 +482,50 @@ export default function PortfolioSection() {
                 <SectionHeader label={WORK_CATEGORIES.find(c => c.key === workCategory)?.label || "Works"} count={currentItems.length} />
 
                 {currentItems.length > 0 ? (
-                  <div className={isSingleItem ? "single-item-container" : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 container-3d"}>
-                    {currentItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className={isSingleItem ? "single-item-card" : "group cursor-pointer h-full"}
-                        onClick={() => setSelectedProject(item)}
-                      >
-                        <div className="card-3d relative h-full rounded-2xl sm:rounded-3xl overflow-hidden border border-[var(--text)]/5 hover:border-[var(--text)]/15 transition-all bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent">
-                          <div className="project-card relative w-full bg-[var(--text)]/[0.03]">
-                            <Image
-                              src={item.image}
-                              alt={item.title}
-                              fill
-                              className="object-cover transition-transform duration-700 group-hover:scale-110"
-                              priority={false}
+                  <>
+                    {featuredItems.length > 0 && (
+                      <div>
+                        <div className="featured-grid">
+                          {featuredItems.map((item) => (
+                            <FeaturedCaseStudy
+                              key={item.id}
+                              item={item}
+                              onClick={() => setSelectedProject(item)}
                             />
-                            <div className="image-overlay" />
-                            <div className="view-indicator flex items-center justify-center gap-2 text-white text-xs sm:text-sm font-medium">
-                              <span>View Project</span>
-                              <RxArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                            </div>
-                          </div>
+                          ))}
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    )}
+                    
+                    {currentItems.length > featuredItems.length && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 container-3d">
+                        {currentItems.filter(item => !item.featured).map((item) => (
+                          <div
+                            key={item.id}
+                            className="group cursor-pointer h-full"
+                            onClick={() => setSelectedProject(item)}
+                          >
+                            <div className="card-3d relative h-full rounded-2xl sm:rounded-3xl overflow-hidden border border-[var(--text)]/5 hover:border-[var(--text)]/15 transition-all bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent">
+                              <div className="project-card relative w-full bg-[var(--text)]/[0.03]">
+                                <Image
+                                  src={item.image}
+                                  alt={item.title}
+                                  fill
+                                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                  priority={false}
+                                />
+                                <div className="image-overlay" />
+                                <div className="view-indicator flex items-center justify-center gap-2 text-white text-xs sm:text-sm font-medium">
+                                  <span>View Project</span>
+                                  <RxArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <div className="col-span-full text-center py-16 sm:py-20">
                     <p className="text-[var(--text)]/50 text-sm sm:text-base">No items in this category yet</p>
