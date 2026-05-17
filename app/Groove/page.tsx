@@ -267,7 +267,7 @@ export default function Groove() {
               {[
                 { label: "My Role", value: "Lead Developer & UI Designer" },
                 { label: "Team Size", value: "4 Members" },
-                { label: "Duration", value: "2023 – 2024" },
+                { label: "Duration", value: "2024 – 2025" },
                 { label: "Deployment", value: "Hostinger (Live)" },
               ].map((item) => (
                 <div key={item.label} className="p-5 rounded-2xl border border-[var(--text)]/8 bg-[var(--text)]/[0.02] space-y-2">

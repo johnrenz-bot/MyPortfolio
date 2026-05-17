@@ -47,7 +47,6 @@ export default function Loader() {
           <div className="h-[2px] w-12 bg-black mt-2"></div>
         </div>
 
-        {/* Loading Progress Section */}
         <div className="flex flex-col items-center">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-8 h-[1px] bg-black/20"></span>
@@ -57,7 +56,6 @@ export default function Loader() {
             <span className="w-8 h-[1px] bg-black/20"></span>
           </div>
 
-          {/* Progress Bar - Minimalist Style */}
           <div className="h-[1px] w-64 bg-black/10 overflow-hidden relative">
             <div className="h-full w-full bg-black origin-left animate-progress-fast"></div>
           </div>
@@ -70,7 +68,6 @@ export default function Loader() {
         </div>
       </div>
 
-      {/* Footer Decoration */}
       <div className="absolute bottom-12 flex items-center gap-3">
         <span className="text-[9px] font-black tracking-[0.6em] uppercase opacity-20 text-black">
           Groove v2.0 // 2026

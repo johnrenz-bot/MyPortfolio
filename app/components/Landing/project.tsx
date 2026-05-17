@@ -13,7 +13,9 @@ import {
 import { FaJava, FaFilePowerpoint } from "react-icons/fa";
 import { TbBrandCSharp } from "react-icons/tb";
 import { DiVisualstudio } from "react-icons/di";
-import { HiOutlineSquares2X2 } from "react-icons/hi2";
+import { HiOutlineSquares2X2, HiArrowTopRightOnSquare } from "react-icons/hi2";
+import { RxArrowRight } from "react-icons/rx";
+import { IoClose } from "react-icons/io5";
 
 type Item = {
   id: string;
@@ -25,6 +27,7 @@ type Item = {
   github?: string;
   uiTools?: string[];
   category?: string;
+  workType?: string;
 };
 
 type Tech = {
@@ -33,53 +36,77 @@ type Tech = {
   color: string;
 };
 
-const WEB_PROJECTS: Item[] = [
-  { id: "capstone", title: "Groove (Capstone Project)", href: "/Groove", image: "/Image/Groove.png", description: "A Bulacan all-in-one performing arts hub with smart chat support.", techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"], github: "https://github.com/johnrenz-bot/groove" },
-  { id: "w1", title: "Simon Game", href: "https://simon-game2-gamma.vercel.app/", image: "/Image/Simon.png", description: "Classic Simon memory game with animations and sound effects.", techStack: ["JavaScript", "HTML", "CSS"] },
-  { id: "w2", title: "Weeknd Soundtrip", href: "https://weeknd-soundtrip.vercel.app/", image: "/Image/WeekndSoundtrip.png", description: "Interactive music experience inspired by The Weeknd.", techStack: ["React", "Tailwind", "JavaScript"] },
-  { id: "w3", title: "DinoVerse", href: "https://dinoverse-buce.vercel.app/", image: "/Image/Dinoverse.png", description: "Educational dinosaur exploration web app.", techStack: ["React", "Next.js", "CSS"] },
-  { id: "w4", title: "EduGuide", href: "https://edu-guide-three.vercel.app/", image: "/Image/EduGuide.png", description: "Educational platform to guide students through courses.", techStack: ["React", "Tailwind", "JavaScript"] },
-  { id: "w5", title: "Kiyoto", href: "https://kiyoto.vercel.app/", image: "/Image/Kiyoto.png", description: "Personal portfolio website with interactive UI.", techStack: ["React", "Tailwind", "Next.js"] },
-  { id: "w6", title: "Windbreaker", href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/", image: "/Image/windbreaker.png", description: "A digital home for street riders to track progress and connect with crews.", techStack: ["Next.js", "Tailwind"] },
+const WEB_DEVELOPMENT: Item[] = [
+  { id: "capstone", title: "Groove (Capstone Project)", href: "/Groove", image: "/Image/Groove.png", description: "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.", techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"], github: "https://github.com/johnrenz-bot/groove", workType: "web-development" },
 ];
 
-const COMING_SOON_PROJECT = {
-  id: "groove-cs",
-  title: "Groove — Case Study",
-  description: "An in-depth case study of the Groove Performing Arts Platform. Covering UX research with 152 participants, system architecture, full-stack implementation, and deployment. Coming soon.",
-  tags: ["Case Study", "UI/UX Research", "Full-Stack", "Laravel"],
-};
-
-const CANVA_PROJECTS: Item[] = [
-  { id: "cv1", title: "The Price of Sugar", href: "", image: "/Image/UI/1.jpg", uiTools: ["Canva"], description: "Graphic design poster made with Canva.", category: "graphic design" },
-  { id: "cv2", title: "Clay Cuneiform Tables", href: "", image: "/Image/UI/2.jpg", uiTools: ["Canva"], description: "Informational graphic design piece.", category: "graphic design" },
-  { id: "cv3", title: "Weeknd UI Concept", href: "", image: "/Image/UI/3.jpg", uiTools: ["Canva"], description: "UI concept inspired by The Weeknd's aesthetic.", category: "graphic design" },
+const WEBSITE_DESIGN: Item[] = [
+  { id: "w5", title: "Kiyoto", href: "https://kiyoto.vercel.app/", image: "/Image/Kiyoto.png", description: "Personal portfolio website with interactive UI and smooth animations throughout.", techStack: ["React", "Tailwind", "Next.js"], workType: "website-design" },
+  { id: "w2", title: "Weeknd Soundtrip", href: "https://weeknd-soundtrip.vercel.app/", image: "/Image/WeekndSoundtrip.png", description: "Interactive music experience inspired by The Weeknd with immersive design.", techStack: ["React", "Tailwind", "JavaScript"], workType: "website-design" },
+  { id: "w3", title: "DinoVerse", href: "https://dinoverse-buce.vercel.app/", image: "/Image/Dinoverse.png", description: "Educational dinosaur exploration web app with interactive learning modules.", techStack: ["React", "Next.js", "CSS"], workType: "website-design" },
+  { id: "w4", title: "EduGuide", href: "https://edu-guide-three.vercel.app/", image: "/Image/EduGuide.png", description: "Educational platform to guide students through interactive courses with progress tracking.", techStack: ["React", "Tailwind", "JavaScript"], workType: "web-development" },
+  { id: "w6", title: "Windbreaker", href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/", image: "/Image/windbreaker.png", description: "Digital home for street riders to track progress, connect with crews and share experiences.", techStack: ["Next.js", "Tailwind"], workType: "web-development" },
 ];
 
-const FIGMA_PROJECTS: Item[] = [
-  { id: "fg1", title: "XREAPER Hoodie", href: "", image: "/Image/UI/4.png", uiTools: ["Figma"], description: "Streetwear hoodie mockup and branding.", category: "tshirt design" },
-  { id: "fg2", title: "BATTLE", href: "", image: "/Image/UI/5.jpg", uiTools: ["Figma"], description: "Bold editorial-style graphic layout.", category: "graphic design" },
-  { id: "fg3", title: "Mazda", href: "", image: "/Image/UI/6.png", uiTools: ["Figma"], description: "Automotive brand UI concept.", category: "graphic design" },
+const UI_UX_DESIGNS: Item[] = [
+  { id: "ui1", title: "Reefer", href: "/Reefer", image: "/Image/UI/Reefer.png", uiTools: ["Figma"], description: "Modern mobile application interface with intuitive user experience design.", category: "UI/UX", workType: "ui-ux" },
 ];
 
-const PHOTOSHOP_PROJECTS: Item[] = [
-  { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren automotive graphic design.", category: "graphic design" },
-  { id: "ps2", title: "Me GA", href: "", image: "/Image/UI/8.png", uiTools: ["Photoshop"], description: "Alternative McLaren composition.", category: "graphic design" },
-  { id: "ps3", title: "GA design poster", href: "", image: "/Image/UI/poster.png", uiTools: ["Photoshop"], description: "Graphic design poster for new arrival soon.", category: "graphic design" },
-  { id: "ps4", title: "Alien Shirt", href: "", image: "/Image/UI/alien.png", uiTools: ["Photoshop"], description: "Custom T-shirt design featuring Reefer branding.", category: "tshirt design" },
-  { id: "ps5", title: "Chest Shirt", href: "", image: "/Image/UI/11.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design.", category: "tshirt design" },
-  { id: "ps6", title: "Devine Outcast Shirt", href: "", image: "/Image/UI/12.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
-  { id: "ps7", title: "Visionless Shirt", href: "", image: "/Image/UI/13.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design.", category: "tshirt design" },
-  { id: "ps8", title: "Last hope Shirt", href: "", image: "/Image/UI/14.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
-  { id: "ps9", title: "hiphop Shirt", href: "", image: "/Image/UI/15.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
-  { id: "ps10", title: "hiphop Shirt", href: "", image: "/Image/UI/Cmytk.png", uiTools: ["Photoshop"], description: "Custom T-shirt design.", category: "tshirt design" },
+const DEVICE_MOCKUPS: Item[] = [
+  { id: "M1", title: "Mockup", href: "", image: "/Image/Devices/watch.png", uiTools: ["Adobe Photoshop"], description: "watch mockup for tech event", category: "Mockup", workType: "Mockup" },
+  { id: "M2", title: "Mockup", href: "", image: "/Image/Devices/phone.png", uiTools: ["Adobe Photoshop"], description: "Iphone mockup for tech event", category: "Mockup", workType: "Mockup" },
+  { id: "M3", title: "Mockup", href: "", image: "/Image/Devices/Iphone.png", uiTools: ["Adobe Photoshop"], description: "Iphone mockup for tech event", category: "Mockup", workType: "Mockup" },
+  { id: "M4", title: "Mockup", href: "", image: "/Image/Devices/Iphone1.png", uiTools: ["Adobe Photoshop"], description: "Iphone mockup for tech event", category: "Mockup", workType: "Mockup" },
+  { id: "M5", title: "Mockup", href: "", image: "/Image/Devices/Iphone2.png", uiTools: ["Adobe Photoshop"], description: "Iphone mockup for tech event", category: "Mockup", workType: "Mockup" },
+];
+
+const POSTERS: Item[] = [
+  { id: "Tech1", title: "WATCH mockup Poster", href: "", image: "/Image/tech/tech1.png", uiTools: ["Canva"], description: "Watch mockup poster for tech event", category: "Poster", workType: "poster" },
+  { id: "Tech2", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech2.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
+  { id: "Tech3", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech3.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
+  { id: "Tech4", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech4.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
+  { id: "Tech5", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech5.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
+
+  { id: "STEM1", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM1.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
+    { id: "STEM2", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM2.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
+  { id: "STEM3", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM3.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
+  { id: "STEM4", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM4.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
+  { id: "STEM5", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM5.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
+  { id: "STEM6", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM6.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
+  { id: "STEM7", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM7.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
+
+
+  { id: "cv1", title: "The Price of Sugar", href: "", image: "/Image/UI/1.jpg", uiTools: ["Canva"], description: "Graphic design poster exploring visual storytelling.", category: "Poster", workType: "poster" },
+  { id: "ps3", title: "GA design poster", href: "", image: "/Image/UI/poster.png", uiTools: ["Photoshop"], description: "Graphic design poster for new arrival campaign.", category: "Poster", workType: "poster" },
+];
+
+const MERCHANDISE_DESIGNS: Item[] = [
+  { id: "ps4", title: "Alien Shirt", href: "", image: "/Image/UI/alien.png", uiTools: ["Photoshop"], description: "Custom T-shirt design featuring Reefer branding.", category: "Merchandise", workType: "merchandise" },
+  { id: "ps5", title: "Chest Shirt", href: "", image: "/Image/UI/11.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design for streetwear collection.", category: "Merchandise", workType: "merchandise" },
+  { id: "ps6", title: "Devine Outcast Shirt", href: "", image: "/Image/UI/12.png", uiTools: ["Photoshop"], description: "Custom T-shirt design with artistic expression.", category: "Merchandise", workType: "merchandise" },
+  { id: "ps7", title: "Visionless Shirt", href: "", image: "/Image/UI/13.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design for brand identity.", category: "Merchandise", workType: "merchandise" },
+  { id: "ps8", title: "Last hope Shirt", href: "", image: "/Image/UI/14.png", uiTools: ["Photoshop"], description: "Custom T-shirt design with meaningful message.", category: "Merchandise", workType: "merchandise" },
+  { id: "ps9", title: "hiphop Shirt", href: "", image: "/Image/UI/15.png", uiTools: ["Photoshop"], description: "Custom T-shirt design for music culture enthusiasts.", category: "Merchandise", workType: "merchandise" },
+  { id: "ps10", title: "hiphop Shirt Alt", href: "", image: "/Image/UI/Cmytk.png", uiTools: ["Photoshop"], description: "Alternative design for hip-hop inspired collection.", category: "Merchandise", workType: "merchandise" },
+];
+
+const GRAPHIC_DESIGNS: Item[] = [
+  { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren-inspired luxury automotive branding concept showcasing high-performance visual identity design.", category: "Graphic Design", workType: "graphic-design" },
+  { id: "ps2", title: "Me GA", href: "", image: "/Image/UI/8.png", uiTools: ["Photoshop"], description: "Experimental McLaren variation exploring alternative automotive branding composition and visual direction.", category: "Graphic Design", workType: "graphic-design" },
+  { id: "cv3", title: "Weeknd UI Concept", href: "", image: "/Image/UI/3.jpg", uiTools: ["Canva"], description: "The Weeknd-inspired UI concept focused on moody aesthetics, atmospheric tone, and expressive visual storytelling.", category: "Graphic Design", workType: "graphic-design" },
+  { id: "dm1", title: "Reefer Hoodie", href: "", image: "/Image/UI/4.png", uiTools: ["Figma"], description: "Reefer hoodie product concept design featuring a clean, modern layout for apparel presentation.", category: "Graphic Design", workType: "graphic-design" },
+  { id: "dm2", title: "Fliptop Poster", href: "", image: "/Image/UI/5.jpg", uiTools: ["Figma"], description: "FlipTop event poster design emphasizing bold typography and strong visual hierarchy for digital display.", category: "Graphic Design", workType: "graphic-design" },
+  { id: "dm3", title: "UI Mazda Figma", href: "", image: "/Image/UI/6.png", uiTools: ["Figma"], description: "Mazda-inspired automotive dashboard UI concept with a sleek, modern, and user-focused interface design.", category: "Graphic Design", workType: "graphic-design" },
+  { id: "cv2", title: "Clay Cuneiform Tables", href: "", image: "/Image/UI/2.jpg", uiTools: ["Canva"], description: "Informational graphic design piece with historical significance.", category: "Poster", workType: "poster" },
+
 ];
 
 const CERTS: Item[] = [
-  { id: "c1", title: "Accenture – Skills to Succeed", href: "/Image/Certificate/S2.jpg", image: "/Image/Certificate/S2.jpg", description: "" },
-  { id: "c2", title: "Java Programming Certificate", href: "/Image/Certificate/java.jpg", image: "/Image/Certificate/java.jpg", description: "" },
-  { id: "c3", title: "Oracle Certified", href: "/Image/Certificate/oracle.jpg", image: "/Image/Certificate/oracle.jpg", description: "" },
-  { id: "c4", title: "Canva Graphic Design Certificate", href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df", image: "/Image/Certificate/Canva.png", description: "" },
+  { id: "c1", title: "Google UX Certification", href: "/Image/Certificate/GoogleUX.jpg", image: "/Image/Certificate/GoogleUX.jpg", description: "Google UX Design Certification covering user research, wireframing, prototyping, and usability testing." },
+  { id: "c2", title: "Accenture – Skills to Succeed", href: "/Image/Certificate/S2.jpg", image: "/Image/Certificate/S2.jpg", description: "Certification in professional skills development." },
+  { id: "c3", title: "Java Programming Certificate", href: "/Image/Certificate/java.jpg", image: "/Image/Certificate/java.jpg", description: "Certification in Java programming fundamentals." },
+  { id: "c4", title: "Oracle Certified", href: "/Image/Certificate/oracle.jpg", image: "/Image/Certificate/oracle.jpg", description: "Certification in Oracle database management." },
+  { id: "c5", title: "Canva Graphic Design Certificate", href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df", image: "/Image/Certificate/Canva.png", description: "Certification in graphic design using Canva." },
 ];
 
 const TECH_DATA: Record<string, Tech[]> = {
@@ -124,59 +151,48 @@ const TECH_DATA: Record<string, Tech[]> = {
   ],
 };
 
-const MAIN_TABS = [
-  { key: "projects", label: "Projects", sub: "Web & UI work" },
-  { key: "tech", label: "Tech Stack", sub: "Tools & languages" },
-  { key: "cert", label: "Certificates", sub: "Credentials" },
+const WORK_CATEGORIES = [
+  { key: "web-dev", label: "Development", sub: "Full-stack", count: WEB_DEVELOPMENT.length },
+  { key: "website-design", label: "Frontend Design", sub: "UI/UX", count: WEBSITE_DESIGN.length },
+  { key: "ui-ux", label: "UI/UX", sub: "Design", count: UI_UX_DESIGNS.length },
+  { key: "mockups", label: "Mockups", sub: "Devices", count: DEVICE_MOCKUPS.length },
+  { key: "posters", label: "Posters", sub: "Marketing", count: POSTERS.length },
+  { key: "merchandise", label: "Merch", sub: "Fashion", count: MERCHANDISE_DESIGNS.length },
+  { key: "graphic-design", label: "Graphics", sub: "Design", count: GRAPHIC_DESIGNS.length },
 ] as const;
 
-const DESIGN_TOOL_ICONS = {
-  gallery: HiOutlineSquares2X2,
-  canva: SiCanva,
-  figma: SiFigma,
-  photoshop: SiAdobephotoshop,
-};
-
-const ALL_DESIGN_ITEMS = [...PHOTOSHOP_PROJECTS, ...CANVA_PROJECTS, ...FIGMA_PROJECTS];
-const TOTAL_WEB = WEB_PROJECTS.length;
-const TOTAL_DESIGN = ALL_DESIGN_ITEMS.length;
-const TOTAL_CERTS = CERTS.length;
+const MAIN_TABS = [
+  { key: "portfolio", label: "Portfolio", sub: "All Works" },
+  { key: "tech", label: "Stack", sub: "Technologies" },
+  { key: "cert", label: "Credentials", sub: "Certificates" },
+] as const;
 
 function SectionHeader({ label, count, className = "" }: { label: string; count?: number; className?: string }) {
   return (
-    <div className={`flex items-center gap-4 sm:gap-6 mb-10 group ${className}`}>
-      <h2
-        className="text-[0.5rem] sm:text-[0.55rem] font-black tracking-[0.3em] sm:tracking-[0.5em] uppercase text-[var(--text)]/40 group-hover:text-[var(--text)]/80 transition-colors"
-        style={{ fontFamily: "'DM Mono', monospace" }}
-      >
-        {label}
-      </h2>
+    <div className={`flex items-center gap-3 sm:gap-5 mb-10 sm:mb-14 group ${className}`}>
+      <div className="flex items-center gap-3 sm:gap-4">
+        <div className="w-1 h-8 sm:h-10 bg-gradient-to-b from-[var(--text)] to-[var(--text)]/30 rounded-full" />
+        <h2 className="text-xs sm:text-sm font-black tracking-[0.4em] sm:tracking-[0.6em] uppercase text-[var(--text)]/80" style={{ fontFamily: "'DM Mono', monospace" }}>
+          {label}
+        </h2>
+      </div>
       {count !== undefined && (
-        <span
-          className="text-[0.38rem] sm:text-[0.42rem] font-black tracking-[0.2em] uppercase px-2 py-0.5 rounded-full border border-[var(--text)]/10 text-[var(--text)]/30"
-          style={{ fontFamily: "'DM Mono', monospace" }}
-        >
+        <span className="ml-auto text-xs sm:text-sm font-black tracking-[0.3em] uppercase px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-[var(--text)]/5 to-[var(--text)]/0 border border-[var(--text)]/10 text-[var(--text)]/60" style={{ fontFamily: "'DM Mono', monospace" }}>
           {String(count).padStart(2, "0")}
         </span>
       )}
-      <div className="h-[1px] flex-1 bg-gradient-to-r from-[var(--text)]/20 via-[var(--text)]/5 to-transparent" />
     </div>
   );
 }
 
-function CountBadge({ value, label }: { value: number; label: string }) {
+function CountBadge({ value, label, icon: Icon }: { value: number; label: string; icon?: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-1">
-      <span
-        className="text-2xl sm:text-3xl font-black text-[var(--text)] tabular-nums"
-        style={{ fontFamily: "'DM Mono', monospace" }}
-      >
+    <div className="flex flex-col items-center gap-3 sm:gap-4 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-[var(--text)]/5 bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent hover:border-[var(--text)]/10 transition-all duration-300 group">
+      {Icon && <div className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">{Icon}</div>}
+      <span className="text-3xl sm:text-5xl font-black text-[var(--text)] tabular-nums" style={{ fontFamily: "'DM Mono', monospace" }}>
         {String(value).padStart(2, "0")}
       </span>
-      <span
-        className="text-[0.38rem] sm:text-[0.42rem] font-bold tracking-[0.25em] uppercase text-[var(--text)]/30"
-        style={{ fontFamily: "'DM Mono', monospace" }}
-      >
+      <span className="text-[0.65rem] sm:text-xs font-bold tracking-[0.3em] uppercase text-[var(--text)]/40" style={{ fontFamily: "'DM Mono', monospace" }}>
         {label}
       </span>
     </div>
@@ -184,250 +200,287 @@ function CountBadge({ value, label }: { value: number; label: string }) {
 }
 
 export default function PortfolioSection() {
-  const [tab, setTab] = useState<"projects" | "tech" | "cert">("projects");
-  const [projectCat, setProjectCat] = useState<"web" | "design">("web");
-  const [designTool, setDesignTool] = useState<"gallery" | "photoshop" | "canva" | "figma">("gallery");
-  const [selectedUI, setSelectedUI] = useState<Item | null>(null);
-  const [showComingSoonAlert, setShowComingSoonAlert] = useState(false);
+  const [tab, setTab] = useState<"portfolio" | "tech" | "cert">("portfolio");
+  const [workCategory, setWorkCategory] = useState<"web-dev" | "website-design" | "ui-ux" | "mockups" | "posters" | "merchandise" | "graphic-design">("web-dev");
+  const [selectedProject, setSelectedProject] = useState<Item | null>(null);
 
-  const designItems =
-    designTool === "gallery" ? ALL_DESIGN_ITEMS :
-    designTool === "canva" ? CANVA_PROJECTS :
-    designTool === "figma" ? FIGMA_PROJECTS :
-    PHOTOSHOP_PROJECTS;
+  const getWorkItems = (category: typeof workCategory): Item[] => {
+    const categoryMap = {
+      "web-dev": WEB_DEVELOPMENT,
+      "website-design": WEBSITE_DESIGN,
+      "ui-ux": UI_UX_DESIGNS,
+      "mockups": DEVICE_MOCKUPS,
+      "posters": POSTERS,
+      "merchandise": MERCHANDISE_DESIGNS,
+      "graphic-design": GRAPHIC_DESIGNS,
+    };
+    return categoryMap[category] || [];
+  };
 
-  const graphicDesignItems = designItems.filter((item) => item.category === "graphic design");
-  const tshirtDesignItems = designItems.filter((item) => item.category === "tshirt design");
+  const currentItems = getWorkItems(workCategory);
+  const totalWorks = WEB_DEVELOPMENT.length + WEBSITE_DESIGN.length + UI_UX_DESIGNS.length + DEVICE_MOCKUPS.length + POSTERS.length + MERCHANDISE_DESIGNS.length + GRAPHIC_DESIGNS.length;
+  const isSingleItem = currentItems.length === 1;
 
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Mono:wght@300;400;500&display=swap');
+        
         .container-3d { transform-style: preserve-3d; perspective: 1000px; }
-        .card-3d { transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease; transform: translateZ(0); }
-        .card-3d:hover { transform: translateZ(20px) translateY(-8px) rotateX(2deg); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5); }
-        .btn-modern { position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateZ(0); }
-        .btn-modern::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); transform: translateX(-100%); transition: transform 0.6s; }
-        .btn-modern:hover::after { transform: translateX(100%); }
-        .active-tab-glow { box-shadow: inset 0 0 15px rgba(255,255,255,0.05), 0 10px 20px -10px rgba(0,0,0,0.3); }
+        
+        .card-3d {
+          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          transform: translateZ(0);
+        }
+        
+        .card-3d:hover {
+          transform: translateZ(20px) translateY(-10px);
+          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-modern {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .btn-modern::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+          opacity: 0;
+          transition: opacity 0.6s;
+        }
+        
+        .btn-modern:hover::before { opacity: 1; }
+        
+        .active-tab-glow {
+          box-shadow: inset 0 0 20px rgba(255,255,255,0.08), 0 15px 35px -15px rgba(0,0,0,0.4);
+        }
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .soon-pulse { animation: soonPulse 3s ease-in-out infinite; }
-        @keyframes soonPulse { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
-        .soon-border { animation: soonBorder 4s linear infinite; }
-        @keyframes soonBorder { 0%{border-color:rgba(255,255,255,0.05)} 50%{border-color:rgba(255,255,255,0.18)} 100%{border-color:rgba(255,255,255,0.05)} }
-        .alert-in { animation: alertIn 0.35s cubic-bezier(0.2,0.8,0.2,1) both; }
-        @keyframes alertIn { from{opacity:0;transform:scale(0.92) translateY(16px)} to{opacity:1;transform:scale(1) translateY(0)} }
+        
+        .project-card {
+          position: relative;
+          overflow: hidden;
+          aspect-ratio: 4/3;
+        }
+        
+        .project-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+          opacity: 0;
+          transition: opacity 0.5s;
+          pointer-events: none;
+        }
+        
+        .project-card:hover::after { opacity: 1; }
+        
+        .image-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.2);
+          opacity: 0;
+          transition: opacity 0.4s;
+        }
+        
+        .project-card:hover .image-overlay {
+          opacity: 1;
+        }
+        
+        .view-indicator {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 16px;
+          background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+          transform: translateY(20px);
+          opacity: 0;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-card:hover .view-indicator {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        .modal-overlay {
+          animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            backdrop-filter: blur(0px);
+          }
+          to {
+            opacity: 1;
+            backdrop-filter: blur(12px);
+          }
+        }
+        
+        .modal-content {
+          animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.92);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        
+        .single-item-container {
+          display: grid;
+          grid-template-columns: 1fr;
+          place-items: center;
+        }
+        
+        .single-item-card {
+          max-width: 500px;
+          width: 100%;
+          margin: 0 auto;
+        }
+        
+        @media (max-width: 640px) {
+          .single-item-card { max-width: 100%; }
+        }
       `}</style>
 
-      <section className="relative z-10 w-full flex justify-center py-12 sm:py-24 bg-transparent text-[var(--text)]">
-        <div className="w-full max-w-6xl px-4 sm:px-6">
-
-          <div className="flex justify-center gap-8 sm:gap-16 mb-12 sm:mb-16 py-6 sm:py-8 border-y border-[var(--text)]/5">
-            <CountBadge value={TOTAL_WEB + 1} label="Web Projects" />
-            <div className="w-[1px] bg-[var(--text)]/10" />
-            <CountBadge value={TOTAL_DESIGN} label="Design Works" />
-            <div className="w-[1px] bg-[var(--text)]/10" />
-            <CountBadge value={TOTAL_CERTS} label="Certificates" />
+      <section className="relative z-10 w-full flex justify-center py-16 sm:py-32 bg-transparent text-[var(--text)]">
+        <div className="w-full max-w-7xl px-4 sm:px-8">
+          <div className="mb-16 sm:mb-24 space-y-8 sm:space-y-12">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6">
+              <CountBadge value={totalWorks} label="Works" />
+              <CountBadge value={WORK_CATEGORIES.length} label="Category" />
+              <CountBadge value={CERTS.length} label="Certified" />
+            </div>
+            <div className="w-full h-px bg-gradient-to-r from-[var(--text)]/0 via-[var(--text)]/10 to-[var(--text)]/0" />
           </div>
 
-          <div className="flex justify-center mb-12 sm:mb-20">
-            <nav className="inline-flex p-1 sm:p-1.5 bg-[var(--text)]/5 rounded-2xl sm:rounded-[2rem] border border-[var(--text)]/10 backdrop-blur-md w-full sm:w-auto overflow-x-auto no-scrollbar">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 sm:gap-12 mb-16 sm:mb-24">
+            <div className="space-y-2 sm:space-y-4">
+              <h1 className="text-4xl sm:text-6xl font-black text-[var(--text)] tracking-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                Creative Portfolio
+              </h1>
+              <p className="text-[var(--text)]/50 text-sm sm:text-base max-w-md" style={{ fontFamily: "'DM Mono', monospace" }}>
+                Crafting digital experiences through code, design, and innovation
+              </p>
+            </div>
+
+            <nav className="inline-flex p-1 sm:p-2 bg-[var(--text)]/[0.03] rounded-2xl sm:rounded-3xl border border-[var(--text)]/5 backdrop-blur-xl w-full sm:w-auto overflow-x-auto no-scrollbar gap-1 sm:gap-2">
               {MAIN_TABS.map((t) => (
                 <button
                   key={t.key}
                   onClick={() => setTab(t.key)}
-                  className={`btn-modern relative flex flex-col items-center flex-1 sm:flex-none min-w-[90px] sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-[1.8rem] transition-all ${
-                    tab === t.key
-                      ? "bg-[var(--bg)] border border-[var(--text)]/10 text-[var(--text)] active-tab-glow"
-                      : "text-[var(--text)]/40 hover:text-[var(--text)]/70"
-                  }`}
+                  className={`btn-modern relative flex flex-col items-center flex-1 sm:flex-none px-4 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all whitespace-nowrap ${tab === t.key
+                      ? "bg-[var(--bg)] border border-[var(--text)]/20 text-[var(--text)] active-tab-glow"
+                      : "text-[var(--text)]/40 hover:text-[var(--text)]/60 border border-transparent"
+                    }`}
                 >
-                  <span className="text-[0.55rem] sm:text-[0.6rem] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase mb-0.5" style={{ fontFamily: "'DM Mono', monospace" }}>
+                  <span className="text-[0.65rem] sm:text-sm font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
                     {t.label}
                   </span>
-                  <span className="text-[0.35rem] sm:text-[0.4rem] tracking-[0.1em] sm:tracking-[0.15em] uppercase opacity-50 whitespace-nowrap" style={{ fontFamily: "'DM Mono', monospace" }}>
+                  <span className="text-[0.45rem] sm:text-xs tracking-[0.1em] uppercase opacity-50" style={{ fontFamily: "'DM Mono', monospace" }}>
                     {t.sub}
                   </span>
-                  {tab === t.key && (
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-white shadow-[0_0_8px_white]" />
-                  )}
                 </button>
               ))}
             </nav>
           </div>
 
-          {tab === "projects" && (
-            <div className="space-y-12 sm:space-y-16 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                {["web", "design"].map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setProjectCat(cat as "web" | "design")}
-                    className={`btn-modern px-6 sm:px-8 py-3 rounded-xl border text-[0.5rem] sm:text-[0.55rem] font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase ${
-                      projectCat === cat
-                        ? "bg-[var(--text)]/10 border-[var(--text)]/20 text-[var(--text)]"
-                        : "border-transparent text-[var(--text)]/30 hover:text-[var(--text)]/60"
-                    }`}
-                    style={{ fontFamily: "'DM Mono', monospace" }}
-                  >
-                    {cat === "web" ? "Digital Development" : "Visual Identity"}
-                  </button>
-                ))}
+          {tab === "portfolio" && (
+            <div className="space-y-16 sm:space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2 sm:gap-3">
+                {WORK_CATEGORIES.map((cat) => {
+                  const catKey = cat.key as typeof workCategory;
+                  return (
+                    <button
+                      key={cat.key}
+                      onClick={() => setWorkCategory(catKey)}
+                      className={`btn-modern group px-3 sm:px-4 py-4 sm:py-5 rounded-xl sm:rounded-2xl border text-center transition-all relative overflow-hidden ${workCategory === cat.key
+                          ? "bg-gradient-to-br from-[var(--text)]/15 to-[var(--text)]/5 border-[var(--text)]/20 text-[var(--text)] shadow-lg"
+                          : "border-[var(--text)]/5 text-[var(--text)]/40 hover:border-[var(--text)]/10 hover:text-[var(--text)]/60 hover:bg-[var(--text)]/[0.02]"
+                        }`}
+                    >
+                      <div className="space-y-2">
+                        <div className="text-xs sm:text-sm font-bold tracking-[0.15em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
+                          {cat.label}
+                        </div>
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="text-[0.65rem] sm:text-xs opacity-60">{cat.sub}</span>
+                          <span className="text-[0.65rem] sm:text-xs font-black opacity-80">{String(cat.count).padStart(2, "0")}</span>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
-              {projectCat === "web" && (
-                <div className="space-y-8 sm:space-y-12">
-                  <SectionHeader label="Web Projects" count={TOTAL_WEB + 1} />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 container-3d">
-                    {WEB_PROJECTS.map((p, index) => (
-                      <Link
-                        key={p.id}
-                        href={p.href}
-                        className={`card-3d group relative rounded-2xl sm:rounded-[2rem] overflow-hidden border border-[var(--text)]/10 ${
-                          index === 0 ? "sm:col-span-2 lg:col-span-3 aspect-video sm:aspect-[21/9]" : "aspect-[4/5]"
-                        }`}
+              <div className="space-y-10 sm:space-y-14">
+                <SectionHeader label={WORK_CATEGORIES.find(c => c.key === workCategory)?.label || "Works"} count={currentItems.length} />
+
+                {currentItems.length > 0 ? (
+                  <div className={isSingleItem ? "single-item-container" : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 container-3d"}>
+                    {currentItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className={isSingleItem ? "single-item-card" : "group cursor-pointer h-full"}
+                        onClick={() => setSelectedProject(item)}
                       >
-                        <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-                        <div className="absolute inset-0 p-4 sm:p-8 flex flex-col justify-end transform transition-transform duration-500 group-hover:translate-y-[-4px]">
-                          <div className="space-y-2 sm:space-y-4">
-                            <div className="flex flex-wrap gap-1 sm:gap-2">
-                              {p.techStack?.slice(0, index === 0 ? 6 : 3).map((tech) => (
-                                <span key={tech} className="text-[8px] sm:text-[10px] px-2 sm:px-3 py-0.5 sm:py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/10 text-white/80 uppercase font-medium tracking-tighter">
-                                  {tech}
-                                </span>
-                              ))}
+                        <div className="card-3d relative h-full rounded-2xl sm:rounded-3xl overflow-hidden border border-[var(--text)]/5 hover:border-[var(--text)]/15 transition-all bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent">
+                          <div className="project-card relative w-full bg-[var(--text)]/[0.03]">
+                            <Image
+                              src={item.image}
+                              alt={item.title}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                              priority={false}
+                            />
+                            <div className="image-overlay" />
+                            <div className="view-indicator flex items-center justify-center gap-2 text-white text-xs sm:text-sm font-medium">
+                              <span>View Project</span>
+                              <RxArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                             </div>
-                            <h3
-                              className={`${index === 0 ? "text-2xl sm:text-4xl" : "text-xl sm:text-2xl"} font-light text-white tracking-wide`}
-                              style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                            >
-                              {p.title}
-                            </h3>
-                            <p className={`text-[0.6rem] sm:text-[0.65rem] text-white/50 leading-relaxed ${index === 0 ? "max-w-md" : "max-w-xs"} group-hover:text-white/80 transition-colors line-clamp-2`}>
-                              {p.description}
-                            </p>
                           </div>
                         </div>
-                      </Link>
+                      </div>
                     ))}
-
-                    <button
-                      onClick={() => setShowComingSoonAlert(true)}
-                      className="soon-border card-3d group relative sm:col-span-2 lg:col-span-3 aspect-video sm:aspect-[21/9] rounded-2xl sm:rounded-[2rem] overflow-hidden border border-white/5 bg-white/[0.02] flex flex-col items-center justify-center gap-6 cursor-pointer hover:bg-white/[0.04] transition-colors duration-500"
-                    >
-                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)]" />
-                      <div className="flex flex-col items-center gap-4 relative z-10 p-8 text-center">
-                        <div className="soon-pulse flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]" />
-                          <span className="text-[0.42rem] sm:text-[0.48rem] font-black tracking-[0.35em] uppercase text-amber-400/80" style={{ fontFamily: "'DM Mono', monospace" }}>
-                            Coming Soon
-                          </span>
-                        </div>
-                        <h3
-                          className="text-2xl sm:text-4xl font-light text-white/60 group-hover:text-white/90 tracking-wide transition-colors duration-500"
-                          style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                        >
-                          {COMING_SOON_PROJECT.title}
-                        </h3>
-                        <p className="text-[0.55rem] sm:text-[0.6rem] text-white/25 leading-relaxed max-w-md group-hover:text-white/50 transition-colors duration-500" style={{ fontFamily: "'DM Mono', monospace" }}>
-                          {COMING_SOON_PROJECT.description}
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-2 mt-2">
-                          {COMING_SOON_PROJECT.tags.map((tag) => (
-                            <span key={tag} className="text-[7px] sm:text-[9px] px-2.5 py-1 bg-white/5 rounded-full border border-white/8 text-white/30 uppercase font-medium tracking-tighter">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                    </button>
                   </div>
-                </div>
-              )}
-
-              {projectCat === "design" && (
-                <div className="space-y-8 sm:space-y-12">
-                  <div className="grid grid-cols-2 sm:flex sm:justify-center gap-3 sm:gap-6">
-                    {(["gallery", "canva", "figma", "photoshop"] as const).map((tool) => {
-                      const Icon = DESIGN_TOOL_ICONS[tool];
-                      const isActive = designTool === tool;
-                      return (
-                        <button
-                          key={tool}
-                          onClick={() => setDesignTool(tool)}
-                          className={`btn-modern min-w-0 sm:min-w-[140px] px-4 sm:px-6 py-4 sm:py-5 rounded-xl sm:rounded-2xl border transition-all duration-500 flex flex-col items-center gap-2 sm:gap-3 ${
-                            isActive
-                              ? "bg-white/10 border-white/30 translate-y-[-4px] shadow-xl"
-                              : "bg-white/5 border-white/5 opacity-40 hover:opacity-100"
-                          }`}
-                        >
-                          <Icon className={`text-lg sm:text-xl transition-transform duration-500 ${isActive ? "scale-110 sm:scale-125" : ""}`} />
-                          <div className="flex items-center gap-1.5 sm:gap-2">
-                            <div className={`w-1 h-1 rounded-full transition-all duration-500 ${isActive ? "bg-white scale-150 shadow-[0_0_8px_white]" : "bg-white/20"}`} />
-                            <span className="text-[0.45rem] sm:text-[0.55rem] font-bold tracking-[0.1em] sm:tracking-[0.2em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
-                              {tool}
-                            </span>
-                          </div>
-                        </button>
-                      );
-                    })}
+                ) : (
+                  <div className="col-span-full text-center py-16 sm:py-20">
+                    <p className="text-[var(--text)]/50 text-sm sm:text-base">No items in this category yet</p>
                   </div>
-
-                  {graphicDesignItems.length > 0 && (
-                    <div className="space-y-6 sm:space-y-8">
-                      <SectionHeader label="Graphic Design" count={graphicDesignItems.length} />
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 container-3d">
-                        {graphicDesignItems.map((item) => (
-                          <div key={item.id} onClick={() => setSelectedUI(item)} className="card-3d relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden border border-white/5 cursor-pointer group">
-                            <Image src={item.image} alt={item.title} fill className="object-cover" />
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-4 text-center">
-                              <span className="text-[0.45rem] sm:text-[0.5rem] font-bold tracking-[0.2em] sm:tracking-[0.5em] uppercase text-white mb-1 sm:mb-2">{item.title}</span>
-                              <span className="text-[0.35rem] sm:text-[0.4rem] tracking-[0.1em] sm:tracking-[0.2em] uppercase text-white/50">{item.category}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {tshirtDesignItems.length > 0 && (
-                    <div className="space-y-6 sm:space-y-8">
-                      <SectionHeader label="T-Shirt Design" count={tshirtDesignItems.length} />
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 container-3d">
-                        {tshirtDesignItems.map((item) => (
-                          <div key={item.id} onClick={() => setSelectedUI(item)} className="card-3d relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden border border-white/5 cursor-pointer group">
-                            <Image src={item.image} alt={item.title} fill className="object-cover" />
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-4 text-center">
-                              <span className="text-[0.45rem] sm:text-[0.5rem] font-bold tracking-[0.2em] sm:tracking-[0.5em] uppercase text-white mb-1 sm:mb-2">{item.title}</span>
-                              <span className="text-[0.35rem] sm:text-[0.4rem] tracking-[0.1em] sm:tracking-[0.2em] uppercase text-white/50">{item.category}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
+                )}
+              </div>
             </div>
           )}
 
           {tab === "tech" && (
-            <div className="text-gray-300 sm:p-8 rounded-2xl animate-in fade-in zoom-in-95 duration-1000">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-12 sm:gap-y-16">
+            <div className="animate-in fade-in zoom-in-95 duration-1000">
+              <div className="space-y-16 sm:space-y-20">
                 {Object.entries(TECH_DATA).map(([group, list]) => (
-                  <div key={group} className="space-y-6 sm:space-y-8">
-                    <SectionHeader label={group} count={list.length} className="text-gray-300" />
-                    <div className="grid grid-cols-4 gap-3 sm:gap-4">
+                  <div key={group} className="space-y-8 sm:space-y-12">
+                    <SectionHeader label={group} count={list.length} />
+                    <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-5">
                       {list.map((t) => (
                         <div
                           key={t.name}
-                          className="group relative aspect-square flex flex-col items-center justify-center rounded-xl sm:rounded-2xl border border-[var(--text)]/5 hover:border-[var(--text)]/20 transition-all bg-zinc-800 duration-500 hover:bg-zinc-700 cursor-default"
+                          className="group relative aspect-square flex flex-col items-center justify-center rounded-2xl sm:rounded-3xl border border-[var(--text)]/5 hover:border-[var(--text)]/20 transition-all bg-gradient-to-br from-[var(--text)]/[0.03] to-transparent hover:from-[var(--text)]/[0.08] duration-500 cursor-default hover:shadow-lg hover:-translate-y-1"
                         >
-                          <t.Icon className="text-lg sm:text-xl mb-2 sm:mb-3 transition-all duration-500 group-hover:scale-110" style={{ color: t.color }} />
-                          <span className="text-[0.35rem] sm:text-[0.45rem] font-md uppercase tracking-[0.1em] sm:tracking-widest text-gray-300 group-hover:text-white px-1 text-center" style={{ fontFamily: "'DM Mono', monospace" }}>
+                          <div className="relative transition-all duration-500 group-hover:scale-125 group-hover:-rotate-12">
+                            <t.Icon className="text-2xl sm:text-3xl" style={{ color: t.color }} />
+                          </div>
+                          <span className="absolute bottom-0 left-0 right-0 text-[0.45rem] sm:text-xs font-bold uppercase tracking-[0.1em] text-[var(--text)]/60 group-hover:text-[var(--text)]/90 px-2 py-2 text-center" style={{ fontFamily: "'DM Mono', monospace" }}>
                             {t.name}
                           </span>
                         </div>
@@ -440,19 +493,33 @@ export default function PortfolioSection() {
           )}
 
           {tab === "cert" && (
-            <div className="space-y-8 sm:space-y-12 animate-in fade-in slide-in-from-top-8 duration-1000">
-              <SectionHeader label="Certificates & Credentials" count={TOTAL_CERTS} />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <div className="space-y-10 sm:space-y-16 animate-in fade-in slide-in-from-top-8 duration-1000">
+              <SectionHeader label="Certificates & Credentials" count={CERTS.length} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                 {CERTS.map((c) => (
                   <a
                     key={c.id}
                     href={c.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group block rounded-xl sm:rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105"
+                    className="group block rounded-2xl sm:rounded-3xl overflow-hidden border border-[var(--text)]/5 hover:border-[var(--text)]/15 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent"
                   >
-                    <div className="relative w-full aspect-[4/3] bg-white">
-                      <Image src={c.image} alt={c.title} fill className="object-cover sm:grayscale sm:group-hover:grayscale-0 transition-all duration-700" />
+                    <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-[var(--text)]/[0.05] to-transparent overflow-hidden">
+                      <Image
+                        src={c.image}
+                        alt={c.title}
+                        fill
+                        className="object-cover sm:grayscale sm:group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-4">
+                        <div className="flex items-center gap-2 text-white text-xs sm:text-sm font-medium">
+                          <span>View Certificate</span>
+                          <HiArrowTopRightOnSquare className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-4 sm:p-5 bg-[var(--bg)] border-t border-[var(--text)]/5">
+                      <h3 className="text-xs sm:text-sm font-bold text-[var(--text)] truncate">{c.title}</h3>
                     </div>
                   </a>
                 ))}
@@ -462,81 +529,107 @@ export default function PortfolioSection() {
         </div>
       </section>
 
-      {selectedUI && (
+      {selectedProject && (
         <div
-          onClick={() => setSelectedUI(null)}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-3xl bg-black/95 animate-in fade-in duration-300 overflow-hidden"
-        >
-          <div className="relative w-full max-w-5xl flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
-            <div className="relative w-full h-[60vh] sm:h-[70vh] flex items-center justify-center">
-              <div className="relative w-full h-full rounded-2xl sm:rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl flex items-center justify-center">
-                <Image src={selectedUI.image} alt={selectedUI.title} fill className="object-contain" priority />
-              </div>
-            </div>
-            <div className="mt-6 sm:mt-8 flex flex-col items-center text-center space-y-2">
-              <h2 className="text-white text-2xl sm:text-3xl font-light tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                {selectedUI.title}
-              </h2>
-              <div className="flex items-center gap-3">
-                <div className="w-6 sm:w-8 h-[1px] bg-white/20" />
-                <p className="text-white/50 text-[0.5rem] sm:text-[0.6rem] tracking-[0.2em] sm:tracking-[0.4em] uppercase font-bold" style={{ fontFamily: "'DM Mono', monospace" }}>
-                  {selectedUI.category}
-                </p>
-                <div className="w-6 sm:w-8 h-[1px] bg-white/20" />
-              </div>
-              <button
-                onClick={() => setSelectedUI(null)}
-                className="mt-6 sm:mt-8 px-10 sm:px-14 py-3 sm:py-4 rounded-full border border-white/10 bg-white/5 text-[0.5rem] sm:text-[0.55rem] font-black tracking-[0.4em] sm:tracking-[0.6em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
-                style={{ fontFamily: "'DM Mono', monospace" }}
-              >
-                Close Viewer
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showComingSoonAlert && (
-        <div
-          onClick={() => setShowComingSoonAlert(false)}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-6 backdrop-blur-2xl bg-black/80 animate-in fade-in duration-300"
+          className="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-lg"
+          onClick={() => setSelectedProject(null)}
         >
           <div
-            className="alert-in relative w-full max-w-md rounded-3xl border border-white/10 bg-[#0d0d0d] p-8 sm:p-10 flex flex-col items-center text-center gap-5 shadow-2xl"
+            className="modal-content relative w-full max-w-5xl flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-400/20 bg-amber-400/5">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_10px_#fbbf24] soon-pulse" />
-              <span className="text-[0.42rem] sm:text-[0.48rem] font-black tracking-[0.35em] uppercase text-amber-400" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Work In Progress
-              </span>
-            </div>
-
-            <h3 className="text-white text-2xl sm:text-3xl font-light tracking-wide" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-              Groove — Case Study
-            </h3>
-
-            <p className="text-white/40 text-[0.52rem] sm:text-[0.58rem] leading-relaxed tracking-wide" style={{ fontFamily: "'DM Mono', monospace" }}>
-              This case study is currently being written. It will cover the full story of Groove — from user research with 152 participants to system deployment. Check back soon for the complete breakdown.
-            </p>
-
-            <div className="w-full h-[1px] bg-white/5" />
-
-            <div className="flex flex-wrap justify-center gap-2">
-              {COMING_SOON_PROJECT.tags.map((tag) => (
-                <span key={tag} className="text-[7px] sm:text-[9px] px-3 py-1 bg-white/5 rounded-full border border-white/8 text-white/30 uppercase font-medium tracking-tight">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
             <button
-              onClick={() => setShowComingSoonAlert(false)}
-              className="mt-2 px-10 py-3 rounded-full border border-white/10 bg-white/5 text-[0.48rem] sm:text-[0.52rem] font-black tracking-[0.4em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
-              style={{ fontFamily: "'DM Mono', monospace" }}
+              onClick={() => setSelectedProject(null)}
+              className="absolute -top-12 right-0 p-2 text-white/60 hover:text-white transition-colors z-50"
             >
-              Got It
+              <IoClose className="w-6 h-6 sm:w-8 sm:h-8" />
             </button>
+
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black flex items-center justify-center" style={{ maxHeight: "70vh" }}>
+              <Image
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                width={1200}
+                height={800}
+                className="object-contain w-auto h-auto max-h-[70vh] max-w-full"
+                priority
+              />
+            </div>
+
+            <div className="mt-8 sm:mt-12 flex flex-col items-center text-center space-y-6 sm:space-y-8 max-w-3xl">
+              <div className="space-y-4 sm:space-y-6">
+                <h2
+                  className="text-2xl sm:text-4xl font-light text-white tracking-wide"
+                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                >
+                  {selectedProject.title}
+                </h2>
+                <p className="text-white/70 text-sm sm:text-base leading-relaxed">
+                  {selectedProject.description}
+                </p>
+              </div>
+
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+              {(selectedProject.techStack || selectedProject.uiTools) && (
+                <div className="w-full space-y-4">
+                  <p className="text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white/60" style={{ fontFamily: "'DM Mono', monospace" }}>
+                    Technologies & Tools
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                    {(selectedProject.techStack || selectedProject.uiTools)?.map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2.5 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white/90 font-medium hover:bg-white/20 transition-colors"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 pt-4 sm:pt-8">
+                {selectedProject.href && selectedProject.href.startsWith("http") && (
+                  <a
+                    href={selectedProject.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
+                    style={{ fontFamily: "'DM Mono', monospace" }}
+                  >
+                    Visit Project
+                  </a>
+                )}
+                {selectedProject.href && !selectedProject.href.startsWith("http") && (
+                  <Link
+                    href={selectedProject.href}
+                    className="px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
+                    style={{ fontFamily: "'DM Mono', monospace" }}
+                  >
+                    View Project
+                  </Link>
+                )}
+                {selectedProject.github && (
+                  <a
+                    href={selectedProject.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
+                    style={{ fontFamily: "'DM Mono', monospace" }}
+                  >
+                    View Code
+                  </a>
+                )}
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white/80 hover:text-white hover:bg-white/10 transition-all duration-500"
+                  style={{ fontFamily: "'DM Mono', monospace" }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

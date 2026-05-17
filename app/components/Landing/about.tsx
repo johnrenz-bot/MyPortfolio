@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import {
   FaGraduationCap,
   FaCode,
@@ -13,37 +14,44 @@ import {
   FaBezierCurve,
   FaBug,
   FaUsers,
+  FaFigma,
+  FaReact,
 } from "react-icons/fa";
-import { FaFigma, FaReact } from "react-icons/fa";
 import {
   SiAdobephotoshop,
   SiAdobeillustrator,
   SiCanva,
   SiNextdotjs,
-  SiLaravel,
   SiTailwindcss,
+  SiTypescript,
+  SiVite,
 } from "react-icons/si";
 
 const ABOUT_DATA = {
-  role: "UI/UX Product Designer • Frontend Developer • Team Lead",
+  role: "Aspiring UI/UX Designer • Frontend Developer • Team Lead",
+
   description: [
-    "I'm a BSIT student at STI College San Jose Del Monte, Bulacan with professional internship experience in UI/UX product design, frontend development, and team leadership.",
-    "Currently interning at Alpha Centauri Garments as UI/UX Product Designer and Team Lead for REEFER — a full e-commerce web system — while also contributing as a frontend developer on a separate company project using React and Tailwind CSS.",
-    "I also intern at BoxHive Digital Solutions where I design web UI screens in Figma, produce graphic design materials, and perform QA testing for IceBreaker, a mobile app published on Google Play. I use tools like Figma, Adobe Photoshop, Adobe Illustrator, and Canva to create intuitive and polished digital experiences.",
+    "I’m an aspiring IT professional and UI/UX Designer who enjoys creating thoughtful, user-friendly digital experiences. I’m passionate about understanding user needs and turning ideas into clean, intuitive interfaces through wireframes, prototypes, and responsive designs using Figma.",
+
+    "Through academic projects and hands-on internship experience, I’ve gained practical exposure to frontend development using React, Next.js, Vite, and Tailwind CSS. This experience helps me better understand how design decisions translate into real, functional products.",
+
+    "Currently, I’m interning at Alpha Centauri Garments as a UI/UX Product Designer and Team Lead for REEFER, a streetwear e-commerce web system. I contribute to product design, collaborate with teams, and support frontend implementation while continuously learning how to balance usability, business goals, and development constraints.",
   ],
+
   goals: [
-    "Lead product design end-to-end — from user research and wireframing to high-fidelity prototypes and design systems.",
-    "Bridge design and development by building clean, responsive frontend interfaces using React, Next.js, and Tailwind CSS.",
-    "Grow as a full-stack engineer and team leader who can manage projects, coordinate with stakeholders, and ship quality software.",
+    "Continue growing as a UI/UX Designer by improving my skills in user research, wireframing, prototyping, usability, and creating meaningful digital experiences that genuinely help users.",
+
+    "Strengthen the connection between design and development by building responsive and accessible interfaces using React, Next.js, and Tailwind CSS, while ensuring design ideas are implemented thoughtfully and consistently.",
+
+    "Develop into a dependable design and technical team contributor — someone who communicates well, collaborates effectively, and helps create polished, user-centered digital products through continuous learning and experience.",
   ],
 };
-
 const ACADEMIC = [
   {
     institution: "STI College SJDM",
     period: "August 2022 – Present",
     subtext: "BS Information Technology",
-    bio: "Currently completing my degree with hands-on exposure to the full software development lifecycle — from system design and backend architecture to UI/UX and frontend implementation. My capstone project and internships have shaped me into a well-rounded IT professional.",
+    bio: "Pursuing a degree in IT with hands-on exposure to the full software development lifecycle. Capstone project and internships have shaped me into a well-rounded IT professional experienced in design, frontend development, and team leadership.",
     icon: <FaGraduationCap className="text-4xl text-zinc-700" />,
   },
   {
@@ -61,47 +69,47 @@ const EXPERIENCE = [
     period: "March 2026 – Present",
     subtext: "Alpha Centauri Garments · Internship",
     details:
-      "Started as UI/UX designer for REEFER, a full streetwear e-commerce web system — handling user research, information architecture, FigJam system flows, wireframes, and high-fidelity Figma prototypes. Promoted to Team Lead overseeing UI/UX direction, facilitating team meetings, and coordinating directly with the company head and clients. Also contributed as a frontend developer on a separate company project (Sorbetes) using React and Tailwind CSS.",
+      "Designed end-to-end UI/UX for REEFER, a streetwear e-commerce platform by building user flows, wireframes, and responsive Figma prototypes delivering a consistent and shoppable interface across all screens. Promoted to Team Lead managing task delegation, documentation, and designer-developer collaboration streamlining workflows. Developed responsive web pages and UI components using React.js, Vite, and Tailwind CSS translating Figma designs into reusable frontend interfaces. Collaborated with design and backend teams aligning on implementation details and resolving interface inconsistencies delivering a polished production-ready web system.",
     icon: <FaPaintBrush className="text-4xl text-zinc-700" />,
   },
   {
-    title: "IT Intern – UI/UX & Graphic Design",
+    title: "IT Intern – UI/UX, Graphic Design & QA",
     period: "April 2026 – Present",
-    subtext: "BoxHive Digital Solutions · IT Startup · Internship",
+    subtext: "BoxHive Digital Solutions · Internship",
     details:
-      "Designed web UI screens (Home, Shop, About, Contact, Login) for a client project in Figma. Produced graphic materials including event expo posters, promotional content, and device mockups for Facebook campaigns. Additionally served as a mobile QA tester for IceBreaker (Android, Google Play) — identifying bugs, writing structured test reports, and collaborating with developers for fix verification.",
+      "Designed client-facing web UI screens in Figma by structuring layouts and refining visual hierarchy improving consistency and presentation across delivered projects. Produced marketing materials including expo posters, social media graphics, and device mockups supporting active campaigns. Executed QA testing for the IceBreaker Android app by documenting bugs, validating fixes, and reporting findings to the dev team contributing to a cleaner and more stable product release.",
     icon: <FaBug className="text-4xl text-zinc-700" />,
   },
   {
-    title: "Lead Developer & UI/UX Product Designer",
-    period: "2023 – 2024",
-    subtext: "Capstone Project · Groove – Performing Arts Ecosystem",
+    title: "Lead Developer & UI/UX Designer",
+    period: "March 2025 – November 2025",
+    subtext: "Capstone Project · Groove Performing Arts Ecosystem",
     details:
-      "Led a 4-person team to design and build Groove, a performing arts platform for San Jose Del Monte, Bulacan. Conducted user research with 152 participants to define flows for three distinct user roles. Built and deployed a full-stack Laravel + MySQL application with Google Maps API integration and an AI chat feature, hosted on Hostinger. Managed an Agile development cycle aligned with ISO/IEC 25010:2014 quality standards.",
+      "Led a 3-person development team by coordinating tasks, timelines, and collaboration across design and build phases delivering a fully functional platform on schedule. Conducted user research with 150+ participants synthesizing findings into user flows, wireframes, and interface designs creating an experience grounded in real user needs. Built and tested core system features across the full development cycle iterating through planning, coding, and QA shipping a user-centered web platform ready for evaluation.",
     icon: <FaUsers className="text-4xl text-zinc-700" />,
   },
   {
     title: "Full-Stack Developer & UI Designer",
     period: "2023 – 2024",
-    subtext: "Capstone Project · Groove Hub",
+    subtext: "Academic Projects",
     details:
-      "Architected the full-stack system using Laravel and MySQL while designing the entire user experience in Figma. The platform features role-based workflows and real-time messaging through a responsive Tailwind CSS interface.",
+      "Built multiple projects integrating design and development workflows. Designed user interfaces in Figma and implemented them with focus on responsive design, accessibility, and performance. Gained experience with component-based architecture using React and modern development practices.",
     icon: <FaLaptopCode className="text-4xl text-zinc-700" />,
+  },
+  {
+    title: "Programming Fundamentals",
+    period: "2022 – 2023",
+    subtext: "Java & Web Development Foundation",
+    details:
+      "Built foundational programming skills in Java and object-oriented principles. Learned essential concepts in web development, database design, and software architecture enabling progression to frontend and full-stack development.",
+    icon: <FaCode className="text-4xl text-zinc-700" />,
   },
   {
     title: "Technical Foundation",
     period: "2020 – 2022",
-    subtext: "TVL-ICT · Grade 11 & 12",
+    subtext: "High School ICT Specialization",
     details:
-      "Built a solid technical base during Senior High School, covering computer systems servicing, digital logic, and hardware diagnostics. First exposure to programming concepts that shaped my path into IT.",
-    icon: <FaCode className="text-4xl text-zinc-700" />,
-  },
-  {
-    title: "The First Program",
-    period: "2022 – 2023",
-    subtext: "First Year College · Java Foundation",
-    details:
-      "Began my programming journey with Java, learning object-oriented principles and logic-building. Earned a Java Foundations certification in June 2023. This served as the gateway into building more complex software systems.",
+      "Completed specialized ICT coursework covering computer systems, digital logic, networking fundamentals, and basic programming concepts forming the foundation for my IT degree.",
     icon: <FaTerminal className="text-4xl text-zinc-700" />,
   },
 ];
@@ -115,61 +123,68 @@ const TOOLS = [
         title: "Figma",
         subtext: "UI/UX Design & Prototyping",
         details:
-          "I map out user journeys, design information architecture, build wireframes, and prototype high-fidelity interactions in Figma — including full design systems and FigJam flow diagrams for complex web systems.",
+          "I design wireframes, build user flows with FigJam, create responsive prototypes, and develop design systems for complex web applications. Used extensively on REEFER project for design-to-development handoff.",
       },
       {
         icon: <SiAdobephotoshop className="text-2xl text-blue-600 mt-1" />,
         title: "Photoshop",
-        subtext: "Visual Compositions",
+        subtext: "Visual Design & Graphics",
         details:
-          "I craft event posters, promotional visuals, t-shirt designs, and layered graphic compositions — used professionally at both Alpha Centauri Garments and BoxHive Digital Solutions.",
+          "I create visual compositions, design mockups, and produce marketing materials. Used professionally at BoxHive Digital Solutions for campaign assets and social media content.",
       },
       {
         icon: <SiAdobeillustrator className="text-2xl text-orange-600 mt-1" />,
         title: "Illustrator",
         subtext: "Vector Graphics & Branding",
         details:
-          "I build scalable logos, vector graphics, and brand assets for clothing and digital projects — ensuring visuals stay crisp across all platforms and print formats.",
+          "I build scalable vector graphics, logos, and brand assets ensuring visuals remain crisp across all platforms and print formats.",
       },
       {
         icon: <SiCanva className="text-2xl text-green-600 mt-1" />,
         title: "Canva",
         subtext: "Presentations & Documentation",
         details:
-          "I create structured project documentation, design workflow trackers, and polished presentations — used actively for team documentation during the REEFER internship project.",
+          "I create structured project documentation, design workflow trackers, and polished presentations used actively for team collaboration and stakeholder communication.",
       },
     ],
   },
   {
-    category: "Tech Stack",
+    category: "Frontend Tech Stack",
     items: [
       {
         icon: <FaReact className="text-2xl text-cyan-600 mt-1" />,
-        title: "React",
-        subtext: "Frontend Interfaces",
+        title: "React.js",
+        subtext: "Frontend Framework",
         details:
-          "I build interactive components and responsive UI pages using React and Tailwind CSS — currently applied in a production environment at Alpha Centauri Garments on the Sorbetes project.",
+          "I build interactive components and responsive UI pages using React with focus on reusable architecture and component scalability. Currently applied in production on REEFER project.",
+      },
+      {
+        icon: <SiVite className="text-2xl text-purple-600 mt-1" />,
+        title: "Vite",
+        subtext: "Build Tool & Development Server",
+        details:
+          "I use Vite for fast frontend development and optimized builds. Implemented on REEFER project for rapid iteration and improved developer experience.",
       },
       {
         icon: <SiNextdotjs className="text-2xl text-zinc-700 mt-1" />,
         title: "Next.js",
-        subtext: "Modern Frontend",
+        subtext: "Full-Stack React Framework",
         details:
-          "I optimize frontend performance, manage routing, and deliver fast, polished web experiences — used across personal and academic projects including EduGuide and DinoVerse.",
+          "I develop server-side rendered and static applications with optimized performance. Implemented routing, API routes, and deployment strategies for production applications.",
       },
       {
         icon: <SiTailwindcss className="text-2xl text-sky-500 mt-1" />,
         title: "Tailwind CSS",
-        subtext: "Utility-First Styling",
+        subtext: "Utility-First CSS Framework",
         details:
-          "My go-to styling framework for responsive, consistent, and efficient UI. Applied across capstone (Groove), internship (Sorbetes), and personal frontend projects.",
+          "My go-to styling framework for responsive, consistent, and efficient UI. Applied across REEFER, Groove capstone, and personal frontend projects.",
       },
       {
-        icon: <SiLaravel className="text-2xl text-red-600 mt-1" />,
-        title: "Laravel",
-        subtext: "Backend Framework",
+        icon: <SiTypescript className="text-2xl text-blue-600 mt-1" />,
+        title: "TypeScript",
+        subtext: "Type-Safe JavaScript",
         details:
-          "I structure backend logic, connect MySQL databases, and integrate third-party APIs. Used to build and deploy the full-stack Groove performing arts platform with Google Maps API and AI chat.",
+          "I write scalable and maintainable code with static type checking. Used to catch errors early and improve developer experience with better tooling.",
       },
     ],
   },
@@ -179,7 +194,7 @@ const CERTIFICATIONS = [
   {
     title: "Graphic Design Essentials",
     issuer: "Canva Design School · Canva Certified",
-    date: "March 8, 2026",
+    date: "March 2026",
     credential: "Credential ID: 198b01",
   },
   {
@@ -202,12 +217,26 @@ const CERTIFICATIONS = [
   },
 ];
 
+const GALLERY_IMAGES = [
+  { id: 1, image: "/Image/Gallery/1.jpg" },
+  { id: 2, image: "/Image/Gallery/2.jpg" },
+  { id: 3, image: "/Image/Gallery/3.jpg" },
+  { id: 4, image: "/Image/Gallery/4.jpg" },
+  { id: 5, image: "/Image/Gallery/5.jpg" },
+  { id: 6, image: "/Image/Gallery/6.jpg" },
+];
+
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
     const els = containerRef.current?.querySelectorAll(".aos");
     if (!els) return;
+
     const obs = new IntersectionObserver(
       (entries) =>
         entries.forEach((entry) =>
@@ -217,116 +246,217 @@ export default function About() {
         ),
       { threshold: 0.1 }
     );
+
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
 
-  const renderCards = (data: typeof EXPERIENCE | typeof TOOLS[0]["items"]) =>
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!galleryRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - galleryRef.current.offsetLeft);
+    setScrollLeft(galleryRef.current.scrollLeft);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !galleryRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - galleryRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    galleryRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const renderCards = (
+    data: typeof EXPERIENCE | typeof TOOLS[0]["items"]
+  ) =>
     data.map((item, i) => (
       <div
         key={i}
-        className={`aos sd${Math.min(i + 1, 5)} exp-row exp-grid group relative border-t border-black/10 hover:bg-black/[0.03] transition-colors py-10 px-6 rounded-lg`}
+        className={`aos sd${Math.min(i + 1, 5)} exp-row group relative border-t border-black/10 hover:bg-black/[0.03] transition-colors py-10 px-6 rounded-lg`}
       >
-        <div className="flex flex-col justify-between py-1 gap-2">
-          <div className="flex items-center gap-4">
-            {"icon" in item && item.icon && item.icon}
-            <div>
-              <h3 className="text-xl font-black uppercase tracking-tight flex items-center gap-3">
+        <div className="flex flex-col md:flex-row md:justify-between md:gap-8">
+          <div className="flex items-start gap-4 md:w-1/3">
+            {"icon" in item && item.icon && <div className="flex-shrink-0">{item.icon}</div>}
+            <div className="flex-1">
+              <h3 className="text-lg md:text-xl font-black uppercase tracking-tight flex items-center gap-2">
                 {"title" in item ? item.title : ""}
                 <FaArrowRight className="text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500" />
               </h3>
               {"subtext" in item && (
-                <span className="text-[10px] font-bold tracking-widest uppercase text-zinc-700">
+                <span className="text-[10px] font-bold tracking-widest uppercase text-zinc-700 block mt-1">
                   {item.subtext}
                 </span>
               )}
               {"period" in item && (
-                <span className="block text-[10px] font-bold tracking-widest uppercase text-zinc-400 mt-1">
+                <span className="block text-[10px] font-bold tracking-widest uppercase text-zinc-400 mt-2">
                   {(item as { period: string }).period}
                 </span>
               )}
             </div>
           </div>
+          {"details" in item && (
+            <div className="mt-4 md:mt-0 md:w-2/3">
+              <p className="text-base md:text-lg font-medium leading-relaxed text-zinc-800">
+                {item.details}
+              </p>
+            </div>
+          )}
         </div>
-        {"details" in item && (
-          <p className="mt-4 text-lg font-medium leading-relaxed text-[#1a1a1a] max-w-2xl">
-            {item.details}
-          </p>
-        )}
       </div>
     ));
 
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen text-black font-sans selection:bg-black selection:text-zinc-100 overflow-hidden"
+      className="relative min-h-screen w-full overflow-x-hidden text-black font-sans selection:bg-black selection:text-zinc-100"
     >
       <style jsx global>{`
+        html,
+        body {
+          overflow-x: hidden;
+          scroll-behavior: smooth;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+          width: 0px;
+          display: none;
+        }
+      `}</style>
+
+      <style jsx>{`
         .aos {
           opacity: 0;
           transform: translateY(36px);
           filter: blur(5px);
-          transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+          transition:
+            opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
             transform 1s cubic-bezier(0.22, 1, 0.36, 1),
             filter 1s cubic-bezier(0.22, 1, 0.36, 1);
         }
+
         .aos-in {
           opacity: 1;
           transform: translateY(0);
           filter: blur(0);
         }
+
         .sd1 { transition-delay: 0.05s; }
         .sd2 { transition-delay: 0.15s; }
         .sd3 { transition-delay: 0.25s; }
         .sd4 { transition-delay: 0.35s; }
         .sd5 { transition-delay: 0.45s; }
-        .exp-grid {
-          display: grid;
-          grid-template-columns: 4fr 8fr;
-          gap: 32px;
+
+        .gallery-scroll {
+          display: flex;
+          gap: 12px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          scroll-behavior: smooth;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          cursor: grab;
+          padding: 8px 0;
         }
-        @media (max-width: 479px) {
-          .exp-grid {
-            grid-template-columns: 1fr;
-            gap: 16px;
+
+        .gallery-scroll::-webkit-scrollbar {
+          display: none;
+          width: 0;
+          height: 0;
+        }
+
+        .gallery-scroll.dragging {
+          cursor: grabbing;
+        }
+
+        .gallery-item {
+          flex: 0 0 auto;
+          width: 200px;
+          height: 200px;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 1px solid rgba(0, 0, 0, 0.08);
+          transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+          user-select: none;
+          position: relative;
+        }
+
+        .gallery-item:hover {
+          border-color: rgba(0, 0, 0, 0.15);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+          transform: translateY(-2px);
+        }
+
+        .gallery-item img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+
+        @media (max-width: 768px) {
+          .gallery-scroll {
+            gap: 10px;
+          }
+
+          .gallery-item {
+            width: 160px;
+            height: 160px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .gallery-scroll {
+            gap: 8px;
+          }
+
+          .gallery-item {
+            width: 140px;
+            height: 140px;
           }
         }
       `}</style>
 
-      <main className="max-w-6xl mx-auto flex flex-col gap-32 p-8">
-        <section className="flex flex-col items-start space-y-8">
+      <main className="w-full max-w-7xl mx-auto flex flex-col gap-24 px-6 md:px-8">
+        <section className="flex flex-col items-start space-y-8 mt-12">
           <div className="aos sd1 flex items-center gap-3">
             <span className="w-16 h-[2px] bg-black" />
-            <span className="text-lg md:text-xl font-black tracking-[0.6em] uppercase text-zinc-900">
-              ABOUT ME
+            <span className="text-base md:text-lg font-black tracking-[0.6em] uppercase text-zinc-900">
+              About Me
             </span>
           </div>
-          <h1 className="aos sd2 hero-h font-black leading-[0.8] tracking-tighter uppercase text-3xl md:text-5xl lg:text-6xl">
-            Creative <br />
+          <h1 className="aos sd2 font-black leading-[0.8] tracking-tighter uppercase text-3xl md:text-5xl lg:text-6xl">
+            User-Centered <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-zinc-600 to-black">
-              Systems
+              Design & Code
             </span>
           </h1>
-          <p className="aos sd3 text-sm font-bold tracking-widest uppercase text-zinc-500">
+          <p className="aos sd3 text-xs md:text-sm font-bold tracking-widest uppercase text-zinc-500">
             {ABOUT_DATA.role}
           </p>
         </section>
 
-        <section className="intro-grid border-t border-black/10 pt-16">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-black/10 pt-16">
           <div className="aos sd1 flex flex-col gap-4">
             <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 flex items-center gap-3">
-              <span className="w-16 h-[2px] bg-black" /> Biography
+              <span className="w-16 h-[2px] bg-black" /> Overview
             </div>
-            <div className="flex gap-2 text-zinc-500">
+            <div className="flex gap-2 text-zinc-500 text-lg">
               <FaLayerGroup />
               <FaBezierCurve />
             </div>
           </div>
-          <div>
+          <div className="space-y-6">
             {ABOUT_DATA.description.map((text, i) => (
               <p
                 key={i}
-                className={`aos sd${i + 2} desc-text font-medium leading-relaxed tracking-tight text-zinc-800 mb-6 last:mb-0 text-lg`}
+                className={`aos sd${i + 2} font-medium leading-relaxed tracking-tight text-zinc-800 text-base md:text-lg`}
               >
                 {text}
               </p>
@@ -338,17 +468,54 @@ export default function About() {
           {ABOUT_DATA.goals.map((goal, i) => (
             <div
               key={i}
-              className={`aos sd${i + 1} p-6 border border-black/5 bg-black/[0.02] rounded-lg`}
+              className={`aos sd${i + 1} p-6 border border-black/5 bg-black/[0.02] rounded-lg hover:border-black/10 hover:bg-black/[0.05] transition-all duration-300`}
             >
-              <p className="text-lg font-bold uppercase mb-2">0{i + 1}.</p>
-              <p className="text-zinc-700 font-medium">{goal}</p>
+              <p className="text-lg font-bold uppercase mb-3">0{i + 1}.</p>
+              <p className="text-base md:text-lg font-medium text-zinc-700">{goal}</p>
             </div>
           ))}
         </section>
 
+        <section className="space-y-6 border-t border-black/10 pt-16">
+          <div className="aos sd1 flex flex-col gap-2">
+            <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 flex items-center gap-3">
+              <span className="w-16 h-[2px] bg-black" /> Gallery
+            </div>
+          </div>
+
+          <div
+            ref={galleryRef}
+            className={`gallery-scroll ${isDragging ? "dragging" : ""}`}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onMouseMove={handleMouseMove}
+          >
+            {GALLERY_IMAGES.map((image, i) => (
+              <div
+                key={image.id}
+                className={`gallery-item aos sd${Math.min(i + 1, 5)}`}
+              >
+                <Image
+                  src={image.image}
+                  alt={`Gallery image ${image.id}`}
+                  fill
+                  className="object-cover"
+                  sizes="200px"
+                  priority={i < 2}
+                />
+              </div>
+            ))}
+          </div>
+
+          <p className="text-xs text-zinc-500 font-medium tracking-wide uppercase">
+            Drag to explore
+          </p>
+        </section>
+
         <section className="space-y-8">
           <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 aos sd1 flex items-center gap-3">
-            <span className="w-16 h-[2px] bg-black" /> Academic
+            <span className="w-16 h-[2px] bg-black" /> Education
           </div>
           <div className="grid md:grid-cols-2 gap-12">
             {ACADEMIC.map((item, i) => (
@@ -358,13 +525,15 @@ export default function About() {
                   <div className="h-[1px] flex-grow bg-black/10" />
                 </div>
                 <h3 className="text-2xl font-black uppercase">{item.institution}</h3>
-                <p className="text-[10px] font-black tracking-[0.3em] uppercase text-zinc-700">
+                <p className="text-xs md:text-sm font-black tracking-[0.3em] uppercase text-zinc-700">
                   {item.subtext}
                 </p>
-                <span className="text-[10px] font-black tracking-[0.3em] text-zinc-900 uppercase">
+                <span className="text-xs md:text-sm font-black tracking-[0.3em] text-zinc-900 uppercase">
                   {item.period}
                 </span>
-                <p className="mt-4 text-zinc-800 font-medium leading-relaxed">{item.bio}</p>
+                <p className="mt-4 text-base md:text-lg text-zinc-800 font-medium leading-relaxed">
+                  {item.bio}
+                </p>
               </div>
             ))}
           </div>
@@ -379,12 +548,14 @@ export default function About() {
 
         {TOOLS.map((section, i) => (
           <section key={i} className="space-y-4">
-            <h3 className="text-sm font-black tracking-widest uppercase">{section.category}</h3>
+            <h3 className="text-xs md:text-sm font-black tracking-widest uppercase text-zinc-900">
+              {section.category}
+            </h3>
             {renderCards(section.items)}
           </section>
         ))}
 
-        <section className="space-y-8">
+        <section className="space-y-8 mb-20">
           <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 aos sd1 flex items-center gap-3">
             <span className="w-16 h-[2px] bg-black" /> Certifications
           </div>
@@ -392,17 +563,19 @@ export default function About() {
             {CERTIFICATIONS.map((cert, i) => (
               <div
                 key={i}
-                className={`aos sd${i + 1} p-6 border border-black/10 rounded-lg hover:bg-black/[0.02] transition-colors`}
+                className={`aos sd${i + 1} p-6 border border-black/10 rounded-lg hover:bg-black/[0.02] hover:border-black/20 transition-all duration-300`}
               >
                 <h4 className="text-base font-black uppercase tracking-tight">{cert.title}</h4>
-                <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-500 mt-1">
+                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-zinc-500 mt-2">
                   {cert.issuer}
                 </p>
-                <p className="text-[10px] font-bold tracking-widest uppercase text-zinc-400 mt-1">
+                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-zinc-400 mt-1">
                   {cert.date}
                 </p>
                 {cert.credential && (
-                  <p className="text-[10px] font-medium text-zinc-400 mt-1">{cert.credential}</p>
+                  <p className="text-xs md:text-sm font-medium text-zinc-400 mt-2">
+                    {cert.credential}
+                  </p>
                 )}
               </div>
             ))}
