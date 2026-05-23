@@ -2,20 +2,22 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   FaGraduationCap,
   FaCode,
   FaLaptopCode,
-  FaHistory,
   FaPaintBrush,
-  FaTerminal,
   FaArrowRight,
-  FaLayerGroup,
   FaBezierCurve,
-  FaBug,
   FaUsers,
   FaFigma,
   FaReact,
+  FaGithub,
+  FaLinkedin,
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 import {
   SiAdobephotoshop,
@@ -25,562 +27,684 @@ import {
   SiTailwindcss,
   SiTypescript,
   SiVite,
+  SiJavascript,
+  SiMysql,
+  SiPostgresql,
+  SiGit,
+  SiGithub as SiGithubIcon,
+  SiLaravel,
+  SiBootstrap,
 } from "react-icons/si";
 
-const ABOUT_DATA = {
-  role: "Aspiring UI/UX Designer • Frontend Developer • Team Lead",
+const HERO_DATA = {
+  name: "JOHN RENZ C. BANDIANON",
+  title: "UI/UX Designer & Frontend Developer",
+  subtitle: "UI/UX, Graphic Design & QA Testing",
+  location: "Marilao, Bulacan, Philippines",
+  email: "johnrenzbandianon@gmail.com",
+  phone: "+63 966 798 7702",
+  bio: "I am an Information Technology professional with hands-on experience in UI/UX design, full-stack development, and quality assurance. I specialize in bridging the gap between beautiful design layouts and functional, production-ready code.",
+};
 
-  description: [
-    "I’m an aspiring IT professional and UI/UX Designer who enjoys creating thoughtful, user-friendly digital experiences. I’m passionate about understanding user needs and turning ideas into clean, intuitive interfaces through wireframes, prototypes, and responsive designs using Figma.",
+const WORK_EXPERIENCE = [
+  {
+    role: "UI/UX Product Designer & Team Lead",
+    company: "Alpha Centauri Garments – Clothing Brand (Internship)",
+    type: "Internship",
+    period: "April 2026 – May 2026",
+    description:
+      "Designed end‑to‑end UI/UX for an apparel e‑commerce platform in Figma, creating wireframes and responsive prototypes that improved user experience and interface consistency. Collaborated with developers on design handoff and implementation, reducing rework. Delivered a cohesive, shoppable interface across devices. Led a small design‑dev team as Team Lead, managing task delegation, documentation, and workflow to keep the project on track. Fostered stronger design–development collaboration through clear communication and feedback loops. Achieved smoother, faster progress from concept to launch. Refined layouts, visual hierarchy, and interaction patterns through iterative testing and stakeholder feedback. Maintained a consistent design system in Figma that aligned with brand identity and usability goals. Helped ship a polished, user‑centered apparel e‑commerce site ready for real‑world use.",
+    highlights: [
+      "Designed e-commerce wireframes and responsive prototypes in Figma",
+      "Led design-dev team workflow, documentation, and task delegation",
+      "Maintained consistent design system and refined interaction patterns",
+      "Collaborated on design handoff to reduce development rework",
+    ],
+  },
+  {
+    role: "IT Intern (Volunteer)",
+    company: "BoxHive Digital Solutions – Tech Company",
+    type: "Volunteer",
+    period: "March 2026 – May 2026",
+    description:
+      "Designed web and mobile apps screens in Figma, improving layout clarity, usability, and visual hierarchy. Collaborated with developers and stakeholders to align on flows and interactions. Reduced user confusion and improved onboarding clarity. Created a Replica Icebreaker App UI and interactive prototype in Figma, including user flows and screen transitions. Practiced user‑centered design and received feedback from mentors. Delivered a usable training asset for internal demos and onboarding. Supported QA efforts for an Android app, documenting bugs, validating fixes, and reporting issues. Demonstrated attention to detail, problem‑solving, and collaboration with devs. Helped ship a cleaner, more stable release with fewer post‑launch issues.",
+    highlights: [
+      "Designed web and mobile application screens in Figma",
+      "Created Replica Icebreaker App UI and interactive prototype",
+      "Supported Android app QA testing, bug tracking, and validation",
+      "Improved layout clarity and onboarding workflows",
+    ],
+  },
+  {
+    role: "Full Stack Developer",
+    company: "STI College San Jose del Monte Bulacan",
+    type: "Capstone Project",
+    period: "March 2025 – Nov 2025",
+    description:
+      "Led a 3-person development team through planning, implementation, and QA using Agile-style coordination, ensuring on-time delivery and proper task alignment across the project lifecycle. Developed full-stack features including an appointment scheduling system and AI chatbot integration, implementing both frontend interfaces and backend logic for seamless functionality. Built and maintained core system components across frontend and backend, ensuring performance, usability, and stability in a production-ready web application.",
+    highlights: [
+      "Led 3-person development team via Agile-style coordination",
+      "Developed appointment scheduling system and AI chatbot integrations",
+      "Built and maintained core full-stack system components",
+      "Ensured production-ready system performance and stability",
+    ],
+  },
+];
 
-    "Through academic projects and hands-on internship experience, I’ve gained practical exposure to frontend development using React, Next.js, Vite, and Tailwind CSS. This experience helps me better understand how design decisions translate into real, functional products.",
-
-    "Currently, I’m interning at Alpha Centauri Garments as a UI/UX Product Designer and Team Lead for REEFER, a streetwear e-commerce web system. I contribute to product design, collaborate with teams, and support frontend implementation while continuously learning how to balance usability, business goals, and development constraints.",
+const SKILLS_DATA = {
+  designTools: [
+    {
+      icon: <FaFigma className="text-2xl" />,
+      name: "Figma",
+      proficiency: "Expert",
+      description: "UI/UX design, wireframing, prototyping, design systems, user flows",
+    },
+    {
+      icon: <SiAdobephotoshop className="text-2xl" />,
+      name: "Photoshop",
+      proficiency: "Advanced",
+      description: "Visual layouts, visual hierarchy, asset optimization",
+    },
+    {
+      icon: <SiAdobeillustrator className="text-2xl" />,
+      name: "Illustrator",
+      proficiency: "Intermediate",
+      description: "Vector graphics, brand identity, layout creation",
+    },
+    {
+      icon: <SiCanva className="text-2xl" />,
+      name: "Canva",
+      proficiency: "Advanced",
+      description: "Marketing design, branding, documentation template setups",
+    },
   ],
-
-  goals: [
-    "Continue growing as a UI/UX Designer by improving my skills in user research, wireframing, prototyping, usability, and creating meaningful digital experiences that genuinely help users.",
-
-    "Strengthen the connection between design and development by building responsive and accessible interfaces using React, Next.js, and Tailwind CSS, while ensuring design ideas are implemented thoughtfully and consistently.",
-
-    "Develop into a dependable design and technical team contributor — someone who communicates well, collaborates effectively, and helps create polished, user-centered digital products through continuous learning and experience.",
+  frontendTech: [
+    {
+      icon: <FaReact className="text-2xl" />,
+      name: "React",
+      proficiency: "Advanced",
+      description: "Component architecture, application interfaces",
+    },
+    {
+      icon: <SiNextdotjs className="text-2xl" />,
+      name: "Next.js",
+      proficiency: "Advanced",
+      description: "Client-side systems, frontend structures",
+    },
+    {
+      icon: <SiTailwindcss className="text-2xl" />,
+      name: "Tailwind CSS",
+      proficiency: "Advanced",
+      description: "Responsive layouts, structural utility-first classes",
+    },
+    {
+      icon: <SiBootstrap className="text-2xl" />,
+      name: "Bootstrap",
+      proficiency: "Advanced",
+      description: "Responsive frameworks, layout templates",
+    },
+    {
+      icon: <SiTypescript className="text-2xl" />,
+      name: "TypeScript",
+      proficiency: "Intermediate",
+      description: "Static analysis typing, interface checking",
+    },
+    {
+      icon: <SiJavascript className="text-2xl" />,
+      name: "JavaScript",
+      proficiency: "Advanced",
+      description: "Frontend scripts, logic flows, interactive states",
+    },
+  ],
+  backend: [
+    {
+      icon: <SiLaravel className="text-2xl" />,
+      name: "Laravel",
+      proficiency: "Intermediate",
+      description: "MVC architectures, application backend features",
+    },
+    {
+      icon: <SiMysql className="text-2xl" />,
+      name: "MySQL",
+      proficiency: "Intermediate",
+      description: "Relational tables, core database management",
+    },
+    {
+      icon: <SiPostgresql className="text-2xl" />,
+      name: "PostgreSQL",
+      proficiency: "Intermediate",
+      description: "Data architectures, relational querying scripts",
+    },
+    {
+      icon: <FaCode className="text-2xl" />,
+      name: "PHP / Java / C#",
+      proficiency: "Intermediate",
+      description: "Backend development logic and structural code blocks",
+    },
+  ],
+  tools: [
+    {
+      icon: <SiGit className="text-2xl" />,
+      name: "Git",
+      proficiency: "Advanced",
+      description: "Version controls, team development lifecycles",
+    },
+    {
+      icon: <SiGithubIcon className="text-2xl" />,
+      name: "GitHub",
+      proficiency: "Advanced",
+      description: "Remote repositories management, deployment pipelines",
+    },
   ],
 };
-const ACADEMIC = [
+
+const SOFT_SKILLS = [
+  "Project management",
+  "Team leadership",
+  "Communication",
+  "Collaboration",
+  "Problem-solving",
+  "Time management",
+  "Adaptability",
+  "Critical thinking",
+  "Creativity",
+];
+
+const HARD_SKILLS = [
+  "UI/UX Design",
+  "Wireframing & Prototyping",
+  "User flows & Information architecture",
+  "Responsive design & Design systems",
+  "Usability testing",
+  "Frontend, Web & Software Development",
+  "Backend & Databases",
+  "API integration & System architecture",
+  "QA Testing & Bug documenting",
+];
+
+const EVENTS = [
   {
-    institution: "STI College SJDM",
-    period: "August 2022 – Present",
-    subtext: "BS Information Technology",
-    bio: "Pursuing a degree in IT with hands-on exposure to the full software development lifecycle. Capstone project and internships have shaped me into a well-rounded IT professional experienced in design, frontend development, and team leadership.",
-    icon: <FaGraduationCap className="text-4xl text-zinc-700" />,
+    name: "PSYSC STEMEX",
+    location: "UP Diliman",
+    year: "Exhibitor",
+    role: "Exhibitor",
+    description: "Presented a STEM tech project and discussed real-world applications of technology.",
   },
   {
-    institution: "Prenza National SHS",
-    period: "June 2020 – June 2022",
-    subtext: "TVL Track • ICT",
-    bio: "Completed Senior High School specializing in Information and Communications Technology. Built a solid technical and vocational foundation covering computer systems, hardware diagnostics, and digital logic before entering higher education.",
-    icon: <FaHistory className="text-4xl text-zinc-700" />,
+    name: "OpenAI / Codex Tech Meetup",
+    location: "BGC",
+    year: "Participant",
+    role: "Participant",
+    description: "Explored AI-assisted development workflows and modern software tools.",
+  },
+  {
+    name: "Academic Week IT/CpE Seminar 2024",
+    location: "STI College",
+    year: "Participant",
+    role: "Participant",
+    description: "Attended GitHub-focused session on collaboration and development practices.",
   },
 ];
 
-const EXPERIENCE = [
+const EDUCATION = [
   {
-    title: "UI/UX Product Designer & Team Lead",
-    period: "March 2026 – Present",
-    subtext: "Alpha Centauri Garments · Internship",
-    details:
-      "Designed end-to-end UI/UX for REEFER, a streetwear e-commerce platform by building user flows, wireframes, and responsive Figma prototypes delivering a consistent and shoppable interface across all screens. Promoted to Team Lead managing task delegation, documentation, and designer-developer collaboration streamlining workflows. Developed responsive web pages and UI components using React.js, Vite, and Tailwind CSS translating Figma designs into reusable frontend interfaces. Collaborated with design and backend teams aligning on implementation details and resolving interface inconsistencies delivering a polished production-ready web system.",
-    icon: <FaPaintBrush className="text-4xl text-zinc-700" />,
-  },
-  {
-    title: "IT Intern – UI/UX, Graphic Design & QA",
-    period: "April 2026 – Present",
-    subtext: "BoxHive Digital Solutions · Internship",
-    details:
-      "Designed client-facing web UI screens in Figma by structuring layouts and refining visual hierarchy improving consistency and presentation across delivered projects. Produced marketing materials including expo posters, social media graphics, and device mockups supporting active campaigns. Executed QA testing for the IceBreaker Android app by documenting bugs, validating fixes, and reporting findings to the dev team contributing to a cleaner and more stable product release.",
-    icon: <FaBug className="text-4xl text-zinc-700" />,
-  },
-  {
-    title: "Lead Developer & UI/UX Designer",
-    period: "March 2025 – November 2025",
-    subtext: "Capstone Project · Groove Performing Arts Ecosystem",
-    details:
-      "Led a 3-person development team by coordinating tasks, timelines, and collaboration across design and build phases delivering a fully functional platform on schedule. Conducted user research with 150+ participants synthesizing findings into user flows, wireframes, and interface designs creating an experience grounded in real user needs. Built and tested core system features across the full development cycle iterating through planning, coding, and QA shipping a user-centered web platform ready for evaluation.",
-    icon: <FaUsers className="text-4xl text-zinc-700" />,
-  },
-  {
-    title: "Full-Stack Developer & UI Designer",
-    period: "2023 – 2024",
-    subtext: "Academic Projects",
-    details:
-      "Built multiple projects integrating design and development workflows. Designed user interfaces in Figma and implemented them with focus on responsive design, accessibility, and performance. Gained experience with component-based architecture using React and modern development practices.",
-    icon: <FaLaptopCode className="text-4xl text-zinc-700" />,
-  },
-  {
-    title: "Programming Fundamentals",
-    period: "2022 – 2023",
-    subtext: "Java & Web Development Foundation",
-    details:
-      "Built foundational programming skills in Java and object-oriented principles. Learned essential concepts in web development, database design, and software architecture enabling progression to frontend and full-stack development.",
-    icon: <FaCode className="text-4xl text-zinc-700" />,
-  },
-  {
-    title: "Technical Foundation",
-    period: "2020 – 2022",
-    subtext: "High School ICT Specialization",
-    details:
-      "Completed specialized ICT coursework covering computer systems, digital logic, networking fundamentals, and basic programming concepts forming the foundation for my IT degree.",
-    icon: <FaTerminal className="text-4xl text-zinc-700" />,
+    degree: "Bachelor of Science Information Technology",
+    school: "STI College San jose del monte",
+    period: "2022 - 2026",
+    description:
+      "Completed coursework in software development fundamentals, including programming logic, systems analysis, and application design. Gained foundational knowledge in computer systems, databases, and basic hardware concepts as part of IT curriculum. Developed practical exposure to software-focused projects and self-initiated UI/UX practice using modern design tools such as Figma.",
   },
 ];
 
-const TOOLS = [
-  {
-    category: "Design Tools",
-    items: [
-      {
-        icon: <FaFigma className="text-2xl text-indigo-600 mt-1" />,
-        title: "Figma",
-        subtext: "UI/UX Design & Prototyping",
-        details:
-          "I design wireframes, build user flows with FigJam, create responsive prototypes, and develop design systems for complex web applications. Used extensively on REEFER project for design-to-development handoff.",
-      },
-      {
-        icon: <SiAdobephotoshop className="text-2xl text-blue-600 mt-1" />,
-        title: "Photoshop",
-        subtext: "Visual Design & Graphics",
-        details:
-          "I create visual compositions, design mockups, and produce marketing materials. Used professionally at BoxHive Digital Solutions for campaign assets and social media content.",
-      },
-      {
-        icon: <SiAdobeillustrator className="text-2xl text-orange-600 mt-1" />,
-        title: "Illustrator",
-        subtext: "Vector Graphics & Branding",
-        details:
-          "I build scalable vector graphics, logos, and brand assets ensuring visuals remain crisp across all platforms and print formats.",
-      },
-      {
-        icon: <SiCanva className="text-2xl text-green-600 mt-1" />,
-        title: "Canva",
-        subtext: "Presentations & Documentation",
-        details:
-          "I create structured project documentation, design workflow trackers, and polished presentations used actively for team collaboration and stakeholder communication.",
-      },
-    ],
-  },
-  {
-    category: "Frontend Tech Stack",
-    items: [
-      {
-        icon: <FaReact className="text-2xl text-cyan-600 mt-1" />,
-        title: "React.js",
-        subtext: "Frontend Framework",
-        details:
-          "I build interactive components and responsive UI pages using React with focus on reusable architecture and component scalability. Currently applied in production on REEFER project.",
-      },
-      {
-        icon: <SiVite className="text-2xl text-purple-600 mt-1" />,
-        title: "Vite",
-        subtext: "Build Tool & Development Server",
-        details:
-          "I use Vite for fast frontend development and optimized builds. Implemented on REEFER project for rapid iteration and improved developer experience.",
-      },
-      {
-        icon: <SiNextdotjs className="text-2xl text-zinc-700 mt-1" />,
-        title: "Next.js",
-        subtext: "Full-Stack React Framework",
-        details:
-          "I develop server-side rendered and static applications with optimized performance. Implemented routing, API routes, and deployment strategies for production applications.",
-      },
-      {
-        icon: <SiTailwindcss className="text-2xl text-sky-500 mt-1" />,
-        title: "Tailwind CSS",
-        subtext: "Utility-First CSS Framework",
-        details:
-          "My go-to styling framework for responsive, consistent, and efficient UI. Applied across REEFER, Groove capstone, and personal frontend projects.",
-      },
-      {
-        icon: <SiTypescript className="text-2xl text-blue-600 mt-1" />,
-        title: "TypeScript",
-        subtext: "Type-Safe JavaScript",
-        details:
-          "I write scalable and maintainable code with static type checking. Used to catch errors early and improve developer experience with better tooling.",
-      },
-    ],
-  },
+const CERTIFICATES = [
+  "Google UX Design Training — User research, wireframing, prototyping, usability testing, Figma interface design.",
+  "Accenture Skills Training Program — Technology fundamentals, digital skills, communication, and job readiness training.",
+  "SAP Business One Training (ERP System) — ERP concepts, business operations, inventory and process management.",
+  "System Administration & Maintenance Training — System administration, troubleshooting, and hardware/software maintenance.",
+  "Java Foundations Certification — Core Java, object-oriented programming (OOP), and programming fundamentals.",
 ];
 
-const CERTIFICATIONS = [
-  {
-    title: "Graphic Design Essentials",
-    issuer: "Canva Design School · Canva Certified",
-    date: "March 2026",
-    credential: "Credential ID: 198b01",
-  },
-  {
-    title: "Accenture Skills Training",
-    issuer: "Accenture",
-    date: "November 2025",
-    credential: "",
-  },
-  {
-    title: "SAP Business One – System Administration & Maintenance",
-    issuer: "SAP",
-    date: "March 2024",
-    credential: "",
-  },
-  {
-    title: "Java Foundations",
-    issuer: "Oracle / Java",
-    date: "June 2023",
-    credential: "",
-  },
-];
+const AnimatedCounter = ({
+  value,
+  label,
+}: {
+  value: number;
+  label: string;
+}) => {
+  const [count, setCount] = useState(0);
 
-const GALLERY_IMAGES = [
-  { id: 1, image: "/Image/Gallery/1.jpg" },
-  { id: 2, image: "/Image/Gallery/2.jpg" },
-  { id: 3, image: "/Image/Gallery/3.jpg" },
-  { id: 4, image: "/Image/Gallery/4.jpg" },
-  { id: 5, image: "/Image/Gallery/5.jpg" },
-  { id: 6, image: "/Image/Gallery/6.jpg" },
-];
+  useEffect(() => {
+    let start = 0;
+    const duration = 1000;
+    const stepTime = Math.abs(Math.floor(duration / value));
+    
+    const timer = setInterval(() => {
+      start += 1;
+      setCount(start);
+      if (start >= value) {
+        clearInterval(timer);
+      }
+    }, stepTime || 10);
+    
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return (
+    <div className="text-center">
+      <div className="text-4xl font-black text-black">
+        {count}+
+      </div>
+      <p className="text-sm font-medium text-neutral-800 mt-2">{label}</p>
+    </div>
+  );
+};
+
+const SkillCard = ({
+  icon,
+  name,
+  proficiency,
+  description,
+  index,
+}: {
+  icon: React.ReactNode;
+  name: string;
+  proficiency: string;
+  description: string;
+  index: number;
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.4 }}
+      whileHover={{ y: -4 }}
+      className="group p-6 border border-neutral-200 rounded-lg hover:border-black hover:bg-neutral-50 transition-all duration-200"
+    >
+      <div className="text-black mb-4 transition-transform duration-200">
+        {icon}
+      </div>
+      <h4 className="font-bold text-black mb-1">{name}</h4>
+      <p className="text-xs font-bold text-neutral-900 mb-2 uppercase tracking-wider">{proficiency}</p>
+      <p className="text-sm text-neutral-800 leading-relaxed">{description}</p>
+    </motion.div>
+  );
+};
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-
-  useEffect(() => {
-    const els = containerRef.current?.querySelectorAll(".aos");
-    if (!els) return;
-
-    const obs = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) =>
-          entry.isIntersecting
-            ? entry.target.classList.add("aos-in")
-            : entry.target.classList.remove("aos-in")
-        ),
-      { threshold: 0.1 }
-    );
-
-    els.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!galleryRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - galleryRef.current.offsetLeft);
-    setScrollLeft(galleryRef.current.scrollLeft);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !galleryRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - galleryRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    galleryRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const renderCards = (
-    data: typeof EXPERIENCE | typeof TOOLS[0]["items"]
-  ) =>
-    data.map((item, i) => (
-      <div
-        key={i}
-        className={`aos sd${Math.min(i + 1, 5)} exp-row group relative border-t border-black/10 hover:bg-black/[0.03] transition-colors py-10 px-6 rounded-lg`}
-      >
-        <div className="flex flex-col md:flex-row md:justify-between md:gap-8">
-          <div className="flex items-start gap-4 md:w-1/3">
-            {"icon" in item && item.icon && <div className="flex-shrink-0">{item.icon}</div>}
-            <div className="flex-1">
-              <h3 className="text-lg md:text-xl font-black uppercase tracking-tight flex items-center gap-2">
-                {"title" in item ? item.title : ""}
-                <FaArrowRight className="text-[10px] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500" />
-              </h3>
-              {"subtext" in item && (
-                <span className="text-[10px] font-bold tracking-widest uppercase text-zinc-700 block mt-1">
-                  {item.subtext}
-                </span>
-              )}
-              {"period" in item && (
-                <span className="block text-[10px] font-bold tracking-widest uppercase text-zinc-400 mt-2">
-                  {(item as { period: string }).period}
-                </span>
-              )}
-            </div>
-          </div>
-          {"details" in item && (
-            <div className="mt-4 md:mt-0 md:w-2/3">
-              <p className="text-base md:text-lg font-medium leading-relaxed text-zinc-800">
-                {item.details}
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-    ));
 
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen w-full overflow-x-hidden text-black font-sans selection:bg-black selection:text-zinc-100"
+      className="relative w-full min-h-screen bg-white text-black overflow-x-hidden antialiased selection:bg-black selection:text-white"
     >
-      <style jsx global>{`
-        html,
-        body {
-          overflow-x: hidden;
-          scroll-behavior: smooth;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-
-        html::-webkit-scrollbar,
-        body::-webkit-scrollbar {
-          width: 0px;
-          display: none;
-        }
-      `}</style>
-
-      <style jsx>{`
-        .aos {
-          opacity: 0;
-          transform: translateY(36px);
-          filter: blur(5px);
-          transition:
-            opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
-            transform 1s cubic-bezier(0.22, 1, 0.36, 1),
-            filter 1s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .aos-in {
-          opacity: 1;
-          transform: translateY(0);
-          filter: blur(0);
-        }
-
-        .sd1 { transition-delay: 0.05s; }
-        .sd2 { transition-delay: 0.15s; }
-        .sd3 { transition-delay: 0.25s; }
-        .sd4 { transition-delay: 0.35s; }
-        .sd5 { transition-delay: 0.45s; }
-
-        .gallery-scroll {
-          display: flex;
-          gap: 12px;
-          overflow-x: auto;
-          overflow-y: hidden;
-          scroll-behavior: smooth;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-          cursor: grab;
-          padding: 8px 0;
-        }
-
-        .gallery-scroll::-webkit-scrollbar {
-          display: none;
-          width: 0;
-          height: 0;
-        }
-
-        .gallery-scroll.dragging {
-          cursor: grabbing;
-        }
-
-        .gallery-item {
-          flex: 0 0 auto;
-          width: 200px;
-          height: 200px;
-          border-radius: 12px;
-          overflow: hidden;
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-          user-select: none;
-          position: relative;
-        }
-
-        .gallery-item:hover {
-          border-color: rgba(0, 0, 0, 0.15);
-          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-          transform: translateY(-2px);
-        }
-
-        .gallery-item img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: center;
-        }
-
-        @media (max-width: 768px) {
-          .gallery-scroll {
-            gap: 10px;
-          }
-
-          .gallery-item {
-            width: 160px;
-            height: 160px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .gallery-scroll {
-            gap: 8px;
-          }
-
-          .gallery-item {
-            width: 140px;
-            height: 140px;
-          }
-        }
-      `}</style>
-
-      <main className="w-full max-w-7xl mx-auto flex flex-col gap-24 px-6 md:px-8">
-        <section className="flex flex-col items-start space-y-8 mt-12">
-          <div className="aos sd1 flex items-center gap-3">
-            <span className="w-16 h-[2px] bg-black" />
-            <span className="text-base md:text-lg font-black tracking-[0.6em] uppercase text-zinc-900">
-              About Me
-            </span>
+      <main className="w-full max-w-6xl mx-auto px-4 md:px-8 py-24 space-y-32">
+        
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="space-y-8"
+        >
+          <div className="space-y-4">
+            <p className="text-black font-bold tracking-widest uppercase text-xs">
+              Portfolio Profile
+            </p>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight text-black max-w-4xl uppercase">
+              {HERO_DATA.name}
+            </h1>
+            <p className="text-xl md:text-2xl font-bold text-neutral-800 max-w-2xl">
+              {HERO_DATA.title} — {HERO_DATA.subtitle}
+            </p>
           </div>
-          <h1 className="aos sd2 font-black leading-[0.8] tracking-tighter uppercase text-3xl md:text-5xl lg:text-6xl">
-            User-Centered <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-zinc-600 to-black">
-              Design & Code
-            </span>
-          </h1>
-          <p className="aos sd3 text-xs md:text-sm font-bold tracking-widest uppercase text-zinc-500">
-            {ABOUT_DATA.role}
-          </p>
-        </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-black/10 pt-16">
-          <div className="aos sd1 flex flex-col gap-4">
-            <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 flex items-center gap-3">
-              <span className="w-16 h-[2px] bg-black" /> Overview
-            </div>
-            <div className="flex gap-2 text-zinc-500 text-lg">
-              <FaLayerGroup />
-              <FaBezierCurve />
-            </div>
-          </div>
-          <div className="space-y-6">
-            {ABOUT_DATA.description.map((text, i) => (
-              <p
-                key={i}
-                className={`aos sd${i + 2} font-medium leading-relaxed tracking-tight text-zinc-800 text-base md:text-lg`}
-              >
-                {text}
+          <div className="grid md:grid-cols-3 gap-8 pt-8 border-t border-neutral-200">
+            <div className="md:col-span-2">
+              <p className="text-lg text-neutral-900 leading-relaxed font-medium">
+                {HERO_DATA.bio}
               </p>
-            ))}
+            </div>
+            <div className="space-y-3 text-sm font-medium text-neutral-800">
+              <p className="flex items-center gap-2"><FaMapMarkerAlt className="text-black" /> {HERO_DATA.location}</p>
+              <p className="flex items-center gap-2"><FaEnvelope className="text-black" /> {HERO_DATA.email}</p>
+              <p className="flex items-center gap-2"><FaPhone className="text-black" /> {HERO_DATA.phone}</p>
+            </div>
           </div>
-        </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {ABOUT_DATA.goals.map((goal, i) => (
-            <div
-              key={i}
-              className={`aos sd${i + 1} p-6 border border-black/5 bg-black/[0.02] rounded-lg hover:border-black/10 hover:bg-black/[0.05] transition-all duration-300`}
+          <div className="flex flex-wrap gap-3 pt-4">
+            <a
+              href={`mailto:${HERO_DATA.email}`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white text-sm font-bold tracking-wider uppercase hover:bg-neutral-900 transition-colors"
             >
-              <p className="text-lg font-bold uppercase mb-3">0{i + 1}.</p>
-              <p className="text-base md:text-lg font-medium text-zinc-700">{goal}</p>
-            </div>
-          ))}
-        </section>
+              Get in Touch
+            </a>
+            <a
+              href="https://github.com/johnrenz-bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-black text-black text-sm font-bold tracking-wider uppercase hover:bg-neutral-50 transition-colors"
+            >
+              <FaGithub /> GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/john-renz-bandianon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-black text-black text-sm font-bold tracking-wider uppercase hover:bg-neutral-50 transition-colors"
+            >
+              <FaLinkedin /> LinkedIn
+            </a>
+          </div>
+        </motion.section>
 
-        <section className="space-y-6 border-t border-black/10 pt-16">
-          <div className="aos sd1 flex flex-col gap-2">
-            <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 flex items-center gap-3">
-              <span className="w-16 h-[2px] bg-black" /> Gallery
-            </div>
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="py-12 border-t border-b border-neutral-200"
+        >
+          <div className="grid grid-cols-3 gap-6">
+            <AnimatedCounter value={3} label="Completed Systems" />
+            <AnimatedCounter value={2} label="Industry Internships" />
+            <AnimatedCounter value={5} label="Expertise Certificates" />
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">
+              Professional Experience
+            </h2>
+            <p className="text-neutral-800 text-base font-medium">
+              Documented background in UI/UX systems design, workflow leadership, and feature deployment
+            </p>
           </div>
 
-          <div
-            ref={galleryRef}
-            className={`gallery-scroll ${isDragging ? "dragging" : ""}`}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onMouseMove={handleMouseMove}
-          >
-            {GALLERY_IMAGES.map((image, i) => (
-              <div
-                key={image.id}
-                className={`gallery-item aos sd${Math.min(i + 1, 5)}`}
+          <div className="space-y-6">
+            {WORK_EXPERIENCE.map((exp, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                viewport={{ once: true }}
+                className="p-8 border border-neutral-200 rounded-lg hover:border-black transition-colors duration-200"
               >
-                <Image
-                  src={image.image}
-                  alt={`Gallery image ${image.id}`}
-                  fill
-                  className="object-cover"
-                  sizes="200px"
-                  priority={i < 2}
-                />
-              </div>
-            ))}
-          </div>
-
-          <p className="text-xs text-zinc-500 font-medium tracking-wide uppercase">
-            Drag to explore
-          </p>
-        </section>
-
-        <section className="space-y-8">
-          <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 aos sd1 flex items-center gap-3">
-            <span className="w-16 h-[2px] bg-black" /> Education
-          </div>
-          <div className="grid md:grid-cols-2 gap-12">
-            {ACADEMIC.map((item, i) => (
-              <div key={i} className={`aos sd${i + 1} flex flex-col gap-4`}>
-                <div className="flex items-center gap-6 mb-4">
-                  {item.icon}
-                  <div className="h-[1px] flex-grow bg-black/10" />
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-widest bg-neutral-100 text-black px-2.5 py-1 rounded">
+                      {exp.type}
+                    </span>
+                    <h3 className="text-2xl font-black text-black mt-3">
+                      {exp.role}
+                    </h3>
+                    <p className="text-base font-bold text-neutral-900 mt-0.5">
+                      {exp.company}
+                    </p>
+                  </div>
+                  <span className="text-sm font-bold text-black border border-black px-3 py-1 rounded-full whitespace-nowrap self-start md:self-auto">
+                    {exp.period}
+                  </span>
                 </div>
-                <h3 className="text-2xl font-black uppercase">{item.institution}</h3>
-                <p className="text-xs md:text-sm font-black tracking-[0.3em] uppercase text-zinc-700">
-                  {item.subtext}
-                </p>
-                <span className="text-xs md:text-sm font-black tracking-[0.3em] text-zinc-900 uppercase">
-                  {item.period}
-                </span>
-                <p className="mt-4 text-base md:text-lg text-zinc-800 font-medium leading-relaxed">
-                  {item.bio}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
 
-        <section className="space-y-8">
-          <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 aos sd1 flex items-center gap-3">
-            <span className="w-16 h-[2px] bg-black" /> Experience
-          </div>
-          <div className="space-y-4">{renderCards(EXPERIENCE)}</div>
-        </section>
-
-        {TOOLS.map((section, i) => (
-          <section key={i} className="space-y-4">
-            <h3 className="text-xs md:text-sm font-black tracking-widest uppercase text-zinc-900">
-              {section.category}
-            </h3>
-            {renderCards(section.items)}
-          </section>
-        ))}
-
-        <section className="space-y-8 mb-20">
-          <div className="text-2xl md:text-3xl font-black uppercase text-zinc-700 aos sd1 flex items-center gap-3">
-            <span className="w-16 h-[2px] bg-black" /> Certifications
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {CERTIFICATIONS.map((cert, i) => (
-              <div
-                key={i}
-                className={`aos sd${i + 1} p-6 border border-black/10 rounded-lg hover:bg-black/[0.02] hover:border-black/20 transition-all duration-300`}
-              >
-                <h4 className="text-base font-black uppercase tracking-tight">{cert.title}</h4>
-                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-zinc-500 mt-2">
-                  {cert.issuer}
+                <p className="text-neutral-800 text-base leading-relaxed mb-6 font-medium">
+                  {exp.description}
                 </p>
-                <p className="text-xs md:text-sm font-bold tracking-widest uppercase text-zinc-400 mt-1">
-                  {cert.date}
-                </p>
-                {cert.credential && (
-                  <p className="text-xs md:text-sm font-medium text-zinc-400 mt-2">
-                    {cert.credential}
+
+                <div className="space-y-3 border-t border-neutral-100 pt-6">
+                  <p className="text-xs font-black text-black uppercase tracking-wider">
+                    Core Focus Points
                   </p>
-                )}
-              </div>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {exp.highlights.map((highlight, i) => (
+                      <div
+                        key={i}
+                        className="flex items-start gap-2.5 text-neutral-800 font-medium text-sm"
+                      >
+                        <FaArrowRight className="text-black mt-1 text-xs flex-shrink-0" />
+                        <span>{highlight}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Education</h2>
+          </div>
+
+          <div className="grid md:grid-cols-1 gap-6">
+            {EDUCATION.map((edu, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                viewport={{ once: true }}
+                className="p-8 border border-neutral-200 rounded-lg hover:border-black hover:bg-neutral-50 transition-all duration-200"
+              >
+                <FaGraduationCap className="text-2xl text-black mb-4" />
+                <h3 className="text-xl font-black text-black mb-1">
+                  {edu.degree}
+                </h3>
+                <p className="text-sm font-bold text-neutral-900 mb-1">{edu.school}</p>
+                <p className="text-xs font-bold text-neutral-800 mb-4 tracking-wide">{edu.period}</p>
+                <p className="text-sm text-neutral-800 leading-relaxed font-medium">{edu.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Courses & Certifications</h2>
+          </div>
+
+          <div className="grid md:grid-cols-1 gap-4">
+            {CERTIFICATES.map((cert, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.05, duration: 0.3 }}
+                viewport={{ once: true }}
+                className="p-5 border border-neutral-200 rounded-lg bg-neutral-50 flex items-start gap-4"
+              >
+                <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0" />
+                <p className="text-sm font-medium text-neutral-900">{cert}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Design Tools</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {SKILLS_DATA.designTools.map((skill, index) => (
+              <SkillCard key={index} index={index} {...skill} />
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Frontend Stack</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SKILLS_DATA.frontendTech.map((skill, index) => (
+              <SkillCard key={index} index={index} {...skill} />
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Backend & Databases</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {SKILLS_DATA.backend.map((skill, index) => (
+              <SkillCard key={index} index={index} {...skill} />
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Tools & Workflow</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {SKILLS_DATA.tools.map((skill, index) => (
+              <SkillCard key={index} index={index} {...skill} />
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Hard Skills Summary</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {HARD_SKILLS.map((skill, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.98 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                viewport={{ once: true }}
+                className="px-6 py-4 bg-neutral-50 border border-neutral-200 rounded-lg hover:border-black hover:bg-white transition-all duration-200 group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-1.5 h-1.5 bg-black rounded-full" />
+                  <span className="font-bold text-black text-sm uppercase tracking-wider">{skill}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Soft Skills Summary</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {SOFT_SKILLS.map((skill, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.98 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                viewport={{ once: true }}
+                className="px-6 py-4 bg-neutral-50 border border-neutral-200 rounded-lg hover:border-black hover:bg-white transition-all duration-200 group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-1.5 h-1.5 bg-black rounded-full" />
+                  <span className="font-bold text-black text-sm uppercase tracking-wider">{skill}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="space-y-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black">Tech Events & Seminars</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {EVENTS.map((event, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                viewport={{ once: true }}
+                className="p-6 border border-neutral-200 bg-neutral-50 rounded-lg hover:border-black hover:bg-white transition-all duration-200"
+              >
+                <span className="text-xs font-black text-black tracking-wider block mb-2">
+                  {event.year}
+                </span>
+                <h3 className="text-lg font-black text-black mb-1">
+                  {event.name}
+                </h3>
+                <p className="text-xs font-bold text-neutral-800 mb-3">{event.location}</p>
+                <p className="text-sm font-bold text-black border-b border-black pb-2 inline-block mb-3">
+                  {event.role}
+                </p>
+                <p className="text-sm text-neutral-800 leading-relaxed font-medium">
+                  {event.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
       </main>
     </div>
   );

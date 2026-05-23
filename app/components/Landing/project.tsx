@@ -1,21 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  SiPhp, SiJavascript, SiReact, SiLaravel, SiHtml5, SiCss3,
-  SiBootstrap, SiTailwindcss, SiGithub, SiNodedotjs, SiExpress,
-  SiPostgresql, SiMysql, SiPrisma, SiTypescript, SiNextdotjs,
-  SiFigma, SiCanva, SiAdobephotoshop, SiAdobeillustrator,
-  SiGit, SiHostinger, SiVercel, SiXampp, SiSap
-} from "react-icons/si";
-import { FaJava, FaFilePowerpoint } from "react-icons/fa";
-import { TbBrandCSharp } from "react-icons/tb";
-import { DiVisualstudio } from "react-icons/di";
-import { HiOutlineSquares2X2, HiArrowTopRightOnSquare } from "react-icons/hi2";
-import { RxArrowRight } from "react-icons/rx";
-import { IoClose } from "react-icons/io5";
+import { SiGithub } from "react-icons/si";
+import { RxArrowRight, RxArrowLeft } from "react-icons/rx";
+import { MdArrowOutward } from "react-icons/md";
 
 type Item = {
   id: string;
@@ -32,677 +22,975 @@ type Item = {
   tags?: string[];
 };
 
-type Tech = {
-  name: string;
-  Icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
-  color: string;
-};
-
 const WEB_DEVELOPMENT: Item[] = [
-  { id: "capstone", title: "Groove (Capstone Project)", href: "/Groove", image: "/Image/Groove.png", description: "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.", techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"], github: "https://github.com/johnrenz-bot/groove", workType: "web-development", featured: true, tags: ["Agency"] },
+  {
+    id: "capstone",
+    title: "Groove (Capstone Project)",
+    href: "/Groove",
+    image: "/Image/Groove.png",
+    description: "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.",
+    techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"],
+    github: "https://github.com/johnrenz-bot/groove",
+    workType: "web-development",
+    featured: true,
+    tags: ["Agency"],
+  },
 ];
 
 const WEBSITE_DESIGN: Item[] = [
-  { id: "w5", title: "Kiyoto", href: "https://kiyoto.vercel.app/", image: "/Image/Kiyoto.png", description: "Personal portfolio website with interactive UI and smooth animations throughout.", techStack: ["React", "Tailwind", "Next.js"], workType: "website-design", featured: true, tags: ["Design"] },
-  { id: "w2", title: "Weeknd Soundtrip", href: "https://weeknd-soundtrip.vercel.app/", image: "/Image/WeekndSoundtrip.png", description: "Interactive music experience inspired by The Weeknd with immersive design.", techStack: ["React", "Tailwind", "JavaScript"], workType: "website-design" },
-  { id: "w3", title: "DinoVerse", href: "https://dinoverse-buce.vercel.app/", image: "/Image/Dinoverse.png", description: "Educational dinosaur exploration web app with interactive learning modules.", techStack: ["React", "Next.js", "CSS"], workType: "website-design" },
-  { id: "w4", title: "EduGuide", href: "https://edu-guide-three.vercel.app/", image: "/Image/EduGuide.png", description: "Educational platform to guide students through interactive courses with progress tracking.", techStack: ["React", "Tailwind", "JavaScript"], workType: "web-development" },
-  { id: "w6", title: "Windbreaker", href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/", image: "/Image/windbreaker.png", description: "Digital home for street riders to track progress, connect with crews and share experiences.", techStack: ["Next.js", "Tailwind"], workType: "web-development" },
+  {
+    id: "w5",
+    title: "Kiyoto",
+    href: "https://kiyoto.vercel.app/",
+    image: "/Image/Kiyoto.png",
+    description: "Personal portfolio website with interactive UI and smooth animations throughout.",
+    techStack: ["React", "Tailwind", "Next.js"],
+    workType: "website-design",
+    featured: true,
+    tags: ["Design"],
+  },
+  {
+    id: "w2",
+    title: "Weeknd Soundtrip",
+    href: "https://weeknd-soundtrip.vercel.app/",
+    image: "/Image/WeekndSoundtrip.png",
+    description: "Interactive music experience inspired by The Weeknd with immersive design.",
+    techStack: ["React", "Tailwind", "JavaScript"],
+    workType: "website-design",
+  },
+  {
+    id: "w3",
+    title: "DinoVerse",
+    href: "https://dinoverse-buce.vercel.app/",
+    image: "/Image/Dinoverse.png",
+    description: "Educational dinosaur exploration web app with interactive learning modules.",
+    techStack: ["React", "Next.js", "CSS"],
+    workType: "website-design",
+  },
+  {
+    id: "w4",
+    title: "EduGuide",
+    href: "https://edu-guide-three.vercel.app/",
+    image: "/Image/EduGuide.png",
+    description: "Educational platform to guide students through interactive courses with progress tracking.",
+    techStack: ["React", "Tailwind", "JavaScript"],
+    workType: "web-development",
+  },
+  {
+    id: "w6",
+    title: "Windbreaker",
+    href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/",
+    image: "/Image/windbreaker.png",
+    description: "Digital home for street riders to track progress, connect with crews and share experiences.",
+    techStack: ["Next.js", "Tailwind"],
+    workType: "web-development",
+  },
 ];
 
 const UI_UX_DESIGNS: Item[] = [
-  { id: "ui1", title: "Reefer", href: "/Reefer", image: "/Image/UI/Reefer.png", uiTools: ["Figma"], description: "Modern mobile application interface with intuitive user experience design.", category: "UI/UX", workType: "ui-ux", featured: true, tags: ["Design Systems"] },
+  {
+    id: "ui1",
+    title: "Reefer",
+    href: "/Reefer",
+    image: "/Image/UI/Reefer.png",
+    uiTools: ["Figma"],
+    description: "Modern mobile application interface with intuitive user experience design.",
+    category: "UI/UX",
+    workType: "ui-ux",
+    featured: true,
+    tags: ["Design Systems"],
+  },
 ];
 
 const DEVICE_MOCKUPS: Item[] = [
-  { id: "M1", title: "Mockup", href: "", image: "/Image/Devices/watch.png", uiTools: ["Adobe Photoshop"], description: "watch mockup for tech event", category: "Mockup", workType: "Mockup" },
-  { id: "M2", title: "Mockup", href: "", image: "/Image/Devices/phone.png", uiTools: ["Adobe Photoshop"], description: "Iphone mockup for tech event", category: "Mockup", workType: "Mockup" },
-  { id: "M3", title: "Mockup", href: "", image: "/Image/Devices/Iphone.png", uiTools: ["Adobe Photoshop"], description: "Iphone mockup for tech event", category: "Mockup", workType: "Mockup" },
-  { id: "M4", title: "Mockup", href: "", image: "/Image/Devices/Iphone1.png", uiTools: ["Adobe Photoshop"], description: "Iphone mockup for tech event", category: "Mockup", workType: "Mockup" },
-  { id: "M5", title: "Mockup", href: "", image: "/Image/Devices/Iphone2.png", uiTools: ["Adobe Photoshop"], description: "Iphone mockup for tech event", category: "Mockup", workType: "Mockup" },
+  {
+    id: "M1",
+    title: "Watch Mockup",
+    href: "",
+    image: "/Image/Devices/watch.png",
+    uiTools: ["Adobe Photoshop"],
+    description: "Watch mockup for tech event",
+    category: "Mockup",
+    workType: "mockup",
+  },
+  {
+    id: "M2",
+    title: "iPhone Mockup",
+    href: "",
+    image: "/Image/Devices/phone.png",
+    uiTools: ["Adobe Photoshop"],
+    description: "iPhone mockup for tech event",
+    category: "Mockup",
+    workType: "mockup",
+  },
+  {
+    id: "M3",
+    title: "iPhone Display",
+    href: "",
+    image: "/Image/Devices/Iphone.png",
+    uiTools: ["Adobe Photoshop"],
+    description: "iPhone mockup for tech event",
+    category: "Mockup",
+    workType: "mockup",
+  },
+  {
+    id: "M4",
+    title: "iPhone Pro",
+    href: "",
+    image: "/Image/Devices/Iphone1.png",
+    uiTools: ["Adobe Photoshop"],
+    description: "iPhone mockup for tech event",
+    category: "Mockup",
+    workType: "mockup",
+  },
+  {
+    id: "M5",
+    title: "iPhone Max",
+    href: "",
+    image: "/Image/Devices/Iphone2.png",
+    uiTools: ["Adobe Photoshop"],
+    description: "iPhone mockup for tech event",
+    category: "Mockup",
+    workType: "mockup",
+  },
 ];
 
 const POSTERS: Item[] = [
-  { id: "Tech1", title: "WATCH mockup Poster", href: "", image: "/Image/tech/tech1.png", uiTools: ["Canva"], description: "Watch mockup poster for tech event", category: "Poster", workType: "poster" },
-  { id: "Tech2", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech2.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
-  { id: "Tech3", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech3.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
-  { id: "Tech4", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech4.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
-  { id: "Tech5", title: "Iphone mockup Poster", href: "", image: "/Image/tech/tech5.png", uiTools: ["Canva"], description: "Iphone mockup poster for tech event", category: "Poster", workType: "poster" },
-  { id: "STEM1", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM1.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-  { id: "STEM2", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM2.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-  { id: "STEM3", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM3.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-  { id: "STEM4", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM4.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-  { id: "STEM5", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM5.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-  { id: "STEM6", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM6.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-  { id: "STEM7", title: "TECH EVENT mockup Poster", href: "", image: "/Image/tech/STEM7.png", uiTools: ["Canva"], description: "Tech event mockup poster", category: "Poster", workType: "poster" },
-  { id: "cv1", title: "The Price of Sugar", href: "", image: "/Image/UI/1.jpg", uiTools: ["Canva"], description: "Graphic design poster exploring visual storytelling.", category: "Poster", workType: "poster" },
-  { id: "ps3", title: "GA design poster", href: "", image: "/Image/UI/poster.png", uiTools: ["Photoshop"], description: "Graphic design poster for new arrival campaign.", category: "Poster", workType: "poster" },
+  {
+    id: "Tech1",
+    title: "WATCH mockup Poster",
+    href: "",
+    image: "/Image/tech/tech1.png",
+    uiTools: ["Canva"],
+    description: "Watch mockup poster for tech event",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "Tech2",
+    title: "iPhone mockup Poster",
+    href: "",
+    image: "/Image/tech/tech2.png",
+    uiTools: ["Canva"],
+    description: "iPhone mockup poster for tech event",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "Tech3",
+    title: "iPhone mockup Poster",
+    href: "",
+    image: "/Image/tech/tech3.png",
+    uiTools: ["Canva"],
+    description: "iPhone mockup poster for tech event",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "Tech4",
+    title: "iPhone mockup Poster",
+    href: "",
+    image: "/Image/tech/tech4.png",
+    uiTools: ["Canva"],
+    description: "iPhone mockup poster for tech event",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "Tech5",
+    title: "iPhone mockup Poster",
+    href: "",
+    image: "/Image/tech/tech5.png",
+    uiTools: ["Canva"],
+    description: "iPhone mockup poster for tech event",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "STEM1",
+    title: "TECH EVENT mockup Poster",
+    href: "",
+    image: "/Image/tech/STEM1.png",
+    uiTools: ["Canva"],
+    description: "Tech event mockup poster",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "STEM2",
+    title: "TECH EVENT mockup Poster",
+    href: "",
+    image: "/Image/tech/STEM2.png",
+    uiTools: ["Canva"],
+    description: "Tech event mockup poster",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "STEM3",
+    title: "TECH EVENT mockup Poster",
+    href: "",
+    image: "/Image/tech/STEM3.png",
+    uiTools: ["Canva"],
+    description: "Tech event mockup poster",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "STEM4",
+    title: "TECH EVENT mockup Poster",
+    href: "",
+    image: "/Image/tech/STEM4.png",
+    uiTools: ["Canva"],
+    description: "Tech event mockup poster",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "STEM5",
+    title: "TECH EVENT mockup Poster",
+    href: "",
+    image: "/Image/tech/STEM5.png",
+    uiTools: ["Canva"],
+    description: "Tech event mockup poster",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "STEM6",
+    title: "TECH EVENT mockup Poster",
+    href: "",
+    image: "/Image/tech/STEM6.png",
+    uiTools: ["Canva"],
+    description: "Tech event mockup poster",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "STEM7",
+    title: "TECH EVENT mockup Poster",
+    href: "",
+    image: "/Image/tech/STEM7.png",
+    uiTools: ["Canva"],
+    description: "Tech event mockup poster",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "cv1",
+    title: "The Price of Sugar",
+    href: "",
+    image: "/Image/UI/1.jpg",
+    uiTools: ["Canva"],
+    description: "Graphic design poster exploring visual storytelling.",
+    category: "Poster",
+    workType: "poster",
+  },
+  {
+    id: "ps3",
+    title: "GA design poster",
+    href: "",
+    image: "/Image/UI/poster.png",
+    uiTools: ["Photoshop"],
+    description: "Graphic design poster for new arrival campaign.",
+    category: "Poster",
+    workType: "poster",
+  },
 ];
 
 const MERCHANDISE_DESIGNS: Item[] = [
-  { id: "ps4", title: "Alien Shirt", href: "", image: "/Image/UI/alien.png", uiTools: ["Photoshop"], description: "Custom T-shirt design featuring Reefer branding.", category: "Merchandise", workType: "merchandise" },
-  { id: "ps5", title: "Chest Shirt", href: "", image: "/Image/UI/11.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design for streetwear collection.", category: "Merchandise", workType: "merchandise" },
-  { id: "ps6", title: "Devine Outcast Shirt", href: "", image: "/Image/UI/12.png", uiTools: ["Photoshop"], description: "Custom T-shirt design with artistic expression.", category: "Merchandise", workType: "merchandise" },
-  { id: "ps7", title: "Visionless Shirt", href: "", image: "/Image/UI/13.png", uiTools: ["Photoshop"], description: "Alternate colorway shirt design for brand identity.", category: "Merchandise", workType: "merchandise" },
-  { id: "ps8", title: "Last hope Shirt", href: "", image: "/Image/UI/14.png", uiTools: ["Photoshop"], description: "Custom T-shirt design with meaningful message.", category: "Merchandise", workType: "merchandise" },
-  { id: "ps9", title: "hiphop Shirt", href: "", image: "/Image/UI/15.png", uiTools: ["Photoshop"], description: "Custom T-shirt design for music culture enthusiasts.", category: "Merchandise", workType: "merchandise" },
-  { id: "ps10", title: "hiphop Shirt Alt", href: "", image: "/Image/UI/Cmytk.png", uiTools: ["Photoshop"], description: "Alternative design for hip-hop inspired collection.", category: "Merchandise", workType: "merchandise" },
+  {
+    id: "ps4",
+    title: "Alien Shirt",
+    href: "",
+    image: "/Image/UI/alien.png",
+    uiTools: ["Photoshop"],
+    description: "Custom T-shirt design featuring Reefer branding.",
+    category: "Merchandise",
+    workType: "merchandise",
+  },
+  {
+    id: "ps5",
+    title: "Chest Shirt",
+    href: "",
+    image: "/Image/UI/11.png",
+    uiTools: ["Photoshop"],
+    description: "Alternate colorway shirt design for streetwear collection.",
+    category: "Merchandise",
+    workType: "merchandise",
+  },
+  {
+    id: "ps6",
+    title: "Devine Outcast Shirt",
+    href: "",
+    image: "/Image/UI/12.png",
+    uiTools: ["Photoshop"],
+    description: "Custom T-shirt design with artistic expression.",
+    category: "Merchandise",
+    workType: "merchandise",
+  },
+  {
+    id: "ps7",
+    title: "Visionless Shirt",
+    href: "",
+    image: "/Image/UI/13.png",
+    uiTools: ["Photoshop"],
+    description: "Alternate colorway shirt design for brand identity.",
+    category: "Merchandise",
+    workType: "merchandise",
+  },
+  {
+    id: "ps8",
+    title: "Last hope Shirt",
+    href: "",
+    image: "/Image/UI/14.png",
+    uiTools: ["Photoshop"],
+    description: "Custom T-shirt design with meaningful message.",
+    category: "Merchandise",
+    workType: "merchandise",
+  },
+  {
+    id: "ps9",
+    title: "hiphop Shirt",
+    href: "",
+    image: "/Image/UI/15.png",
+    uiTools: ["Photoshop"],
+    description: "Custom T-shirt design for music culture enthusiasts.",
+    category: "Merchandise",
+    workType: "merchandise",
+  },
+  {
+    id: "ps10",
+    title: "hiphop Shirt Alt",
+    href: "",
+    image: "/Image/UI/Cmytk.png",
+    uiTools: ["Photoshop"],
+    description: "Alternative design for hip-hop inspired collection.",
+    category: "Merchandise",
+    workType: "merchandise",
+  },
 ];
 
 const GRAPHIC_DESIGNS: Item[] = [
-  { id: "ps1", title: "McLaren", href: "", image: "/Image/UI/7.png", uiTools: ["Photoshop"], description: "McLaren-inspired luxury automotive branding concept showcasing high-performance visual identity design.", category: "Graphic Design", workType: "graphic-design", featured: true, tags: ["Branding"] },
-  { id: "ps2", title: "Me GA", href: "", image: "/Image/UI/8.png", uiTools: ["Photoshop"], description: "Experimental McLaren variation exploring alternative automotive branding composition and visual direction.", category: "Graphic Design", workType: "graphic-design" },
-  { id: "cv3", title: "Weeknd UI Concept", href: "", image: "/Image/UI/3.jpg", uiTools: ["Canva"], description: "The Weeknd-inspired UI concept focused on moody aesthetics, atmospheric tone, and expressive visual storytelling.", category: "Graphic Design", workType: "graphic-design" },
-  { id: "dm1", title: "Reefer Hoodie", href: "", image: "/Image/UI/4.png", uiTools: ["Figma"], description: "Reefer hoodie product concept design featuring a clean, modern layout for apparel presentation.", category: "Graphic Design", workType: "graphic-design" },
-  { id: "dm2", title: "Fliptop Poster", href: "", image: "/Image/UI/5.jpg", uiTools: ["Figma"], description: "FlipTop event poster design emphasizing bold typography and strong visual hierarchy for digital display.", category: "Graphic Design", workType: "graphic-design" },
-  { id: "dm3", title: "UI Mazda Figma", href: "", image: "/Image/UI/6.png", uiTools: ["Figma"], description: "Mazda-inspired automotive dashboard UI concept with a sleek, modern, and user-focused interface design.", category: "Graphic Design", workType: "graphic-design" },
-  { id: "cv2", title: "Clay Cuneiform Tables", href: "", image: "/Image/UI/2.jpg", uiTools: ["Canva"], description: "Informational graphic design piece with historical significance.", category: "Poster", workType: "poster" },
+  {
+    id: "ps1",
+    title: "McLaren",
+    href: "",
+    image: "/Image/UI/7.png",
+    uiTools: ["Photoshop"],
+    description: "McLaren-inspired luxury automotive branding concept showcasing high-performance visual identity design.",
+    category: "Graphic Design",
+    workType: "graphic-design",
+    featured: true,
+    tags: ["Branding"],
+  },
+  {
+    id: "ps2",
+    title: "Me GA",
+    href: "",
+    image: "/Image/UI/8.png",
+    uiTools: ["Photoshop"],
+    description: "Experimental McLaren variation exploring alternative automotive branding composition and visual direction.",
+    category: "Graphic Design",
+    workType: "graphic-design",
+  },
+  {
+    id: "cv3",
+    title: "Weeknd UI Concept",
+    href: "",
+    image: "/Image/UI/3.jpg",
+    uiTools: ["Canva"],
+    description: "The Weeknd-inspired UI concept focused on moody aesthetics, atmospheric tone, and expressive visual storytelling.",
+    category: "Graphic Design",
+    workType: "graphic-design",
+  },
+  {
+    id: "dm1",
+    title: "Reefer Hoodie",
+    href: "",
+    image: "/Image/UI/4.png",
+    uiTools: ["Figma"],
+    description: "Reefer hoodie product concept design featuring a clean, modern layout for apparel presentation.",
+    category: "Graphic Design",
+    workType: "graphic-design",
+  },
+  {
+    id: "dm2",
+    title: "Fliptop Poster",
+    href: "",
+    image: "/Image/UI/5.jpg",
+    uiTools: ["Figma"],
+    description: "FlipTop event poster design emphasizing bold typography and strong visual hierarchy for digital display.",
+    category: "Graphic Design",
+    workType: "graphic-design",
+  },
+  {
+    id: "dm3",
+    title: "UI Mazda Figma",
+    href: "",
+    image: "/Image/UI/6.png",
+    uiTools: ["Figma"],
+    description: "Mazda-inspired automotive dashboard UI concept with a sleek, modern, and user-focused interface design.",
+    category: "Graphic Design",
+    workType: "graphic-design",
+  },
+  {
+    id: "cv2",
+    title: "Clay Cuneiform Tables",
+    href: "",
+    image: "/Image/UI/2.jpg",
+    uiTools: ["Canva"],
+    description: "Informational graphic design piece with historical significance.",
+    category: "Poster",
+    workType: "poster",
+  },
 ];
 
 const CERTS: Item[] = [
-  { id: "c1", title: "Google UX Certification", href: "/Image/Certificate/GoogleUX.jpg", image: "/Image/Certificate/GoogleUX.jpg", description: "Google UX Design Certification covering user research, wireframing, prototyping, and usability testing." },
-  { id: "c2", title: "Accenture – Skills to Succeed", href: "/Image/Certificate/S2.jpg", image: "/Image/Certificate/S2.jpg", description: "Certification in professional skills development." },
-  { id: "c3", title: "Java Programming Certificate", href: "/Image/Certificate/java.jpg", image: "/Image/Certificate/java.jpg", description: "Certification in Java programming fundamentals." },
-  { id: "c4", title: "Oracle Certified", href: "/Image/Certificate/oracle.jpg", image: "/Image/Certificate/oracle.jpg", description: "Certification in Oracle database management." },
-  { id: "c5", title: "Canva Graphic Design Certificate", href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df", image: "/Image/Certificate/Canva.png", description: "Certification in graphic design using Canva." },
+  {
+    id: "c1",
+    title: "Google UX Certification",
+    href: "/Image/Certificate/GoogleUX.jpg",
+    image: "/Image/Certificate/GoogleUX.jpg",
+    description: "Google UX Design Certification covering user research, wireframing, prototyping, and usability testing.",
+  },
+  {
+    id: "c2",
+    title: "DICT UI/UX Certification",
+    href: "/Image/Certificate/DICT-UIUX.jpg",
+    image: "/Image/Certificate/DICT-UIUX.jpg",
+    description: "DICT UI/UX Design Certification covering foundational principles of user interface design, user experience workflow, and practical design application.",
+  },
+  {
+    id: "c3",
+    title: "Accenture – Skills to Succeed",
+    href: "/Image/Certificate/S2.jpg",
+    image: "/Image/Certificate/S2.jpg",
+    description: "Certification in professional skills development.",
+  },
+  {
+    id: "c4",
+    title: "Java Programming Certificate",
+    href: "/Image/Certificate/java.jpg",
+    image: "/Image/Certificate/java.jpg",
+    description: "Certification in Java programming fundamentals.",
+  },
+  {
+    id: "c5",
+    title: "Oracle Certified",
+    href: "/Image/Certificate/oracle.jpg",
+    image: "/Image/Certificate/oracle.jpg",
+    description: "Certification in Oracle database management.",
+  },
+  {
+    id: "c6",
+    title: "Canva Graphic Design Certificate",
+    href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df",
+    image: "/Image/Certificate/Canva.png",
+    description: "Certification in graphic design using Canva.",
+  },
 ];
 
-const TECH_DATA: Record<string, Tech[]> = {
-  Frontend: [
-    { name: "HTML", Icon: SiHtml5, color: "#e34f26" },
-    { name: "CSS", Icon: SiCss3, color: "#1572b6" },
-    { name: "Tailwind", Icon: SiTailwindcss, color: "#06b6d4" },
-    { name: "Bootstrap", Icon: SiBootstrap, color: "#7952b3" },
-    { name: "JavaScript", Icon: SiJavascript, color: "#f7df1e" },
-    { name: "TypeScript", Icon: SiTypescript, color: "#3178c6" },
-    { name: "React", Icon: SiReact, color: "#61dafb" },
-    { name: "Next.js", Icon: SiNextdotjs, color: "#ffffff" },
-  ],
-  Backend: [
-    { name: "Node.js", Icon: SiNodedotjs, color: "#339933" },
-    { name: "Express", Icon: SiExpress, color: "#ffffff" },
-    { name: "PHP", Icon: SiPhp, color: "#777bb4" },
-    { name: "Laravel", Icon: SiLaravel, color: "#ff2d20" },
-    { name: "Java", Icon: FaJava, color: "#f89820" },
-    { name: "C#", Icon: TbBrandCSharp, color: "#239120" },
-  ],
-  Database: [
-    { name: "PostgreSQL", Icon: SiPostgresql, color: "#4169e1" },
-    { name: "MySQL", Icon: SiMysql, color: "#4479a1" },
-    { name: "Prisma", Icon: SiPrisma, color: "#2d3748" },
-    { name: "XAMPP", Icon: SiXampp, color: "#fb7a24" },
-  ],
-  Enterprise: [{ name: "SAP", Icon: SiSap, color: "#0faaff" }],
-  Design: [
-    { name: "Figma", Icon: SiFigma, color: "#f24e1e" },
-    { name: "Canva", Icon: SiCanva, color: "#00c4cc" },
-    { name: "Photoshop", Icon: SiAdobephotoshop, color: "#31a8ff" },
-    { name: "Illustrator", Icon: SiAdobeillustrator, color: "#ff9a00" },
-    { name: "PowerPoint", Icon: FaFilePowerpoint, color: "#d24726" },
-  ],
-  "Dev Tools": [
-    { name: "VS Code", Icon: DiVisualstudio, color: "#007acc" },
-    { name: "Git", Icon: SiGit, color: "#f05032" },
-    { name: "GitHub", Icon: SiGithub, color: "#ffffff" },
-    { name: "Vercel", Icon: SiVercel, color: "#ffffff" },
-    { name: "Hostinger", Icon: SiHostinger, color: "#673de6" },
-  ],
-};
-
 const WORK_CATEGORIES = [
-  { key: "web-dev", label: "Development", sub: "Full-stack", count: WEB_DEVELOPMENT.length },
-  { key: "website-design", label: "Frontend Design", sub: "UI/UX", count: WEBSITE_DESIGN.length },
-  { key: "ui-ux", label: "UI/UX", sub: "Design", count: UI_UX_DESIGNS.length },
-  { key: "mockups", label: "Mockups", sub: "Devices", count: DEVICE_MOCKUPS.length },
-  { key: "posters", label: "Posters", sub: "Marketing", count: POSTERS.length },
-  { key: "merchandise", label: "Merch", sub: "Fashion", count: MERCHANDISE_DESIGNS.length },
-  { key: "graphic-design", label: "Graphics", sub: "Design", count: GRAPHIC_DESIGNS.length },
+  {
+    key: "web-dev",
+    label: "Development",
+    sub: "Full-stack",
+    count: WEB_DEVELOPMENT.length,
+    featured: WEB_DEVELOPMENT[0],
+  },
+  {
+    key: "website-design",
+    label: "Frontend Design",
+    sub: "UI/UX",
+    count: WEBSITE_DESIGN.length,
+    featured: WEBSITE_DESIGN[0],
+  },
+  {
+    key: "ui-ux",
+    label: "UI/UX",
+    sub: "Design",
+    count: UI_UX_DESIGNS.length,
+    featured: UI_UX_DESIGNS[0],
+  },
+  {
+    key: "mockups",
+    label: "Mockups",
+    sub: "Devices",
+    count: DEVICE_MOCKUPS.length,
+    featured: DEVICE_MOCKUPS[0],
+  },
+  {
+    key: "posters",
+    label: "Posters",
+    sub: "Marketing",
+    count: POSTERS.length,
+    featured: POSTERS[0],
+  },
+  {
+    key: "merchandise",
+    label: "Merch",
+    sub: "Fashion",
+    count: MERCHANDISE_DESIGNS.length,
+    featured: MERCHANDISE_DESIGNS[0],
+  },
+  {
+    key: "graphic-design",
+    label: "Graphics",
+    sub: "Design",
+    count: GRAPHIC_DESIGNS.length,
+    featured: GRAPHIC_DESIGNS[0],
+  },
+  {
+    key: "certificates",
+    label: "Certificates",
+    sub: "Creds",
+    count: CERTS.length,
+    featured: CERTS[0],
+  },
 ] as const;
 
-const MAIN_TABS = [
-  { key: "portfolio", label: "Portfolio", sub: "All Works" },
-  { key: "tech", label: "Stack", sub: "Technologies" },
-  { key: "cert", label: "Credentials", sub: "Certificates" },
-] as const;
+type Category = (typeof WORK_CATEGORIES)[number];
+type CategoryKey = Category["key"];
 
-function SectionHeader({ label, count, className = "" }: { label: string; count?: number; className?: string }) {
+function CategoryCard({ category, isActive, onClick }: { category: Category; isActive: boolean; onClick: () => void }) {
   return (
-    <div className={`flex items-center gap-3 sm:gap-5 mb-10 sm:mb-14 group ${className}`}>
-      <div className="flex items-center gap-3 sm:gap-4">
-        <div className="w-1 h-8 sm:h-10 bg-gradient-to-b from-[var(--text)] to-[var(--text)]/30 rounded-full" />
-        <h2 className="text-xs sm:text-sm font-black tracking-[0.4em] sm:tracking-[0.6em] uppercase text-[var(--text)]/80" style={{ fontFamily: "'DM Mono', monospace" }}>
-          {label}
-        </h2>
-      </div>
-      {count !== undefined && (
-        <span className="ml-auto text-xs sm:text-sm font-black tracking-[0.3em] uppercase px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-[var(--text)]/5 to-[var(--text)]/0 border border-[var(--text)]/10 text-[var(--text)]/60" style={{ fontFamily: "'DM Mono', monospace" }}>
-          {String(count).padStart(2, "0")}
-        </span>
+    <button
+      onClick={onClick}
+      className="group relative flex-shrink-0 w-72 h-80 md:w-80 md:h-96 lg:w-96 lg:h-[420px] rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+    >
+      <Image
+        src={category.featured.image}
+        alt={category.label}
+        fill
+        className="object-cover transition-transform duration-700 group-hover:scale-105"
+        priority={false}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-white/20 to-transparent transition-all duration-500" />
+      {isActive && (
+        <div className="absolute inset-0 border-2 border-gray-900/30 rounded-2xl md:rounded-3xl shadow-lg shadow-gray-900/5" />
       )}
-    </div>
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-white/98 via-transparent to-transparent" />
+      <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-6">
+        <div className="flex justify-end">
+          <div className="px-3 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-gray-900/10 text-gray-900 text-xs font-semibold">
+            {String(category.count).padStart(2, "0")} Projects
+          </div>
+        </div>
+        <div className="space-y-3">
+          <div className="flex items-end gap-3">
+            <div className="w-1 h-10 md:h-12 bg-gradient-to-t from-gray-900 to-gray-900/40 rounded-full" />
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 tracking-wide leading-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              {category.label}
+            </h3>
+          </div>
+          <p className="text-gray-700 text-xs md:text-sm ml-4 md:ml-5 tracking-wide font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+            {category.sub} • Explore
+          </p>
+        </div>
+      </div>
+      <div className="absolute top-5 md:top-6 right-5 md:right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
+        <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/50 backdrop-blur-md border border-gray-900/10 flex items-center justify-center">
+          <MdArrowOutward className="w-4 h-4 md:w-5 md:h-5 text-gray-900" />
+        </div>
+      </div>
+    </button>
   );
 }
 
-function CountBadge({ value, label, icon: Icon }: { value: number; label: string; icon?: React.ReactNode }) {
+function ProjectGrid({ items, onSelectProject }: { items: Item[]; onSelectProject: (item: Item) => void }) {
   return (
-    <div className="flex flex-col items-center gap-3 sm:gap-4 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-[var(--text)]/5 bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent hover:border-[var(--text)]/10 transition-all duration-300 group">
-      {Icon && <div className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform">{Icon}</div>}
-      <span className="text-3xl sm:text-5xl font-black text-[var(--text)] tabular-nums" style={{ fontFamily: "'DM Mono', monospace" }}>
-        {String(value).padStart(2, "0")}
-      </span>
-      <span className="text-[0.65rem] sm:text-xs font-bold tracking-[0.3em] uppercase text-[var(--text)]/40" style={{ fontFamily: "'DM Mono', monospace" }}>
-        {label}
-      </span>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8">
+      {items.map((item, index) => (
+        <button
+          key={item.id}
+          onClick={() => onSelectProject(item)}
+          className="group relative h-64 md:h-72 lg:h-80 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 focus:outline-none focus:ring-2 focus:ring-gray-900/20 bg-white border border-gray-100 animate-in fade-in slide-in-from-bottom-4"
+          style={{ animationDelay: `${index * 50}ms` }}
+        >
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            priority={false}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-transparent group-hover:from-white/90 group-hover:via-white/20 transition-all duration-700" />
+          <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-6">
+            <div className="flex justify-end">
+              <div className="opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0 px-2.5 py-1 rounded-full bg-white/40 backdrop-blur-md border border-gray-900/10">
+                <span className="text-gray-900 text-xs uppercase tracking-wide font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  View
+                </span>
+              </div>
+            </div>
+            <div className="space-y-2 md:space-y-3">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-left opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-3 group-hover:translate-y-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                {item.title}
+              </h3>
+              <p className="text-gray-600 text-xs md:text-sm line-clamp-2 text-left opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-3 group-hover:translate-y-0 delay-75" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {item.description}
+              </p>
+              <div className="flex items-center gap-2 text-gray-900 text-xs md:text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-3 group-hover:translate-y-0 delay-100">
+                <span className="text-gray-600">View Details</span>
+                <RxArrowRight className="w-3 h-3 md:w-4 md:h-4 transition-transform group-hover:translate-x-1" />
+              </div>
+            </div>
+          </div>
+        </button>
+      ))}
     </div>
   );
 }
 
-function FeaturedCaseStudy({ item, onClick }: { item: Item; onClick: () => void }) {
+function ProjectModal({ project, onClose }: { project: Item; onClose: () => void }) {
   return (
     <div
-      onClick={onClick}
-      className="group cursor-pointer relative overflow-hidden rounded-2xl sm:rounded-3xl border border-[var(--text)]/5 hover:border-[var(--text)]/15 transition-all bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent hover:shadow-xl"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 backdrop-blur-xl animate-in fade-in duration-300 overflow-y-auto"
+      onClick={onClose}
     >
-      <div className="relative w-full aspect-video bg-[var(--text)]/[0.03] overflow-hidden">
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
-          priority={false}
-        />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-      </div>
-      
-      <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="flex flex-wrap gap-2">
-          {item.tags?.map((tag) => (
-            <span key={tag} className="text-[0.65rem] sm:text-xs px-2 sm:px-3 py-1 bg-white/20 backdrop-blur-sm rounded-lg text-white font-medium">
-              {tag}
-            </span>
-          ))}
+      <div
+        className="relative w-full max-w-5xl flex flex-col items-center my-6 md:my-10 animate-in zoom-in-95 slide-in-from-bottom-8 duration-500"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="relative rounded-3xl overflow-hidden border border-gray-200/60 shadow-2xl bg-white flex items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ maxHeight: "70vh" }}>
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={1400}
+            height={900}
+            className="object-contain w-auto h-auto max-h-[70vh] max-w-full"
+            priority
+          />
         </div>
-        <div className="space-y-3 sm:space-y-4">
-          <h3 className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-            {item.title}
-          </h3>
-          <div className="flex items-center gap-2 text-white text-xs sm:text-sm font-medium">
-            <span>View Project</span>
-            <RxArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+
+        <div className="mt-10 md:mt-14 flex flex-col items-center text-center space-y-8 md:space-y-10 max-w-4xl w-full px-4">
+          <div className="space-y-4 md:space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
+            <div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-2" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                {project.title}
+              </h2>
+              <div className="h-1 w-12 bg-gradient-to-r from-gray-900/60 to-transparent rounded-full mx-auto mt-3 animate-in scale-x-0 origin-left duration-700 delay-200" />
+            </div>
+            <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl mx-auto animate-in fade-in duration-700 delay-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+              {project.description}
+            </p>
+          </div>
+
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent animate-in scale-x-0 origin-right duration-700 delay-300" />
+
+          {(project.techStack || project.uiTools) && (
+            <div className="w-full space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400">
+              <p className="text-xs sm:text-sm font-bold tracking-wider uppercase text-gray-500" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Technologies & Tools
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+                {(project.techStack || project.uiTools)?.map((tech, index) => (
+                  <span
+                    key={tech}
+                    className="text-xs sm:text-sm px-3 md:px-4 py-2 bg-gray-100 rounded-lg border border-gray-200 text-gray-700 font-medium hover:bg-gray-200 hover:border-gray-300 transition-all duration-300 transform hover:scale-105 animate-in fade-in zoom-in-75 duration-500"
+                    style={{ animationDelay: `${400 + index * 50}ms`, fontFamily: "'Inter', sans-serif" }}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 pt-6 md:pt-8 w-full justify-center flex-wrap animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
+            {project.href && project.href.startsWith("http") && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/btn inline-flex items-center gap-2 px-6 md:px-8 py-2.5 md:py-3 rounded-full border border-gray-300 bg-white text-xs sm:text-sm font-semibold tracking-wide uppercase text-gray-900 hover:bg-gray-50 hover:border-gray-400 transition-all duration-500 transform hover:scale-105"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                Visit Project
+                <MdArrowOutward className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+              </a>
+            )}
+            {project.href && !project.href.startsWith("http") && (
+              <Link
+                href={project.href}
+                className="group/btn inline-flex items-center gap-2 px-6 md:px-8 py-2.5 md:py-3 rounded-full border border-gray-300 bg-white text-xs sm:text-sm font-semibold tracking-wide uppercase text-gray-900 hover:bg-gray-50 hover:border-gray-400 transition-all duration-500 transform hover:scale-105"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                View Project
+                <MdArrowOutward className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+              </Link>
+            )}
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/btn inline-flex items-center gap-2 px-6 md:px-8 py-2.5 md:py-3 rounded-full border border-gray-300 bg-white text-xs sm:text-sm font-semibold tracking-wide uppercase text-gray-900 hover:bg-gray-50 hover:border-gray-400 transition-all duration-500 transform hover:scale-105"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                View Code
+                <SiGithub className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform" />
+              </a>
+            )}
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function CategoryView({ category, onBack }: { category: Category; onBack: () => void }) {
+  const [selectedProject, setSelectedProject] = useState<Item | null>(null);
+
+  const getItems = (): Item[] => {
+    const map: Record<CategoryKey, Item[]> = {
+      "web-dev": WEB_DEVELOPMENT,
+      "website-design": WEBSITE_DESIGN,
+      "ui-ux": UI_UX_DESIGNS,
+      mockups: DEVICE_MOCKUPS,
+      posters: POSTERS,
+      merchandise: MERCHANDISE_DESIGNS,
+      "graphic-design": GRAPHIC_DESIGNS,
+      certificates: CERTS,
+    };
+    return map[category.key];
+  };
+
+  const items = getItems();
+
+  return (
+    <>
+      <div className="space-y-10 md:space-y-12 lg:space-y-16 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-left-8 duration-700">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 md:gap-6 animate-in fade-in duration-700">
+            <button
+              onClick={onBack}
+              className="group flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 hover:border-gray-300 text-gray-900 transition-all duration-500 transform hover:scale-105 text-xs md:text-sm font-semibold"
+            >
+              <RxArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+              Back
+            </button>
+            <div>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                {category.label}
+              </h1>
+              <p className="text-gray-500 text-xs md:text-sm mt-1.5 tracking-wider uppercase font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {category.sub} • {items.length} Projects
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-2 animate-in fade-in slide-in-from-left-8 duration-700 delay-100">
+            <p className="text-xs md:text-sm font-semibold tracking-widest uppercase text-gray-500" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Selected Works
+            </p>
+            <div className="h-1 w-20 bg-gradient-to-r from-gray-900/60 to-transparent rounded-full" />
+          </div>
+        </div>
+
+        {items.length > 0 ? (
+          <div className="animate-in fade-in duration-1000 delay-200">
+            <ProjectGrid items={items} onSelectProject={setSelectedProject} />
+          </div>
+        ) : (
+          <div className="text-center py-20 md:py-28 animate-in fade-in duration-700">
+            <p className="text-gray-500 text-base md:text-lg" style={{ fontFamily: "'Inter', sans-serif" }}>
+              No projects in this category
+            </p>
+          </div>
+        )}
+      </div>
+
+      {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+    </>
   );
 }
 
 export default function PortfolioSection() {
-  const [tab, setTab] = useState<"portfolio" | "tech" | "cert">("portfolio");
-  const [workCategory, setWorkCategory] = useState<"web-dev" | "website-design" | "ui-ux" | "mockups" | "posters" | "merchandise" | "graphic-design">("web-dev");
-  const [selectedProject, setSelectedProject] = useState<Item | null>(null);
+  const [view, setView] = useState<"categories" | "projects">("categories");
+  const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("web-dev");
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const getWorkItems = (category: typeof workCategory): Item[] => {
-    const categoryMap = {
-      "web-dev": WEB_DEVELOPMENT,
-      "website-design": WEBSITE_DESIGN,
-      "ui-ux": UI_UX_DESIGNS,
-      "mockups": DEVICE_MOCKUPS,
-      "posters": POSTERS,
-      "merchandise": MERCHANDISE_DESIGNS,
-      "graphic-design": GRAPHIC_DESIGNS,
-    };
-    return categoryMap[category] || [];
+  const handleCategoryClick = (key: CategoryKey) => {
+    setSelectedCategory(key);
+    setView("projects");
   };
 
-  const currentItems = getWorkItems(workCategory);
-  const totalWorks = WEB_DEVELOPMENT.length + WEBSITE_DESIGN.length + UI_UX_DESIGNS.length + DEVICE_MOCKUPS.length + POSTERS.length + MERCHANDISE_DESIGNS.length + GRAPHIC_DESIGNS.length;
-  const featuredItems = currentItems.filter(item => item.featured);
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 420;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollContainerRef.current) {
+        setScrollPosition(scrollContainerRef.current.scrollLeft);
+      }
+    };
+
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => container.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
+
+  const currentCategory = WORK_CATEGORIES.find((c) => c.key === selectedCategory);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Mono:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
         
-        .container-3d { transform-style: preserve-3d; perspective: 1000px; }
-        
-        .card-3d {
-          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-          transform: translateZ(0);
+        .category-scroll {
+          scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
         }
         
-        .card-3d:hover {
-          transform: translateZ(20px) translateY(-10px);
-          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        .category-scroll > * {
+          scroll-snap-align: start;
         }
         
-        .btn-modern {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
         }
         
-        .btn-modern::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-          opacity: 0;
-          transition: opacity 0.6s;
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
-        
-        .btn-modern:hover::before { opacity: 1; }
-        
-        .active-tab-glow {
-          box-shadow: inset 0 0 20px rgba(255,255,255,0.08), 0 15px 35px -15px rgba(0,0,0,0.4);
+
+        .delay-75 {
+          animation-delay: 75ms;
         }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .project-card {
-          position: relative;
-          overflow: hidden;
-          aspect-ratio: 4/3;
+
+        .delay-100 {
+          animation-delay: 100ms;
         }
-        
-        .project-card::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-          opacity: 0;
-          transition: opacity 0.5s;
-          pointer-events: none;
+
+        .delay-200 {
+          animation-delay: 200ms;
         }
-        
-        .project-card:hover::after { opacity: 1; }
-        
-        .image-overlay {
-          position: absolute;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.2);
-          opacity: 0;
-          transition: opacity 0.4s;
+
+        .delay-300 {
+          animation-delay: 300ms;
         }
-        
-        .project-card:hover .image-overlay {
-          opacity: 1;
+
+        .delay-400 {
+          animation-delay: 400ms;
         }
-        
-        .view-indicator {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          padding: 16px;
-          background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-          transform: translateY(20px);
-          opacity: 0;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        .delay-500 {
+          animation-delay: 500ms;
         }
-        
-        .project-card:hover .view-indicator {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
-        .modal-overlay {
-          animation: fadeIn 0.3s ease-out;
-        }
-        
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            backdrop-filter: blur(0px);
-          }
-          to {
-            opacity: 1;
-            backdrop-filter: blur(12px);
-          }
-        }
-        
-        .modal-content {
-          animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.92);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        
-        .featured-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1.5rem;
-        }
-        
-        @media (max-width: 768px) {
-          .featured-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-          }
-        }
-        
-        .featured-grid > div:nth-child(1) {
-          grid-column: span 1;
-        }
-        
-        .featured-grid > div:nth-child(2) {
-          grid-column: span 1;
-        }
-        
-        .featured-grid > div:nth-child(3) {
-          grid-column: span 2;
-        }
-        
-        @media (max-width: 768px) {
-          .featured-grid > div:nth-child(3) {
-            grid-column: span 1;
-          }
+
+        .delay-700 {
+          animation-delay: 700ms;
         }
       `}</style>
 
-      <section className="relative z-10 w-full flex justify-center py-16 sm:py-32 bg-transparent text-[var(--text)]">
-        <div className="w-full max-w-7xl px-4 sm:px-8">
-          <div className="mb-16 sm:mb-24 space-y-8 sm:space-y-12">
-            <div className="grid grid-cols-3 gap-3 sm:gap-6">
-              <CountBadge value={totalWorks} label="Works" />
-              <CountBadge value={WORK_CATEGORIES.length} label="Category" />
-              <CountBadge value={CERTS.length} label="Certified" />
-            </div>
-            <div className="w-full h-px bg-gradient-to-r from-[var(--text)]/0 via-[var(--text)]/10 to-[var(--text)]/0" />
-          </div>
+      <section className="relative z-10 w-full flex justify-center py-12 md:py-16 lg:py-20 bg-white text-gray-900">
+        <div className="w-full max-w-7xl px-4 sm:px-6 md:px-8 lg:px-10">
+          {view === "categories" ? (
+            <div className="space-y-12 md:space-y-14 lg:space-y-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+              <div className="flex flex-col gap-12 md:gap-14">
+                <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-8 duration-700">
+                  <span className="w-12 h-[1.5px] bg-gray-300" />
+                  <span className="text-xs md:text-sm font-bold tracking-[0.4em] uppercase text-gray-500" style={{ fontFamily: "'Inter', sans-serif" }}>
+                    Portfolio Collection
+                  </span>
+                </div>
 
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 sm:gap-12 mb-16 sm:mb-24">
-            <div className="space-y-2 sm:space-y-4">
-              <h1 className="text-4xl sm:text-6xl font-black text-[var(--text)] tracking-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                Creative Portfolio
-              </h1>
-              <p className="text-[var(--text)]/50 text-sm sm:text-base max-w-md" style={{ fontFamily: "'DM Mono', monospace" }}>
-                Crafting digital experiences through code, design, and innovation
-              </p>
-            </div>
+                <div className="space-y-6">
+                  <div className="space-y-3">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 tracking-tight leading-[1.1] animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                      User-Centered
+                    </h1>
+                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 tracking-tight leading-[1.1] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100" style={{ fontFamily: "'Outfit', sans-serif" }}>
+                      Design & Code
+                    </h2>
+                  </div>
 
-            <nav className="inline-flex p-1 sm:p-2 bg-[var(--text)]/[0.03] rounded-2xl sm:rounded-3xl border border-[var(--text)]/5 backdrop-blur-xl w-full sm:w-auto overflow-x-auto no-scrollbar gap-1 sm:gap-2">
-              {MAIN_TABS.map((t) => (
-                <button
-                  key={t.key}
-                  onClick={() => setTab(t.key)}
-                  className={`btn-modern relative flex flex-col items-center flex-1 sm:flex-none px-4 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl transition-all whitespace-nowrap ${tab === t.key
-                      ? "bg-[var(--bg)] border border-[var(--text)]/20 text-[var(--text)] active-tab-glow"
-                      : "text-[var(--text)]/40 hover:text-[var(--text)]/60 border border-transparent"
-                    }`}
+                  <div className="space-y-4">
+                    <h3 className="text-sm md:text-base text-gray-700 tracking-widest uppercase font-light animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      Creative Work Across Multiple Disciplines
+                    </h3>
+                    <p className="text-gray-600 text-sm sm:text-base md:text-lg max-w-3xl leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      Explore a curated collection of my creative portfolio. Each category represents a unique approach to design and development, showcasing excellence in web development, UI/UX design, graphic design, and creative direction. Discover projects that combine aesthetic appeal with functional excellence.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative group animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-400">
+                <div
+                  ref={scrollContainerRef}
+                  className="flex gap-4 md:gap-5 lg:gap-6 overflow-x-auto no-scrollbar category-scroll py-4 px-1 -mx-1"
                 >
-                  <span className="text-[0.65rem] sm:text-sm font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
-                    {t.label}
-                  </span>
-                  <span className="text-[0.45rem] sm:text-xs tracking-[0.1em] uppercase opacity-50" style={{ fontFamily: "'DM Mono', monospace" }}>
-                    {t.sub}
-                  </span>
-                </button>
-              ))}
-            </nav>
-          </div>
-
-          {tab === "portfolio" && (
-            <div className="space-y-16 sm:space-y-24 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2 sm:gap-3">
-                {WORK_CATEGORIES.map((cat) => {
-                  const catKey = cat.key as typeof workCategory;
-                  return (
-                    <button
-                      key={cat.key}
-                      onClick={() => setWorkCategory(catKey)}
-                      className={`btn-modern group px-3 sm:px-4 py-4 sm:py-5 rounded-xl sm:rounded-2xl border text-center transition-all relative overflow-hidden ${workCategory === cat.key
-                          ? "bg-gradient-to-br from-[var(--text)]/15 to-[var(--text)]/5 border-[var(--text)]/20 text-[var(--text)] shadow-lg"
-                          : "border-[var(--text)]/5 text-[var(--text)]/40 hover:border-[var(--text)]/10 hover:text-[var(--text)]/60 hover:bg-[var(--text)]/[0.02]"
-                        }`}
-                    >
-                      <div className="space-y-2">
-                        <div className="text-xs sm:text-sm font-bold tracking-[0.15em] uppercase" style={{ fontFamily: "'DM Mono', monospace" }}>
-                          {cat.label}
-                        </div>
-                        <div className="flex items-center justify-center gap-2">
-                          <span className="text-[0.65rem] sm:text-xs opacity-60">{cat.sub}</span>
-                          <span className="text-[0.65rem] sm:text-xs font-black opacity-80">{String(cat.count).padStart(2, "0")}</span>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="space-y-10 sm:space-y-14">
-                <SectionHeader label={WORK_CATEGORIES.find(c => c.key === workCategory)?.label || "Works"} count={currentItems.length} />
-
-                {currentItems.length > 0 ? (
-                  <>
-                    {featuredItems.length > 0 && (
-                      <div>
-                        <div className="featured-grid">
-                          {featuredItems.map((item) => (
-                            <FeaturedCaseStudy
-                              key={item.id}
-                              item={item}
-                              onClick={() => setSelectedProject(item)}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {currentItems.length > featuredItems.length && (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 container-3d">
-                        {currentItems.filter(item => !item.featured).map((item) => (
-                          <div
-                            key={item.id}
-                            className="group cursor-pointer h-full"
-                            onClick={() => setSelectedProject(item)}
-                          >
-                            <div className="card-3d relative h-full rounded-2xl sm:rounded-3xl overflow-hidden border border-[var(--text)]/5 hover:border-[var(--text)]/15 transition-all bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent">
-                              <div className="project-card relative w-full bg-[var(--text)]/[0.03]">
-                                <Image
-                                  src={item.image}
-                                  alt={item.title}
-                                  fill
-                                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                  priority={false}
-                                />
-                                <div className="image-overlay" />
-                                <div className="view-indicator flex items-center justify-center gap-2 text-white text-xs sm:text-sm font-medium">
-                                  <span>View Project</span>
-                                  <RxArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <div className="col-span-full text-center py-16 sm:py-20">
-                    <p className="text-[var(--text)]/50 text-sm sm:text-base">No items in this category yet</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {tab === "tech" && (
-            <div className="animate-in fade-in zoom-in-95 duration-1000">
-              <div className="space-y-16 sm:space-y-20">
-                {Object.entries(TECH_DATA).map(([group, list]) => (
-                  <div key={group} className="space-y-8 sm:space-y-12">
-                    <SectionHeader label={group} count={list.length} />
-                    <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-5">
-                      {list.map((t) => (
-                        <div
-                          key={t.name}
-                          className="group relative aspect-square flex flex-col items-center justify-center rounded-2xl sm:rounded-3xl border border-[var(--text)]/5 hover:border-[var(--text)]/20 transition-all bg-gradient-to-br from-[var(--text)]/[0.03] to-transparent hover:from-[var(--text)]/[0.08] duration-500 cursor-default hover:shadow-lg hover:-translate-y-1"
-                        >
-                          <div className="relative transition-all duration-500 group-hover:scale-125 group-hover:-rotate-12">
-                            <t.Icon className="text-2xl sm:text-3xl" style={{ color: t.color }} />
-                          </div>
-                          <span className="absolute bottom-0 left-0 right-0 text-[0.45rem] sm:text-xs font-bold uppercase tracking-[0.1em] text-[var(--text)]/60 group-hover:text-[var(--text)]/90 px-2 py-2 text-center" style={{ fontFamily: "'DM Mono', monospace" }}>
-                            {t.name}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {tab === "cert" && (
-            <div className="space-y-10 sm:space-y-16 animate-in fade-in slide-in-from-top-8 duration-1000">
-              <SectionHeader label="Certificates & Credentials" count={CERTS.length} />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-                {CERTS.map((c) => (
-                  <a
-                    key={c.id}
-                    href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block rounded-2xl sm:rounded-3xl overflow-hidden border border-[var(--text)]/5 hover:border-[var(--text)]/15 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 bg-gradient-to-br from-[var(--text)]/[0.02] to-transparent"
-                  >
-                    <div className="relative w-full aspect-[4/3] bg-gradient-to-br from-[var(--text)]/[0.05] to-transparent overflow-hidden">
-                      <Image
-                        src={c.image}
-                        alt={c.title}
-                        fill
-                        className="object-cover sm:grayscale sm:group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  {WORK_CATEGORIES.map((cat, index) => (
+                    <div key={cat.key} className="animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: `${500 + index * 75}ms` }}>
+                      <CategoryCard
+                        category={cat}
+                        isActive={cat.key === selectedCategory}
+                        onClick={() => handleCategoryClick(cat.key)}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-4">
-                        <div className="flex items-center gap-2 text-white text-xs sm:text-sm font-medium">
-                          <span>View Certificate</span>
-                          <HiArrowTopRightOnSquare className="w-4 h-4" />
-                        </div>
-                      </div>
                     </div>
-                    <div className="p-4 sm:p-5 bg-[var(--bg)] border-t border-[var(--text)]/5">
-                      <h3 className="text-xs sm:text-sm font-bold text-[var(--text)] truncate">{c.title}</h3>
-                    </div>
-                  </a>
-                ))}
+                  ))}
+                </div>
+
+                {scrollPosition > 0 && (
+                  <button
+                    onClick={() => scroll("left")}
+                    className="absolute -left-6 md:-left-8 top-1/2 transform -translate-y-1/2 z-20 p-2 md:p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 transition-all duration-500 backdrop-blur-md hidden md:flex items-center justify-center animate-in fade-in duration-500 delay-700"
+                    aria-label="Scroll left"
+                  >
+                    <RxArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
+                  </button>
+                )}
+
+                <button
+                  onClick={() => scroll("right")}
+                  className="absolute -right-6 md:-right-8 top-1/2 transform -translate-y-1/2 z-20 p-2 md:p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 transition-all duration-500 backdrop-blur-md hidden md:flex items-center justify-center animate-in fade-in duration-500 delay-700"
+                  aria-label="Scroll right"
+                >
+                  <RxArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                </button>
+
+                <div className="flex md:hidden gap-3 mt-6 justify-center animate-in fade-in duration-700 delay-700">
+                  <button
+                    onClick={() => scroll("left")}
+                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-600 hover:text-gray-900 transition-all"
+                  >
+                    <RxArrowLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => scroll("right")}
+                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-600 hover:text-gray-900 transition-all"
+                  >
+                    <RxArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="pt-6 md:pt-8 border-t border-gray-200 animate-in fade-in duration-700 delay-700">
+                <p className="text-gray-500 text-xs md:text-sm tracking-widest uppercase font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  {WORK_CATEGORIES.length} Categories • {WORK_CATEGORIES.reduce((sum, cat) => sum + cat.count, 0)} Total Projects
+                </p>
               </div>
             </div>
+          ) : (
+            currentCategory && <CategoryView category={currentCategory} onBack={() => setView("categories")} />
           )}
         </div>
       </section>
-
-      {selectedProject && (
-        <div
-          className="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-lg"
-          onClick={() => setSelectedProject(null)}
-        >
-          <div
-            className="modal-content relative w-full max-w-5xl flex flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setSelectedProject(null)}
-              className="absolute -top-12 right-0 p-2 text-white/60 hover:text-white transition-colors z-50"
-            >
-              <IoClose className="w-6 h-6 sm:w-8 sm:h-8" />
-            </button>
-
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black flex items-center justify-center" style={{ maxHeight: "70vh" }}>
-              <Image
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                width={1200}
-                height={800}
-                className="object-contain w-auto h-auto max-h-[70vh] max-w-full"
-                priority
-              />
-            </div>
-
-            <div className="mt-8 sm:mt-12 flex flex-col items-center text-center space-y-6 sm:space-y-8 max-w-3xl">
-              <div className="space-y-4 sm:space-y-6">
-                <h2
-                  className="text-2xl sm:text-4xl font-light text-white tracking-wide"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  {selectedProject.title}
-                </h2>
-                <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-                  {selectedProject.description}
-                </p>
-              </div>
-
-              <div className="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-
-              {(selectedProject.techStack || selectedProject.uiTools) && (
-                <div className="w-full space-y-4">
-                  <p className="text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white/60" style={{ fontFamily: "'DM Mono', monospace" }}>
-                    Technologies & Tools
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-                    {(selectedProject.techStack || selectedProject.uiTools)?.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2.5 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 text-white/90 font-medium hover:bg-white/20 transition-colors"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 pt-4 sm:pt-8">
-                {selectedProject.href && selectedProject.href.startsWith("http") && (
-                  <a
-                    href={selectedProject.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
-                    style={{ fontFamily: "'DM Mono', monospace" }}
-                  >
-                    Visit Project
-                  </a>
-                )}
-                {selectedProject.href && !selectedProject.href.startsWith("http") && (
-                  <Link
-                    href={selectedProject.href}
-                    className="px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
-                    style={{ fontFamily: "'DM Mono', monospace" }}
-                  >
-                    View Project
-                  </Link>
-                )}
-                {selectedProject.github && (
-                  <a
-                    href={selectedProject.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white hover:bg-white hover:text-black transition-all duration-500"
-                    style={{ fontFamily: "'DM Mono', monospace" }}
-                  >
-                    View Code
-                  </a>
-                )}
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="px-8 sm:px-12 py-3 sm:py-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white/80 hover:text-white hover:bg-white/10 transition-all duration-500"
-                  style={{ fontFamily: "'DM Mono', monospace" }}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
