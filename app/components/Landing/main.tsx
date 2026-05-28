@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const NavBtn = ({ label, href, primary }: { label: string; href: string; primary?: boolean }) => (
-  <a
+  
     href={href}
     className={`px-10 py-2.5 rounded-xl border text-sm font-medium transition-all ${
       primary
@@ -16,13 +16,11 @@ const NavBtn = ({ label, href, primary }: { label: string; href: string; primary
 );
 
 export default function Main() {
-  const [showModal, setShowModal] = useState(false);
   const [ready, setReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 80);
-    if (!localStorage.getItem("visited")) setShowModal(true);
     return () => clearTimeout(t);
   }, []);
 
@@ -51,10 +49,6 @@ export default function Main() {
           0%   { opacity:0; transform:translateY(28px); filter:blur(4px); }
           100% { opacity:1; transform:translateY(0);    filter:blur(0);   }
         }
-        @keyframes smoothIn {
-          0%   { opacity:0; transform:scale(0.96) translateY(16px); filter:blur(6px); }
-          100% { opacity:1; transform:scale(1)    translateY(0);    filter:blur(0);   }
-        }
 
         .a { opacity:0; animation:smoothUp 1.1s cubic-bezier(.22,1,.36,1) forwards paused; }
         .a.go { animation-play-state:running; }
@@ -71,10 +65,6 @@ export default function Main() {
             filter 1s cubic-bezier(.22,1,.36,1);
         }
         .aos-in { opacity:1; transform:translateY(0); filter:blur(0); }
-        .sd1{transition-delay:.05s} .sd2{transition-delay:.15s} .sd3{transition-delay:.25s}
-        .sd4{transition-delay:.35s} .sd5{transition-delay:.45s}
-
-        .modal-card { animation:smoothIn .9s cubic-bezier(.22,1,.36,1) forwards; }
 
         .hero-title { font-size:clamp(48px,9vw,110px); }
 
@@ -102,7 +92,6 @@ export default function Main() {
       `}</style>
 
       <div ref={containerRef} className="relative min-h-screen text-[#1a1a1a] font-sans flex flex-col selection:bg-[#1a1a1a] selection:text-white overflow-hidden bg-white">
-        {/* Subtle background accents */}
         <div className="fixed inset-0 -z-20">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#f0f0f0] rounded-full blur-3xl" />
           <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-[#f5f5f5] rounded-full blur-3xl" />
@@ -134,13 +123,13 @@ export default function Main() {
             </p>
 
             <div className={`a d5 ${g} ctas flex gap-4`}>
-              <a
+              
                 href="#project"
                 className="px-10 py-4 bg-[#1a1a1a] text-white rounded-full text-sm font-serif italic hover:bg-black transition-all shadow-md hover:shadow-lg hover:scale-105 flex items-center"
               >
                 view work <span className="ml-2 not-italic">↗</span>
               </a>
-              <a
+              
                 href="#contact"
                 className="px-10 py-4 bg-[#f0f0f0] border border-[#e0e0e0] text-[#1a1a1a] rounded-full text-sm font-medium hover:bg-[#e8e8e8] hover:border-[#d0d0d0] transition-all hover:shadow-md hover:scale-105"
               >
@@ -153,28 +142,6 @@ export default function Main() {
         <footer className={`a d6 ${g} foot-wrap relative z-10 opacity-40 text-[9px] uppercase tracking-[1em] text-center`}>
           EST 2026
         </footer>
-
-        {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-lg transition-all">
-            <div className="modal-card bg-gray-500 border border-[#e0e0e0] shadow-2xl p-12 max-w-sm w-full rounded-3xl text-center">
-              <h2 className="aos sd1 text-2xl font-light mb-1 uppercase tracking-[0.4em] text-[#1a1a1a]">
-                Welcome
-              </h2>
-              <p className="aos sd2 text-gray-800 text-[8px] mb-10 uppercase tracking-widest font-black">
-                Portfolio Guide
-              </p>
-              <button
-                onClick={() => {
-                  setShowModal(false);
-                  localStorage.setItem("visited", "true");
-                }}
-                className="aos sd3 w-full py-4 bg-[#1a1a1a] text-black rounded-2xl text-[10px] uppercase tracking-widest font-bold hover:bg-black transition-all hover:shadow-lg hover:scale-105"
-              >
-                Enter Portfolio
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );
