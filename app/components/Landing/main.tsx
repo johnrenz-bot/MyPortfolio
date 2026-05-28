@@ -156,11 +156,11 @@ export default function Main() {
 
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-lg transition-all">
-            <div className="modal-card bg-white border border-[#e0e0e0] shadow-2xl p-12 max-w-sm w-full rounded-3xl text-center">
+            <div className="modal-card bg-gray-500 border border-[#e0e0e0] shadow-2xl p-12 max-w-sm w-full rounded-3xl text-center">
               <h2 className="aos sd1 text-2xl font-light mb-1 uppercase tracking-[0.4em] text-[#1a1a1a]">
                 Welcome
               </h2>
-              <p className="aos sd2 text-gray-400 text-[8px] mb-10 uppercase tracking-widest font-black">
+              <p className="aos sd2 text-gray-800 text-[8px] mb-10 uppercase tracking-widest font-black">
                 Portfolio Guide
               </p>
               <button
@@ -168,7 +168,7 @@ export default function Main() {
                   setShowModal(false);
                   localStorage.setItem("visited", "true");
                 }}
-                className="aos sd3 w-full py-4 bg-[#1a1a1a] text-white rounded-2xl text-[10px] uppercase tracking-widest font-bold hover:bg-black transition-all hover:shadow-lg hover:scale-105"
+                className="aos sd3 w-full py-4 bg-[#1a1a1a] text-black rounded-2xl text-[10px] uppercase tracking-widest font-bold hover:bg-black transition-all hover:shadow-lg hover:scale-105"
               >
                 Enter Portfolio
               </button>
