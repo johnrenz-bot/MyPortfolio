@@ -49,7 +49,7 @@ const WORK_EXPERIENCE = [
     subtitle: "Clothing Brand",
     type: "Internship",
     period: "April 2026 – May 2026",
-    logo: "/Image/companylogo/alpha.png",
+    logo: "/Image/CompanyLogo/Alpha.png",
     certificate: "/Image/Certificate/alpha-certificate.png",
     description:
       "Designed end-to-end UI/UX for an apparel e-commerce platform in Figma, creating wireframes and responsive prototypes that improved user experience and interface consistency. Collaborated with developers on design handoff and implementation, reducing rework. Led a small design-dev team, managing task delegation, documentation, and workflow. Maintained a consistent design system aligned with brand identity and usability goals.",
@@ -69,7 +69,7 @@ const WORK_EXPERIENCE = [
     subtitle: "Tech Company",
     type: "Volunteer",
     period: "March 2026 – May 2026",
-    logo: "/Image/companylogo/boxhive.jpg",
+    logo: "/Image/CompanyLogo/Boxhive.jpg",
     certificate: "/Image/Certificate/BoxHive.png",
     description:
       "Designed web and mobile app screens in Figma, improving layout clarity, usability, and visual hierarchy. Created the Replica Icebreaker App UI with interactive prototype, including user flows and screen transitions. Supported QA efforts for Android app testing, documenting bugs and validating fixes. Demonstrated attention to detail and collaboration with developers.",
@@ -89,7 +89,7 @@ const WORK_EXPERIENCE = [
     subtitle: "Capstone Project",
     type: "Capstone Project",
     period: "March 2025 – Nov 2025",
-    logo: "/Image/companylogo/sti.png",
+    logo: "/Image/CompanyLogo/STI.png",
     description:
       "Led a 3-person development team through planning, implementation, and QA using Agile-style coordination. Developed full-stack features including appointment scheduling system and AI chatbot integration. Built and maintained core system components ensuring production-ready performance, usability, and stability.",
     highlights: [
