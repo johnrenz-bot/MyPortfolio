@@ -7,8 +7,8 @@ const NavBtn = ({ label, href, primary }: { label: string; href: string; primary
     href={href}
     className={`px-10 py-2.5 rounded-xl border text-sm font-medium transition-all ${
       primary
-        ? "bg-[#EAEAEA] border-gray-300 shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)]"
-        : "bg-white border-gray-200 hover:bg-gray-50"
+        ? "bg-[#1a1a1a] text-white border-[#1a1a1a] shadow-[0_8px_32px_rgba(0,0,0,0.12)] hover:bg-black hover:shadow-[0_12px_40px_rgba(0,0,0,0.16)]"
+        : "bg-[#f5f5f5] border-[#e5e5e5] text-[#1a1a1a] hover:bg-[#f0f0f0] hover:border-[#d0d0d0] hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)]"
     }`}
   >
     {label}
@@ -101,14 +101,18 @@ export default function Main() {
         }
       `}</style>
 
-      <div ref={containerRef} className="relative min-h-screen text-black font-sans flex flex-col selection:bg-black selection:text-white overflow-hidden">
-        <div className="fixed inset-0 -z-20" />
+      <div ref={containerRef} className="relative min-h-screen text-[#1a1a1a] font-sans flex flex-col selection:bg-[#1a1a1a] selection:text-white overflow-hidden bg-white">
+        {/* Subtle background accents */}
+        <div className="fixed inset-0 -z-20">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#f0f0f0] rounded-full blur-3xl" />
+          <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-[#f5f5f5] rounded-full blur-3xl" />
+        </div>
 
-        <nav className={`a d1 ${g} nav-wrap relative z-10 flex justify-between items-center`}>
-          <div className="text-4xl font-light tracking-[-0.15em] uppercase scale-y-125 select-none">
+        <nav className={`a d1 ${g} nav-wrap relative z-10 flex justify-between items-center backdrop-blur-sm`}>
+          <div className="text-4xl font-light tracking-[-0.15em] uppercase scale-y-125 select-none bg-gradient-to-r from-[#1a1a1a] to-[#4a4a4a] bg-clip-text text-transparent">
             RΣNZ
           </div>
-          <div className="nav-btns flex gap-4">
+          <div className="nav-btns flex gap-3">
             <NavBtn label="LinkedIn" href="https://www.linkedin.com/in/john-renz-96a77728b/" primary />
             <NavBtn label="Github" href="https://github.com/johnrenz-bot" />
           </div>
@@ -117,28 +121,28 @@ export default function Main() {
         <main className="relative z-10 flex-grow flex items-center justify-center px-6 text-center">
           <div className="flex flex-col items-center gap-8 max-w-4xl w-full">
             <div className="group">
-              <h1 className={`a d2 ${g} hero-title font-black leading-[0.85] tracking-tighter uppercase mb-4 transition-transform duration-500 group-hover:scale-[1.01]`}>
+              <h1 className={`a d2 ${g} hero-title font-black leading-[0.85] tracking-tighter uppercase mb-4 transition-transform duration-500 group-hover:scale-[1.01] bg-gradient-to-b from-[#1a1a1a] via-[#2a2a2a] to-[#4a4a4a] bg-clip-text text-transparent`}>
                 John Renz <br /> Bandianon
               </h1>
-              <p className={`a d3 ${g} text-[10px] font-black tracking-[0.2em] opacity-80 uppercase`}>
+              <p className={`a d3 ${g} text-[10px] font-black tracking-[0.2em] opacity-60 uppercase`}>
                 UI / UX Designer • Graphic Designer • Frontend Developer
               </p>
             </div>
 
-            <p className={`a d4 ${g} text-base md:text-lg font-medium leading-relaxed tracking-tight max-w-md opacity-80`}>
+            <p className={`a d4 ${g} text-base md:text-lg font-medium leading-relaxed tracking-tight max-w-md opacity-75`}>
               Building clean interactive web experiences focused on modern UI design and thoughtful user interaction.
             </p>
 
             <div className={`a d5 ${g} ctas flex gap-4`}>
               <a
                 href="#project"
-                className="px-10 py-4 bg-[#222] text-white rounded-full text-sm font-serif italic hover:bg-black transition-all shadow-lg flex items-center"
+                className="px-10 py-4 bg-[#1a1a1a] text-white rounded-full text-sm font-serif italic hover:bg-black transition-all shadow-md hover:shadow-lg hover:scale-105 flex items-center"
               >
                 view work <span className="ml-2 not-italic">↗</span>
               </a>
               <a
                 href="#contact"
-                className="px-10 py-4 bg-white/50 backdrop-blur-md border border-white/20 text-[#333] rounded-full text-sm font-medium hover:bg-white transition-all"
+                className="px-10 py-4 bg-[#f0f0f0] border border-[#e0e0e0] text-[#1a1a1a] rounded-full text-sm font-medium hover:bg-[#e8e8e8] hover:border-[#d0d0d0] transition-all hover:shadow-md hover:scale-105"
               >
                 Get in touch
               </a>
@@ -146,14 +150,14 @@ export default function Main() {
           </div>
         </main>
 
-        <footer className={`a d6 ${g} foot-wrap relative z-10 opacity-20 text-[9px] uppercase tracking-[1em] text-center`}>
+        <footer className={`a d6 ${g} foot-wrap relative z-10 opacity-40 text-[9px] uppercase tracking-[1em] text-center`}>
           EST 2026
         </footer>
 
         {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/5 backdrop-blur-2xl transition-all">
-            <div className="modal-card bg-white/80 backdrop-blur-md border border-white/40 shadow-2xl p-12 max-w-sm w-full rounded-[40px] text-center">
-              <h2 className="aos sd1 text-xl font-light mb-1 uppercase tracking-[0.4em]">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-lg transition-all">
+            <div className="modal-card bg-white border border-[#e0e0e0] shadow-2xl p-12 max-w-sm w-full rounded-3xl text-center">
+              <h2 className="aos sd1 text-2xl font-light mb-1 uppercase tracking-[0.4em] text-[#1a1a1a]">
                 Welcome
               </h2>
               <p className="aos sd2 text-gray-400 text-[8px] mb-10 uppercase tracking-widest font-black">
@@ -164,7 +168,7 @@ export default function Main() {
                   setShowModal(false);
                   localStorage.setItem("visited", "true");
                 }}
-                className="aos sd3 w-full py-4 bg-black text-white rounded-2xl text-[10px] uppercase tracking-widest font-bold hover:opacity-80 transition-all"
+                className="aos sd3 w-full py-4 bg-[#1a1a1a] text-white rounded-2xl text-[10px] uppercase tracking-widest font-bold hover:bg-black transition-all hover:shadow-lg hover:scale-105"
               >
                 Enter Portfolio
               </button>
