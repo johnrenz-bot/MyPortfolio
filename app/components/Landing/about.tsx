@@ -80,7 +80,7 @@ const WORK_EXPERIENCE = [
     subtitle: "Tech Company",
     type: "Volunteer",
     period: "March 2026 – May 2026",
-    logo: "/Image/CompanyLogo/Boxhive.png",
+    logo: "/Image/CompanyLogo/Boxhive.jpg",
     certificate: "/Image/Certificate/BoxHive.png",
     description:
       "Designed web and mobile app screens in Figma, improving layout clarity, usability, and visual hierarchy. Created the Replica Icebreaker App UI with interactive prototype, including user flows and screen transitions. Supported QA efforts for Android app testing, documenting bugs and validating fixes. Demonstrated attention to detail and collaboration with developers.",
