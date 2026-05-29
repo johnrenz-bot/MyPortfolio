@@ -165,6 +165,15 @@ export default function Main() {
               <p className={`a d4 ${g} text-base md:text-lg font-normal leading-relaxed max-w-lg text-neutral-600`}>
                 Building clean interactive web experiences focused on modern UI design and thoughtful user interaction.
               </p>
+<p className={`a d4 ${g} mt-4 text-sm md:text-base font-medium italic text-neutral-500 max-w-lg`}>
+  “I have 2+ years of experience in Web Development and UI/UX Design — continuously learning, improving, and exploring deeper into modern web development and software engineering while building meaningful digital experiences.”
+</p>
+
+              <div className={`a d5 ${g} ctas flex gap-3 mt-6`}>
+                <NavBtn label="Discover My Story" href="#about" />
+                <NavBtn label="Explore Creations" href="#project" primary />
+                <NavBtn label="Let's Connect" href="#contact" />
+              </div>
             </div>
 
             <div className="lg:col-span-5 w-full flex flex-col gap-6">

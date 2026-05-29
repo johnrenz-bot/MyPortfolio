@@ -468,7 +468,28 @@ const CERTS: Item[] = [
     image: "/Image/Certificate/Canva.png",
     description: "Certification in graphic design using Canva.",
   },
+  
+
+
   {
+  id: "c8",
+  title: "IxDF Membership Certificate",
+  href: "https://ixdf.org/members/john-renz-bandianon/certificate/membership",
+  image: "/Image/Certificate/IxDF.jpg",
+  description:
+    "Official membership certification from the Interaction Design Foundation (IxDF), recognizing active membership in the global UX/UI and interaction design community.",
+},
+
+{
+  id: "c7",
+  title: "BoxHive Certification",
+  href: "https://www.boxhive.com/certification",
+  image: "/Image/Certificate/BoxHive.png",
+  description: "Completed internship at BoxHive Digital Solutions Co. with experience in UI/UX design, graphic design (mockups and event posters), software testing, and documentation for a mobile application project.",
+},
+
+
+{
     id: "c4",
     title: "Accenture – Skills to Succeed",
     href: "/Image/Certificate/S2.jpg",
@@ -489,13 +510,8 @@ const CERTS: Item[] = [
     image: "/Image/Certificate/oracle.jpg",
     description: "Certification in Oracle database management.",
   },
-{
-  id: "c7",
-  title: "BoxHive Certification",
-  href: "https://www.boxhive.com/certification",
-  image: "/Image/Certificate/BoxHive.png",
-  description: "Completed internship at BoxHive Digital Solutions Co. with experience in UI/UX design, graphic design (mockups and event posters), software testing, and documentation for a mobile application project.",
-}
+
+
 ];
 
 

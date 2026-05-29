@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { FaGithub, FaLinkedin, FaInstagram, FaFacebook, FaThreads, FaRedditAlien, FaXTwitter } from "react-icons/fa6";
-import { SiGlassdoor } from "react-icons/si";
+import { FaGithub, FaLinkedin, FaInstagram, FaFacebook, FaThreads, FaRedditAlien, FaXTwitter, FaGoogle } from "react-icons/fa6";
+import { SiGlassdoor, SiInteractiondesignfoundation } from "react-icons/si";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdPhone, MdEmail } from "react-icons/md";
 
@@ -13,14 +13,16 @@ const PERSONAL = {
 };
 
 const SOCIALS = [
-  { icon: <FaGithub />, url: "https://github.com/johnrenz-bot", label: "GitHub" },
-  { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/john-renz-96a77728b/", label: "LinkedIn" },
-  { icon: <SiGlassdoor />, url: "https://www.glassdoor.com/member/profile", label: "Glassdoor" },
-  { icon: <FaInstagram />, url: "https://www.instagram.com/wiieidjxhdshehe/", label: "Instagram" },
-  { icon: <FaThreads />, url: "https://www.threads.net/@wiieidjxhdshehe", label: "Threads" },
-  { icon: <FaXTwitter />, url: "https://x.com/JohnRen94949414/", label: "Twitter" },
-  { icon: <FaRedditAlien />, url: "https://www.reddit.com/user/Aware-scratch8897/", label: "Reddit" },
-  { icon: <FaFacebook />, url: "https://www.facebook.com/john.r.bandianon/", label: "Facebook" },
+  { icon: <FaGoogle />, url: "https://gdg.community.dev/u/m5ucyf/#/about", label: "GDG", image: "/Image/profiles/gdg.png" },
+  { icon: <SiInteractiondesignfoundation />, url: "https://ixdf.org/my-private-profile", label: "IxDF", image: "/Image/profiles/ixdf.png" },
+  { icon: <FaGithub />, url: "https://github.com/johnrenz-bot", label: "GitHub", image: "/Image/profiles/Github.png" },
+  { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/john-renz-96a77728b/", label: "LinkedIn", image: "/Image/profiles/linkedin.png" },
+  { icon: <SiGlassdoor />, url: "https://www.glassdoor.com/member/profile", label: "Glassdoor", image: "/Image/profiles/Glassdoor.png" },
+  { icon: <FaInstagram />, url: "https://www.instagram.com/wiieidjxhdshehe/", label: "Instagram", image: "/Image/profiles/instagram.png" },
+  { icon: <FaThreads />, url: "https://www.threads.net/@wiieidjxhdshehe", label: "Threads", image: "/Image/profiles/threads.png" },
+  { icon: <FaXTwitter />, url: "https://x.com/JohnRen94949414/", label: "Twitter", image: "/Image/profiles/X.png" },
+  { icon: <FaRedditAlien />, url: "https://www.reddit.com/user/Aware-scratch8897/", label: "Reddit", image: "/Image/profiles/reddit.png" },
+  { icon: <FaFacebook />, url: "https://www.facebook.com/john.r.bandianon/", label: "Facebook", image: "/Image/profiles/facebook.png" },
 ];
 
 const DETAILS = [
@@ -130,10 +132,39 @@ export default function Contact() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aos group bg-white/50 border border-black/5 aspect-square flex flex-col items-center justify-center space-y-3 transition-all duration-500 hover:bg-black hover:text-white"
+                className="aos group relative aspect-square bg-white border border-black/5 overflow-hidden block rounded-xl shadow-sm"
               >
-                <span className="text-xl transition-transform duration-500 group-hover:scale-110">{s.icon}</span>
-                <span className="text-[8px] font-bold uppercase tracking-widest opacity-40 group-hover:opacity-100">{s.label}</span>
+                <div className="absolute inset-0 w-full h-full opacity-100 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                  <img 
+                    src={s.image} 
+                    alt={`${s.label} profile`} 
+                    className="w-full h-full object-cover grayscale opacity-40 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                </div>
+
+                <div className="absolute inset-0 p-6 flex flex-col justify-between z-10 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-black/5">
+                  <div className="text-xl text-black bg-white/70 backdrop-blur-md w-12 h-12 flex items-center justify-center rounded-2xl border border-white/40 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-95 group-hover:bg-black group-hover:text-white group-hover:border-black">
+                    {s.icon}
+                  </div>
+
+                  <div className="flex flex-col items-start gap-1.5 w-full">
+                    <span className="inline-block text-[8px] font-bold text-black uppercase hover:text-white tracking-widest px-2.5 py-1.5 bg-white/80 backdrop-blur-md border border-white/40 rounded-lg shadow-sm transition-all duration-500 group-hover:opacity-0 group-hover:-translate-y-1">
+                      {s.label}
+                    </span>
+                    
+                    <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between pointer-events-none opacity-0 translate-y-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-y-0">
+                      <span className="text-[9px] font-black  hover:text-white uppercase tracking-wider text-black group-hover:text-black">
+                        View Account
+                      </span>
+                 <span className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-gray-100 text-gray-600 transition-all duration-300 hover:bg-gray-200 hover:text-black">
+  ↗
+</span>
+                    </div>
+                  </div>
+                </div>
               </a>
             ))}
           </div>
@@ -142,7 +173,7 @@ export default function Contact() {
         <footer className="pt-20 border-t border-black/5 flex flex-col items-center space-y-12">
           <a
             href={`mailto:${PERSONAL.email}`}
-            className="aos group relative px-10 py-5 bg-black text-white overflow-hidden transition-all duration-300"
+            className="aos group relative px-10 py-5 bg-black text-white overflow-hidden transition-all duration-300 rounded-xl"
           >
             <span className="relative z-10 text-[10px] font-bold uppercase tracking-[0.3em]">Drop an Email</span>
             <div className="absolute inset-0 bg-zinc-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -160,8 +191,10 @@ export default function Contact() {
 
 function DetailBox({ d }: { d: any }) {
   return (
-    <div className="p-8 border border-black/5 bg-white/30 backdrop-blur-sm flex flex-col justify-between h-full space-y-12 transition-all duration-500 group-hover:bg-black group-hover:text-white">
-      <d.Icon className="text-2xl opacity-30 group-hover:opacity-100 transition-all duration-500" />
+    <div className="p-8 border border-black/5 bg-white/30 backdrop-blur-sm flex flex-col justify-between h-full space-y-12 transition-all duration-500 rounded-xl group-hover:bg-black group-hover:text-white shadow-sm">
+      <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/5 border border-black/5 group-hover:bg-zinc-900 group-hover:border-zinc-800 transition-all duration-500">
+        <d.Icon className="text-2xl opacity-40 group-hover:opacity-100 transition-all duration-500" />
+      </div>
       <div className="space-y-2">
         <p className="text-[9px] font-bold uppercase tracking-widest opacity-40 group-hover:opacity-60">{d.label}</p>
         <p className="text-xs font-bold leading-tight break-words uppercase">{d.value}</p>

@@ -50,8 +50,7 @@ const HERO_DATA = {
   location: "Marilao, Bulacan, Philippines",
   email: "johnrenzbandianon@gmail.com",
   phone: "+63 966 798 7702",
-  bio: "I am an Information Technology professional with hands-on experience in UI/UX design, full-stack development, and quality assurance. I specialize in bridging the gap between beautiful design layouts and functional, production-ready code.",
-};
+bio: "I am an Information Technology professional with over 2 years of hands-on experience in UI/UX Design, Full-Stack Development, and Quality Assurance. I specialize in bridging the gap between stunning design layouts and clean, functional, production-ready code — turning ideas into meaningful and user-friendly digital experiences."};
 
 const WORK_EXPERIENCE = [
   {
@@ -270,7 +269,7 @@ const SKILLS_DATA = {
       description: "Custom project dashboards, goal tracking, productivity workflows",
     },
     {
-      icon: <CgMonday  className="text-2xl" />,
+      icon: <CgMonday className="text-2xl" />,
       name: "Monday.com",
       proficiency: "Advanced",
       description: "Operational management, resource tracking, team alignment dashboards",
@@ -651,34 +650,110 @@ export default function About() {
             </div>
           </motion.div>
 
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="flex flex-wrap gap-4 pt-8"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9 }}
+            className="pt-20 pb-20 bg-white"
           >
-            <a
-              href={`mailto:${HERO_DATA.email}`}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 text-sm font-bold tracking-wider uppercase rounded-xl border border-gray-200 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all hover:shadow-md"
-            >
-              <FaEnvelope /> Get in Touch
-            </a>
-            <a
-              href="https://github.com/johnrenz-bot"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 text-sm font-bold tracking-wider uppercase rounded-xl border border-gray-200 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all hover:shadow-md"
-            >
-              <FaGithub /> GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/john-renz-bandianon"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 text-sm font-bold tracking-wider uppercase rounded-xl border border-gray-200 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all hover:shadow-md"
-            >
-              <FaLinkedin /> LinkedIn
-            </a>
+            <div className="max-w-5xl mx-auto px-6">
+              {/* Header */}
+              <div className="text-center mb-16">
+                <p className="text-emerald-600 font-semibold tracking-[3px] text-sm mb-3">
+                  MY COMMUNITY JOURNEY
+                </p>
+                <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+                  Growing Through Community
+                </h2>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                  I actively joined these communities to accelerate my growth as a developer.
+                  The connections, knowledge sharing, and collaborative spirit here have been
+                  instrumental in shaping my skills and career.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <motion.a
+                  href="https://gdg.community.dev/u/m5ucyf/#/about"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.03, y: -12 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="group relative bg-white/70 backdrop-blur-2xl border border-white/60 
+                   rounded-3xl p-10 shadow-xl shadow-gray-200/80 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="w-28 h-28 mb-8 rounded-3xl bg-white shadow-inner flex items-center justify-center 
+                        group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
+                      <img
+                        src="/Image/Community/gdg.png"
+                        alt="GDG Community"
+                        className="w-20 h-20 object-contain"
+                      />
+                    </div>
+
+                    <h3 className="text-3xl font-semibold text-gray-900 mb-2">
+                      Google Developer Groups
+                    </h3>
+                    <p className="text-emerald-600 font-medium mb-6">Philippines</p>
+
+                    <p className="text-gray-600 leading-relaxed text-[17px]">
+                      I joined GDG Manila to stay updated with modern technologies and
+                      grow alongside passionate developers. The workshops, study jams,
+                      and networking opportunities have greatly contributed to my technical growth.
+                    </p>
+
+                    <div className="mt-8 text-emerald-600 font-medium flex items-center gap-2 text-sm tracking-wider group-hover:gap-3 transition-all">
+                      VISIT COMMUNITY
+                      <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </div>
+                </motion.a>
+
+                <motion.a
+                  href="https://www.facebook.com/devconmanila"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.03, y: -12 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="group relative bg-white/70 backdrop-blur-2xl border border-white/60 
+                   rounded-3xl p-10 shadow-xl shadow-gray-200/80 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-violet-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="w-28 h-28 mb-8 rounded-3xl bg-white shadow-inner flex items-center justify-center 
+                        group-hover:scale-110 group-hover:-rotate-6 transition-all duration-700">
+                      <img
+                        src="/Image/Community/devcon.png"
+                        alt="DevCon Manila"
+                        className="w-20 h-20 object-contain"
+                      />
+                    </div>
+
+                    <h3 className="text-3xl font-semibold text-gray-900 mb-2">
+                      DevCon Manila
+                    </h3>
+                    <p className="text-violet-600 font-medium mb-6">Philippines</p>
+
+                    <p className="text-gray-600 leading-relaxed text-[17px]">
+                      Being part of DevCon Manila has been a game-changer for me.
+                      I attend to learn from industry leaders, connect with fellow developers,
+                      and stay inspired by the vibrant local tech scene.
+                    </p>
+
+                    <div className="mt-8 text-violet-600 font-medium flex items-center gap-2 text-sm tracking-wider group-hover:gap-3 transition-all">
+                      JOIN THE COMMUNITY
+                      <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </div>
+                </motion.a>
+              </div>
+            </div>
           </motion.div>
         </motion.section>
 
