@@ -31,11 +31,11 @@ export default function Main() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const journeyImages = [
-    { src: "/image/Journey/ygg.png", year: "2024", title: "Ygg Event BGC" },
-    { src: "/image/Journey/Capstone.png", year: "2025", title: "Capstone year" },
-    { src: "/image/Journey/OpenAI.png", year: "2026", title: "OpenAI / Codex Tech Meetup" },
-    { src: "/image/Journey/PSYSC.png", year: "2026", title: "PSYSC STEMEX" },
-    { src: "/image/Journey/Intern.png", year: "2026", title: "UI/UX Engineering" },
+    { src: "/Image/Journey/ygg.png", year: "2024", title: "Ygg Event BGC" },
+    { src: "/Image/Journey/Capstone.png", year: "2025", title: "Capstone year" },
+    { src: "/Image/Journey/OpenAI.png", year: "2026", title: "OpenAI / Codex Tech Meetup" },
+    { src: "/Image/Journey/PSYSC.png", year: "2026", title: "PSYSC STEMEX" },
+    { src: "/Image/Journey/Intern.png", year: "2026", title: "UI/UX Engineering" },
   ];
 
   useEffect(() => {
