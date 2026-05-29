@@ -31,7 +31,18 @@ import {
   SiGithub as SiGithubIcon,
   SiLaravel,
   SiBootstrap,
+  SiNotion,
+  SiTrello,
+  SiJira,
+  SiClickup,
+  SiBehance,
+  SiDribbble,
+  SiWix,
+  SiWebflow,
 } from "react-icons/si";
+
+import { CgMonday } from "react-icons/cg";
+
 
 const HERO_DATA = {
   title: "UI/UX Designer & Frontend Developer",
@@ -69,7 +80,7 @@ const WORK_EXPERIENCE = [
     subtitle: "Tech Company",
     type: "Volunteer",
     period: "March 2026 – May 2026",
-    logo: "/Image/CompanyLogo/Boxhive.jpg",
+    logo: "/Image/CompanyLogo/Boxhive.png",
     certificate: "/Image/Certificate/BoxHive.png",
     description:
       "Designed web and mobile app screens in Figma, improving layout clarity, usability, and visual hierarchy. Created the Replica Icebreaker App UI with interactive prototype, including user flows and screen transitions. Supported QA efforts for Android app testing, documenting bugs and validating fixes. Demonstrated attention to detail and collaboration with developers.",
@@ -231,6 +242,64 @@ const SKILLS_DATA = {
       name: "PHP / Java / C#",
       proficiency: "Intermediate",
       description: "Backend development logic and structural code blocks",
+    },
+  ],
+  managementTools: [
+    {
+      icon: <SiNotion className="text-2xl" />,
+      name: "Notion",
+      proficiency: "Advanced",
+      description: "Workspace documentation, knowledge bases, task management setups",
+    },
+    {
+      icon: <SiTrello className="text-2xl" />,
+      name: "Trello",
+      proficiency: "Advanced",
+      description: "Kanban board task tracking, project workflows, team collaboration",
+    },
+    {
+      icon: <SiJira className="text-2xl" />,
+      name: "Jira",
+      proficiency: "Intermediate",
+      description: "Agile project tracking, sprint planning, issue and bug management",
+    },
+    {
+      icon: <SiClickup className="text-2xl" />,
+      name: "ClickUp",
+      proficiency: "Advanced",
+      description: "Custom project dashboards, goal tracking, productivity workflows",
+    },
+    {
+      icon: <CgMonday  className="text-2xl" />,
+      name: "Monday.com",
+      proficiency: "Advanced",
+      description: "Operational management, resource tracking, team alignment dashboards",
+    },
+  ],
+  portfolioPlatforms: [
+    {
+      icon: <SiBehance className="text-2xl" />,
+      name: "Behance",
+      proficiency: "Advanced",
+      description: "Design case studies, project showcases, visual portfolio presentation",
+    },
+    {
+      icon: <SiDribbble className="text-2xl" />,
+      name: "Dribbble",
+      proficiency: "Advanced",
+      description: "Visual design snippets, UI components, creative networking",
+    },
+    {
+      icon: <SiWix className="text-2xl" />,
+      name: "Wix",
+      proficiency: "Advanced",
+      description: "No-code website creation, rapid prototyping, business web templates",
+    },
+    {
+      icon: <SiWebflow className="text-2xl" />,
+      name: "Webflow",
+      proficiency: "Intermediate",
+      description: "Visual web design, custom interactions, CMS-driven responsive sites",
     },
   ],
   tools: [
@@ -950,6 +1019,8 @@ export default function About() {
             ))}
           </div>
         </motion.section>
+
+
 
         <motion.section
           initial={{ opacity: 0 }}

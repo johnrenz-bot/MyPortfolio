@@ -117,7 +117,7 @@ const DEVICE_MOCKUPS: Item[] = [
     id: "M2",
     title: "iPhone Mockup",
     href: "",
-    image: "/Image/Devices/phone.png",
+    image: "/Image/Devices/Iphonee.png",
     uiTools: ["Adobe Photoshop"],
     description: "iPhone mockup for tech event",
     category: "Mockup",
@@ -461,51 +461,60 @@ const CERTS: Item[] = [
     image: "/Image/Certificate/DICT-UIUX.jpg",
     description: "DICT UI/UX Design Certification covering foundational principles of user interface design, user experience workflow, and practical design application.",
   },
-  {
+   {
     id: "c3",
+    title: "Canva Graphic Design Certificate",
+    href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df",
+    image: "/Image/Certificate/Canva.png",
+    description: "Certification in graphic design using Canva.",
+  },
+  {
+    id: "c4",
     title: "Accenture – Skills to Succeed",
     href: "/Image/Certificate/S2.jpg",
     image: "/Image/Certificate/S2.jpg",
     description: "Certification in professional skills development.",
   },
   {
-    id: "c4",
+    id: "c5",
     title: "Java Programming Certificate",
     href: "/Image/Certificate/java.jpg",
     image: "/Image/Certificate/java.jpg",
     description: "Certification in Java programming fundamentals.",
   },
   {
-    id: "c5",
+    id: "c6",
     title: "Oracle Certified",
     href: "/Image/Certificate/oracle.jpg",
     image: "/Image/Certificate/oracle.jpg",
     description: "Certification in Oracle database management.",
   },
-  {
-    id: "c6",
-    title: "Canva Graphic Design Certificate",
-    href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df",
-    image: "/Image/Certificate/Canva.png",
-    description: "Certification in graphic design using Canva.",
-  },
+{
+  id: "c7",
+  title: "BoxHive Certification",
+  href: "https://www.boxhive.com/certification",
+  image: "/Image/Certificate/BoxHive.png",
+  description: "Completed internship at BoxHive Digital Solutions Co. with experience in UI/UX design, graphic design (mockups and event posters), software testing, and documentation for a mobile application project.",
+}
 ];
 
+
 const WORK_CATEGORIES = [
-  {
+   {
+    key: "certificates",
+    label: "Certificates",
+    sub: "Creds",
+    count: CERTS.length,
+    featured: CERTS[0],
+  },
+   {
     key: "web-dev",
     label: "Development",
     sub: "Full-stack",
     count: WEB_DEVELOPMENT.length,
     featured: WEB_DEVELOPMENT[0],
   },
-  {
-    key: "website-design",
-    label: "Frontend Design",
-    sub: "UI/UX",
-    count: WEBSITE_DESIGN.length,
-    featured: WEBSITE_DESIGN[0],
-  },
+
   {
     key: "ui-ux",
     label: "UI/UX",
@@ -513,6 +522,15 @@ const WORK_CATEGORIES = [
     count: UI_UX_DESIGNS.length,
     featured: UI_UX_DESIGNS[0],
   },
+
+  {
+    key: "website-design",
+    label: "Frontend Design",
+    sub: "UI/UX",
+    count: WEBSITE_DESIGN.length,
+    featured: WEBSITE_DESIGN[0],
+  },
+  
   {
     key: "mockups",
     label: "Mockups",
@@ -540,13 +558,6 @@ const WORK_CATEGORIES = [
     sub: "Design",
     count: GRAPHIC_DESIGNS.length,
     featured: GRAPHIC_DESIGNS[0],
-  },
-  {
-    key: "certificates",
-    label: "Certificates",
-    sub: "Creds",
-    count: CERTS.length,
-    featured: CERTS[0],
   },
 ] as const;
 
@@ -897,100 +908,143 @@ export default function PortfolioSection() {
         }
       `}</style>
 
-      <section className="relative z-10 w-full flex justify-center py-12 md:py-16 lg:py-20 bg-white text-gray-900">
-        <div className="w-full max-w-7xl px-4 sm:px-6 md:px-8 lg:px-10">
-          {view === "categories" ? (
-            <div className="space-y-12 md:space-y-14 lg:space-y-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-              <div className="flex flex-col gap-12 md:gap-14">
-                <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-8 duration-700">
-                  <span className="w-12 h-[1.5px] bg-gray-300" />
-                  <span className="text-xs md:text-sm font-bold tracking-[0.4em] uppercase text-gray-500" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    Portfolio Collection
-                  </span>
-                </div>
+  <section className="relative z-10 w-full flex justify-center py-20 md:py-32 bg-white text-neutral-900 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(243,244,246,1),transparent_50%)] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-neutral-100/40 rounded-full blur-3xl pointer-events-none" />
 
-                <div className="space-y-6">
-                  <div className="space-y-3">
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 tracking-tight leading-[1.1] animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                      User-Centered
-                    </h1>
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 tracking-tight leading-[1.1] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                      Design & Code
-                    </h2>
-                  </div>
-
-                  <div className="space-y-4">
-                    <h3 className="text-sm md:text-base text-gray-700 tracking-widest uppercase font-light animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200" style={{ fontFamily: "'Inter', sans-serif" }}>
-                      Creative Work Across Multiple Disciplines
-                    </h3>
-                    <p className="text-gray-600 text-sm sm:text-base md:text-lg max-w-3xl leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300" style={{ fontFamily: "'Inter', sans-serif" }}>
-                      Explore a curated collection of my creative portfolio. Each category represents a unique approach to design and development, showcasing excellence in web development, UI/UX design, graphic design, and creative direction. Discover projects that combine aesthetic appeal with functional excellence.
-                    </p>
-                  </div>
-                </div>
+      <div className="w-full max-w-7xl px-4 sm:px-6 md:px-8 lg:px-10 relative z-10">
+        {view === "categories" ? (
+          <div className="space-y-20 md:space-y-28 lg:space-y-36 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            
+            <div className="flex flex-col gap-12">
+              <div className="flex items-center gap-4 animate-in fade-in slide-in-from-left-8 duration-700">
+                <span className="w-12 h-[2px] bg-neutral-950" />
+                <span
+                  className="text-xs font-bold tracking-[0.5em] uppercase text-neutral-400"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  Portfolio Collection
+                </span>
               </div>
 
-              <div className="relative group animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-400">
-                <div
-                  ref={scrollContainerRef}
-                  className="flex gap-4 md:gap-5 lg:gap-6 overflow-x-auto no-scrollbar category-scroll py-4 px-1 -mx-1"
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+                <div className="space-y-3 lg:col-span-7">
+                  <h1
+                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-neutral-950 tracking-tighter leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-700"
+                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                  >
+                    User-Centered
+                  </h1>
+                  <h2
+                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neutral-950 via-neutral-800 to-neutral-500 tracking-tighter leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100"
+                    style={{ fontFamily: "'Outfit', sans-serif" }}
+                  >
+                    Design & Code
+                  </h2>
+                </div>
+
+                <div className="space-y-5 lg:col-span-5 lg:pl-4">
+                  <h3
+                    className="text-xs text-neutral-450 tracking-[0.25em] uppercase font-bold animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                  >
+                    Creative Work Across Multiple Disciplines
+                  </h3>
+                  <p
+                    className="text-neutral-500 text-sm sm:text-base leading-relaxed font-normal animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                  >
+                    Explore a curated collection of my creative portfolio. Each
+                    category represents a unique approach to design and
+                    development, showcasing excellence in web development, UI/UX
+                    design, graphic design, and creative direction. Discover
+                    projects that combine aesthetic appeal with functional
+                    excellence.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative w-screen left-1/2 right-1/2 -mx-[50vw] group/slider animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-400">
+              <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-all duration-500 hidden md:flex items-center justify-start pl-16">
+                <button
+                  onClick={() => scroll("left")}
+                  className="pointer-events-auto w-14 h-14 flex items-center justify-center rounded-full bg-neutral-950/10 hover:bg-neutral-950 text-neutral-950 hover:text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.08)] backdrop-blur-xl hover:scale-105 active:scale-95 transition-all duration-500 border border-neutral-950/15"
+                  aria-label="Scroll left"
                 >
-                  {WORK_CATEGORIES.map((cat, index) => (
-                    <div key={cat.key} className="animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: `${500 + index * 75}ms` }}>
+                  <RxArrowLeft className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div
+                ref={scrollContainerRef}
+                className="flex w-full gap-8 md:gap-10 overflow-x-auto no-scrollbar py-12 scroll-smooth snap-x snap-mandatory px-[max(1rem,calc((100vw-80rem)/2+2.5rem))]"
+              >
+                {WORK_CATEGORIES.map((cat, index) => (
+                  <div
+                    key={cat.key}
+                    className="flex-shrink-0 snap-start animate-in fade-in slide-in-from-bottom-8 duration-700 hover:translate-y-[-8px] transition-transform duration-500"
+                    style={{ animationDelay: `${500 + index * 75}ms` }}
+                  >
+                    <div className="p-1 rounded-3xl bg-gradient-to-b from-neutral-200/60 to-transparent shadow-[0_12px_40px_-12px_rgba(0,0,0,0.05)] backdrop-blur-md">
                       <CategoryCard
                         category={cat}
                         isActive={cat.key === selectedCategory}
                         onClick={() => handleCategoryClick(cat.key)}
                       />
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
 
-                {scrollPosition > 0 && (
-                  <button
-                    onClick={() => scroll("left")}
-                    className="absolute -left-6 md:-left-8 top-1/2 transform -translate-y-1/2 z-20 p-2 md:p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 transition-all duration-500 backdrop-blur-md hidden md:flex items-center justify-center animate-in fade-in duration-500 delay-700"
-                    aria-label="Scroll left"
-                  >
-                    <RxArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
-                  </button>
-                )}
-
+              <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-all duration-500 hidden md:flex items-center justify-end pr-16">
                 <button
                   onClick={() => scroll("right")}
-                  className="absolute -right-6 md:-right-8 top-1/2 transform -translate-y-1/2 z-20 p-2 md:p-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 transition-all duration-500 backdrop-blur-md hidden md:flex items-center justify-center animate-in fade-in duration-500 delay-700"
+                  className="pointer-events-auto w-14 h-14 flex items-center justify-center rounded-full bg-neutral-950/10 hover:bg-neutral-950 text-neutral-950 hover:text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.08)] backdrop-blur-xl hover:scale-105 active:scale-95 transition-all duration-500 border border-neutral-950/15"
                   aria-label="Scroll right"
                 >
-                  <RxArrowRight className="w-4 h-4 md:w-5 md:h-5" />
+                  <RxArrowRight className="w-6 h-6" />
                 </button>
-
-                <div className="flex md:hidden gap-3 mt-6 justify-center animate-in fade-in duration-700 delay-700">
-                  <button
-                    onClick={() => scroll("left")}
-                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-600 hover:text-gray-900 transition-all"
-                  >
-                    <RxArrowLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => scroll("right")}
-                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-600 hover:text-gray-900 transition-all"
-                  >
-                    <RxArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
               </div>
 
-              <div className="pt-6 md:pt-8 border-t border-gray-200 animate-in fade-in duration-700 delay-700">
-                <p className="text-gray-500 text-xs md:text-sm tracking-widest uppercase font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  {WORK_CATEGORIES.length} Categories • {WORK_CATEGORIES.reduce((sum, cat) => sum + cat.count, 0)} Total Projects
-                </p>
+              <div className="flex md:hidden items-center justify-center gap-3 mt-4 opacity-100 animate-in fade-in duration-700 delay-700">
+                {WORK_CATEGORIES.map((cat) => (
+                  <span
+                    key={`dot-${cat.key}`}
+                    className={`h-1.5 rounded-full transition-all duration-500 ease-out ${
+                      cat.key === selectedCategory
+                        ? "w-12 bg-neutral-950"
+                        : "w-2 bg-neutral-200 hover:bg-neutral-300"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
-          ) : (
-            currentCategory && <CategoryView category={currentCategory} onBack={() => setView("categories")} />
-          )}
-        </div>
-      </section>
+
+            <div className="pt-10 border-t border-neutral-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 animate-in fade-in duration-700 delay-700">
+              <p
+                className="text-neutral-400 text-xs tracking-[0.25em] uppercase font-bold"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                {WORK_CATEGORIES.length} Categories •{" "}
+                {WORK_CATEGORIES.reduce((sum, cat) => sum + cat.count, 0)} Total
+                Projects
+              </p>
+              <span className="text-[10px] uppercase tracking-[0.3em] font-black text-neutral-300 pointer-events-none select-none hidden sm:block">
+                © 2026 Studio
+              </span>
+            </div>
+          </div>
+        ) : (
+          currentCategory && (
+            <CategoryView
+              category={currentCategory}
+              onBack={() => setView("categories")}
+            />
+          )
+        )}
+      </div>
+    </section>
     </>
   );
 }

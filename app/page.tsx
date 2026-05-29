@@ -15,7 +15,6 @@ export default function Home() {
     document.documentElement.style.scrollBehavior = "smooth";
   }, []);
 
-
   useEffect(() => {
     const options = {
       root: null,
@@ -41,11 +40,6 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen text-[var(--text)] transition-colors duration-500 font-sans overflow-x-hidden selection:bg-white selection:text-black">
-      
-      <div className="fixed inset-0 pointer-events-none z-0 mix-blend-overlay">
-        <div className="w-full h-full animate-grain bg-[url('/images/noise.png')] opacity-[0.06]"></div>
-      </div>
-
       <nav className="fixed right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-50 mix-blend-difference">
         {sections.map((section) => {
           const isActive = activeSection === section;
@@ -59,7 +53,6 @@ export default function Home() {
               aria-label={`Scroll to ${section}`}
             >
               <div className="flex items-center gap-4">
-
                 <span className={`hidden md:block text-[9px] tracking-[0.4em] uppercase font-bold transition-all duration-300 ${
                   isActive ? "translate-x-0 opacity-100" : "translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
                 }`}>
@@ -108,16 +101,6 @@ export default function Home() {
         .delay-100 { animation-delay: 0.2s; }
         .delay-200 { animation-delay: 0.35s; }
         .delay-300 { animation-delay: 0.5s; }
-
-        @keyframes grain {
-          0%, 100% { transform: translate(0,0); }
-          10% { transform: translate(-0.5%, -1%); }
-          30% { transform: translate(1%, -0.5%); }
-          50% { transform: translate(-1%, 1%); }
-          70% { transform: translate(0.5%, 0.5%); }
-          90% { transform: translate(-0.5%, -0.5%); }
-        }
-        .animate-grain { animation: grain 0.6s steps(2) infinite; }
 
         @media (max-width: 768px) {
           .animate-fadeIn { animation-duration: 0.9s; }
