@@ -1,20 +1,18 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  FaGraduationCap,
-  FaCode,
   FaArrowRight,
-  FaFigma,
-  FaReact,
-  FaGithub,
-  FaLinkedin,
   FaEnvelope,
   FaPhone,
   FaMapMarkerAlt,
   FaAward,
+  FaGraduationCap,
+  FaCode,
+  FaReact,
+  FaGithub,
   FaTimes,
 } from "react-icons/fa";
 import {
@@ -39,10 +37,11 @@ import {
   SiDribbble,
   SiWix,
   SiWebflow,
+  SiNodedotjs,
+  SiPrisma,
+  SiFigma,
 } from "react-icons/si";
-
 import { CgMonday } from "react-icons/cg";
-
 
 const HERO_DATA = {
   title: "UI/UX Designer & Frontend Developer",
@@ -50,7 +49,8 @@ const HERO_DATA = {
   location: "Marilao, Bulacan, Philippines",
   email: "johnrenzbandianon@gmail.com",
   phone: "+63 966 798 7702",
-bio: "I am an Information Technology professional with over 2 years of hands-on experience in UI/UX Design, Full-Stack Development, and Quality Assurance. I specialize in bridging the gap between stunning design layouts and clean, functional, production-ready code — turning ideas into meaningful and user-friendly digital experiences."};
+  bio: "I am an Information Technology professional with over 2 years of hands-on experience in UI/UX Design, Full-Stack Development, and Quality Assurance. I specialize in bridging the gap between stunning design layouts and clean, functional, production-ready code — turning ideas into meaningful and user-friendly digital experiences.",
+};
 
 const WORK_EXPERIENCE = [
   {
@@ -155,7 +155,7 @@ const EXPERIENCE_TIMELINE = [
 const SKILLS_DATA = {
   designTools: [
     {
-      icon: <FaFigma className="text-2xl" />,
+      icon: <SiFigma className="text-2xl" />,
       name: "Figma",
       proficiency: "Expert",
       description: "UI/UX design, wireframing, prototyping, design systems, user flows",
@@ -301,7 +301,7 @@ const SKILLS_DATA = {
       description: "Visual web design, custom interactions, CMS-driven responsive sites",
     },
   ],
-  tools: [
+  devTools: [
     {
       icon: <SiGit className="text-2xl" />,
       name: "Git",
@@ -339,6 +339,27 @@ const HARD_SKILLS = [
   "Backend & Databases",
   "API integration & System architecture",
   "QA Testing & Bug documenting",
+];
+
+const COMMUNITIES = [
+  {
+    name: "Google Developer Groups Philippines",
+    location: "Manila, Philippines",
+    role: "Community Member",
+    year: "2024 - Present",
+    logo: "/Image/Community/gdg.png",
+    description: "I joined GDG Manila to stay updated with modern technologies and grow alongside passionate developers. The workshops, study jams, and networking opportunities have greatly contributed to my technical growth.",
+    link: "https://gdg.community.dev/gdg-manila/",
+  },
+  {
+    name: "DevCon Manila",
+    location: "Manila, Philippines",
+    role: "Community Member",
+    year: "2024 - Present",
+    logo: "/Image/Community/devcon.png",
+    description: "Being part of DevCon Manila has been a game-changer for me. I attend to learn from industry leaders, connect with fellow developers, and stay inspired by the vibrant local tech scene.",
+    link: "https://devcon.ph/",
+  },
 ];
 
 const EVENTS = [
@@ -417,11 +438,9 @@ const AnimatedCounter = ({
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="text-center p-8 rounded-2xl bg-white border border-gray-100 hover:border-slate-900 hover:shadow-lg transition-all"
+      className="text-center p-8 rounded-2xl border border-gray-200 hover:border-slate-900 hover:shadow-lg transition-all"
     >
-      <div className="text-5xl font-black text-slate-900">
-        {count}+
-      </div>
+      <div className="text-5xl font-black text-slate-900">{count}+</div>
       <p className="text-sm font-bold text-gray-600 mt-3">{label}</p>
     </motion.div>
   );
@@ -446,7 +465,7 @@ const SkillCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.4 }}
       whileHover={{ y: -8 }}
-      className="group p-6 border border-gray-100 rounded-2xl bg-white hover:bg-slate-900 hover:border-slate-900 transition-all duration-300 shadow-sm hover:shadow-md"
+      className="group p-6 border border-gray-200 rounded-2xl hover:bg-slate-900 hover:border-slate-900 transition-all duration-300 shadow-sm hover:shadow-md"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="text-slate-900 group-hover:text-white text-3xl transition-colors duration-300">
@@ -469,7 +488,7 @@ const SkillCard = ({
 const CompanyLogoImage = ({ src, alt }: { src: string; alt: string }) => (
   <motion.div
     whileHover={{ scale: 1.05 }}
-    className="relative w-24 h-24 rounded-2xl bg-white border border-gray-100 flex items-center justify-center overflow-hidden hover:border-slate-900 hover:shadow-md transition-all group"
+    className="relative w-24 h-24 rounded-2xl border border-gray-200 flex items-center justify-center overflow-hidden hover:border-slate-900 hover:shadow-md transition-all group"
   >
     <Image
       src={src}
@@ -551,7 +570,7 @@ const CertificateModal = ({
   );
 };
 
-export default function About() {
+export default function Portfolio() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [certificateModal, setCertificateModal] = useState<{
     isOpen: boolean;
@@ -580,10 +599,9 @@ export default function About() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full min-h-screen bg-white text-slate-900 overflow-x-hidden antialiased selection:bg-slate-900 selection:text-white"
+      className="relative w-full min-h-screen text-slate-900 overflow-x-hidden antialiased selection:bg-slate-900 selection:text-white"
     >
       <main className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8 py-24 space-y-40">
-
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -630,19 +648,19 @@ export default function About() {
             </div>
             <div className="space-y-4 text-sm font-medium text-gray-700">
               <p className="flex items-center gap-3 hover:text-slate-900 transition-colors">
-                <span className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-slate-900 hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                <span className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-slate-900 hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300">
                   <FaMapMarkerAlt />
                 </span>
                 {HERO_DATA.location}
               </p>
               <p className="flex items-center gap-3 hover:text-slate-900 transition-colors">
-                <span className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-slate-900 hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                <span className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-slate-900 hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300">
                   <FaEnvelope />
                 </span>
                 {HERO_DATA.email}
               </p>
               <p className="flex items-center gap-3 hover:text-slate-900 transition-colors">
-                <span className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-slate-900 hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                <span className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-slate-900 hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300">
                   <FaPhone />
                 </span>
                 {HERO_DATA.phone}
@@ -650,16 +668,14 @@ export default function About() {
             </div>
           </motion.div>
 
-
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9 }}
-            className="pt-20 pb-20 bg-white"
+            className="pt-20 pb-20"
           >
             <div className="max-w-5xl mx-auto px-6">
-              {/* Header */}
               <div className="text-center mb-16">
                 <p className="text-emerald-600 font-semibold tracking-[3px] text-sm mb-3">
                   MY COMMUNITY JOURNEY
@@ -668,90 +684,68 @@ export default function About() {
                   Growing Through Community
                 </h2>
                 <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  I actively joined these communities to accelerate my growth as a developer.
-                  The connections, knowledge sharing, and collaborative spirit here have been
-                  instrumental in shaping my skills and career.
+                  I actively joined these communities to accelerate my growth as a developer. The connections, knowledge sharing, and collaborative spirit here have been instrumental in shaping my skills and career.
                 </p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <motion.a
-                  href="https://gdg.community.dev/u/m5ucyf/#/about"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.03, y: -12 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="group relative bg-white/70 backdrop-blur-2xl border border-white/60 
-                   rounded-3xl p-10 shadow-xl shadow-gray-200/80 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {COMMUNITIES.map((community, index) => (
+                  <motion.a
+                    key={index}
+                    href={community.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.03, y: -12 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className={`group relative border border-gray-200 rounded-3xl p-10 overflow-hidden hover:shadow-lg transition-all duration-300 ${
+                      index === 0
+                        ? "hover:border-emerald-600 hover:bg-emerald-900 hover:text-white"
+                        : "hover:border-violet-600 hover:bg-violet-900 hover:text-white"
+                    }`}
+                  >
+                    <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                      index === 0
+                        ? "bg-gradient-to-br from-emerald-100/40 to-transparent"
+                        : "bg-gradient-to-br from-violet-100/40 to-transparent"
+                    }`} />
 
-                  <div className="flex flex-col items-center text-center relative z-10">
-                    <div className="w-28 h-28 mb-8 rounded-3xl bg-white shadow-inner flex items-center justify-center 
-                        group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
-                      <img
-                        src="/Image/Community/gdg.png"
-                        alt="GDG Community"
-                        className="w-20 h-20 object-contain"
-                      />
+                    <div className="flex flex-col items-center text-center relative z-10">
+                      <div className="w-28 h-28 mb-8 rounded-3xl border border-gray-200 flex items-center justify-center group-hover:scale-110 group-hover:border-white/30 transition-all duration-700">
+                        <Image
+                          src={community.logo}
+                          alt={community.name}
+                          width={80}
+                          height={80}
+                          className="w-20 h-20 object-contain"
+                        />
+                      </div>
+
+                      <h3 className="text-3xl font-semibold text-gray-900 group-hover:text-white mb-2 transition-colors duration-300">
+                        {community.name}
+                      </h3>
+                      <p className={`font-medium mb-6 transition-colors duration-300 ${
+                        index === 0
+                          ? "text-emerald-600 group-hover:text-emerald-200"
+                          : "text-violet-600 group-hover:text-violet-200"
+                      }`}>
+                        {community.location}
+                      </p>
+
+                      <p className="text-gray-600 group-hover:text-gray-200 leading-relaxed text-base transition-colors duration-300">
+                        {community.description}
+                      </p>
+
+                      <div className={`mt-8 font-medium flex items-center gap-2 text-sm tracking-wider group-hover:gap-3 transition-all ${
+                        index === 0
+                          ? "text-emerald-600 group-hover:text-emerald-200"
+                          : "text-violet-600 group-hover:text-violet-200"
+                      }`}>
+                        {index === 0 ? "VISIT COMMUNITY" : "JOIN THE COMMUNITY"}
+                        <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                      </div>
                     </div>
-
-                    <h3 className="text-3xl font-semibold text-gray-900 mb-2">
-                      Google Developer Groups
-                    </h3>
-                    <p className="text-emerald-600 font-medium mb-6">Philippines</p>
-
-                    <p className="text-gray-600 leading-relaxed text-[17px]">
-                      I joined GDG Manila to stay updated with modern technologies and
-                      grow alongside passionate developers. The workshops, study jams,
-                      and networking opportunities have greatly contributed to my technical growth.
-                    </p>
-
-                    <div className="mt-8 text-emerald-600 font-medium flex items-center gap-2 text-sm tracking-wider group-hover:gap-3 transition-all">
-                      VISIT COMMUNITY
-                      <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
-                    </div>
-                  </div>
-                </motion.a>
-
-                <motion.a
-                  href="https://www.facebook.com/devconmanila"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.03, y: -12 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="group relative bg-white/70 backdrop-blur-2xl border border-white/60 
-                   rounded-3xl p-10 shadow-xl shadow-gray-200/80 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-violet-100/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  <div className="flex flex-col items-center text-center relative z-10">
-                    <div className="w-28 h-28 mb-8 rounded-3xl bg-white shadow-inner flex items-center justify-center 
-                        group-hover:scale-110 group-hover:-rotate-6 transition-all duration-700">
-                      <img
-                        src="/Image/Community/devcon.png"
-                        alt="DevCon Manila"
-                        className="w-20 h-20 object-contain"
-                      />
-                    </div>
-
-                    <h3 className="text-3xl font-semibold text-gray-900 mb-2">
-                      DevCon Manila
-                    </h3>
-                    <p className="text-violet-600 font-medium mb-6">Philippines</p>
-
-                    <p className="text-gray-600 leading-relaxed text-[17px]">
-                      Being part of DevCon Manila has been a game-changer for me.
-                      I attend to learn from industry leaders, connect with fellow developers,
-                      and stay inspired by the vibrant local tech scene.
-                    </p>
-
-                    <div className="mt-8 text-violet-600 font-medium flex items-center gap-2 text-sm tracking-wider group-hover:gap-3 transition-all">
-                      JOIN THE COMMUNITY
-                      <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
-                    </div>
-                  </div>
-                </motion.a>
+                  </motion.a>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -795,13 +789,10 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group p-10 border border-gray-200 rounded-3xl bg-white hover:border-slate-900 hover:shadow-lg transition-all duration-300"
+                className="group p-10 border border-gray-200 rounded-3xl hover:border-slate-900 hover:shadow-lg transition-all duration-300"
               >
                 <div className="flex flex-col lg:flex-row gap-10 mb-10">
-                  <motion.div
-                    whileHover={{ rotate: 5 }}
-                    className="flex-shrink-0"
-                  >
+                  <motion.div whileHover={{ rotate: 5 }} className="flex-shrink-0">
                     <CompanyLogoImage src={exp.logo} alt={exp.company} />
                   </motion.div>
 
@@ -824,20 +815,17 @@ export default function About() {
                         </p>
                       </div>
 
-                      {(exp.company === "BoxHive Digital Solutions" ||
-                        exp.company === "Alpha Centauri Garments") && (
-                          <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() =>
-                              openCertificate(exp.certificate, exp.company)
-                            }
-                            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 text-white font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg whitespace-nowrap"
-                          >
-                            <FaAward className="text-lg" />
-                            View Certificate
-                          </motion.button>
-                        )}
+                      {exp.certificate && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => openCertificate(exp.certificate, exp.company)}
+                          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 text-white font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg whitespace-nowrap"
+                        >
+                          <FaAward className="text-lg" />
+                          View Certificate
+                        </motion.button>
+                      )}
                     </div>
 
                     <p className="text-gray-700 text-base leading-relaxed mb-8 font-medium">
@@ -901,7 +889,7 @@ export default function About() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="p-8 border border-gray-200 rounded-2xl bg-white hover:border-slate-900 hover:shadow-md transition-all duration-300 group"
+                className="p-8 border border-gray-200 rounded-2xl hover:border-slate-900 hover:shadow-md transition-all duration-300 group"
               >
                 <div className="flex gap-8">
                   <div className="flex flex-col items-center flex-shrink-0">
@@ -931,7 +919,7 @@ export default function About() {
                         <motion.span
                           key={i}
                           whileHover={{ scale: 1.05 }}
-                          className="px-4 py-2 bg-white text-slate-900 text-xs font-bold rounded-full border border-gray-200 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
+                          className="px-4 py-2 text-slate-900 text-xs font-bold rounded-full border border-gray-200 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
                         >
                           {tag}
                         </motion.span>
@@ -955,9 +943,7 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Education
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Foundation & Academic Excellence
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Foundation & Academic Excellence</p>
           </div>
 
           <div className="grid gap-8">
@@ -968,27 +954,23 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="p-10 border border-gray-200 rounded-3xl bg-white hover:border-slate-900 hover:shadow-md transition-all duration-300 group"
+                className="p-10 border border-gray-200 rounded-3xl hover:border-slate-900 hover:shadow-md transition-all duration-300 group"
               >
                 <div className="flex items-start gap-6 mb-6">
                   <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center text-slate-900 text-3xl shadow-sm border border-gray-200 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900 transition-all duration-300">
                     <FaGraduationCap />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-black text-slate-900 mb-2 group-hover:text-slate-900 transition-colors duration-300">
+                    <h3 className="text-2xl font-black text-slate-900 mb-2">
                       {edu.degree}
                     </h3>
-                    <p className="text-lg font-bold text-slate-900 mb-1">
-                      {edu.school}
-                    </p>
+                    <p className="text-lg font-bold text-slate-900 mb-1">{edu.school}</p>
                     <p className="text-sm font-bold text-gray-600 uppercase tracking-widest">
                       {edu.period}
                     </p>
                   </div>
                 </div>
-                <p className="text-gray-700 leading-relaxed font-medium">
-                  {edu.description}
-                </p>
+                <p className="text-gray-700 leading-relaxed font-medium">{edu.description}</p>
               </motion.div>
             ))}
           </div>
@@ -1005,9 +987,7 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Certifications
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Professional Development & Recognition
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Professional Development & Recognition</p>
           </div>
 
           <div className="grid gap-4">
@@ -1018,7 +998,7 @@ export default function About() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05, duration: 0.4 }}
                 viewport={{ once: true }}
-                className="p-6 border border-gray-100 rounded-2xl bg-white hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300 group flex items-start gap-4"
+                className="p-6 border border-gray-200 rounded-2xl hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300 group flex items-start gap-4"
               >
                 <div className="w-3 h-3 bg-slate-900 group-hover:bg-white rounded-full mt-2 flex-shrink-0 group-hover:scale-150 transition-all duration-300" />
                 <p className="text-base font-medium text-slate-900 group-hover:text-white transition-colors duration-300">
@@ -1040,9 +1020,7 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Design Tools
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Creative & Design Software Expertise
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Creative & Design Software Expertise</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {SKILLS_DATA.designTools.map((skill, index) => (
@@ -1062,9 +1040,7 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Frontend Stack
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Modern Web Development Technologies
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Modern Web Development Technologies</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {SKILLS_DATA.frontendTech.map((skill, index) => (
@@ -1084,9 +1060,7 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Backend & Databases
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Server-Side & Data Management
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Server-Side & Data Management</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {SKILLS_DATA.backend.map((skill, index) => (
@@ -1095,7 +1069,45 @@ export default function About() {
           </div>
         </motion.section>
 
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="space-y-16"
+        >
+          <div className="space-y-4">
+            <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
+              Project Management Tools
+            </h2>
+            <p className="text-gray-700 text-lg font-medium">Organization & Collaboration</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
+            {SKILLS_DATA.managementTools.map((skill, index) => (
+              <SkillCard key={index} index={index} {...skill} />
+            ))}
+          </div>
+        </motion.section>
 
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="space-y-16"
+        >
+          <div className="space-y-4">
+            <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
+              Portfolio & Web Platforms
+            </h2>
+            <p className="text-gray-700 text-lg font-medium">Design Showcase & Web Building</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {SKILLS_DATA.portfolioPlatforms.map((skill, index) => (
+              <SkillCard key={index} index={index} {...skill} />
+            ))}
+          </div>
+        </motion.section>
 
         <motion.section
           initial={{ opacity: 0 }}
@@ -1108,12 +1120,10 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Developer Tools
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Version Control & Collaboration
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Version Control & Collaboration</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-8">
-            {SKILLS_DATA.tools.map((skill, index) => (
+            {SKILLS_DATA.devTools.map((skill, index) => (
               <SkillCard key={index} index={index} {...skill} />
             ))}
           </div>
@@ -1130,9 +1140,7 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Technical Skills
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Core Competencies & Expertise Areas
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Core Competencies & Expertise Areas</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {HARD_SKILLS.map((skill, index) => (
@@ -1142,7 +1150,7 @@ export default function About() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.03, duration: 0.3 }}
                 viewport={{ once: true }}
-                className="px-6 py-4 bg-white border border-gray-100 rounded-2xl hover:border-slate-900 hover:bg-slate-900 transition-all duration-300 group"
+                className="px-6 py-4 border border-gray-200 rounded-2xl hover:border-slate-900 hover:bg-slate-900 transition-all duration-300 group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-2.5 h-2.5 bg-slate-900 group-hover:bg-white rounded-full group-hover:scale-125 transition-all duration-300" />
@@ -1166,9 +1174,7 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Soft Skills
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Professional & Interpersonal Abilities
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Professional & Interpersonal Abilities</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {SOFT_SKILLS.map((skill, index) => (
@@ -1178,7 +1184,7 @@ export default function About() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.03, duration: 0.3 }}
                 viewport={{ once: true }}
-                className="px-6 py-4 bg-white border border-gray-100 rounded-2xl hover:border-slate-900 hover:bg-slate-900 transition-all duration-300 group"
+                className="px-6 py-4 border border-gray-200 rounded-2xl hover:border-slate-900 hover:bg-slate-900 transition-all duration-300 group"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-2.5 h-2.5 bg-slate-900 group-hover:bg-white rounded-full group-hover:scale-125 transition-all duration-300" />
@@ -1202,9 +1208,7 @@ export default function About() {
             <h2 className="text-5xl md:text-6xl font-black tracking-tight text-slate-900">
               Events & Speaking
             </h2>
-            <p className="text-gray-700 text-lg font-medium">
-              Community Engagement & Networking
-            </p>
+            <p className="text-gray-700 text-lg font-medium">Community Engagement & Networking</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -1215,13 +1219,11 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="p-8 border border-gray-200 bg-white rounded-3xl hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300 group overflow-hidden relative"
+                className="p-8 border border-gray-200 rounded-3xl hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300 group overflow-hidden relative"
               >
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-6">
-                    <span className="text-4xl font-black">
-                      {event.badge}
-                    </span>
+                    <span className="text-4xl font-black">{event.badge}</span>
                     <span className="text-xs font-bold text-gray-600 group-hover:text-gray-300 uppercase tracking-widest bg-gray-100 group-hover:bg-white/20 px-3 py-1 rounded-full border border-gray-200 group-hover:border-white/30 transition-all duration-300">
                       {event.year}
                     </span>
@@ -1243,7 +1245,6 @@ export default function About() {
             ))}
           </div>
         </motion.section>
-
       </main>
 
       <CertificateModal
