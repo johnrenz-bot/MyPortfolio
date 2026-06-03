@@ -58,9 +58,9 @@ const WORK_EXPERIENCE = [
     company: "Alpha Centauri Garments",
     subtitle: "Clothing Brand",
     type: "Internship",
-    period: "April 2026 – May 2026",
+    period: "March 2026 – June 2026",
     logo: "/Image/CompanyLogo/Alpha.png",
-    certificate: "/Image/Certificate/alpha-certificate.png",
+    certificate: "/Image/Certificate/Alpha.jpg",
     description:
       "Designed end-to-end UI/UX for an apparel e-commerce platform in Figma, creating wireframes and responsive prototypes that improved user experience and interface consistency. Collaborated with developers on design handoff and implementation, reducing rework. Led a small design-dev team, managing task delegation, documentation, and workflow. Maintained a consistent design system aligned with brand identity and usability goals.",
     highlights: [

@@ -452,68 +452,74 @@ const CERTS: Item[] = [
     title: "Google UX Certification",
     href: "/Image/Certificate/GoogleUX.jpg",
     image: "/Image/Certificate/GoogleUX.jpg",
-    description: "Google UX Design Certification covering user research, wireframing, prototyping, and usability testing.",
+    description:
+      "Google UX Design Certification focused on user research, wireframing, prototyping, and usability testing in real-world product design workflows.",
   },
   {
     id: "c2",
     title: "DICT UI/UX Certification",
     href: "/Image/Certificate/DICT-UIUX.jpg",
     image: "/Image/Certificate/DICT-UIUX.jpg",
-    description: "DICT UI/UX Design Certification covering foundational principles of user interface design, user experience workflow, and practical design application.",
+    description:
+      "DICT UI/UX Design Certification covering core principles of interface design, user experience workflows, and practical application of design thinking methodologies.",
   },
-   {
+  {
+    id: "c9",
+    title: "Alpha Centauri Certification",
+    href: "https://www.alphacentauri.ph/certification",
+    image: "/Image/Certificate/Alpha.jpg",
+    description:
+      "UI/UX design internship certification demonstrating hands-on experience in interface design, user experience principles, and applied design execution in a real-world project environment.",
+  },
+  {
+    id: "c7",
+    title: "BoxHive Certification",
+    href: "https://www.boxhive.com/certification",
+    image: "/Image/Certificate/BoxHive.png",
+    description:
+      "Internship certification from BoxHive Digital Solutions Co., involving UI/UX design, graphic design (mockups and event posters), software testing, and technical documentation for a mobile application project.",
+  },
+  {
     id: "c3",
     title: "Canva Graphic Design Certificate",
     href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df",
     image: "/Image/Certificate/Canva.png",
-    description: "Certification in graphic design using Canva.",
+    description:
+      "Certification demonstrating proficiency in graphic design using Canva, including layout composition, branding, and visual communication principles.",
   },
-  
-
-
   {
-  id: "c8",
-  title: "IxDF Membership Certificate",
-  href: "https://ixdf.org/members/john-renz-bandianon/certificate/membership",
-  image: "/Image/Certificate/IxDF.jpg",
-  description:
-    "Official membership certification from the Interaction Design Foundation (IxDF), recognizing active membership in the global UX/UI and interaction design community.",
-},
-
-{
-  id: "c7",
-  title: "BoxHive Certification",
-  href: "https://www.boxhive.com/certification",
-  image: "/Image/Certificate/BoxHive.png",
-  description: "Completed internship at BoxHive Digital Solutions Co. with experience in UI/UX design, graphic design (mockups and event posters), software testing, and documentation for a mobile application project.",
-},
-
-
-{
+    id: "c8",
+    title: "IxDF Membership Certificate",
+    href: "https://ixdf.org/members/john-renz-bandianon/certificate/membership",
+    image: "/Image/Certificate/IxDF.jpg",
+    description:
+      "Official membership from the Interaction Design Foundation (IxDF), recognizing active participation in the global UX/UI and interaction design community.",
+  },
+  {
     id: "c4",
     title: "Accenture – Skills to Succeed",
     href: "/Image/Certificate/S2.jpg",
     image: "/Image/Certificate/S2.jpg",
-    description: "Certification in professional skills development.",
+    description:
+      "Professional development certification focused on workplace readiness, communication skills, and foundational career competencies.",
   },
   {
     id: "c5",
     title: "Java Programming Certificate",
     href: "/Image/Certificate/java.jpg",
     image: "/Image/Certificate/java.jpg",
-    description: "Certification in Java programming fundamentals.",
+    description:
+      "Certification covering Java programming fundamentals including object-oriented programming, syntax, and basic application development.",
   },
   {
     id: "c6",
     title: "Oracle Certified",
     href: "/Image/Certificate/oracle.jpg",
     image: "/Image/Certificate/oracle.jpg",
-    description: "Certification in Oracle database management.",
+    description:
+      "Certification in Oracle database fundamentals, including data management, SQL queries, and database structure operations.",
   },
-
-
 ];
-
 
 const WORK_CATEGORIES = [
    {
