@@ -275,7 +275,7 @@ export default function Groove() {
                   <p className="text-sm font-semibold">{item.value}</p>
                 </div>
               ))}
-            </div>
+            </div>  
 
             <div className="relative overflow-hidden rounded-[2rem] border border-[var(--text)]/10 aspect-video sm:aspect-[21/9]">
               <Image
@@ -372,7 +372,7 @@ export default function Groove() {
                 {SURVEY_STATS.map((stat, i) => (
                   <div
                     key={i}
-                    className="stat-card p-6 rounded-2xl border border-[var(--text)]/8 bg-[var(--text)]/[0.02] hover:bg-[var(--text)]/[0.04] transition-colors space-y-3"
+                    className="stat-card p-6 rounded-2xl border border-[var(--text)]/8 bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 space-y-3"
                   >
                     <p className="stat-value text-4xl sm:text-5xl cs-serif font-light">{stat.value}</p>
                     <p className="text-xs font-medium leading-relaxed">{stat.label}</p>
@@ -429,7 +429,7 @@ export default function Groove() {
               {PROCESS_PHASES.map((phase) => (
                 <div
                   key={phase.phase}
-                  className="p-7 rounded-2xl border border-[var(--text)]/8 hover:border-[var(--text)]/20 hover:bg-[var(--text)]/[0.02] transition-all space-y-4"
+                  className="p-7 rounded-2xl border border-[var(--text)]/8 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 bg-white hover:border-[var(--text)]/10 transition-all duration-300 space-y-4"
                 >
                   <span className="text-3xl cs-serif font-light text-[var(--text)]/20">{phase.phase}</span>
                   <h3 className="text-base font-bold">{phase.title}</h3>
@@ -444,7 +444,7 @@ export default function Groove() {
                 {STACK.map((s) => (
                   <div
                     key={s.label}
-                    className="flex flex-col items-center gap-2 p-4 rounded-xl border border-[var(--text)]/8 hover:border-[var(--text)]/20 hover:bg-[var(--text)]/[0.03] transition-all"
+                    className="flex flex-col items-center gap-2 p-4 rounded-xl border border-[var(--text)]/8 bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300"
                   >
                     <span className="text-2xl">{s.icon}</span>
                     <span className="text-[0.38rem] cs-mono uppercase tracking-[0.15em] text-center text-[var(--text)]/50">{s.label}</span>
@@ -595,7 +595,7 @@ export default function Groove() {
                 href="https://github.com/johnrenz-bot/groove"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl border border-[var(--text)]/20 hover:bg-[var(--text)]/5 transition text-sm font-bold cs-mono uppercase tracking-widest"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl border border-[var(--text)]/20 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1 bg-neutral-900 text-white transition-all duration-300 text-sm font-bold cs-mono uppercase tracking-widest"
               >
                 <FaGithub /> View Repository
               </a>

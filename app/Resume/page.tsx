@@ -54,15 +54,19 @@
 
     if (loading) {
       return (
-        <div className="min-h-screen w-full flex items-center justify-center bg-linear-to-r from-[#3b373a] via-[#232222] to-[#0f0f0f] text-white">
-          <div className="flex flex-col items-center gap-2">
-            <h1 className="black-ops-one-regular text-4xl sm:text-5xl tracking-widest text-gray-200 animate-wobble">
+        <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white text-neutral-900 overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+          <div className="relative flex flex-col items-center gap-2">
+            <h1 className="black-ops-one-regular text-4xl sm:text-5xl tracking-widest text-neutral-900 animate-wobble">
               JOHN RENZ
             </h1>
-            <h2 className="black-ops-one-regular text-2xl sm:text-3xl tracking-[0.4em] text-gray-400 animate-wobble-slow">
+            <h2 className="black-ops-one-regular text-2xl sm:text-3xl tracking-[0.4em] text-neutral-400 animate-wobble-slow">
               BANDIANON
             </h2>
-            <p className="mt-3 text-[11px] uppercase tracking-[0.3em] text-white/60">
+            <div className="w-24 h-[2px] bg-neutral-100 mt-4 rounded-full overflow-hidden">
+              <div className="h-full bg-neutral-900 rounded-full animate-pulse"></div>
+            </div>
+            <p className="mt-3 text-[9px] uppercase font-bold tracking-[0.3em] text-neutral-400">
               loading resume
             </p>
           </div>
@@ -71,17 +75,17 @@
     }
 
     return (
-      <div className="relative min-h-screen w-full bg-slate-100 text-slate-900 flex justify-center py-10 px-4">
+      <div className="relative min-h-screen w-full bg-neutral-50 text-neutral-900 flex justify-center py-10 px-4">
         <Link
           href="/"
-          className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full border border-slate-300 bg-white/80 px-3 py-1 text-xs font-medium shadow-sm hover:bg-white hover:shadow-md transition"
+          className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full border border-black/5 bg-white/80 px-3 py-1 text-xs font-medium shadow-sm hover:bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-0.5 transition-all duration-300"
         >
           <FaCaretLeft className="text-lg" />
           <span>Back</span>
         </Link>
 
-        <main className="w-full max-w-4xl bg-white shadow-md rounded-xl px-10 py-10 md:px-14 md:py-12 mt-6">
-          <header className="pb-4 mb-6 border-b border-slate-300 text-center">
+        <main className="w-full max-w-4xl bg-white shadow-sm border border-black/5 rounded-xl px-10 py-10 md:px-14 md:py-12 mt-6">
+          <header className="pb-4 mb-6 border-b border-black/5 text-center">
             <h1 className="text-2xl md:text-3xl font-semibold tracking-[0.3em] uppercase">
               JOHN RENZ C. BANDIANON
             </h1>
@@ -154,7 +158,7 @@
           </section>
 
           <section className="mb-6">
-            <h2 className="text-xs font-bold tracking-[0.35em] uppercase border-b pb-1 mb-3 text-center">
+            <h2 className="text-xs font-bold tracking-[0.35em] uppercase border-b border-black/5 pb-1 mb-3 text-center">
               SKILLS
             </h2>
             <div className="grid md:grid-cols-2 gap-8 text-[13px]">
@@ -175,7 +179,7 @@
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xs font-bold tracking-[0.35em] uppercase border-b pb-1 mb-3 text-center">
+            <h2 className="text-xs font-bold tracking-[0.35em] uppercase border-b border-black/5 pb-1 mb-3 text-center">
               COURSES & CERTIFICATES
             </h2>
             <ul className="space-y-1 text-[13px]">
@@ -198,7 +202,7 @@
             </ul>
           </section>
 
-          <footer className="pt-2 border-t text-[11px] text-right">
+          <footer className="pt-2 border-t border-black/5 text-[11px] text-right">
             <p className="italic">Applicant’s Signature</p>
             <p className="font-semibold">John Renz C. Bandianon</p>
           </footer>

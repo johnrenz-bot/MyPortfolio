@@ -39,8 +39,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative min-h-screen text-[var(--text)] transition-colors duration-500 font-sans overflow-x-hidden selection:bg-white selection:text-black">
-      <nav className="fixed right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-50 mix-blend-difference">
+    <div className="relative min-h-screen bg-white text-neutral-900 transition-colors duration-500 font-sans overflow-x-hidden selection:bg-neutral-900 selection:text-white">
+      {/* Light subtle grid background for modern feel */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      
+      <nav className="fixed right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-50">
         {sections.map((section) => {
           const isActive = activeSection === section;
           return (
@@ -48,22 +51,22 @@ export default function Home() {
               key={section}
               href={`#${section}`}
               className={`group flex items-center justify-end transition-all duration-500 ease-out ${
-                isActive ? "opacity-100" : "opacity-30 hover:opacity-70"
+                isActive ? "opacity-100" : "opacity-40 hover:opacity-100"
               }`}
               aria-label={`Scroll to ${section}`}
             >
               <div className="flex items-center gap-4">
-                <span className={`hidden md:block text-[9px] tracking-[0.4em] uppercase font-bold transition-all duration-300 ${
+                <span className={`hidden md:block text-[9px] tracking-[0.4em] uppercase font-bold text-neutral-900 transition-all duration-300 ${
                   isActive ? "translate-x-0 opacity-100" : "translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
                 }`}>
                   {section}
                 </span>
 
                 <span
-                  className={`h-[1.5px] transition-all duration-500 ease-in-out origin-right ${
+                  className={`h-[2px] transition-all duration-500 ease-in-out origin-right rounded-full ${
                     isActive 
-                      ? "w-14 bg-white shadow-[0_0_12px_rgba(255,255,255,1)]" 
-                      : "w-4 bg-[var(--text)] group-hover:w-8"
+                      ? "w-12 bg-neutral-900 shadow-[0_0_8px_rgba(0,0,0,0.1)]" 
+                      : "w-4 bg-neutral-400 group-hover:w-8 group-hover:bg-neutral-600"
                   }`}
                 />
               </div>
@@ -90,22 +93,7 @@ export default function Home() {
         </section>
       </main>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(15px); filter: blur(4px); }
-          to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        .animate-fadeIn { 
-          animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; 
-        }
-        .delay-100 { animation-delay: 0.2s; }
-        .delay-200 { animation-delay: 0.35s; }
-        .delay-300 { animation-delay: 0.5s; }
-
-        @media (max-width: 768px) {
-          .animate-fadeIn { animation-duration: 0.9s; }
-        }
-      `}</style>
+      
     </div>
   );
 }

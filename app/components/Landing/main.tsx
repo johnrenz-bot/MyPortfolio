@@ -15,10 +15,10 @@ const NavBtn = ({
 }) => (
   <a
     href={href}
-    className={`inline-flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-medium tracking-wide transition-all duration-300 backdrop-blur-md border ${
+    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border shadow-sm ${
       primary
-        ? "bg-white/80 text-neutral-900 border-white hover:bg-white/40"
-        : "bg-white/25 text-neutral-800 border-white/20 hover:bg-white/50 hover:border-white/40"
+        ? "bg-neutral-900 text-white border-neutral-900 hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5"
+        : "bg-white/70 text-neutral-800 border-black/10 hover:bg-white hover:border-black/20 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-md"
     }`}
   >
     {label}
@@ -129,9 +129,9 @@ export default function Main() {
         className="relative w-full flex-grow flex flex-col selection:bg-neutral-900 selection:text-white antialiased text-neutral-900"
       >
         <nav
-          className={`a d1 ${g} nav-wrap w-full relative z-20 flex justify-between items-center border-b border-white/40 backdrop-blur-md bg-white/20`}
+          className={`a d1 ${g} nav-wrap w-full relative z-20 flex justify-between items-center border-b border-black/5 bg-white/70 backdrop-blur-xl`}
         >
-          <div className="text-2xl font-black tracking-[-0.06em] uppercase select-none bg-clip-text text-transparent bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-500">
+          <div className="text-2xl font-black tracking-[-0.06em] uppercase select-none text-neutral-900">
             RΣNZ
           </div>
 
@@ -178,15 +178,15 @@ export default function Main() {
 
             <div className="lg:col-span-5 w-full flex flex-col gap-6">
               <div className="aos text-center lg:text-right">
-                <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-indigo-600 block mb-1">Timeline</span>
-                <h2 className="text-xl font-black uppercase">Tech Journey</h2>
+                <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-neutral-500 block mb-1">Timeline</span>
+                <h2 className="text-xl font-black uppercase text-neutral-900">Tech Journey</h2>
               </div>
 
               <div className="deck-perspective relative flex flex-col md:flex-row lg:flex-col gap-4 lg:gap-0 lg:h-[480px] justify-center items-stretch lg:items-end w-full">
                 {journeyImages.map((img, idx) => (
                   <div
                     key={idx}
-                    className="aos deck-card relative w-full md:w-1/4 lg:w-[340px] aspect-[4/3] rounded-2xl overflow-hidden border border-white/60 bg-white/30 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.03)] lg:absolute"
+                    className="aos deck-card relative w-full md:w-1/4 lg:w-[340px] aspect-[4/3] rounded-2xl overflow-hidden border border-black/5 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] lg:absolute group"
                     style={{
                       transitionDelay: `${idx * 0.05}s`,
                       top: `${idx * 90}px`,
@@ -198,11 +198,11 @@ export default function Main() {
                       alt={img.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-neutral-900/10 to-transparent flex flex-col justify-end p-5">
-                      <span className="text-[9px] font-bold tracking-widest text-indigo-300 uppercase">
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/20 to-transparent flex flex-col justify-end p-5 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="text-[9px] font-bold tracking-widest text-neutral-300 uppercase">
                         {img.year}
                       </span>
-                      <h3 className="text-sm font-bold text-white tracking-wide uppercase mt-0.5">
+                      <h3 className="text-sm font-bold text-white tracking-wide uppercase mt-0.5 group-hover:-translate-y-1 transition-transform duration-300">
                         {img.title}
                       </h3>
                     </div>
@@ -214,7 +214,7 @@ export default function Main() {
           </div>
         </main>
 
-        <footer className="foot-wrap relative z-10 text-[9px] uppercase tracking-[1em] text-center text-neutral-400 border-t border-white/40 bg-white/10 backdrop-blur-md">
+        <footer className="foot-wrap relative z-10 text-[9px] uppercase tracking-[1em] text-center text-neutral-400 border-t border-black/5 bg-white/70 backdrop-blur-xl">
           EST 2026
         </footer>
       </div>

@@ -173,13 +173,13 @@ export default function Contact() {
         <footer className="pt-20 border-t border-black/5 flex flex-col items-center space-y-12">
           <a
             href={`mailto:${PERSONAL.email}`}
-            className="aos group relative px-10 py-5 bg-black text-white overflow-hidden transition-all duration-300 rounded-xl"
+            className="aos group relative px-10 py-5 bg-neutral-900 text-white overflow-hidden transition-all duration-300 rounded-xl hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1"
           >
             <span className="relative z-10 text-[10px] font-bold uppercase tracking-[0.3em]">Drop an Email</span>
-            <div className="absolute inset-0 bg-zinc-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </a>
 
-          <div className="aos flex flex-col items-center gap-2 opacity-30">
+          <div className="aos flex flex-col items-center gap-2 opacity-30 text-neutral-900">
             <div className="text-2xl font-black tracking-tighter uppercase italic">BANDIANON</div>
             <p className="text-[8px] font-bold uppercase tracking-widest">© 2026 All Rights Reserved</p>
           </div>
@@ -191,12 +191,12 @@ export default function Contact() {
 
 function DetailBox({ d }: { d: any }) {
   return (
-    <div className="p-8 border border-black/5 bg-white/30 backdrop-blur-sm flex flex-col justify-between h-full space-y-12 transition-all duration-500 rounded-xl group-hover:bg-black group-hover:text-white shadow-sm">
-      <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/5 border border-black/5 group-hover:bg-zinc-900 group-hover:border-zinc-800 transition-all duration-500">
-        <d.Icon className="text-2xl opacity-40 group-hover:opacity-100 transition-all duration-500" />
+    <div className="p-8 border border-black/5 bg-white/30 backdrop-blur-sm flex flex-col justify-between h-full space-y-12 transition-all duration-500 rounded-xl group-hover:bg-white group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] group-hover:-translate-y-1">
+      <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-neutral-100 border border-black/5 group-hover:bg-neutral-900 group-hover:text-white transition-all duration-500">
+        <d.Icon className="text-2xl opacity-60 group-hover:opacity-100 transition-all duration-500" />
       </div>
-      <div className="space-y-2">
-        <p className="text-[9px] font-bold uppercase tracking-widest opacity-40 group-hover:opacity-60">{d.label}</p>
+      <div className="space-y-2 text-neutral-900">
+        <p className="text-[9px] font-bold uppercase tracking-widest opacity-50 group-hover:opacity-70">{d.label}</p>
         <p className="text-xs font-bold leading-tight break-words uppercase">{d.value}</p>
       </div>
     </div>

@@ -7,584 +7,20 @@ import { SiGithub } from "react-icons/si";
 import { RxArrowRight, RxArrowLeft } from "react-icons/rx";
 import { MdArrowOutward } from "react-icons/md";
 
-type Item = {
-  id: string;
-  title: string;
-  href: string;
-  image: string;
-  description: string;
-  techStack?: string[];
-  github?: string;
-  uiTools?: string[];
-  category?: string;
-  workType?: string;
-  featured?: boolean;
-  tags?: string[];
-};
-
-const WEB_DEVELOPMENT: Item[] = [
-  {
-    id: "capstone",
-    title: "Groove (Capstone Project)",
-    href: "/Groove",
-    image: "/Image/Groove.png",
-    description: "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.",
-    techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"],
-    github: "https://github.com/johnrenz-bot/groove",
-    workType: "web-development",
-    featured: true,
-    tags: ["Agency"],
-  },
-];
-
-const WEBSITE_DESIGN: Item[] = [
-  {
-    id: "w5",
-    title: "Kiyoto",
-    href: "https://kiyoto.vercel.app/",
-    image: "/Image/Kiyoto.png",
-    description: "Personal portfolio website with interactive UI and smooth animations throughout.",
-    techStack: ["React", "Tailwind", "Next.js"],
-    workType: "website-design",
-    featured: true,
-    tags: ["Design"],
-  },
-  {
-    id: "w2",
-    title: "Weeknd Soundtrip",
-    href: "https://weeknd-soundtrip.vercel.app/",
-    image: "/Image/WeekndSoundtrip.png",
-    description: "Interactive music experience inspired by The Weeknd with immersive design.",
-    techStack: ["React", "Tailwind", "JavaScript"],
-    workType: "website-design",
-  },
-  {
-    id: "w3",
-    title: "DinoVerse",
-    href: "https://dinoverse-buce.vercel.app/",
-    image: "/Image/Dinoverse.png",
-    description: "Educational dinosaur exploration web app with interactive learning modules.",
-    techStack: ["React", "Next.js", "CSS"],
-    workType: "website-design",
-  },
-  {
-    id: "w4",
-    title: "EduGuide",
-    href: "https://edu-guide-three.vercel.app/",
-    image: "/Image/EduGuide.png",
-    description: "Educational platform to guide students through interactive courses with progress tracking.",
-    techStack: ["React", "Tailwind", "JavaScript"],
-    workType: "web-development",
-  },
-  {
-    id: "w6",
-    title: "Windbreaker",
-    href: "https://windbreaker-7lq1wcy18-johnrenz-bots-projects.vercel.app/",
-    image: "/Image/windbreaker.png",
-    description: "Digital home for street riders to track progress, connect with crews and share experiences.",
-    techStack: ["Next.js", "Tailwind"],
-    workType: "web-development",
-  },
-];
-
-const UI_UX_DESIGNS: Item[] = [
-  {
-    id: "ui1",
-    title: "Reefer",
-    href: "/Reefer",
-    image: "/Image/UI/Reefer.png",
-    uiTools: ["Figma"],
-    description: "Modern mobile application interface with intuitive user experience design.",
-    category: "UI/UX",
-    workType: "ui-ux",
-    featured: true,
-    tags: ["Design Systems"],
-  },
-];
-
-const DEVICE_MOCKUPS: Item[] = [
-  {
-    id: "M1",
-    title: "Watch Mockup",
-    href: "",
-    image: "/Image/Devices/watch.png",
-    uiTools: ["Adobe Photoshop"],
-    description: "Watch mockup for tech event",
-    category: "Mockup",
-    workType: "mockup",
-  },
-  {
-    id: "M2",
-    title: "iPhone Mockup",
-    href: "",
-    image: "/Image/Devices/Iphonee.png",
-    uiTools: ["Adobe Photoshop"],
-    description: "iPhone mockup for tech event",
-    category: "Mockup",
-    workType: "mockup",
-  },
-  {
-    id: "M3",
-    title: "iPhone Display",
-    href: "",
-    image: "/Image/Devices/Iphone.png",
-    uiTools: ["Adobe Photoshop"],
-    description: "iPhone mockup for tech event",
-    category: "Mockup",
-    workType: "mockup",
-  },
-  {
-    id: "M4",
-    title: "iPhone Pro",
-    href: "",
-    image: "/Image/Devices/Iphone1.png",
-    uiTools: ["Adobe Photoshop"],
-    description: "iPhone mockup for tech event",
-    category: "Mockup",
-    workType: "mockup",
-  },
-  {
-    id: "M5",
-    title: "iPhone Max",
-    href: "",
-    image: "/Image/Devices/Iphone2.png",
-    uiTools: ["Adobe Photoshop"],
-    description: "iPhone mockup for tech event",
-    category: "Mockup",
-    workType: "mockup",
-  },
-];
-
-const POSTERS: Item[] = [
-  {
-    id: "Tech1",
-    title: "WATCH mockup Poster",
-    href: "",
-    image: "/Image/tech/tech1.png",
-    uiTools: ["Canva"],
-    description: "Watch mockup poster for tech event",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "Tech2",
-    title: "iPhone mockup Poster",
-    href: "",
-    image: "/Image/tech/tech2.png",
-    uiTools: ["Canva"],
-    description: "iPhone mockup poster for tech event",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "Tech3",
-    title: "iPhone mockup Poster",
-    href: "",
-    image: "/Image/tech/tech3.png",
-    uiTools: ["Canva"],
-    description: "iPhone mockup poster for tech event",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "Tech4",
-    title: "iPhone mockup Poster",
-    href: "",
-    image: "/Image/tech/tech4.png",
-    uiTools: ["Canva"],
-    description: "iPhone mockup poster for tech event",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "Tech5",
-    title: "iPhone mockup Poster",
-    href: "",
-    image: "/Image/tech/tech5.png",
-    uiTools: ["Canva"],
-    description: "iPhone mockup poster for tech event",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "STEM1",
-    title: "TECH EVENT mockup Poster",
-    href: "",
-    image: "/Image/tech/STEM1.png",
-    uiTools: ["Canva"],
-    description: "Tech event mockup poster",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "STEM2",
-    title: "TECH EVENT mockup Poster",
-    href: "",
-    image: "/Image/tech/STEM2.png",
-    uiTools: ["Canva"],
-    description: "Tech event mockup poster",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "STEM3",
-    title: "TECH EVENT mockup Poster",
-    href: "",
-    image: "/Image/tech/STEM3.png",
-    uiTools: ["Canva"],
-    description: "Tech event mockup poster",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "STEM4",
-    title: "TECH EVENT mockup Poster",
-    href: "",
-    image: "/Image/tech/STEM4.png",
-    uiTools: ["Canva"],
-    description: "Tech event mockup poster",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "STEM5",
-    title: "TECH EVENT mockup Poster",
-    href: "",
-    image: "/Image/tech/STEM5.png",
-    uiTools: ["Canva"],
-    description: "Tech event mockup poster",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "STEM6",
-    title: "TECH EVENT mockup Poster",
-    href: "",
-    image: "/Image/tech/STEM6.png",
-    uiTools: ["Canva"],
-    description: "Tech event mockup poster",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "STEM7",
-    title: "TECH EVENT mockup Poster",
-    href: "",
-    image: "/Image/tech/STEM7.png",
-    uiTools: ["Canva"],
-    description: "Tech event mockup poster",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "cv1",
-    title: "The Price of Sugar",
-    href: "",
-    image: "/Image/UI/1.jpg",
-    uiTools: ["Canva"],
-    description: "Graphic design poster exploring visual storytelling.",
-    category: "Poster",
-    workType: "poster",
-  },
-  {
-    id: "ps3",
-    title: "GA design poster",
-    href: "",
-    image: "/Image/UI/poster.png",
-    uiTools: ["Photoshop"],
-    description: "Graphic design poster for new arrival campaign.",
-    category: "Poster",
-    workType: "poster",
-  },
-];
-
-const MERCHANDISE_DESIGNS: Item[] = [
-  {
-    id: "ps4",
-    title: "Alien Shirt",
-    href: "",
-    image: "/Image/UI/alien.png",
-    uiTools: ["Photoshop"],
-    description: "Custom T-shirt design featuring Reefer branding.",
-    category: "Merchandise",
-    workType: "merchandise",
-  },
-  {
-    id: "ps5",
-    title: "Chest Shirt",
-    href: "",
-    image: "/Image/UI/11.png",
-    uiTools: ["Photoshop"],
-    description: "Alternate colorway shirt design for streetwear collection.",
-    category: "Merchandise",
-    workType: "merchandise",
-  },
-  {
-    id: "ps6",
-    title: "Devine Outcast Shirt",
-    href: "",
-    image: "/Image/UI/12.png",
-    uiTools: ["Photoshop"],
-    description: "Custom T-shirt design with artistic expression.",
-    category: "Merchandise",
-    workType: "merchandise",
-  },
-  {
-    id: "ps7",
-    title: "Visionless Shirt",
-    href: "",
-    image: "/Image/UI/13.png",
-    uiTools: ["Photoshop"],
-    description: "Alternate colorway shirt design for brand identity.",
-    category: "Merchandise",
-    workType: "merchandise",
-  },
-  {
-    id: "ps8",
-    title: "Last hope Shirt",
-    href: "",
-    image: "/Image/UI/14.png",
-    uiTools: ["Photoshop"],
-    description: "Custom T-shirt design with meaningful message.",
-    category: "Merchandise",
-    workType: "merchandise",
-  },
-  {
-    id: "ps9",
-    title: "hiphop Shirt",
-    href: "",
-    image: "/Image/UI/15.png",
-    uiTools: ["Photoshop"],
-    description: "Custom T-shirt design for music culture enthusiasts.",
-    category: "Merchandise",
-    workType: "merchandise",
-  },
-  {
-    id: "ps10",
-    title: "hiphop Shirt Alt",
-    href: "",
-    image: "/Image/UI/Cmytk.png",
-    uiTools: ["Photoshop"],
-    description: "Alternative design for hip-hop inspired collection.",
-    category: "Merchandise",
-    workType: "merchandise",
-  },
-];
-
-const GRAPHIC_DESIGNS: Item[] = [
-  {
-    id: "ps1",
-    title: "McLaren",
-    href: "",
-    image: "/Image/UI/7.png",
-    uiTools: ["Photoshop"],
-    description: "McLaren-inspired luxury automotive branding concept showcasing high-performance visual identity design.",
-    category: "Graphic Design",
-    workType: "graphic-design",
-    featured: true,
-    tags: ["Branding"],
-  },
-  {
-    id: "ps2",
-    title: "Me GA",
-    href: "",
-    image: "/Image/UI/8.png",
-    uiTools: ["Photoshop"],
-    description: "Experimental McLaren variation exploring alternative automotive branding composition and visual direction.",
-    category: "Graphic Design",
-    workType: "graphic-design",
-  },
-  {
-    id: "cv3",
-    title: "Weeknd UI Concept",
-    href: "",
-    image: "/Image/UI/3.jpg",
-    uiTools: ["Canva"],
-    description: "The Weeknd-inspired UI concept focused on moody aesthetics, atmospheric tone, and expressive visual storytelling.",
-    category: "Graphic Design",
-    workType: "graphic-design",
-  },
-  {
-    id: "dm1",
-    title: "Reefer Hoodie",
-    href: "",
-    image: "/Image/UI/4.png",
-    uiTools: ["Figma"],
-    description: "Reefer hoodie product concept design featuring a clean, modern layout for apparel presentation.",
-    category: "Graphic Design",
-    workType: "graphic-design",
-  },
-  {
-    id: "dm2",
-    title: "Fliptop Poster",
-    href: "",
-    image: "/Image/UI/5.jpg",
-    uiTools: ["Figma"],
-    description: "FlipTop event poster design emphasizing bold typography and strong visual hierarchy for digital display.",
-    category: "Graphic Design",
-    workType: "graphic-design",
-  },
-  {
-    id: "dm3",
-    title: "UI Mazda Figma",
-    href: "",
-    image: "/Image/UI/6.png",
-    uiTools: ["Figma"],
-    description: "Mazda-inspired automotive dashboard UI concept with a sleek, modern, and user-focused interface design.",
-    category: "Graphic Design",
-    workType: "graphic-design",
-  },
-  {
-    id: "cv2",
-    title: "Clay Cuneiform Tables",
-    href: "",
-    image: "/Image/UI/2.jpg",
-    uiTools: ["Canva"],
-    description: "Informational graphic design piece with historical significance.",
-    category: "Poster",
-    workType: "poster",
-  },
-];
-
-const CERTS: Item[] = [
-  {
-    id: "c1",
-    title: "Google UX Certification",
-    href: "/Image/Certificate/GoogleUX.jpg",
-    image: "/Image/Certificate/GoogleUX.jpg",
-    description:
-      "Google UX Design Certification focused on user research, wireframing, prototyping, and usability testing in real-world product design workflows.",
-  },
-  {
-    id: "c2",
-    title: "DICT UI/UX Certification",
-    href: "/Image/Certificate/DICT-UIUX.jpg",
-    image: "/Image/Certificate/DICT-UIUX.jpg",
-    description:
-      "DICT UI/UX Design Certification covering core principles of interface design, user experience workflows, and practical application of design thinking methodologies.",
-  },
-  {
-    id: "c9",
-    title: "Alpha Centauri Certification",
-    href: "https://www.alphacentauri.ph/certification",
-    image: "/Image/Certificate/Alpha.jpg",
-    description:
-      "UI/UX design internship certification demonstrating hands-on experience in interface design, user experience principles, and applied design execution in a real-world project environment.",
-  },
-  {
-    id: "c7",
-    title: "BoxHive Certification",
-    href: "https://www.boxhive.com/certification",
-    image: "/Image/Certificate/BoxHive.png",
-    description:
-      "Internship certification from BoxHive Digital Solutions Co., involving UI/UX design, graphic design (mockups and event posters), software testing, and technical documentation for a mobile application project.",
-  },
-  {
-    id: "c3",
-    title: "Canva Graphic Design Certificate",
-    href: "https://www.canva.com/design-school/certification-award/198b01d5-617f-440d-b42e-453aedc794df",
-    image: "/Image/Certificate/Canva.png",
-    description:
-      "Certification demonstrating proficiency in graphic design using Canva, including layout composition, branding, and visual communication principles.",
-  },
-  {
-    id: "c8",
-    title: "IxDF Membership Certificate",
-    href: "https://ixdf.org/members/john-renz-bandianon/certificate/membership",
-    image: "/Image/Certificate/IxDF.jpg",
-    description:
-      "Official membership from the Interaction Design Foundation (IxDF), recognizing active participation in the global UX/UI and interaction design community.",
-  },
-  {
-    id: "c4",
-    title: "Accenture – Skills to Succeed",
-    href: "/Image/Certificate/S2.jpg",
-    image: "/Image/Certificate/S2.jpg",
-    description:
-      "Professional development certification focused on workplace readiness, communication skills, and foundational career competencies.",
-  },
-  {
-    id: "c5",
-    title: "Java Programming Certificate",
-    href: "/Image/Certificate/java.jpg",
-    image: "/Image/Certificate/java.jpg",
-    description:
-      "Certification covering Java programming fundamentals including object-oriented programming, syntax, and basic application development.",
-  },
-  {
-    id: "c6",
-    title: "Oracle Certified",
-    href: "/Image/Certificate/oracle.jpg",
-    image: "/Image/Certificate/oracle.jpg",
-    description:
-      "Certification in Oracle database fundamentals, including data management, SQL queries, and database structure operations.",
-  },
-];
-
-const WORK_CATEGORIES = [
-   {
-    key: "certificates",
-    label: "Certificates",
-    sub: "Creds",
-    count: CERTS.length,
-    featured: CERTS[0],
-  },
-   {
-    key: "web-dev",
-    label: "Development",
-    sub: "Full-stack",
-    count: WEB_DEVELOPMENT.length,
-    featured: WEB_DEVELOPMENT[0],
-  },
-
-  {
-    key: "ui-ux",
-    label: "UI/UX",
-    sub: "Design",
-    count: UI_UX_DESIGNS.length,
-    featured: UI_UX_DESIGNS[0],
-  },
-
-  {
-    key: "website-design",
-    label: "Frontend Design",
-    sub: "UI/UX",
-    count: WEBSITE_DESIGN.length,
-    featured: WEBSITE_DESIGN[0],
-  },
-  
-  {
-    key: "mockups",
-    label: "Mockups",
-    sub: "Devices",
-    count: DEVICE_MOCKUPS.length,
-    featured: DEVICE_MOCKUPS[0],
-  },
-  {
-    key: "posters",
-    label: "Posters",
-    sub: "Marketing",
-    count: POSTERS.length,
-    featured: POSTERS[0],
-  },
-  {
-    key: "merchandise",
-    label: "Merch",
-    sub: "Fashion",
-    count: MERCHANDISE_DESIGNS.length,
-    featured: MERCHANDISE_DESIGNS[0],
-  },
-  {
-    key: "graphic-design",
-    label: "Graphics",
-    sub: "Design",
-    count: GRAPHIC_DESIGNS.length,
-    featured: GRAPHIC_DESIGNS[0],
-  },
-] as const;
-
-type Category = (typeof WORK_CATEGORIES)[number];
-type CategoryKey = Category["key"];
+import {
+  Item,
+  WEB_DEVELOPMENT,
+  WEBSITE_DESIGN,
+  UI_UX_DESIGNS,
+  DEVICE_MOCKUPS,
+  POSTERS,
+  MERCHANDISE_DESIGNS,
+  GRAPHIC_DESIGNS,
+  CERTS,
+  WORK_CATEGORIES,
+  Category,
+  CategoryKey
+} from "../../data/projectData";
 
 function CategoryCard({ category, isActive, onClick }: { category: Category; isActive: boolean; onClick: () => void }) {
   return (
@@ -638,7 +74,7 @@ function ProjectGrid({ items, onSelectProject }: { items: Item[]; onSelectProjec
         <button
           key={item.id}
           onClick={() => onSelectProject(item)}
-          className="group relative h-64 md:h-72 lg:h-80 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2 focus:outline-none focus:ring-2 focus:ring-gray-900/20 bg-white border border-gray-100 animate-in fade-in slide-in-from-bottom-4"
+          className="group relative h-64 md:h-72 lg:h-80 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-2 focus:outline-none focus:ring-2 focus:ring-neutral-900/20 bg-white border border-black/5 animate-in fade-in slide-in-from-bottom-4"
           style={{ animationDelay: `${index * 50}ms` }}
         >
           <Image
@@ -679,91 +115,72 @@ function ProjectGrid({ items, onSelectProject }: { items: Item[]; onSelectProjec
 function ProjectModal({ project, onClose }: { project: Item; onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 backdrop-blur-xl animate-in fade-in duration-300 overflow-y-auto"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-neutral-900/80 backdrop-blur-md animate-fadeIn overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-5xl flex flex-col items-center my-6 md:my-10 animate-in zoom-in-95 slide-in-from-bottom-8 duration-500"
+        className="relative w-full max-w-6xl flex flex-col items-center m-auto animate-fadeIn delay-100"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative rounded-3xl overflow-hidden border border-gray-200/60 shadow-2xl bg-white flex items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ maxHeight: "70vh" }}>
+        <button 
+          onClick={onClose}
+          className="absolute -top-10 right-0 sm:right-0 text-white hover:text-gray-300 transition-colors p-2 font-bold"
+        >
+          Close ✕
+        </button>
+        <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black/50 flex items-center justify-center w-full max-h-[70vh]">
           <Image
             src={project.image}
             alt={project.title}
             width={1400}
             height={900}
-            className="object-contain w-auto h-auto max-h-[70vh] max-w-full"
+            className="object-contain w-full h-full max-h-[70vh]"
             priority
           />
         </div>
 
-        <div className="mt-10 md:mt-14 flex flex-col items-center text-center space-y-8 md:space-y-10 max-w-4xl w-full px-4">
-          <div className="space-y-4 md:space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
-            <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-2" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                {project.title}
-              </h2>
-              <div className="h-1 w-12 bg-gradient-to-r from-gray-900/60 to-transparent rounded-full mx-auto mt-3 animate-in scale-x-0 origin-left duration-700 delay-200" />
-            </div>
-            <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-3xl mx-auto animate-in fade-in duration-700 delay-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+        <div className="mt-6 flex flex-col items-center text-center space-y-5 max-w-4xl w-full px-6 py-6 bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 text-white shadow-xl">
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              {project.title}
+            </h2>
+            <p className="text-gray-200 text-sm md:text-base leading-relaxed max-w-2xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
               {project.description}
             </p>
           </div>
 
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent animate-in scale-x-0 origin-right duration-700 delay-300" />
-
           {(project.techStack || project.uiTools) && (
-            <div className="w-full space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400">
-              <p className="text-xs sm:text-sm font-bold tracking-wider uppercase text-gray-500" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Technologies & Tools
-              </p>
-              <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-                {(project.techStack || project.uiTools)?.map((tech, index) => (
-                  <span
-                    key={tech}
-                    className="text-xs sm:text-sm px-3 md:px-4 py-2 bg-gray-100 rounded-lg border border-gray-200 text-gray-700 font-medium hover:bg-gray-200 hover:border-gray-300 transition-all duration-300 transform hover:scale-105 animate-in fade-in zoom-in-75 duration-500"
-                    style={{ animationDelay: `${400 + index * 50}ms`, fontFamily: "'Inter', sans-serif" }}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
+            <div className="flex flex-wrap justify-center gap-2 pt-2">
+              {(project.techStack || project.uiTools)?.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-4 py-1.5 bg-white/20 rounded-full text-white text-xs font-semibold tracking-wide border border-white/10"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 pt-6 md:pt-8 w-full justify-center flex-wrap animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-4 w-full">
             {project.href && project.href.startsWith("http") && (
               <a
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/btn inline-flex items-center gap-2 px-6 md:px-8 py-2.5 md:py-3 rounded-full border border-gray-300 bg-white text-xs sm:text-sm font-semibold tracking-wide uppercase text-gray-900 hover:bg-gray-50 hover:border-gray-400 transition-all duration-500 transform hover:scale-105"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black text-sm font-bold hover:scale-105 transition-transform"
               >
                 Visit Project
-                <MdArrowOutward className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
               </a>
-            )}
-            {project.href && !project.href.startsWith("http") && (
-              <Link
-                href={project.href}
-                className="group/btn inline-flex items-center gap-2 px-6 md:px-8 py-2.5 md:py-3 rounded-full border border-gray-300 bg-white text-xs sm:text-sm font-semibold tracking-wide uppercase text-gray-900 hover:bg-gray-50 hover:border-gray-400 transition-all duration-500 transform hover:scale-105"
-                style={{ fontFamily: "'Inter', sans-serif" }}
-              >
-                View Project
-                <MdArrowOutward className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-              </Link>
             )}
             {project.github && (
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/btn inline-flex items-center gap-2 px-6 md:px-8 py-2.5 md:py-3 rounded-full border border-gray-300 bg-white text-xs sm:text-sm font-semibold tracking-wide uppercase text-gray-900 hover:bg-gray-50 hover:border-gray-400 transition-all duration-500 transform hover:scale-105"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="flex items-center gap-2 px-8 py-3 rounded-full border border-white/40 text-white text-sm font-bold hover:bg-white/20 transition-colors"
               >
                 View Code
-                <SiGithub className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform" />
               </a>
             )}
           </div>
