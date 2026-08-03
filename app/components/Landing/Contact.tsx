@@ -6,6 +6,13 @@ import { SiGlassdoor, SiInteractiondesignfoundation } from "react-icons/si";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdPhone, MdEmail } from "react-icons/md";
 
+type Detail = {
+  label: string;
+  value: string;
+  href: string | null;
+  Icon: React.ComponentType<{ className?: string }>;
+};
+
 const PERSONAL = {
   address: "Grand Villas, Loma de Gato, Marilao, Bulacan",
   phone: "+63 966 798 7702",
@@ -25,7 +32,7 @@ const SOCIALS = [
   { icon: <FaFacebook />, url: "https://www.facebook.com/john.r.bandianon/", label: "Facebook", image: "/Image/profiles/facebook.png" },
 ];
 
-const DETAILS = [
+const DETAILS: Detail[] = [
   { label: "Location", value: PERSONAL.address, href: null, Icon: HiLocationMarker },
   { label: "Connect", value: PERSONAL.phone, href: `tel:${PERSONAL.phone}`, Icon: MdPhone },
   { label: "Direct", value: PERSONAL.email, href: `mailto:${PERSONAL.email}`, Icon: MdEmail },
@@ -51,19 +58,19 @@ export default function Contact() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-screen text-black font-sans selection:bg-black selection:text-white overflow-x-hidden">
+    <div ref={containerRef} className="relative min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white overflow-x-hidden">
       <style jsx global>{`
         @keyframes gradientMove {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
-        .animate-bg {
-          background: linear-gradient(-45deg, #f0f0f0, #ffffff, #e0e0e0, #f8f8f8);
+        .contact-bg {
+          background: linear-gradient(-45deg, #f5f5f5, #ffffff, #ececec, #f8f8f8);
           background-size: 400% 400%;
           animation: gradientMove 15s ease-in-out infinite;
         }
-        .noise-overlay {
+        .contact-noise {
           position: absolute; inset: 0; opacity: 0.03; pointer-events: none;
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
@@ -72,43 +79,44 @@ export default function Contact() {
         .sd1 { transition-delay: 0.1s; }
         .sd2 { transition-delay: 0.2s; }
         .sd3 { transition-delay: 0.3s; }
-        
-        .grid-container {
+
+        .socials-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           gap: 12px;
           width: 100%;
         }
 
-        @media(min-width: 768px) {
-          .grid-container {
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+        @media (min-width: 768px) {
+          .socials-grid {
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
           }
         }
       `}</style>
 
-      <div className="fixed inset-0 animate-bg -z-20" />
-      <div className="noise-overlay -z-10" />
+      <div className="fixed inset-0 contact-bg -z-20" />
+      <div className="contact-noise -z-10" />
 
       <main className="max-w-6xl mx-auto px-6 py-16 md:py-24 space-y-24">
-        
         <section className="space-y-8">
           <div className="aos sd1 flex items-center gap-4">
             <span className="w-12 h-[1px] bg-black" />
-            <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-50">Get in touch</span>
+            <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-50">Get in Touch</span>
           </div>
+
           <h1 className="aos sd2 text-6xl md:text-9xl font-black leading-[0.9] tracking-tighter uppercase">
             REACH <br />
-            <span className="text-transparent border-text" style={{ WebkitTextStroke: '1px black' }}>OUT</span>
+            <span className="text-transparent" style={{ WebkitTextStroke: "1px black" }}>OUT</span>
           </h1>
-          <p className="aos sd3 max-w-sm text-[10px] font-medium text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
-            Available for freelance opportunities and full-time positions.
+
+          <p className="aos sd3 max-w-md text-[10px] font-medium text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
+            BSIT graduate open to full-time IT roles and freelance work across the Philippines.
           </p>
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
-          {DETAILS.map((d, i) => (
+          {DETAILS.map((d) => (
             <div key={d.label} className="aos h-full">
               {d.href ? (
                 <a href={d.href} className="block h-full group">
@@ -125,8 +133,8 @@ export default function Contact() {
 
         <section className="space-y-10">
           <h2 className="aos text-[10px] font-bold uppercase tracking-[0.4em] text-black/40">Network</h2>
-          <div className="grid-container">
-            {SOCIALS.map((s, i) => (
+          <div className="socials-grid">
+            {SOCIALS.map((s) => (
               <a
                 key={s.label}
                 href={s.url}
@@ -134,13 +142,13 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="aos group relative aspect-square bg-white border border-black/5 overflow-hidden block rounded-xl shadow-sm"
               >
-                <div className="absolute inset-0 w-full h-full opacity-100 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                  <img 
-                    src={s.image} 
-                    alt={`${s.label} profile`} 
+                <div className="absolute inset-0 w-full h-full">
+                  <img
+                    src={s.image}
+                    alt={`${s.label} profile`}
                     className="w-full h-full object-cover grayscale opacity-40 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
                     onError={(e) => {
-                      (e.target as HTMLElement).style.display = 'none';
+                      (e.target as HTMLElement).style.display = "none";
                     }}
                   />
                 </div>
@@ -150,18 +158,18 @@ export default function Contact() {
                     {s.icon}
                   </div>
 
-                  <div className="flex flex-col items-start gap-1.5 w-full">
-                    <span className="inline-block text-[8px] font-bold text-black uppercase hover:text-white tracking-widest px-2.5 py-1.5 bg-white/80 backdrop-blur-md border border-white/40 rounded-lg shadow-sm transition-all duration-500 group-hover:opacity-0 group-hover:-translate-y-1">
+                  <div className="relative flex flex-col items-start gap-1.5 w-full">
+                    <span className="inline-block text-[8px] font-bold text-black uppercase tracking-widest px-2.5 py-1.5 bg-white/80 backdrop-blur-md border border-white/40 rounded-lg shadow-sm transition-all duration-500 group-hover:opacity-0 group-hover:-translate-y-1">
                       {s.label}
                     </span>
-                    
-                    <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between pointer-events-none opacity-0 translate-y-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-y-0">
-                      <span className="text-[9px] font-black  hover:text-white uppercase tracking-wider text-black group-hover:text-black">
+
+                    <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between pointer-events-none opacity-0 translate-y-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-y-0">
+                      <span className="text-[9px] font-black uppercase tracking-wider text-black">
                         View Account
                       </span>
-                 <span className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-gray-100 text-gray-600 transition-all duration-300 hover:bg-gray-200 hover:text-black">
-  ↗
-</span>
+                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-gray-100 text-gray-600 transition-all duration-300 group-hover:bg-black group-hover:text-white">
+                        ↗
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -189,7 +197,7 @@ export default function Contact() {
   );
 }
 
-function DetailBox({ d }: { d: any }) {
+function DetailBox({ d }: { d: Detail }) {
   return (
     <div className="p-8 border border-black/5 bg-white/30 backdrop-blur-sm flex flex-col justify-between h-full space-y-12 transition-all duration-500 rounded-xl group-hover:bg-white group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] group-hover:-translate-y-1">
       <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-neutral-100 border border-black/5 group-hover:bg-neutral-900 group-hover:text-white transition-all duration-500">
