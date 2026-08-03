@@ -60,20 +60,6 @@ export default function Contact() {
   return (
     <div ref={containerRef} className="relative min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white overflow-x-hidden">
       <style jsx global>{`
-        @keyframes gradientMove {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .contact-bg {
-          background: linear-gradient(-45deg, #f5f5f5, #ffffff, #ececec, #f8f8f8);
-          background-size: 400% 400%;
-          animation: gradientMove 15s ease-in-out infinite;
-        }
-        .contact-noise {
-          position: absolute; inset: 0; opacity: 0.03; pointer-events: none;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
         .aos { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .aos-in { opacity: 1; transform: translateY(0); }
         .sd1 { transition-delay: 0.1s; }
@@ -95,19 +81,17 @@ export default function Contact() {
         }
       `}</style>
 
-      <div className="fixed inset-0 contact-bg -z-20" />
-      <div className="contact-noise -z-10" />
+      <div className="fixed inset-0 bg-white -z-20" />
 
-      <main className="max-w-6xl mx-auto px-6 py-16 md:py-24 space-y-24">
+      <main className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 py-16 md:py-24 space-y-24">
         <section className="space-y-8">
           <div className="aos sd1 flex items-center gap-4">
             <span className="w-12 h-[1px] bg-black" />
             <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-50">Get in Touch</span>
           </div>
 
-          <h1 className="aos sd2 text-6xl md:text-9xl font-black leading-[0.9] tracking-tighter uppercase">
-            REACH <br />
-            <span className="text-transparent" style={{ WebkitTextStroke: "1px black" }}>OUT</span>
+          <h1 className="aos sd2 text-6xl md:text-9xl font-black leading-[0.9] tracking-tighter uppercase text-black">
+            REACH OUT
           </h1>
 
           <p className="aos sd3 max-w-md text-[10px] font-medium text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
@@ -199,7 +183,7 @@ export default function Contact() {
 
 function DetailBox({ d }: { d: Detail }) {
   return (
-    <div className="p-8 border border-black/5 bg-white/30 backdrop-blur-sm flex flex-col justify-between h-full space-y-12 transition-all duration-500 rounded-xl group-hover:bg-white group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] group-hover:-translate-y-1">
+    <div className="p-8 border border-black/5 bg-white flex flex-col justify-between h-full space-y-12 transition-all duration-500 rounded-xl group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] group-hover:-translate-y-1">
       <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-neutral-100 border border-black/5 group-hover:bg-neutral-900 group-hover:text-white transition-all duration-500">
         <d.Icon className="text-2xl opacity-60 group-hover:opacity-100 transition-all duration-500" />
       </div>

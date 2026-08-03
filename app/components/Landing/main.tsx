@@ -17,11 +17,10 @@ const NavBtn = ({
     href={href}
     target={href.startsWith("http") ? "_blank" : undefined}
     rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border shadow-sm ${
-      primary
+    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border shadow-sm ${primary
         ? "bg-neutral-900 text-white border-neutral-900 hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5"
         : "bg-white/70 text-neutral-800 border-black/10 hover:bg-white hover:border-black/20 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-md"
-    }`}
+      }`}
   >
     {label}
     {icon}
@@ -185,7 +184,7 @@ export default function Main() {
           </div>
         </nav>
 
-        <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 pt-20 pb-28">
+        <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 pt-20 pb-32 md:pb-40">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center max-w-7xl w-full mx-auto">
             <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-7">
               <div className={`a d1 ${g} inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/10 bg-white`}>
@@ -213,7 +212,7 @@ export default function Main() {
               </p>
 
               <p className={`a d4 ${g} text-sm md:text-base font-medium italic text-neutral-500 max-w-lg`}>
-                "2+ years of hands-on experience across web development, UI/UX design, and internships — continuously learning and building meaningful digital experiences."
+                "1+ years of hands-on experience across web development, UI/UX design, and internships — continuously learning and building meaningful digital experiences."
               </p>
 
               <div className={`a d5 ${g} ctas flex flex-wrap gap-3 mt-2`}>
@@ -230,7 +229,7 @@ export default function Main() {
               </div>
             </div>
 
-            <div className="lg:col-span-5 w-full flex flex-col gap-6">
+            <div className="lg:col-span-5 w-full flex flex-col gap-6 mb-16 lg:mb-24">
               <div className="aos text-center lg:text-right">
                 <span className="font-mono text-[10px] font-bold tracking-[0.3em] uppercase text-neutral-500 block mb-1">
                   2020 — 2026
@@ -238,7 +237,7 @@ export default function Main() {
                 <h2 className="text-xl font-black uppercase text-neutral-900">Tech Journey</h2>
               </div>
 
-              <div className="deck-perspective relative flex flex-col md:flex-row lg:flex-col gap-4 lg:gap-0 lg:h-[480px] justify-center items-stretch lg:items-end w-full">
+              <div className="deck-perspective relative flex flex-col md:flex-row lg:flex-col gap-4 lg:gap-0 lg:h-[770px] justify-center items-stretch lg:items-end w-full">
                 {journeyImages.map((img, idx) => (
                   <div
                     key={idx}
@@ -265,7 +264,7 @@ export default function Main() {
           </div>
         </main>
 
-        <footer className="foot-wrap relative z-10 flex flex-col sm:flex-row gap-2 items-center justify-between text-neutral-400 border-t border-black/5 bg-white/70 backdrop-blur-xl">
+        <footer className="foot-wrap relative z-10 mt-12 flex flex-col sm:flex-row gap-2 items-center justify-between text-neutral-400 border-t border-black/5 bg-white/70 backdrop-blur-xl">
           <span className="text-[9px] uppercase tracking-[0.5em]">EST 2026</span>
           <span className="font-mono text-[9px] uppercase tracking-[0.25em]">
             Marilao, Bulacan · Philippines
