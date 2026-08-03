@@ -26,7 +26,7 @@ function CategoryCard({ category, isActive, onClick }: { category: Category; isA
   return (
     <button
       onClick={onClick}
-      className="group relative flex-shrink-0 w-72 h-80 md:w-80 md:h-96 lg:w-96 lg:h-[420px] rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+      className="group relative shrink-0 w-72 h-80 md:w-80 md:h-96 lg:w-96 lg:h-105px rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-900/20"
     >
       <Image
         src={category.featured.image}
@@ -35,11 +35,11 @@ function CategoryCard({ category, isActive, onClick }: { category: Category; isA
         className="object-cover transition-transform duration-700 group-hover:scale-105"
         priority={false}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-white/20 to-transparent transition-all duration-500" />
+      <div className="absolute inset-0 bg-linear-to-t from-gray-900/50 via-white/20 to-transparent transition-all duration-500" />
       {isActive && (
         <div className="absolute inset-0 border-2 border-gray-900/30 rounded-2xl md:rounded-3xl shadow-lg shadow-gray-900/5" />
       )}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-white/98 via-transparent to-transparent" />
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-t from-white/98 via-transparent to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-6">
         <div className="flex justify-end">
           <div className="px-3 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-gray-900/10 text-gray-900 text-xs font-semibold">
@@ -48,7 +48,7 @@ function CategoryCard({ category, isActive, onClick }: { category: Category; isA
         </div>
         <div className="space-y-3">
           <div className="flex items-end gap-3">
-            <div className="w-1 h-10 md:h-12 bg-gradient-to-t from-gray-900 to-gray-900/40 rounded-full" />
+            <div className="w-1 h-10 md:h-12 bg-linear-to-t from-gray-900 to-gray-900/40 rounded-full" />
             <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 tracking-wide leading-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
               {category.label}
             </h3>
@@ -84,7 +84,7 @@ function ProjectGrid({ items, onSelectProject }: { items: Item[]; onSelectProjec
             className="object-cover transition-transform duration-700 group-hover:scale-110"
             priority={false}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-transparent group-hover:from-white/90 group-hover:via-white/20 transition-all duration-700" />
+          <div className="absolute inset-0 bg-linear-to-t from-transparent via-transparent to-transparent group-hover:from-white/90 group-hover:via-white/20 transition-all duration-700" />
           <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-6">
             <div className="flex justify-end">
               <div className="opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0 px-2.5 py-1 rounded-full bg-white/40 backdrop-blur-md border border-gray-900/10">
@@ -115,7 +115,7 @@ function ProjectGrid({ items, onSelectProject }: { items: Item[]; onSelectProjec
 function ProjectModal({ project, onClose }: { project: Item; onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-neutral-900/80 backdrop-blur-md animate-fadeIn overflow-y-auto"
+      className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-neutral-900/80 backdrop-blur-md animate-fadeIn overflow-y-auto"
       onClick={onClose}
     >
       <div
@@ -235,7 +235,7 @@ function CategoryView({ category, onBack }: { category: Category; onBack: () => 
             <p className="text-xs md:text-sm font-semibold tracking-widest uppercase text-gray-500" style={{ fontFamily: "'Inter', sans-serif" }}>
               Selected Works
             </p>
-            <div className="h-1 w-20 bg-gradient-to-r from-gray-900/60 to-transparent rounded-full" />
+            <div className="h-1 w-20 bg-linear-to-r from-gray-900/60 to-transparent rounded-full" />
           </div>
         </div>
 
@@ -357,7 +357,7 @@ export default function PortfolioSection() {
             
             <div className="flex flex-col gap-12">
               <div className="flex items-center gap-4 animate-in fade-in slide-in-from-left-8 duration-700">
-                <span className="w-12 h-[2px] bg-neutral-950" />
+                <span className="w-12 h-0.5 bg-neutral-950" />
                 <span
                   className="text-xs font-bold tracking-[0.5em] uppercase text-neutral-400"
                   style={{ fontFamily: "'Inter', sans-serif" }}
@@ -375,7 +375,7 @@ export default function PortfolioSection() {
                     User-Centered
                   </h1>
                   <h2
-                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neutral-950 via-neutral-800 to-neutral-500 tracking-tighter leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100"
+                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-500 tracking-tighter leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100"
                     style={{ fontFamily: "'Outfit', sans-serif" }}
                   >
                     Design & Code
@@ -405,7 +405,7 @@ export default function PortfolioSection() {
             </div>
 
             <div className="relative w-screen left-1/2 right-1/2 -mx-[50vw] group/slider animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-400">
-              <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-all duration-500 hidden md:flex items-center justify-start pl-16">
+              <div className="absolute left-0 top-0 bottom-0 w-40 bg-linear-to-r from-white via-white/80 to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-all duration-500 hidden md:flex items-center justify-start pl-16">
                 <button
                   onClick={() => scroll("left")}
                   className="pointer-events-auto w-14 h-14 flex items-center justify-center rounded-full bg-neutral-950/10 hover:bg-neutral-950 text-neutral-950 hover:text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.08)] backdrop-blur-xl hover:scale-105 active:scale-95 transition-all duration-500 border border-neutral-950/15"
@@ -422,10 +422,10 @@ export default function PortfolioSection() {
                 {WORK_CATEGORIES.map((cat, index) => (
                   <div
                     key={cat.key}
-                    className="flex-shrink-0 snap-start animate-in fade-in slide-in-from-bottom-8 duration-700 hover:translate-y-[-8px] transition-transform duration-500"
+                    className="shrink-0 snap-start animate-in fade-in slide-in-from-bottom-8 hover:translate-y-2 transition-transform duration-500"
                     style={{ animationDelay: `${500 + index * 75}ms` }}
                   >
-                    <div className="p-1 rounded-3xl bg-gradient-to-b from-neutral-200/60 to-transparent shadow-[0_12px_40px_-12px_rgba(0,0,0,0.05)] backdrop-blur-md">
+                    <div className="p-1 rounded-3xl bg-linear-to-b from-neutral-200/60 to-transparent shadow-[0_12px_40px_-12px_rgba(0,0,0,0.05)] backdrop-blur-md">
                       <CategoryCard
                         category={cat}
                         isActive={cat.key === selectedCategory}
@@ -436,7 +436,7 @@ export default function PortfolioSection() {
                 ))}
               </div>
 
-              <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-all duration-500 hidden md:flex items-center justify-end pr-16">
+              <div className="absolute right-0 top-0 bottom-0 w-40 bg-linear-to-l from-white via-white/80 to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-all duration-500 hidden md:flex items-center justify-end pr-16">
                 <button
                   onClick={() => scroll("right")}
                   className="pointer-events-auto w-14 h-14 flex items-center justify-center rounded-full bg-neutral-950/10 hover:bg-neutral-950 text-neutral-950 hover:text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.08)] backdrop-blur-xl hover:scale-105 active:scale-95 transition-all duration-500 border border-neutral-950/15"

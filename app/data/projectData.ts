@@ -30,7 +30,7 @@ export const WEB_DEVELOPMENT: Item[] = [
     id: "tp-client-portal",
     title: "TP Client Portal",
     href: "https://tpclientportal.vercel.app/",
-    image: "/Image/Groove.png", // Using an existing placeholder image path
+    image: "/Image/TP.png", // Using an existing placeholder image path
     description: "New system where I am the main programmer. A client portal system.",
     techStack: ["Next.js", "React", "TailwindCSS"],
     workType: "web-development",
