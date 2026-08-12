@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { SiGithub } from "react-icons/si";
+import { motion, AnimatePresence, type Easing } from "framer-motion";
 import { RxArrowRight, RxArrowLeft } from "react-icons/rx";
 import { MdArrowOutward } from "react-icons/md";
 
 import {
-  Item,
   WEB_DEVELOPMENT,
   WEBSITE_DESIGN,
   UI_UX_DESIGNS,
@@ -19,116 +17,158 @@ import {
   CERTS,
   WORK_CATEGORIES,
   Category,
-  CategoryKey
-} from "../../data/projectData";
+  CategoryKey,
+} from "../../../data/projects";
+import type { Project } from "../../../types";
+
+type Item = Project;
+
+const EASE: Easing = [0.22, 1, 0.36, 1];
+
+const staggerContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
+};
 
 function CategoryCard({ category, isActive, onClick }: { category: Category; isActive: boolean; onClick: () => void }) {
   return (
-    <button
+    <motion.button
+      whileHover={{ y: -6, transition: { duration: 0.4, ease: EASE } }}
       onClick={onClick}
-      className="group relative shrink-0 w-72 h-80 md:w-80 md:h-96 lg:w-96 lg:h-105px rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+      className="group relative shrink-0 w-72 h-80 md:w-80 md:h-96 lg:w-96 lg:h-[420px] rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer transition-colors duration-500 bg-neutral-100 shadow-sm hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-neutral-900/20 border border-black/5"
     >
       <Image
         src={category.featured.image}
         alt={category.label}
         fill
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
+        className="object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
         priority={false}
       />
-      <div className="absolute inset-0 bg-linear-to-t from-gray-900/50 via-white/20 to-transparent transition-all duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-500 opacity-80 group-hover:opacity-100" />
       {isActive && (
-        <div className="absolute inset-0 border-2 border-gray-900/30 rounded-2xl md:rounded-3xl shadow-lg shadow-gray-900/5" />
+        <div className="absolute inset-0 border-2 border-neutral-900/30 rounded-2xl md:rounded-3xl shadow-lg shadow-neutral-900/5" />
       )}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-t from-white/98 via-transparent to-transparent" />
-      <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-6">
+
+      <div className="absolute inset-0 flex flex-col justify-between p-6">
         <div className="flex justify-end">
-          <div className="px-3 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-gray-900/10 text-gray-900 text-xs font-semibold">
+          <div className="px-3 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-neutral-900/10 text-neutral-900 text-xs font-semibold shadow-sm">
             {String(category.count).padStart(2, "0")} Projects
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-3 relative z-10 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500 ease-out">
           <div className="flex items-end gap-3">
-            <div className="w-1 h-10 md:h-12 bg-linear-to-t from-gray-900 to-gray-900/40 rounded-full" />
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 tracking-wide leading-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
+            <div className="w-1 h-8 md:h-10 bg-white rounded-full opacity-80" />
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
               {category.label}
             </h3>
           </div>
-          <p className="text-gray-700 text-xs md:text-sm ml-4 md:ml-5 tracking-wide font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <p className="text-neutral-200 text-xs md:text-sm ml-4 md:ml-5 tracking-wide font-medium">
             {category.sub} • Explore
           </p>
         </div>
       </div>
-      <div className="absolute top-5 md:top-6 right-5 md:right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0">
-        <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/50 backdrop-blur-md border border-gray-900/10 flex items-center justify-center">
-          <MdArrowOutward className="w-4 h-4 md:w-5 md:h-5 text-gray-900" />
+      <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0">
+        <div className="w-10 h-10 rounded-full bg-white backdrop-blur-md border border-neutral-900/10 flex items-center justify-center shadow-lg">
+          <MdArrowOutward className="w-5 h-5 text-neutral-900" />
         </div>
       </div>
-    </button>
+    </motion.button>
   );
 }
 
 function ProjectGrid({ items, onSelectProject }: { items: Item[]; onSelectProject: (item: Item) => void }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 lg:gap-8">
-      {items.map((item, index) => (
-        <button
+    <motion.div
+      variants={staggerContainer}
+      initial="hidden"
+      animate="show"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+    >
+      {items.map((item) => (
+        <motion.button
+          variants={fadeUp}
+          whileHover={{ y: -6, transition: { duration: 0.4, ease: EASE } }}
           key={item.id}
           onClick={() => onSelectProject(item)}
-          className="group relative h-64 md:h-72 lg:h-80 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-2 focus:outline-none focus:ring-2 focus:ring-neutral-900/20 bg-white border border-black/5 animate-in fade-in slide-in-from-bottom-4"
-          style={{ animationDelay: `${index * 50}ms` }}
+          className="group relative h-64 md:h-72 lg:h-80 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-neutral-900/20 bg-neutral-100 border border-black/5"
         >
           <Image
             src={item.image}
             alt={item.title}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            className="object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
             priority={false}
           />
-          <div className="absolute inset-0 bg-linear-to-t from-transparent via-transparent to-transparent group-hover:from-white/90 group-hover:via-white/20 transition-all duration-700" />
-          <div className="absolute inset-0 flex flex-col justify-between p-5 md:p-6">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
+          <div className="absolute inset-0 flex flex-col justify-between p-6">
             <div className="flex justify-end">
-              <div className="opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-2 group-hover:translate-y-0 px-2.5 py-1 rounded-full bg-white/40 backdrop-blur-md border border-gray-900/10">
-                <span className="text-gray-900 text-xs uppercase tracking-wide font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-black/10 shadow-sm">
+                <span className="text-neutral-900 text-[10px] uppercase tracking-[0.2em] font-black">
                   View
                 </span>
               </div>
             </div>
-            <div className="space-y-2 md:space-y-3">
-              <h3 className="text-lg md:text-xl font-bold text-gray-900 leading-tight text-left opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-3 group-hover:translate-y-0" style={{ fontFamily: "'Outfit', sans-serif" }}>
+            <div className="space-y-3 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out">
+              <h3 className="text-lg md:text-xl font-bold text-white leading-tight text-left">
                 {item.title}
               </h3>
-              <p className="text-gray-600 text-xs md:text-sm line-clamp-2 text-left opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-3 group-hover:translate-y-0 delay-75" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <p className="text-neutral-300 text-xs md:text-sm line-clamp-2 text-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
                 {item.description}
               </p>
-              <div className="flex items-center gap-2 text-gray-900 text-xs md:text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-3 group-hover:translate-y-0 delay-100">
-                <span className="text-gray-600">View Details</span>
-                <RxArrowRight className="w-3 h-3 md:w-4 md:h-4 transition-transform group-hover:translate-x-1" />
+              <div className="flex items-center gap-2 text-white text-xs md:text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 uppercase tracking-widest">
+                <span>View Details</span>
+                <RxArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </div>
-        </button>
+        </motion.button>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
 function ProjectModal({ project, onClose }: { project: Item; onClose: () => void }) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   return (
-    <div
-      className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-neutral-900/80 backdrop-blur-md animate-fadeIn overflow-y-auto"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: EASE }}
+      className="fixed inset-0 z-[150] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-white/80 backdrop-blur-2xl overflow-y-auto"
       onClick={onClose}
     >
-      <div
-        className="relative w-full max-w-6xl flex flex-col items-center m-auto animate-fadeIn delay-100"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.98, y: 10 }}
+        transition={{ duration: 0.5, ease: EASE }}
+        className="relative w-full max-w-6xl flex flex-col items-center m-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <button 
+        <button
           onClick={onClose}
-          className="absolute -top-10 right-0 sm:right-0 text-white hover:text-gray-300 transition-colors p-2 font-bold"
+          className="absolute -top-12 right-0 text-neutral-500 hover:text-neutral-900 transition-colors p-2 font-black uppercase tracking-widest text-xs flex items-center gap-2"
         >
-          Close ✕
+          Close <span className="text-lg">✕</span>
         </button>
-        <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black/50 flex items-center justify-center w-full max-h-[70vh]">
+
+        <div className="relative rounded-3xl overflow-hidden border border-black/5 shadow-2xl bg-neutral-100 flex items-center justify-center w-full max-h-[70vh]">
           <Image
             src={project.image}
             alt={project.title}
@@ -139,22 +179,22 @@ function ProjectModal({ project, onClose }: { project: Item; onClose: () => void
           />
         </div>
 
-        <div className="mt-6 flex flex-col items-center text-center space-y-5 max-w-4xl w-full px-6 py-6 bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 text-white shadow-xl">
-          <div className="space-y-2">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
+        <div className="mt-8 flex flex-col items-center text-center space-y-6 max-w-3xl w-full px-8 py-8 bg-white rounded-3xl border border-black/5 shadow-xl">
+          <div className="space-y-3">
+            <h2 className="text-3xl md:text-4xl font-black text-neutral-900 tracking-tight">
               {project.title}
             </h2>
-            <p className="text-gray-200 text-sm md:text-base leading-relaxed max-w-2xl mx-auto" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <p className="text-neutral-500 text-sm md:text-base leading-relaxed">
               {project.description}
             </p>
           </div>
 
           {(project.techStack || project.uiTools) && (
-            <div className="flex flex-wrap justify-center gap-2 pt-2">
-              {(project.techStack || project.uiTools)?.map((tech) => (
+            <div className="flex flex-wrap justify-center gap-2">
+              {(project.techStack || project.uiTools)?.map((tech: string) => (
                 <span
                   key={tech}
-                  className="px-4 py-1.5 bg-white/20 rounded-full text-white text-xs font-semibold tracking-wide border border-white/10"
+                  className="px-4 py-1.5 bg-neutral-100 rounded-full text-neutral-700 text-xs font-bold tracking-widest uppercase border border-black/5"
                 >
                   {tech}
                 </span>
@@ -162,13 +202,13 @@ function ProjectModal({ project, onClose }: { project: Item; onClose: () => void
             </div>
           )}
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4 w-full">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2 w-full">
             {project.href && project.href.startsWith("http") && (
               <a
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black text-sm font-bold hover:scale-105 transition-transform"
+                className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-neutral-900 text-white text-sm font-bold tracking-widest uppercase hover:bg-neutral-800 transition-colors shadow-md hover:shadow-lg hover:-translate-y-0.5"
               >
                 Visit Project
               </a>
@@ -178,15 +218,15 @@ function ProjectModal({ project, onClose }: { project: Item; onClose: () => void
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-8 py-3 rounded-full border border-white/40 text-white text-sm font-bold hover:bg-white/20 transition-colors"
+                className="flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-neutral-200 text-neutral-900 text-sm font-bold tracking-widest uppercase hover:bg-neutral-50 transition-colors"
               >
                 View Code
               </a>
             )}
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -211,48 +251,53 @@ function CategoryView({ category, onBack }: { category: Category; onBack: () => 
 
   return (
     <>
-      <div className="space-y-10 md:space-y-12 lg:space-y-16 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-        <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-left-8 duration-700">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 md:gap-6 animate-in fade-in duration-700">
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="show"
+        className="space-y-10 md:space-y-12 lg:space-y-16"
+      >
+        <div className="flex flex-col gap-8">
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-start sm:items-center gap-5 md:gap-6">
             <button
               onClick={onBack}
-              className="group flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-gray-100 hover:bg-gray-200 border border-gray-200 hover:border-gray-300 text-gray-900 transition-all duration-500 transform hover:scale-105 text-xs md:text-sm font-semibold"
+              className="group flex items-center gap-2 px-6 py-3 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-black/5 text-neutral-900 transition-all duration-300 text-xs font-bold uppercase tracking-widest"
             >
-              <RxArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+              <RxArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
               Back
             </button>
             <div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-neutral-900 tracking-tight">
                 {category.label}
               </h1>
-              <p className="text-gray-500 text-xs md:text-sm mt-1.5 tracking-wider uppercase font-light" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <p className="text-neutral-500 text-xs md:text-sm mt-2 tracking-widest uppercase font-bold">
                 {category.sub} • {items.length} Projects
               </p>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="space-y-2 animate-in fade-in slide-in-from-left-8 duration-700 delay-100">
-            <p className="text-xs md:text-sm font-semibold tracking-widest uppercase text-gray-500" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <motion.div variants={fadeUp} className="space-y-2">
+            <p className="text-xs font-bold tracking-[0.25em] uppercase text-neutral-400">
               Selected Works
             </p>
-            <div className="h-1 w-20 bg-linear-to-r from-gray-900/60 to-transparent rounded-full" />
-          </div>
+            <div className="h-1 w-20 bg-neutral-900 rounded-full" />
+          </motion.div>
         </div>
 
         {items.length > 0 ? (
-          <div className="animate-in fade-in duration-1000 delay-200">
-            <ProjectGrid items={items} onSelectProject={setSelectedProject} />
-          </div>
+          <ProjectGrid items={items} onSelectProject={setSelectedProject} />
         ) : (
-          <div className="text-center py-20 md:py-28 animate-in fade-in duration-700">
-            <p className="text-gray-500 text-base md:text-lg" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <motion.div variants={fadeUp} className="text-center py-20">
+            <p className="text-neutral-500 text-lg font-medium">
               No projects in this category
             </p>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
 
-      {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+      <AnimatePresence>
+        {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+      </AnimatePresence>
     </>
   );
 }
@@ -260,7 +305,6 @@ function CategoryView({ category, onBack }: { category: Category; onBack: () => 
 export default function PortfolioSection() {
   const [view, setView] = useState<"categories" | "projects">("categories");
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("web-dev");
-  const [scrollPosition, setScrollPosition] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleCategoryClick = (key: CategoryKey) => {
@@ -278,212 +322,132 @@ export default function PortfolioSection() {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollContainerRef.current) {
-        setScrollPosition(scrollContainerRef.current.scrollLeft);
-      }
-    };
-
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
-    }
-  }, []);
-
-  const currentCategory = WORK_CATEGORIES.find((c) => c.key === selectedCategory);
+  const currentCategory = WORK_CATEGORIES.find((c: Category) => c.key === selectedCategory);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
-        
         .category-scroll {
           scroll-snap-type: x mandatory;
           scroll-behavior: smooth;
           -webkit-overflow-scrolling: touch;
         }
-        
         .category-scroll > * {
           scroll-snap-align: start;
         }
-        
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
-        
         .no-scrollbar {
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
-
-        .delay-75 {
-          animation-delay: 75ms;
-        }
-
-        .delay-100 {
-          animation-delay: 100ms;
-        }
-
-        .delay-200 {
-          animation-delay: 200ms;
-        }
-
-        .delay-300 {
-          animation-delay: 300ms;
-        }
-
-        .delay-400 {
-          animation-delay: 400ms;
-        }
-
-        .delay-500 {
-          animation-delay: 500ms;
-        }
-
-        .delay-700 {
-          animation-delay: 700ms;
-        }
       `}</style>
 
-  <section className="relative z-10 w-full flex justify-center py-20 md:py-32 bg-white text-neutral-900 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(243,244,246,1),transparent_50%)] pointer-events-none" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-neutral-100/40 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative z-10 w-full flex justify-center py-24 md:py-32 bg-white text-neutral-900 overflow-hidden" id="project">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neutral-100/50 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="w-full max-w-7xl px-4 sm:px-6 md:px-8 lg:px-10 relative z-10">
-        {view === "categories" ? (
-          <div className="space-y-20 md:space-y-28 lg:space-y-36 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            
-            <div className="flex flex-col gap-12">
-              <div className="flex items-center gap-4 animate-in fade-in slide-in-from-left-8 duration-700">
-                <span className="w-12 h-0.5 bg-neutral-950" />
-                <span
-                  className="text-xs font-bold tracking-[0.5em] uppercase text-neutral-400"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Portfolio Collection
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
-                <div className="space-y-3 lg:col-span-7">
-                  <h1
-                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-neutral-950 tracking-tighter leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-700"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
-                  >
-                    User-Centered
-                  </h1>
-                  <h2
-                    className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-linear-to-r from-neutral-950 via-neutral-800 to-neutral-500 tracking-tighter leading-[0.95] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100"
-                    style={{ fontFamily: "'Outfit', sans-serif" }}
-                  >
-                    Design & Code
-                  </h2>
-                </div>
-
-                <div className="space-y-5 lg:col-span-5 lg:pl-4">
-                  <h3
-                    className="text-xs text-neutral-450 tracking-[0.25em] uppercase font-bold animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
-                  >
-                    Creative Work Across Multiple Disciplines
-                  </h3>
-                  <p
-                    className="text-neutral-500 text-sm sm:text-base leading-relaxed font-normal animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300"
-                    style={{ fontFamily: "'Inter', sans-serif" }}
-                  >
-                    Explore a curated collection of my creative portfolio. Each
-                    category represents a unique approach to design and
-                    development, showcasing excellence in web development, UI/UX
-                    design, graphic design, and creative direction. Discover
-                    projects that combine aesthetic appeal with functional
-                    excellence.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative w-screen left-1/2 right-1/2 -mx-[50vw] group/slider animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-400">
-              <div className="absolute left-0 top-0 bottom-0 w-40 bg-linear-to-r from-white via-white/80 to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-all duration-500 hidden md:flex items-center justify-start pl-16">
-                <button
-                  onClick={() => scroll("left")}
-                  className="pointer-events-auto w-14 h-14 flex items-center justify-center rounded-full bg-neutral-950/10 hover:bg-neutral-950 text-neutral-950 hover:text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.08)] backdrop-blur-xl hover:scale-105 active:scale-95 transition-all duration-500 border border-neutral-950/15"
-                  aria-label="Scroll left"
-                >
-                  <RxArrowLeft className="w-6 h-6" />
-                </button>
-              </div>
-
-              <div
-                ref={scrollContainerRef}
-                className="flex w-full gap-8 md:gap-10 overflow-x-auto no-scrollbar py-12 scroll-smooth snap-x snap-mandatory px-[max(1rem,calc((100vw-80rem)/2+2.5rem))]"
+        <div className="w-full max-w-7xl px-4 sm:px-6 md:px-8 relative z-10">
+          <AnimatePresence mode="wait">
+            {view === "categories" ? (
+              <motion.div
+                key="categories"
+                variants={staggerContainer}
+                initial="hidden"
+                animate="show"
+                exit={{ opacity: 0, y: -20, transition: { duration: 0.4, ease: EASE } }}
+                className="space-y-20 lg:space-y-28"
               >
-                {WORK_CATEGORIES.map((cat, index) => (
-                  <div
-                    key={cat.key}
-                    className="shrink-0 snap-start animate-in fade-in slide-in-from-bottom-8 hover:translate-y-2 transition-transform duration-500"
-                    style={{ animationDelay: `${500 + index * 75}ms` }}
-                  >
-                    <div className="p-1 rounded-3xl bg-linear-to-b from-neutral-200/60 to-transparent shadow-[0_12px_40px_-12px_rgba(0,0,0,0.05)] backdrop-blur-md">
-                      <CategoryCard
-                        category={cat}
-                        isActive={cat.key === selectedCategory}
-                        onClick={() => handleCategoryClick(cat.key)}
-                      />
-                    </div>
+                <div className="flex flex-col gap-8">
+                  <motion.div variants={fadeUp} className="flex items-center gap-4">
+                    <span className="w-12 h-0.5 bg-neutral-900" />
+                    <span className="text-xs font-bold tracking-[0.3em] uppercase text-neutral-400">
+                      Portfolio Collection
+                    </span>
+                  </motion.div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+                    <motion.div variants={fadeUp} className="space-y-2 lg:col-span-7">
+                      <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-neutral-950 tracking-tighter leading-[0.9]">
+                        Selected
+                      </h1>
+                      <h2 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neutral-950 via-neutral-600 to-neutral-400 tracking-tighter leading-[0.9]">
+                        Works
+                      </h2>
+                    </motion.div>
+
+                    <motion.div variants={fadeUp} className="space-y-4 lg:col-span-5 lg:pl-8">
+                      <h3 className="text-xs text-neutral-500 tracking-[0.2em] uppercase font-black">
+                        Design & Engineering
+                      </h3>
+                      <p className="text-neutral-500 text-sm sm:text-base leading-relaxed font-medium">
+                        Explore a curated collection of my creative portfolio. Each category represents a unique approach to design and development, showcasing excellence in software engineering, UI/UX design, and creative direction.
+                      </p>
+                    </motion.div>
                   </div>
-                ))}
-              </div>
+                </div>
 
-              <div className="absolute right-0 top-0 bottom-0 w-40 bg-linear-to-l from-white via-white/80 to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-all duration-500 hidden md:flex items-center justify-end pr-16">
-                <button
-                  onClick={() => scroll("right")}
-                  className="pointer-events-auto w-14 h-14 flex items-center justify-center rounded-full bg-neutral-950/10 hover:bg-neutral-950 text-neutral-950 hover:text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.08)] backdrop-blur-xl hover:scale-105 active:scale-95 transition-all duration-500 border border-neutral-950/15"
-                  aria-label="Scroll right"
+                <motion.div variants={fadeUp} className="relative w-screen left-1/2 right-1/2 -mx-[50vw] group/slider">
+                  <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-opacity duration-500 hidden md:flex items-center justify-start pl-8">
+                    <button
+                      onClick={() => scroll("left")}
+                      className="pointer-events-auto w-12 h-12 flex items-center justify-center rounded-full bg-white text-neutral-900 shadow-lg border border-black/5 hover:scale-110 active:scale-95 transition-all duration-300"
+                    >
+                      <RxArrowLeft className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div
+                    ref={scrollContainerRef}
+                    className="flex w-full gap-6 md:gap-8 overflow-x-auto no-scrollbar py-8 scroll-smooth snap-x snap-mandatory px-[max(1rem,calc((100vw-80rem)/2+1rem))]"
+                  >
+                    {WORK_CATEGORIES.map((cat: Category) => (
+                      <div key={cat.key} className="shrink-0 snap-start">
+                        <CategoryCard
+                          category={cat}
+                          isActive={cat.key === selectedCategory}
+                          onClick={() => handleCategoryClick(cat.key)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-opacity duration-500 hidden md:flex items-center justify-end pr-8">
+                    <button
+                      onClick={() => scroll("right")}
+                      className="pointer-events-auto w-12 h-12 flex items-center justify-center rounded-full bg-white text-neutral-900 shadow-lg border border-black/5 hover:scale-110 active:scale-95 transition-all duration-300"
+                    >
+                      <RxArrowRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                </motion.div>
+
+                <motion.div variants={fadeUp} className="pt-10 border-t border-neutral-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <p className="text-neutral-400 text-xs tracking-[0.25em] uppercase font-bold">
+                    {WORK_CATEGORIES.length} Categories •{" "}
+                    {WORK_CATEGORIES.reduce((sum: number, cat: Category) => sum + cat.count, 0)} Total Projects
+                  </p>
+                </motion.div>
+              </motion.div>
+            ) : (
+              currentCategory && (
+                <motion.div
+                  key="projects"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, ease: EASE }}
                 >
-                  <RxArrowRight className="w-6 h-6" />
-                </button>
-              </div>
-
-              <div className="flex md:hidden items-center justify-center gap-3 mt-4 opacity-100 animate-in fade-in duration-700 delay-700">
-                {WORK_CATEGORIES.map((cat) => (
-                  <span
-                    key={`dot-${cat.key}`}
-                    className={`h-1.5 rounded-full transition-all duration-500 ease-out ${
-                      cat.key === selectedCategory
-                        ? "w-12 bg-neutral-950"
-                        : "w-2 bg-neutral-200 hover:bg-neutral-300"
-                    }`}
+                  <CategoryView
+                    category={currentCategory}
+                    onBack={() => setView("categories")}
                   />
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-10 border-t border-neutral-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 animate-in fade-in duration-700 delay-700">
-              <p
-                className="text-neutral-400 text-xs tracking-[0.25em] uppercase font-bold"
-                style={{ fontFamily: "'Inter', sans-serif" }}
-              >
-                {WORK_CATEGORIES.length} Categories •{" "}
-                {WORK_CATEGORIES.reduce((sum, cat) => sum + cat.count, 0)} Total
-                Projects
-              </p>
-              <span className="text-[10px] uppercase tracking-[0.3em] font-black text-neutral-300 pointer-events-none select-none hidden sm:block">
-                © 2026 Studio
-              </span>
-            </div>
-          </div>
-        ) : (
-          currentCategory && (
-            <CategoryView
-              category={currentCategory}
-              onBack={() => setView("categories")}
-            />
-          )
-        )}
-      </div>
-    </section>
+                </motion.div>
+              )
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
     </>
   );
 }

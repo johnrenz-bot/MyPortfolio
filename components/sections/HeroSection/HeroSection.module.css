@@ -1,0 +1,137 @@
+.heroSection {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.container {
+  max-width: 80rem; /* max-w-7xl */
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .container { padding: 0 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .container { padding: 0 2rem; }
+}
+
+.content {
+  max-width: 48rem; /* max-w-3xl */
+}
+
+.badgeWrapper {
+  margin-bottom: 2rem; /* mb-8 */
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 */
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  border: 1px solid #e5e5e5; /* border-neutral-200 */
+  border-radius: 9999px;
+  background-color: #fafafa; /* bg-neutral-50 */
+}
+
+.pulseDot {
+  width: 0.5rem; /* w-2 */
+  height: 0.5rem; /* h-2 */
+  border-radius: 9999px;
+  background-color: #10b981; /* emerald-500 */
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.badgeText {
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600; /* font-semibold */
+  color: #171717; /* text-neutral-900 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wider */
+}
+
+.title {
+  font-family: var(--font-outfit), sans-serif;
+  font-weight: 900; /* font-black */
+  letter-spacing: -0.05em; /* tracking-tighter */
+  line-height: 1;
+  margin-bottom: 1.5rem; /* mb-6 */
+  font-size: clamp(3.5rem, 10vw, 8.75rem);
+  color: #171717; /* text-neutral-900 */
+}
+
+.nameLine {
+  display: block;
+}
+
+.roleContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem; /* gap-2 */
+  margin-bottom: 2rem; /* mb-8 */
+  font-size: 1.5rem; /* text-2xl */
+}
+@media (min-width: 768px) {
+  .roleContainer { font-size: 2.25rem; /* md:text-4xl */ }
+}
+
+.rolePrefix {
+  color: #737373; /* text-neutral-500 */
+  font-weight: 500; /* font-medium */
+}
+
+.roleCarousel {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  height: 2.5rem; /* h-10 */
+  min-width: 300px;
+}
+@media (min-width: 768px) {
+  .roleCarousel { height: 3rem; /* h-12 */ }
+}
+
+.roleText {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: 700; /* font-bold */
+  color: #171717; /* text-neutral-900 */
+  white-space: nowrap;
+}
+
+.bio {
+  font-size: 1.125rem; /* text-lg */
+  color: #737373; /* text-neutral-500 */
+  line-height: 1.75; /* leading-relaxed */
+  margin-bottom: 3rem; /* mb-12 */
+  max-width: 42rem; /* max-w-2xl */
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem; /* gap-6 */
+  margin-bottom: 4rem; /* mb-16 */
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem; /* gap-8 */
+  padding-top: 3rem; /* pt-12 */
+  border-top: 1px solid #e5e5e5; /* border-neutral-200 */
+}
+@media (min-width: 768px) {
+  .statsRow { grid-template-columns: repeat(3, 1fr); }
+}

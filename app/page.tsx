@@ -12,10 +12,6 @@ export default function Home() {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth";
-  }, []);
-
-  useEffect(() => {
     const options = {
       root: null,
       rootMargin: "-30% 0px -40% 0px",

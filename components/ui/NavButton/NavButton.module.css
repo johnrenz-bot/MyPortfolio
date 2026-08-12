@@ -1,0 +1,29 @@
+.button {
+  position: relative;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.active {
+  color: #171717; /* neutral-900 */
+}
+
+.inactive {
+  color: #737373; /* neutral-500 */
+}
+.inactive:hover {
+  color: #171717;
+}
+
+.indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background-color: #171717; /* neutral-900 */
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+}

@@ -1,0 +1,8 @@
+.inlineBlock {
+  display: inline-block;
+}
+
+.wordContainer {
+  display: inline-block;
+  overflow: hidden;
+}

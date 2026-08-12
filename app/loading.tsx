@@ -1,5 +1,5 @@
-import Loader from "./components/loader"
+import PortfolioLoader from "./components/loading/PortfolioLoader";
 
-export default function LoadingLogin() {
-  return <Loader />
+export default function Loading() {
+  return <PortfolioLoader />;
 }

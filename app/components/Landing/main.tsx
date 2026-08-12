@@ -204,15 +204,15 @@ export default function Main() {
               </h1>
 
               <p className={`a d3 ${g} font-mono text-[10px] font-bold tracking-[0.25em] uppercase text-neutral-500`}>
-                BSIT Graduate · UI/UX Designer · Frontend Developer
+                Software Engineer · Web Developer · UI/UX Designer
               </p>
 
               <p className={`a d4 ${g} text-base md:text-lg font-normal leading-relaxed max-w-lg text-neutral-600`}>
-                A recent Information Technology graduate from STI College San Jose del Monte, building clean, interactive web experiences focused on modern UI design and thoughtful user interaction — now looking for a full-time role in the Philippine tech industry.
+                Recent BS Information Technology graduate with internship experience in software development, UI/UX design, and quality assurance. Experienced in building responsive web applications using Next.js, React, TypeScript, and Supabase — now looking for an entry-level Software Engineer or Web Developer role.
               </p>
 
               <p className={`a d4 ${g} text-sm md:text-base font-medium italic text-neutral-500 max-w-lg`}>
-                "1+ years of hands-on experience across web development, UI/UX design, and internships — continuously learning and building meaningful digital experiences."
+                "Collaborating with cross-functional teams throughout the software development lifecycle. Passionate about creating scalable, user-focused applications and continuously learning modern technologies."
               </p>
 
               <div className={`a d5 ${g} ctas flex flex-wrap gap-3 mt-2`}>

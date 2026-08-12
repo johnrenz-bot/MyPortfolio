@@ -2,9 +2,9 @@
 
 :root {
   --bg: #ffffff;
-  --text: #111827; /* sleek dark gray */
-  --border: #f3f4f6;
-  --accent: #f9fafb;
+  --text: #000000;
+  --border: #E5E7EB;
+  --accent: #F9FAFB;
 }
 
 html, body {
@@ -14,32 +14,21 @@ html, body {
 }
 
 body {
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-inter), sans-serif;
   background-color: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Base custom classes for the modern UI */
-.glass-panel {
-  @apply bg-white/60 backdrop-blur-xl border border-black/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
-}
-
-.text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-neutral-900 via-neutral-700 to-neutral-500;
-}
+/* Animations that are strictly global or needed everywhere */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); filter: blur(4px); }
   to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
-.animate-fadeIn { 
-  animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; 
-}
-.delay-100 { animation-delay: 0.2s; }
-.delay-200 { animation-delay: 0.35s; }
-.delay-300 { animation-delay: 0.5s; }
 
-@media (max-width: 768px) {
-  .animate-fadeIn { animation-duration: 0.9s; }
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/60 backdrop-blur-xl border border-black/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  }
 }

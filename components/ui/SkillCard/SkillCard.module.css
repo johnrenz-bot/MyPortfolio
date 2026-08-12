@@ -1,0 +1,65 @@
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5; /* neutral-200 */
+  border-radius: 1rem; /* 2xl */
+  padding: 1.5rem; /* p-6 */
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  transform: translateY(-4px); /* -translate-y-1 */
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem; /* gap-4 */
+}
+
+.iconWrapper {
+  width: 3rem; /* w-12 */
+  height: 3rem; /* h-12 */
+  background-color: #fafafa; /* neutral-50 */
+  border-radius: 0.75rem; /* xl */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem; /* 2xl */
+  color: #404040; /* neutral-700 */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card:hover .iconWrapper {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-weight: 700;
+  color: #171717; /* neutral-900 */
+  transition: color 0.3s ease;
+}
+
+.card:hover .title {
+  color: #000000;
+}
+
+.proficiency {
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600; /* font-semibold */
+  color: #9ca3af; /* neutral-400 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wider */
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.description {
+  font-size: 0.875rem; /* text-sm */
+  color: #737373; /* neutral-500 */
+  line-height: 1.625; /* leading-relaxed */
+}
