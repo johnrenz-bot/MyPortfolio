@@ -4,11 +4,20 @@ export const WEB_DEVELOPMENT: Project[] = [
   {
     id: "capstone",
     title: "Groove (Capstone Project)",
-    href: "/Groove",
+    href: "https://groove-sand.vercel.app/",
     image: "/Image/Groove.png",
-    description: "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.",
-    techStack: ["Laravel", "MySQL", "Xampp", "TailwindCSS"],
-    github: "https://github.com/johnrenz-bot/groove",
+    description:
+      "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.",
+    techStack: [
+      "Next.js",
+      "Supabase",
+      "TypeScript",
+      "TailwindCSS",
+      "Laravel",
+      "MySQL",
+      "XAMPP",
+    ],
+    github: "https://github.com/johnrenzbandianonteampadua-a11y/Groove",
     workType: "web-development",
     featured: true,
     tags: ["Agency"],
@@ -511,14 +520,14 @@ export const CERTS: Project[] = [
 ];
 
 export const WORK_CATEGORIES = [
-   {
+  {
     key: "certificates",
     label: "Certificates",
     sub: "Creds",
     count: CERTS.length,
     featured: CERTS[0],
   },
-   {
+  {
     key: "web-dev",
     label: "Development",
     sub: "Full-stack",
@@ -541,7 +550,7 @@ export const WORK_CATEGORIES = [
     count: WEBSITE_DESIGN.length,
     featured: WEBSITE_DESIGN[0],
   },
-  
+
   {
     key: "mockups",
     label: "Mockups",
