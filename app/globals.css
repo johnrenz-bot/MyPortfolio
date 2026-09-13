@@ -1,24 +1,51 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   --bg: #ffffff;
-  --text: #000000;
-  --border: #E5E7EB;
-  --accent: #F9FAFB;
+  --surface: #f9fafb;
+  --surface-elevated: #ffffff;
+  --text: #09090b;
+  --text-muted: #52525b;
+  --text-subtle: #71717a;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.04);
 }
 
-html, body {
+.dark {
+  --bg: #09090b;
+  --surface: #121214;
+  --surface-elevated: #18181b;
+  --text: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --text-subtle: #71717a;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+}
+
+html {
   height: 100%;
   width: 100%;
   scroll-behavior: smooth;
+  background-color: #ffffff;
+  color: #09090b;
+}
+
+html.dark {
+  background-color: #09090b;
+  color: #f4f4f5;
 }
 
 body {
+  height: 100%;
+  width: 100%;
   font-family: var(--font-inter), sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
+  background-color: inherit;
+  color: inherit;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* Animations that are strictly global or needed everywhere */
@@ -29,6 +56,6 @@ body {
 
 @layer utilities {
   .glass-panel {
-    @apply bg-white/60 backdrop-blur-xl border border-black/5 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+    @apply bg-white/70 dark:bg-neutral-900/70 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)];
   }
 }

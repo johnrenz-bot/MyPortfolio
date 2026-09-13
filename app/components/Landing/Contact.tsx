@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { FaGithub, FaLinkedin, FaInstagram, FaFacebook, FaThreads, FaRedditAlien, FaXTwitter, FaGoogle } from "react-icons/fa6";
 import { SiGlassdoor, SiInteractiondesignfoundation } from "react-icons/si";
 import { HiLocationMarker } from "react-icons/hi";
@@ -34,8 +35,8 @@ const SOCIALS = [
 
 const DETAILS: Detail[] = [
   { label: "Location", value: PERSONAL.address, href: null, Icon: HiLocationMarker },
-  { label: "Connect", value: PERSONAL.phone, href: `tel:${PERSONAL.phone}`, Icon: MdPhone },
-  { label: "Direct", value: PERSONAL.email, href: `mailto:${PERSONAL.email}`, Icon: MdEmail },
+  { label: "Phone", value: PERSONAL.phone, href: `tel:${PERSONAL.phone}`, Icon: MdPhone },
+  { label: "Direct Email", value: PERSONAL.email, href: `mailto:${PERSONAL.email}`, Icon: MdEmail },
 ];
 
 export default function Contact() {
@@ -58,13 +59,16 @@ export default function Contact() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white overflow-x-hidden">
+    <div
+      ref={containerRef}
+      className="relative min-h-screen w-full bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900 overflow-x-hidden transition-colors duration-300"
+    >
       <style jsx global>{`
-        .aos { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .aos { opacity: 0; transform: translateY(24px); transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
         .aos-in { opacity: 1; transform: translateY(0); }
-        .sd1 { transition-delay: 0.1s; }
-        .sd2 { transition-delay: 0.2s; }
-        .sd3 { transition-delay: 0.3s; }
+        .sd1 { transition-delay: 0.08s; }
+        .sd2 { transition-delay: 0.18s; }
+        .sd3 { transition-delay: 0.28s; }
 
         .socials-grid {
           display: grid;
@@ -73,7 +77,14 @@ export default function Contact() {
           width: 100%;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 640px) {
+          .socials-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+          }
+        }
+
+        @media (min-width: 1024px) {
           .socials-grid {
             grid-template-columns: repeat(5, 1fr);
             gap: 16px;
@@ -81,29 +92,31 @@ export default function Contact() {
         }
       `}</style>
 
-      <div className="fixed inset-0 bg-white -z-20" />
-
-      <main className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-24 py-16 md:py-24 space-y-24">
-        <section className="space-y-8">
-          <div className="aos sd1 flex items-center gap-4">
-            <span className="w-12 h-[1px] bg-black" />
-            <span className="text-[10px] font-bold tracking-[0.5em] uppercase opacity-50">Get in Touch</span>
+      <main className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 py-20 sm:py-24 md:py-32 space-y-20 sm:space-y-24">
+        {/* Section Header */}
+        <section className="space-y-6">
+          <div className="aos sd1 flex items-center gap-3">
+            <span className="w-10 h-[2px] bg-neutral-900 dark:bg-white" />
+            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-neutral-500 dark:text-neutral-400">
+              Get in Touch
+            </span>
           </div>
 
-          <h1 className="aos sd2 text-6xl md:text-9xl font-black leading-[0.9] tracking-tighter uppercase text-black">
+          <h2 className="aos sd2 text-5xl sm:text-7xl md:text-9xl font-black leading-[0.9] tracking-tighter uppercase text-neutral-950 dark:text-white">
             REACH OUT
-          </h1>
+          </h2>
 
-          <p className="aos sd3 max-w-md text-[10px] font-medium text-gray-500 uppercase tracking-[0.2em] leading-relaxed">
-            BSIT graduate open to full-time IT roles and freelance work across the Philippines.
+          <p className="aos sd3 max-w-lg text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 uppercase tracking-[0.18em] leading-relaxed">
+            BSIT graduate open to full-time Software Engineer, Web Developer, and IT roles across the Philippines and remotely.
           </p>
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+        {/* Contact Details Cards */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full">
           {DETAILS.map((d) => (
             <div key={d.label} className="aos h-full">
               {d.href ? (
-                <a href={d.href} className="block h-full group">
+                <a href={d.href} className="block h-full group focus:outline-none focus:ring-2 focus:ring-neutral-900/30 rounded-2xl">
                   <DetailBox d={d} />
                 </a>
               ) : (
@@ -115,8 +128,17 @@ export default function Contact() {
           ))}
         </section>
 
-        <section className="space-y-10">
-          <h2 className="aos text-[10px] font-bold uppercase tracking-[0.4em] text-black/40">Network</h2>
+        {/* Social Network Grid */}
+        <section className="space-y-8">
+          <div className="flex items-center justify-between">
+            <h3 className="aos text-xs font-bold uppercase tracking-[0.35em] text-neutral-500 dark:text-neutral-400">
+              Professional Network &amp; Profiles
+            </h3>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-400">
+              {SOCIALS.length} Profiles
+            </span>
+          </div>
+
           <div className="socials-grid">
             {SOCIALS.map((s) => (
               <a
@@ -124,34 +146,33 @@ export default function Contact() {
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aos group relative aspect-square bg-white border border-black/5 overflow-hidden block rounded-xl shadow-sm"
+                className="aos group relative aspect-square bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden block rounded-2xl shadow-sm hover:border-neutral-900 dark:hover:border-white transition-all duration-300"
               >
                 <div className="absolute inset-0 w-full h-full">
-                  <img
+                  <Image
                     src={s.image}
                     alt={`${s.label} profile`}
-                    className="w-full h-full object-cover grayscale opacity-40 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
-                    onError={(e) => {
-                      (e.target as HTMLElement).style.display = "none";
-                    }}
+                    fill
+                    sizes="(max-width: 640px) 150px, 220px"
+                    className="object-cover grayscale opacity-35 dark:opacity-25 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
                   />
                 </div>
 
-                <div className="absolute inset-0 p-6 flex flex-col justify-between z-10 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-black/5">
-                  <div className="text-xl text-black bg-white/70 backdrop-blur-md w-12 h-12 flex items-center justify-center rounded-2xl border border-white/40 shadow-sm transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-95 group-hover:bg-black group-hover:text-white group-hover:border-black">
+                <div className="absolute inset-0 p-5 flex flex-col justify-between z-10 transition-all duration-300 group-hover:bg-neutral-950/10 dark:group-hover:bg-black/30">
+                  <div className="text-xl text-neutral-900 dark:text-white bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md w-11 h-11 flex items-center justify-center rounded-xl border border-neutral-200 dark:border-neutral-700 shadow-sm transition-all duration-300 group-hover:scale-95 group-hover:bg-neutral-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-neutral-950">
                     {s.icon}
                   </div>
 
-                  <div className="relative flex flex-col items-start gap-1.5 w-full">
-                    <span className="inline-block text-[8px] font-bold text-black uppercase tracking-widest px-2.5 py-1.5 bg-white/80 backdrop-blur-md border border-white/40 rounded-lg shadow-sm transition-all duration-500 group-hover:opacity-0 group-hover:-translate-y-1">
+                  <div className="relative flex flex-col items-start gap-1 w-full">
+                    <span className="inline-block text-[9px] font-bold text-neutral-800 dark:text-neutral-200 uppercase tracking-widest px-2.5 py-1 bg-white/85 dark:bg-neutral-900/85 backdrop-blur-md border border-neutral-200 dark:border-neutral-700 rounded-lg shadow-sm transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
                       {s.label}
                     </span>
 
-                    <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between pointer-events-none opacity-0 translate-y-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-y-0">
-                      <span className="text-[9px] font-black uppercase tracking-wider text-black">
+                    <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between pointer-events-none opacity-0 translate-y-1 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-y-0">
+                      <span className="text-[9px] font-black uppercase tracking-wider text-neutral-900 dark:text-white">
                         View Account
                       </span>
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-md bg-gray-100 text-gray-600 transition-all duration-300 group-hover:bg-black group-hover:text-white">
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 text-xs">
                         ↗
                       </span>
                     </div>
@@ -162,18 +183,23 @@ export default function Contact() {
           </div>
         </section>
 
-        <footer className="pt-20 border-t border-black/5 flex flex-col items-center space-y-12">
-          <a
-            href={`mailto:${PERSONAL.email}`}
-            className="aos group relative px-10 py-5 bg-neutral-900 text-white overflow-hidden transition-all duration-300 rounded-xl hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1"
-          >
-            <span className="relative z-10 text-[10px] font-bold uppercase tracking-[0.3em]">Drop an Email</span>
-            <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-          </a>
+        {/* Footer Actions & Branding */}
+        <footer className="pt-16 border-t border-neutral-200 dark:border-neutral-800 flex flex-col items-center space-y-10">
+          <div className="flex flex-wrap justify-center items-center gap-4">
+            <a
+              href={`mailto:${PERSONAL.email}`}
+              className="aos group relative inline-flex items-center gap-2 px-8 py-4 bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 transition-all duration-300 rounded-xl hover:shadow-[0_8px_30px_rgb(0,0,0,0.15)] hover:-translate-y-0.5 text-xs font-bold uppercase tracking-[0.25em]"
+            >
+              <MdEmail className="text-base" />
+              <span>Drop an Email</span>
+            </a>
+          </div>
 
-          <div className="aos flex flex-col items-center gap-2 opacity-30 text-neutral-900">
+          <div className="aos flex flex-col items-center gap-2 text-neutral-900 dark:text-neutral-100 opacity-40">
             <div className="text-2xl font-black tracking-tighter uppercase italic">BANDIANON</div>
-            <p className="text-[8px] font-bold uppercase tracking-widest">© 2026 All Rights Reserved</p>
+            <p className="text-[9px] font-bold uppercase tracking-widest font-mono">
+              © 2026 John Renz Bandianon · All Rights Reserved
+            </p>
           </div>
         </footer>
       </main>
@@ -183,13 +209,17 @@ export default function Contact() {
 
 function DetailBox({ d }: { d: Detail }) {
   return (
-    <div className="p-8 border border-black/5 bg-white flex flex-col justify-between h-full space-y-12 transition-all duration-500 rounded-xl group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] group-hover:-translate-y-1">
-      <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-neutral-100 border border-black/5 group-hover:bg-neutral-900 group-hover:text-white transition-all duration-500">
-        <d.Icon className="text-2xl opacity-60 group-hover:opacity-100 transition-all duration-500" />
+    <div className="p-6 sm:p-8 border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 flex flex-col justify-between h-full space-y-8 transition-all duration-300 rounded-2xl group-hover:border-neutral-400 dark:group-hover:border-neutral-600 group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] group-hover:-translate-y-0.5">
+      <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 group-hover:bg-neutral-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-neutral-950 transition-all duration-300">
+        <d.Icon className="text-2xl opacity-75 group-hover:opacity-100 transition-all duration-300" />
       </div>
-      <div className="space-y-2 text-neutral-900">
-        <p className="text-[9px] font-bold uppercase tracking-widest opacity-50 group-hover:opacity-70">{d.label}</p>
-        <p className="text-xs font-bold leading-tight break-words uppercase">{d.value}</p>
+      <div className="space-y-1.5 text-neutral-900 dark:text-white">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
+          {d.label}
+        </p>
+        <p className="text-xs sm:text-sm font-bold leading-relaxed break-words uppercase">
+          {d.value}
+        </p>
       </div>
     </div>
   );

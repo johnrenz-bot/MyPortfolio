@@ -259,7 +259,7 @@ export default function Groove() {
               </h1>
 
               <p className="text-lg sm:text-xl font-light prose-text max-w-2xl leading-relaxed">
-                San Jose Del Monte, Bulacan's Web-Based Performing Arts Hub with Smart Chat Support and Studio Locator — a full-stack platform unifying artists, coaches, and clients into one accessible digital ecosystem.
+                San Jose Del Monte, Bulacan&apos;s Web-Based Performing Arts Hub with Smart Chat Support and Studio Locator — a full-stack platform unifying artists, coaches, and clients into one accessible digital ecosystem.
               </p>
             </div>
 

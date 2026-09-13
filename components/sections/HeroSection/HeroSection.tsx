@@ -46,7 +46,7 @@ export function HeroSection() {
           </h1>
 
           <div className={styles.roleContainer}>
-            <span className={styles.rolePrefix}>I'm a </span>
+            <span className={styles.rolePrefix}>I&apos;m a </span>
             <div className={styles.roleCarousel}>
               <AnimatePresence mode="wait">
                 <motion.span

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -455,7 +454,7 @@ export default function ReeferCaseStudy() {
               <div>
                 <h3 className="font-semibold text-neutral-900 mb-3">Brand Foundation</h3>
                 <p className="text-sm text-neutral-500 leading-relaxed">
-                  Understand REEFER's identity: modern, visually appealing, and user-centered. Study reference brands for inspiration while avoiding cluttered, flashy layouts that disrupt conversion funnels.
+                  Understand REEFER&apos;s identity: modern, visually appealing, and user-centered. Study reference brands for inspiration while avoiding cluttered, flashy layouts that disrupt conversion funnels.
                 </p>
               </div>
               <div>

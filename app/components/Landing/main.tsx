@@ -1,26 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { ThemeToggle } from "../theme/ThemeToggle";
 
 const NavBtn = ({
   label,
   href,
   primary,
   icon,
+  external,
 }: {
   label: string;
   href: string;
   primary?: boolean;
   icon?: React.ReactNode;
+  external?: boolean;
 }) => (
   <a
     href={href}
-    target={href.startsWith("http") ? "_blank" : undefined}
-    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border shadow-sm ${primary
-        ? "bg-neutral-900 text-white border-neutral-900 hover:bg-neutral-800 hover:shadow-md hover:-translate-y-0.5"
-        : "bg-white/70 text-neutral-800 border-black/10 hover:bg-white hover:border-black/20 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-md"
-      }`}
+    target={external || href.startsWith("http") || href.endsWith(".pdf") ? "_blank" : undefined}
+    rel={external || href.startsWith("http") || href.endsWith(".pdf") ? "noopener noreferrer" : undefined}
+    className={`inline-flex items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border shadow-sm ${
+      primary
+        ? "bg-neutral-900 text-white border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:shadow-md hover:-translate-y-0.5"
+        : "bg-white/80 dark:bg-neutral-900/80 text-neutral-800 dark:text-neutral-200 border-black/10 dark:border-white/10 hover:bg-white dark:hover:bg-neutral-800 hover:border-black/20 dark:hover:border-white/20 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-md"
+    }`}
   >
     {label}
     {icon}
@@ -29,8 +34,10 @@ const NavBtn = ({
 
 const StatBlock = ({ value, label }: { value: string; label: string }) => (
   <div className="flex flex-col gap-0.5">
-    <span className="font-mono text-lg font-bold text-neutral-900">{value}</span>
-    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+    <span className="font-mono text-base sm:text-lg font-bold text-neutral-900 dark:text-white">
+      {value}
+    </span>
+    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
       {label}
     </span>
   </div>
@@ -76,7 +83,7 @@ export default function Main() {
     <>
       <style>{`
         @keyframes smoothUp {
-          from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+          from { opacity: 0; transform: translateY(24px); filter: blur(8px); }
           to   { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
@@ -86,19 +93,25 @@ export default function Main() {
           100% { box-shadow: 0 0 0 0 rgba(23,23,23,0); }
         }
 
-        .a { opacity: 0; animation: smoothUp 1.2s cubic-bezier(.16,1,.3,1) forwards paused; }
+        .dark @keyframes pulseRing {
+          0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+          70% { box-shadow: 0 0 0 8px rgba(255,255,255,0); }
+          100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+        }
+
+        .a { opacity: 0; animation: smoothUp 1.1s cubic-bezier(.16,1,.3,1) forwards paused; }
         .a.go { animation-play-state: running; }
-        .d1 { animation-delay: .1s } .d2 { animation-delay: .25s }
-        .d3 { animation-delay: .4s } .d4 { animation-delay: .55s }
-        .d5 { animation-delay: .7s } .d6 { animation-delay: .85s }
+        .d1 { animation-delay: .08s } .d2 { animation-delay: .2s }
+        .d3 { animation-delay: .32s } .d4 { animation-delay: .45s }
+        .d5 { animation-delay: .58s } .d6 { animation-delay: .7s }
 
         .aos {
           opacity: 0;
-          transform: translateY(40px);
-          filter: blur(5px);
-          transition: opacity 1.2s cubic-bezier(.16,1,.3,1),
-                      transform 1.2s cubic-bezier(.16,1,.3,1),
-                      filter 1.2s cubic-bezier(.16,1,.3,1);
+          transform: translateY(30px);
+          filter: blur(4px);
+          transition: opacity 1s cubic-bezier(.16,1,.3,1),
+                      transform 1s cubic-bezier(.16,1,.3,1),
+                      filter 1s cubic-bezier(.16,1,.3,1);
         }
 
         .aos-in {
@@ -111,9 +124,15 @@ export default function Main() {
           animation: pulseRing 2.2s cubic-bezier(.4,0,.6,1) infinite;
         }
 
-        .hero-title { font-size: clamp(44px, 10vw, 108px); }
-        .nav-wrap  { padding: 24px 40px; }
-        .foot-wrap { padding: 32px 40px; }
+        .hero-title { font-size: clamp(38px, 9.5vw, 104px); }
+        .nav-wrap  { padding: 20px 24px; }
+        @media (min-width: 768px) {
+          .nav-wrap  { padding: 24px 40px; }
+        }
+        .foot-wrap { padding: 28px 24px; }
+        @media (min-width: 768px) {
+          .foot-wrap { padding: 32px 40px; }
+        }
 
         .deck-perspective {
           perspective: 1200px;
@@ -139,121 +158,156 @@ export default function Main() {
             filter: none !important;
           }
         }
-
-        @media (max-width: 639px) {
-          .nav-wrap  { padding: 20px 24px; }
-          .hero-title { font-size: clamp(38px, 14vw, 64px); }
-          .ctas { flex-direction: column; width: 100%; max-width: 280px; }
-          .ctas a { text-align: center; justify-content: center; }
-        }
       `}</style>
 
       <div
         ref={containerRef}
-        className="relative w-full flex-grow flex flex-col selection:bg-neutral-900 selection:text-white antialiased text-neutral-900 bg-white"
+        className="relative w-full flex-grow flex flex-col selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900 antialiased text-neutral-900 dark:text-neutral-100 bg-white dark:bg-[#09090b] transition-colors duration-300"
       >
-        <nav
-          className={`a d1 ${g} nav-wrap w-full relative z-20 flex justify-between items-center border-b border-black/5 bg-white/70 backdrop-blur-xl`}
+        {/* Navigation Bar */}
+        <header
+          className={`a d1 ${g} nav-wrap w-full relative z-30 flex justify-between items-center border-b border-black/5 dark:border-white/10 bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl transition-colors duration-300`}
         >
-          <div className="text-2xl font-black tracking-[-0.06em] uppercase select-none text-neutral-900">
+          <a
+            href="#main"
+            className="text-xl sm:text-2xl font-black tracking-[-0.06em] uppercase select-none text-neutral-900 dark:text-white hover:opacity-80 transition-opacity"
+            aria-label="Home"
+          >
             RΣNZ
-          </div>
+          </a>
 
-          <div className="flex gap-3">
+          <nav aria-label="Quick links" className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
+
             <NavBtn
-              label="LinkedIn"
-              href="https://www.linkedin.com/in/john-renz-96a77728b/"
+              label="Resume"
+              href="/JohnRenz_Resume.pdf"
               primary
               icon={
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                  <rect x="2" y="9" width="4" height="12" />
-                  <circle cx="4" cy="4" r="2" />
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="12" y1="18" x2="12" y2="12" />
+                  <line x1="9" y1="15" x2="15" y2="15" />
                 </svg>
               }
             />
-            <NavBtn
-              label="Github"
-              href="https://github.com/johnrenz-bot"
-              icon={
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                </svg>
-              }
-            />
-          </div>
-        </nav>
 
-        <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 pt-20 pb-32 md:pb-40">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center max-w-7xl w-full mx-auto">
-            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-7">
-              <div className={`a d1 ${g} inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/10 bg-white`}>
+            <div className="hidden xs:flex items-center gap-2">
+              <NavBtn
+                label="LinkedIn"
+                href="https://www.linkedin.com/in/john-renz-96a77728b/"
+                icon={
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                }
+              />
+              <NavBtn
+                label="GitHub"
+                href="https://github.com/johnrenz-bot"
+                icon={
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                  </svg>
+                }
+              />
+            </div>
+          </nav>
+        </header>
+
+        {/* Hero Section Content */}
+        <div className="relative z-10 flex-grow flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 pt-12 sm:pt-16 pb-24 md:pb-36">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center max-w-7xl w-full mx-auto">
+            {/* Left Column: Bio and CTAs */}
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-6 sm:gap-7">
+              {/* Availability Badge */}
+              <div className={`a d1 ${g} inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white dark:bg-neutral-900 shadow-sm`}>
                 <span className="relative flex h-2 w-2">
-                  <span className="pulse-dot absolute inline-flex h-full w-full rounded-full bg-neutral-900" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-neutral-900" />
+                  <span className="pulse-dot absolute inline-flex h-full w-full rounded-full bg-neutral-900 dark:bg-white" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-neutral-900 dark:bg-white" />
                 </span>
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-700">
-                  Open to Work · IT Industry, Philippines
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-700 dark:text-neutral-300">
+                  Open to Work · Entry-Level SWE / Web Developer
                 </span>
               </div>
 
-              <h1 className={`a d2 ${g} hero-title font-black leading-[0.85] tracking-tighter uppercase bg-clip-text text-transparent bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-500`}>
+              {/* Main H1 Title */}
+              <h1 className={`a d2 ${g} hero-title font-black leading-[0.88] tracking-tighter uppercase bg-clip-text text-transparent bg-gradient-to-b from-neutral-950 via-neutral-800 to-neutral-500 dark:from-white dark:via-neutral-200 dark:to-neutral-400`}>
                 John Renz
                 <br />
                 Bandianon
               </h1>
 
-              <p className={`a d3 ${g} font-mono text-[10px] font-bold tracking-[0.25em] uppercase text-neutral-500`}>
-                Software Engineer · Web Developer · UI/UX Designer
+              {/* Core Role / Tech Stacks */}
+              <p className={`a d3 ${g} font-mono text-[11px] sm:text-xs font-bold tracking-[0.22em] uppercase text-neutral-500 dark:text-neutral-400`}>
+                Software Engineer · Web Developer · Full-Stack Developer
               </p>
 
-              <p className={`a d4 ${g} text-base md:text-lg font-normal leading-relaxed max-w-lg text-neutral-600`}>
-                Recent BS Information Technology graduate with internship experience in software development, UI/UX design, and quality assurance. Experienced in building responsive web applications using Next.js, React, TypeScript, and Supabase — now looking for an entry-level Software Engineer or Web Developer role.
+              {/* Factual Summary */}
+              <p className={`a d4 ${g} text-base sm:text-lg font-normal leading-relaxed max-w-xl text-neutral-600 dark:text-neutral-300`}>
+                Recent BS Information Technology graduate with hands-on internship experience in full-stack web development, UI/UX systems, and quality assurance. Experienced in building production web applications using <strong>Next.js, React, TypeScript, PHP/Laravel, and Supabase</strong> — seeking entry-level Software Engineer or Web Developer opportunities.
               </p>
 
-              <p className={`a d4 ${g} text-sm md:text-base font-medium italic text-neutral-500 max-w-lg`}>
-                "Collaborating with cross-functional teams throughout the software development lifecycle. Passionate about creating scalable, user-focused applications and continuously learning modern technologies."
+              {/* Quote */}
+              <p className={`a d4 ${g} text-xs sm:text-sm font-medium italic text-neutral-500 dark:text-neutral-400 max-w-lg`}>
+                &ldquo;Collaborating with cross-functional teams throughout the software development lifecycle. Passionate about creating scalable, user-focused applications and continuously learning modern technologies.&rdquo;
               </p>
 
-              <div className={`a d5 ${g} ctas flex flex-wrap gap-3 mt-2`}>
-                <NavBtn label="Discover My Story" href="#about" />
-                <NavBtn label="Explore Creations" href="#project" primary />
-                <NavBtn label="Let's Connect" href="#contact" />
+              {/* Action Buttons */}
+              <div className={`a d5 ${g} flex flex-wrap justify-center lg:justify-start gap-2.5 sm:gap-3 mt-2 w-full max-w-md`}>
+                <NavBtn label="Explore Projects" href="#project" primary />
+                <NavBtn label="About & Experience" href="#about" />
+                <NavBtn label="Get in Touch" href="#contact" />
               </div>
 
-              <div className={`a d6 ${g} flex gap-8 mt-4 pt-6 border-t border-black/5 w-full max-w-lg justify-center lg:justify-start`}>
+              {/* Stat Blocks */}
+              <div className={`a d6 ${g} grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mt-4 pt-6 border-t border-black/5 dark:border-white/10 w-full max-w-lg text-center sm:text-left`}>
                 <StatBlock value="4" label="Systems Built" />
-                <StatBlock value="3" label="Internships" />
-                <StatBlock value="5" label="Certificates" />
+                <StatBlock value="3" label="Industry Roles" />
+                <StatBlock value="5" label="Certifications" />
                 <StatBlock value="Bulacan, PH" label="Based In" />
               </div>
             </div>
 
-            <div className="lg:col-span-5 w-full flex flex-col gap-6 mb-16 lg:mb-24">
+            {/* Right Column: Tech Journey Stacked Cards */}
+            <div className="lg:col-span-5 w-full flex flex-col gap-6 mt-4 lg:mt-0 mb-8 lg:mb-16">
               <div className="aos text-center lg:text-right">
-                <span className="font-mono text-[10px] font-bold tracking-[0.3em] uppercase text-neutral-500 block mb-1">
+                <span className="font-mono text-[10px] font-bold tracking-[0.3em] uppercase text-neutral-500 dark:text-neutral-400 block mb-1">
                   2020 — 2026
                 </span>
-                <h2 className="text-xl font-black uppercase text-neutral-900">Tech Journey</h2>
+                <h2 className="text-xl font-black uppercase text-neutral-900 dark:text-white">
+                  Tech Journey
+                </h2>
               </div>
 
-              <div className="deck-perspective relative flex flex-col md:flex-row lg:flex-col gap-4 lg:gap-0 lg:h-[770px] justify-center items-stretch lg:items-end w-full">
+              {/* Responsive Deck of Cards */}
+              <div className="deck-perspective relative flex flex-col sm:grid sm:grid-cols-2 lg:flex lg:flex-col gap-4 lg:gap-0 lg:h-[760px] justify-center items-stretch lg:items-end w-full">
                 {journeyImages.map((img, idx) => (
                   <div
                     key={idx}
-                    className="aos deck-card relative w-full md:w-1/4 lg:w-[340px] aspect-[4/3] rounded-2xl overflow-hidden border border-black/5 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] lg:absolute group"
+                    className="aos deck-card relative w-full sm:w-auto lg:w-[340px] aspect-[4/3] rounded-2xl overflow-hidden border border-black/10 dark:border-white/15 bg-neutral-100 dark:bg-neutral-900 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] lg:absolute group"
                     style={{
                       transitionDelay: `${idx * 0.05}s`,
                       top: `${idx * 90}px`,
                       zIndex: idx + 10,
                     }}
                   >
-                    <img src={img.src} alt={img.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/20 to-transparent flex flex-col justify-end p-5 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                    <Image
+                      src={img.src}
+                      alt={img.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 340px"
+                      className="object-cover"
+                      priority={idx < 2}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/30 to-transparent flex flex-col justify-end p-5 opacity-85 group-hover:opacity-100 transition-opacity duration-300">
                       <span className="font-mono text-[9px] font-bold tracking-widest text-neutral-300 uppercase">
                         {img.year}
                       </span>
-                      <h3 className="text-sm font-bold text-white tracking-wide uppercase mt-0.5 group-hover:-translate-y-1 transition-transform duration-300">
+                      <h3 className="text-sm font-bold text-white tracking-wide uppercase mt-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
                         {img.title}
                       </h3>
                     </div>
@@ -262,9 +316,10 @@ export default function Main() {
               </div>
             </div>
           </div>
-        </main>
+        </div>
 
-        <footer className="foot-wrap relative z-10 mt-12 flex flex-col sm:flex-row gap-2 items-center justify-between text-neutral-400 border-t border-black/5 bg-white/70 backdrop-blur-xl">
+        {/* Footer Sub-strip */}
+        <footer className="foot-wrap relative z-10 flex flex-col sm:flex-row gap-2 items-center justify-between text-neutral-400 dark:text-neutral-500 border-t border-black/5 dark:border-white/10 bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl">
           <span className="text-[9px] uppercase tracking-[0.5em]">EST 2026</span>
           <span className="font-mono text-[9px] uppercase tracking-[0.25em]">
             Marilao, Bulacan · Philippines

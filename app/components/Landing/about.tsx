@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaArrowRight,
   FaEnvelope,
@@ -33,7 +33,10 @@ import { EDUCATION } from "../../../data/education";
 import { CERTIFICATES } from "../../../data/certificates";
 import type { WorkExperience, TimelineItem, Community, Event, Education, Skill } from "../../../types";
 
-// Assemble SKILLS_DATA object to match usage pattern in this component
+const faMap = FaIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+const siMap = SiIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+const cgMap = CgIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+
 const SKILLS_DATA = {
   designTools: DESIGN_TOOLS,
   frontendTech: FRONTEND_TECH,
@@ -44,7 +47,7 @@ const SKILLS_DATA = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0 },
 };
 
@@ -69,15 +72,15 @@ const SectionHeader = ({
   <motion.div
     initial="hidden"
     whileInView="show"
-    viewport={{ once: true, margin: "-80px" }}
+    viewport={{ once: true, margin: "-60px" }}
     variants={staggerContainer}
-    className="space-y-4"
+    className="space-y-3"
   >
     {eyebrow && (
       <motion.p
         variants={fadeUp}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="text-xs font-bold tracking-[0.25em] uppercase text-slate-500"
+        className="text-xs font-bold tracking-[0.25em] uppercase text-neutral-500 dark:text-neutral-400"
       >
         {eyebrow}
       </motion.p>
@@ -85,14 +88,14 @@ const SectionHeader = ({
     <motion.h2
       variants={fadeUp}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="text-5xl md:text-6xl font-black tracking-tight text-slate-900"
+      className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 dark:text-white"
     >
       {title}
     </motion.h2>
     <motion.p
       variants={fadeUp}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="text-gray-600 text-lg font-medium max-w-2xl"
+      className="text-neutral-600 dark:text-neutral-300 text-base sm:text-lg font-medium max-w-2xl"
     >
       {subtitle}
     </motion.p>
@@ -126,10 +129,14 @@ const AnimatedCounter = ({ value, label }: { value: number; label: string }) => 
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -4 }}
-      className="text-center p-10 rounded-3xl border border-gray-200 bg-white hover:border-slate-900 hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300"
+      className="text-center p-8 sm:p-10 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 hover:border-neutral-900 dark:hover:border-white hover:shadow-xl transition-all duration-300"
     >
-      <div className="text-6xl font-black text-slate-900 tabular-nums">{count}+</div>
-      <p className="text-sm font-bold text-gray-500 mt-3 tracking-wide uppercase">{label}</p>
+      <div className="text-5xl sm:text-6xl font-black text-neutral-900 dark:text-white tabular-nums">
+        {count}+
+      </div>
+      <p className="text-xs sm:text-sm font-bold text-neutral-500 dark:text-neutral-400 mt-3 tracking-wide uppercase">
+        {label}
+      </p>
     </motion.div>
   );
 };
@@ -147,17 +154,17 @@ const SkillCard = ({
   description: string;
   index: number;
 }) => {
-  const getIcon = (iconId: string) => {
-    if (iconId.startsWith("Fa") && (FaIcons as any)[iconId]) {
-      const Icon = (FaIcons as any)[iconId];
+  const getIcon = (id: string) => {
+    if (id.startsWith("Fa") && faMap[id]) {
+      const Icon = faMap[id];
       return <Icon />;
     }
-    if (iconId.startsWith("Si") && (SiIcons as any)[iconId]) {
-      const Icon = (SiIcons as any)[iconId];
+    if (id.startsWith("Si") && siMap[id]) {
+      const Icon = siMap[id];
       return <Icon />;
     }
-    if (iconId.startsWith("Cg") && (CgIcons as any)[iconId]) {
-      const Icon = (CgIcons as any)[iconId];
+    if (id.startsWith("Cg") && cgMap[id]) {
+      const Icon = cgMap[id];
       return <Icon />;
     }
     return null;
@@ -165,27 +172,23 @@ const SkillCard = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ delay: (index % 4) * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -6, transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] } }}
-      className="group p-6 border border-gray-200 rounded-2xl bg-white hover:bg-slate-900 hover:border-slate-900 transition-colors duration-300 shadow-sm hover:shadow-xl hover:shadow-slate-900/10"
+      transition={{ delay: (index % 4) * 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -4, transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] } }}
+      className="group p-6 border border-neutral-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-neutral-900/60 hover:bg-neutral-900 hover:border-neutral-900 dark:hover:bg-neutral-100 dark:hover:border-white transition-colors duration-300 shadow-sm hover:shadow-xl"
     >
-      <motion.div
-        
-        transition={{  stiffness: 300, damping: 15 }}
-        className="text-slate-900 group-hover:text-white text-3xl mb-4 inline-block transition-colors duration-300"
-      >
+      <div className="text-neutral-900 dark:text-neutral-100 group-hover:text-white dark:group-hover:text-neutral-950 text-3xl mb-4 inline-block transition-colors duration-300">
         {getIcon(iconId)}
-      </motion.div>
-      <h4 className="font-bold text-slate-900 group-hover:text-white mb-1 text-lg transition-colors duration-300">
+      </div>
+      <h3 className="font-bold text-neutral-900 dark:text-white group-hover:text-white dark:group-hover:text-neutral-950 mb-1 text-lg transition-colors duration-300">
         {name}
-      </h4>
-      <p className="text-xs font-bold text-gray-500 group-hover:text-gray-300 mb-3 uppercase tracking-wider transition-colors duration-300">
+      </h3>
+      <p className="text-xs font-bold text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-300 dark:group-hover:text-neutral-600 mb-3 uppercase tracking-wider transition-colors duration-300">
         {proficiency}
       </p>
-      <p className="text-sm text-gray-600 group-hover:text-gray-200 leading-relaxed transition-colors duration-300">
+      <p className="text-sm text-neutral-600 dark:text-neutral-300 group-hover:text-neutral-200 dark:group-hover:text-neutral-800 leading-relaxed transition-colors duration-300">
         {description}
       </p>
     </motion.div>
@@ -193,20 +196,15 @@ const SkillCard = ({
 };
 
 const CompanyLogoImage = ({ src, alt }: { src: string; alt: string }) => (
-  <motion.div
-    
-    transition={{  stiffness: 260, damping: 18 }}
-    className="relative w-24 h-24 rounded-2xl border border-gray-200 flex items-center justify-center overflow-hidden hover:border-slate-900 hover:shadow-lg transition-shadow"
-  >
+  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800 flex items-center justify-center overflow-hidden flex-shrink-0 shadow-sm">
     <Image
       src={src}
       alt={alt}
       width={96}
       height={96}
       className="w-full h-full object-cover"
-      priority
     />
-  </motion.div>
+  </div>
 );
 
 const CertificateModal = ({
@@ -247,19 +245,16 @@ const CertificateModal = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+          className="fixed inset-0 z-50 bg-neutral-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
           onClick={onClose}
         >
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <button
             onClick={onClose}
-            className="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+            className="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10"
             aria-label="Close"
           >
             ✕
-          </motion.button>
+          </button>
           <motion.div
             ref={modalRef}
             initial={{ scale: 0.92, opacity: 0, y: 16 }}
@@ -267,7 +262,7 @@ const CertificateModal = ({
             exit={{ scale: 0.94, opacity: 0, y: 10 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center max-w-4xl w-full"
           >
             <Image
               src={certificate}
@@ -275,7 +270,7 @@ const CertificateModal = ({
               width={1200}
               height={800}
               priority
-              className="max-w-[90vw] max-h-[90vh] w-auto h-auto object-contain rounded-2xl shadow-2xl"
+              className="max-w-[90vw] max-h-[85vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border border-white/10"
             />
           </motion.div>
         </motion.div>
@@ -284,11 +279,7 @@ const CertificateModal = ({
   );
 };
 
-export default function Portfolio() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 1]);
-
+export default function About() {
   const [certificateModal, setCertificateModal] = useState<{
     isOpen: boolean;
     certificate?: string;
@@ -307,263 +298,190 @@ export default function Portfolio() {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full min-h-screen bg-white text-slate-900 overflow-x-hidden antialiased selection:bg-slate-900 selection:text-white"
-    >
-      <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.4]">
-        <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] rounded-full bg-slate-100 blur-3xl" />
-        <div className="absolute bottom-[10%] right-[-5%] w-[35%] h-[35%] rounded-full bg-slate-50 blur-3xl" />
-      </div>
-
-      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8 py-24 space-y-40">
-        <motion.section style={{ opacity: heroOpacity }} className="space-y-8">
-          <div className="space-y-6">
+    <div className="relative w-full min-h-screen bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 overflow-x-hidden antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950 transition-colors duration-300">
+      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-20 md:py-28 space-y-28 md:space-y-36">
+        {/* About Intro Section */}
+        <section className="space-y-8">
+          <div className="space-y-3">
             <motion.p
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="text-slate-900 font-bold tracking-widest uppercase text-sm"
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-xs font-bold tracking-[0.25em] uppercase text-neutral-500 dark:text-neutral-400"
             >
-              ✨ Welcome to my portfolio
+              Background &amp; Profile
             </motion.p>
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 max-w-4xl leading-[0.95]"
-            >
-              Software Engineer & Web Developer
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="text-2xl md:text-3xl font-bold text-slate-700 max-w-3xl"
-            >
-              {HERO_DATA.title} — {HERO_DATA.subtitle}
-            </motion.p>
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-neutral-900 dark:text-white max-w-4xl leading-[0.95]">
+              About &amp; Experience
+            </h2>
+            <p className="text-lg sm:text-xl font-medium text-neutral-600 dark:text-neutral-300 max-w-3xl">
+              Software Engineer &amp; Web Developer with a strong foundation in modern frontend architecture, backend systems, and UI/UX engineering.
+            </p>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="grid md:grid-cols-3 gap-8 pt-12 border-t border-gray-200"
-          >
+          <div className="grid md:grid-cols-3 gap-8 pt-8 border-t border-neutral-200 dark:border-neutral-800">
             <div className="md:col-span-2">
-              <p className="text-lg text-gray-700 leading-relaxed font-medium">
-                {HERO_DATA.bio}
+              <p className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed font-normal">
+                Graduated with a Bachelor of Science in Information Technology from STI College, building hands-on experience in full-stack web applications, UI/UX systems design, and collaborative engineering workflows. Completed multiple internships spanning corporate operations, apparel e-commerce platforms, and mobile application QA testing.
               </p>
             </div>
-            <div className="space-y-4 text-sm font-medium text-gray-700">
+            <div className="space-y-3 text-sm font-medium text-neutral-700 dark:text-neutral-300">
               {[
-                { icon: <FaMapMarkerAlt />, value: HERO_DATA.location },
-                { icon: <FaEnvelope />, value: HERO_DATA.email },
-                { icon: <FaPhone />, value: HERO_DATA.phone },
+                { icon: <FaMapMarkerAlt />, value: HERO_DATA.location, href: null },
+                { icon: <FaEnvelope />, value: HERO_DATA.email, href: `mailto:${HERO_DATA.email}` },
+                { icon: <FaPhone />, value: HERO_DATA.phone, href: `tel:${HERO_DATA.phone}` },
               ].map((item, i) => (
-                <motion.p
-                  key={i}
-                  whileHover={{ x: 4 }}
-                  transition={{  stiffness: 300, damping: 20 }}
-                  className="flex items-center gap-3 hover:text-slate-900 transition-colors"
-                >
-                  <span className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-slate-900 hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                <div key={i} className="flex items-center gap-3">
+                  <span className="w-9 h-9 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center text-neutral-900 dark:text-white bg-neutral-50 dark:bg-neutral-800/80 flex-shrink-0">
                     {item.icon}
                   </span>
-                  {item.value}
-                </motion.p>
+                  {item.href ? (
+                    <a href={item.href} className="hover:underline truncate">{item.value}</a>
+                  ) : (
+                    <span className="truncate">{item.value}</span>
+                  )}
+                </div>
               ))}
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="pt-20 pb-20"
-          >
-            <div className="max-w-5xl mx-auto px-6">
-              <div className="text-center mb-16">
-                <p className="text-emerald-600 font-semibold tracking-[3px] text-sm mb-3">
-                  MY COMMUNITY JOURNEY
-                </p>
-                <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-                  Growing Through Community
-                </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  I actively joined these communities to accelerate my growth as a developer. The connections, knowledge sharing, and collaborative spirit here have been instrumental in shaping my skills and career.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {COMMUNITIES.map((community: Community, index: number) => (
-                  <motion.a
-                    key={index}
-                    href={community.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ delay: index * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    
-                    className={`group relative border border-gray-200 rounded-3xl p-10 overflow-hidden hover:shadow-2xl transition-shadow duration-300 ${index === 0
-                        ? "hover:border-emerald-600 hover:bg-emerald-900 hover:text-white"
-                        : "hover:border-violet-600 hover:bg-violet-900 hover:text-white"
-                      }`}
-                  >
-                    <div
-                      className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${index === 0
-                          ? "bg-gradient-to-br from-emerald-100/40 to-transparent"
-                          : "bg-gradient-to-br from-violet-100/40 to-transparent"
-                        }`}
-                    />
-
-                    <div className="flex flex-col items-center text-center relative z-10">
-                      <motion.div
-                        
-                        transition={{  stiffness: 260, damping: 16 }}
-                        className="w-28 h-28 mb-8 rounded-3xl border border-gray-200 flex items-center justify-center group-hover:border-white/30 transition-colors duration-500"
-                      >
-                        <Image
-                          src={community.logo}
-                          alt={community.name}
-                          width={80}
-                          height={80}
-                          className="w-20 h-20 object-contain"
-                        />
-                      </motion.div>
-
-                      <h3 className="text-3xl font-semibold text-gray-900 group-hover:text-white mb-2 transition-colors duration-300">
-                        {community.name}
-                      </h3>
-                      <p
-                        className={`font-medium mb-6 transition-colors duration-300 ${index === 0
-                            ? "text-emerald-600 group-hover:text-emerald-200"
-                            : "text-violet-600 group-hover:text-violet-200"
-                          }`}
-                      >
-                        {community.location}
-                      </p>
-
-                      <p className="text-gray-600 group-hover:text-gray-200 leading-relaxed text-base transition-colors duration-300">
-                        {community.description}
-                      </p>
-
-                      <div
-                        className={`mt-8 font-medium flex items-center gap-2 text-sm tracking-wider group-hover:gap-3 transition-all ${index === 0
-                            ? "text-emerald-600 group-hover:text-emerald-200"
-                            : "text-violet-600 group-hover:text-violet-200"
-                          }`}
-                      >
-                        {index === 0 ? "VISIT COMMUNITY" : "JOIN THE COMMUNITY"}
-                        <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
-                      </div>
-                    </div>
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </motion.section>
-
-        <section className="py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <AnimatedCounter value={3} label="Completed Systems" />
-            <AnimatedCounter value={2} label="Industry Internships" />
-            <AnimatedCounter value={5} label="Expertise Certificates" />
           </div>
         </section>
 
-        <section className="space-y-16">
+        {/* Community Journey Section */}
+        <section className="space-y-12">
           <SectionHeader
-            title="Professional Experience"
-            subtitle="Documented background in UI/UX systems design, workflow leadership, and feature deployment across multiple organizations and projects."
+            eyebrow="My Community Journey"
+            title="Growing Through Community"
+            subtitle="I actively joined developer communities to accelerate my technical growth, learn best practices from industry peers, and contribute collaboratively."
           />
 
-          <div className="space-y-12">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
+            {COMMUNITIES.map((community: Community, index: number) => (
+              <motion.a
+                key={index}
+                href={community.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 sm:p-10 overflow-hidden bg-white dark:bg-neutral-900/60 hover:border-neutral-900 dark:hover:border-white hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-20 h-20 mb-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800 flex items-center justify-center group-hover:border-neutral-900 dark:group-hover:border-white transition-colors duration-300">
+                    <Image
+                      src={community.logo}
+                      alt={community.name}
+                      width={64}
+                      height={64}
+                      className="w-14 h-14 object-contain"
+                    />
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-neutral-900 dark:text-white mb-1.5">
+                    {community.name}
+                  </h3>
+                  <p className="font-mono text-xs uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-4">
+                    {community.location}
+                  </p>
+
+                  <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm">
+                    {community.description}
+                  </p>
+                </div>
+
+                <div className="mt-8 font-mono text-xs font-bold tracking-wider text-neutral-900 dark:text-white flex items-center gap-2 group-hover:gap-3 transition-all">
+                  <span>VISIT COMMUNITY</span>
+                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </section>
+
+        {/* Counter Stats Section */}
+        <section className="py-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <AnimatedCounter value={4} label="Completed Systems" />
+            <AnimatedCounter value={3} label="Industry Internships & Roles" />
+            <AnimatedCounter value={5} label="Professional Certifications" />
+          </div>
+        </section>
+
+        {/* Professional Experience Section */}
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Career Experience"
+            title="Professional Experience"
+            subtitle="Documented background in full-stack web development, UI/UX systems design, team leadership, and quality assurance."
+          />
+
+          <div className="space-y-8">
             {WORK_EXPERIENCE.map((exp: WorkExperience, index: number) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: true, margin: "-60px" }}
-                whileHover={{ y: -4 }}
-                className="group p-8 md:p-10 border border-gray-200 rounded-3xl bg-white hover:border-slate-300 hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300"
+                transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true, margin: "-40px" }}
+                className="group p-6 sm:p-8 md:p-10 border border-neutral-200 dark:border-neutral-800 rounded-3xl bg-white dark:bg-neutral-900/60 hover:border-neutral-400 dark:hover:border-neutral-600 hover:shadow-xl transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-                  <div className="flex-shrink-0">
-                    <CompanyLogoImage src={exp.logo} alt={exp.company} />
-                  </div>
+                  <CompanyLogoImage src={exp.logo} alt={exp.company} />
 
                   <div className="flex-1">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full text-white bg-slate-900">
+                    <div className="flex flex-wrap items-center gap-3 mb-3">
+                      <span className="text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full text-white bg-neutral-900 dark:bg-white dark:text-neutral-950">
                         {exp.type}
                       </span>
-                      <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                      <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-widest">
                         {exp.period}
                       </span>
                     </div>
 
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
                       <div>
-                        <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-neutral-900 dark:text-white mb-1">
                           {exp.role}
                         </h3>
-                        <p className="text-lg font-bold text-slate-900">
-                          {exp.company} <span className="text-gray-500 text-sm font-semibold">• {exp.subtitle}</span>
+                        <p className="text-base sm:text-lg font-bold text-neutral-800 dark:text-neutral-200">
+                          {exp.company} <span className="text-neutral-500 text-sm font-semibold">• {exp.subtitle}</span>
                         </p>
                       </div>
 
                       {exp.certificate && (
-                        <motion.button
-                          
-                          whileTap={{ scale: 0.96 }}
-                          transition={{  stiffness: 400, damping: 20 }}
+                        <button
                           onClick={() => openCertificate(exp.certificate, exp.company)}
-                          className="flex items-center gap-2 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition-colors duration-300 shadow-md hover:shadow-lg whitespace-nowrap"
+                          className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 dark:bg-white hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-950 text-xs font-bold rounded-xl transition-colors duration-300 shadow-sm whitespace-nowrap self-start"
                         >
-                          <FaAward className="text-lg" />
+                          <FaAward className="text-sm" />
                           View Certificate
-                        </motion.button>
+                        </button>
                       )}
                     </div>
 
-                    <p className="text-gray-700 text-base leading-relaxed font-medium mb-8">
+                    <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-base leading-relaxed font-normal mb-6">
                       {exp.description}
                     </p>
 
-                    <div className="border-t border-gray-100 pt-8 mt-4">
-                      <p className="text-sm font-black text-slate-900 uppercase tracking-widest mb-4">
-                        Experience Timeline &amp; Focus
-                      </p>
-                      
-                      <div className="inline-flex mb-6">
-                        <span className="text-sm font-bold text-white bg-slate-900 px-5 py-2.5 rounded-xl border border-slate-900 shadow-sm">
+                    <div className="border-t border-neutral-100 dark:border-neutral-800 pt-6 mt-4">
+                      <div className="inline-flex mb-4">
+                        <span className="text-xs font-bold text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 px-3.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 font-mono">
                           {exp.timeline}
                         </span>
                       </div>
 
-                      <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="grid sm:grid-cols-2 gap-3">
                         {exp.highlights.map((highlight: string, i: number) => (
-                          <motion.div
+                          <div
                             key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.05, duration: 0.4 }}
-                            viewport={{ once: true }}
-                            whileHover={{ x: 3 }}
-                            className="flex items-center gap-3 p-4 bg-gray-50/80 rounded-xl transition-all duration-300 hover:bg-gray-100 group/item"
+                            className="flex items-center gap-3 p-3 bg-neutral-50 dark:bg-neutral-800/50 rounded-xl"
                           >
-                            <FaArrowRight className="text-slate-900 text-xs flex-shrink-0 font-bold transition-colors duration-300" />
-                            <span className="text-sm text-slate-700 font-medium transition-colors duration-300">
+                            <FaArrowRight className="text-neutral-900 dark:text-white text-xs flex-shrink-0" />
+                            <span className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 font-medium">
                               {highlight}
                             </span>
-                          </motion.div>
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -574,63 +492,49 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section className="space-y-16">
+        {/* Career Timeline Section */}
+        <section className="space-y-12">
           <SectionHeader
+            eyebrow="Continuous Learning"
             title="Career Journey"
-            subtitle="Complete timeline from 2024 to 2026 showcasing continuous growth in web design and development"
+            subtitle="Timeline showcasing continuous growth across web development, software engineering, and UI/UX design."
           />
 
-          <div className="space-y-8">
+          <div className="space-y-6">
             {EXPERIENCE_TIMELINE.map((item: TimelineItem, index: number) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -30 }}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: true, margin: "-60px" }}
-                className="p-8 border border-gray-200 rounded-2xl bg-white hover:border-slate-900 hover:shadow-lg hover:shadow-slate-900/5 transition-all duration-300 group"
+                transition={{ delay: index * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true, margin: "-40px" }}
+                className="p-6 sm:p-8 border border-neutral-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-neutral-900/60 hover:border-neutral-900 dark:hover:border-white transition-all duration-300 group"
               >
-                <div className="flex gap-8">
+                <div className="flex gap-6 sm:gap-8">
                   <div className="flex flex-col items-center flex-shrink-0">
-                    <motion.div
-                      
-                      transition={{  stiffness: 300, damping: 15 }}
-                      className="w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center text-white text-2xl font-black shadow-md group-hover:shadow-xl transition-shadow duration-300"
-                    >
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-neutral-900 dark:bg-white flex items-center justify-center text-white dark:text-neutral-950 text-xl font-black shadow-md">
                       {item.icon}
-                    </motion.div>
-                    {index < EXPERIENCE_TIMELINE.length - 1 && (
-                      <motion.div
-                        initial={{ scaleY: 0 }}
-                        whileInView={{ scaleY: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                        style={{ originY: 0 }}
-                        className="w-1 h-20 bg-gradient-to-b from-slate-900 to-gray-300 mt-4 group-hover:h-24 transition-[height] duration-300"
-                      />
-                    )}
+                    </div>
                   </div>
 
-                  <div className="pb-8 flex-1">
-                    <p className="text-sm font-black text-slate-900 uppercase tracking-widest mb-2">
+                  <div className="flex-1">
+                    <p className="font-mono text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-1.5">
                       {item.period}
                     </p>
-                    <h3 className="text-2xl font-black text-slate-900 mb-3">
+                    <h3 className="text-xl sm:text-2xl font-black text-neutral-900 dark:text-white mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-base text-gray-700 leading-relaxed mb-6 font-medium">
+                    <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-4">
                       {item.description}
                     </p>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       {item.focus.map((tag: string, i: number) => (
-                        <motion.span
+                        <span
                           key={i}
-                          
-                          transition={{  stiffness: 400, damping: 20 }}
-                          className="px-4 py-2 text-slate-900 text-xs font-bold rounded-full border border-gray-200 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-colors duration-300"
+                          className="px-3 py-1 text-neutral-700 dark:text-neutral-300 text-xs font-semibold rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800/80"
                         >
                           {tag}
-                        </motion.span>
+                        </span>
                       ))}
                     </div>
                   </div>
@@ -640,54 +544,62 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Education" subtitle="Foundation & Academic Excellence" />
+        {/* Education Section */}
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Academic Foundation"
+            title="Education"
+            subtitle="Foundation and academic coursework in Information Technology and software fundamentals."
+          />
 
-          <div className="grid gap-8">
+          <div className="grid gap-6">
             {EDUCATION.map((edu: Education, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: true, margin: "-60px" }}
-                whileHover={{ y: -4 }}
-                className="p-10 border border-gray-200 rounded-3xl bg-white hover:border-slate-900 hover:shadow-lg hover:shadow-slate-900/5 transition-all duration-300 group"
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true, margin: "-40px" }}
+                className="p-8 sm:p-10 border border-neutral-200 dark:border-neutral-800 rounded-3xl bg-white dark:bg-neutral-900/60 hover:border-neutral-900 dark:hover:border-white transition-all duration-300"
               >
-                <div className="flex items-start gap-6 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center text-slate-900 text-3xl shadow-sm border border-gray-200 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900 transition-all duration-300">
+                <div className="flex items-start gap-5 mb-4">
+                  <div className="w-14 h-14 rounded-2xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center text-neutral-900 dark:text-white text-2xl shadow-sm border border-neutral-200 dark:border-neutral-700 flex-shrink-0">
                     <FaGraduationCap />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-black text-slate-900 mb-2">{edu.degree}</h3>
-                    <p className="text-lg font-bold text-slate-900 mb-1">{edu.school}</p>
-                    <p className="text-sm font-bold text-gray-600 uppercase tracking-widest">
+                    <h3 className="text-2xl font-black text-neutral-900 dark:text-white mb-1">{edu.degree}</h3>
+                    <p className="text-base font-bold text-neutral-800 dark:text-neutral-200 mb-1">{edu.school}</p>
+                    <p className="font-mono text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-widest">
                       {edu.period}
                     </p>
                   </div>
                 </div>
-                <p className="text-gray-700 leading-relaxed font-medium">{edu.description}</p>
+                <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm sm:text-base">{edu.description}</p>
               </motion.div>
             ))}
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Certifications" subtitle="Professional Development & Recognition" />
+        {/* Certifications Section */}
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Credentials"
+            title="Certifications"
+            subtitle="Industry-recognized courses and technical training credentials."
+          />
 
-          <div className="grid gap-4">
+          <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
             {CERTIFICATES.map((cert: string, index: number) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -16 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.04, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: index * 0.03, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 viewport={{ once: true, margin: "-40px" }}
-                whileHover={{ x: 4 }}
-                className="p-6 border border-gray-200 rounded-2xl bg-white hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300 group flex items-start gap-4"
+                className="p-5 border border-neutral-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-neutral-900/60 hover:border-neutral-900 dark:hover:border-white transition-all duration-300 flex items-start gap-3.5"
               >
-                <div className="w-3 h-3 bg-slate-900 group-hover:bg-white rounded-full mt-2 flex-shrink-0 group-hover:scale-150 transition-all duration-300" />
-                <p className="text-base font-medium text-slate-900 group-hover:text-white transition-colors duration-300">
+                <div className="w-2.5 h-2.5 bg-neutral-900 dark:bg-white rounded-full mt-1.5 flex-shrink-0" />
+                <p className="text-sm font-medium text-neutral-800 dark:text-neutral-200 leading-snug">
                   {cert}
                 </p>
               </motion.div>
@@ -695,139 +607,137 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Design Tools" subtitle="Creative & Design Software Expertise" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {SKILLS_DATA.designTools.map((skill: Skill, index: number) => (
-              <SkillCard key={index} index={index} {...skill} />
-            ))}
-          </div>
-        </section>
-
-        <section className="space-y-16">
-          <SectionHeader title="Frontend Stack" subtitle="Modern Web Development Technologies" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Skills Breakdown */}
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Core Competencies"
+            title="Frontend Stack"
+            subtitle="Primary frontend technologies used for production web application development."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {SKILLS_DATA.frontendTech.map((skill: Skill, index: number) => (
               <SkillCard key={index} index={index} {...skill} />
             ))}
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Backend & Databases" subtitle="Server-Side & Data Management" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Backend Technologies"
+            title="Backend &amp; Databases"
+            subtitle="Server-side frameworks, relational databases, and API development."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {SKILLS_DATA.backend.map((skill: Skill, index: number) => (
               <SkillCard key={index} index={index} {...skill} />
             ))}
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Project Management Tools" subtitle="Organization & Collaboration" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
-            {SKILLS_DATA.managementTools.map((skill: Skill, index: number) => (
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="UI/UX Engineering"
+            title="Design Tools"
+            subtitle="UI design, wireframing, component libraries, and interactive prototyping."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {SKILLS_DATA.designTools.map((skill: Skill, index: number) => (
               <SkillCard key={index} index={index} {...skill} />
             ))}
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Portfolio & Web Platforms" subtitle="Design Showcase & Web Building" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {SKILLS_DATA.portfolioPlatforms.map((skill: Skill, index: number) => (
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Workflow &amp; Collaboration"
+            title="Developer Tools &amp; Management"
+            subtitle="Version control, project tracking, and agile collaboration tooling."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...SKILLS_DATA.devTools, ...SKILLS_DATA.managementTools].map((skill: Skill, index: number) => (
               <SkillCard key={index} index={index} {...skill} />
             ))}
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Developer Tools" subtitle="Version Control & Collaboration" />
-          <div className="grid sm:grid-cols-2 gap-8">
-            {SKILLS_DATA.devTools.map((skill: Skill, index: number) => (
-              <SkillCard key={index} index={index} {...skill} />
-            ))}
-          </div>
-        </section>
-
-        <section className="space-y-16">
-          <SectionHeader title="Technical Skills" subtitle="Core Competencies & Expertise Areas" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Skills Matrix"
+            title="Technical Proficiencies"
+            subtitle="Key software engineering proficiencies and industry hard skills."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {HARD_SKILLS.map((skill: string, index: number) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, scale: 0.94 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: (index % 6) * 0.04, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: true, margin: "-40px" }}
-                
-                className="px-6 py-4 border border-gray-200 rounded-2xl bg-white hover:border-slate-900 hover:bg-slate-900 transition-colors duration-300 group"
+                className="px-5 py-3.5 border border-neutral-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-neutral-900/60 hover:border-neutral-900 dark:hover:border-white transition-colors duration-300 flex items-center gap-3"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-2.5 h-2.5 bg-slate-900 group-hover:bg-white rounded-full group-hover:scale-125 transition-all duration-300" />
-                  <span className="font-bold text-slate-900 group-hover:text-white text-sm uppercase tracking-wider transition-colors duration-300">
-                    {skill}
-                  </span>
-                </div>
-              </motion.div>
+                <div className="w-2 h-2 bg-neutral-900 dark:bg-white rounded-full flex-shrink-0" />
+                <span className="font-semibold text-neutral-800 dark:text-neutral-200 text-xs sm:text-sm uppercase tracking-wider">
+                  {skill}
+                </span>
+              </div>
             ))}
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Soft Skills" subtitle="Professional & Interpersonal Abilities" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Interpersonal"
+            title="Soft Skills"
+            subtitle="Communication, leadership, and collaboration abilities developed across team environments."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SOFT_SKILLS.map((skill: string, index: number) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, scale: 0.94 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: (index % 6) * 0.04, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: true, margin: "-40px" }}
-                
-                className="px-6 py-4 border border-gray-200 rounded-2xl bg-white hover:border-slate-900 hover:bg-slate-900 transition-colors duration-300 group"
+                className="px-5 py-3.5 border border-neutral-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-neutral-900/60 hover:border-neutral-900 dark:hover:border-white transition-colors duration-300 flex items-center gap-3"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-2.5 h-2.5 bg-slate-900 group-hover:bg-white rounded-full group-hover:scale-125 transition-all duration-300" />
-                  <span className="font-bold text-slate-900 group-hover:text-white text-sm uppercase tracking-wider transition-colors duration-300">
-                    {skill}
-                  </span>
-                </div>
-              </motion.div>
+                <div className="w-2 h-2 bg-neutral-900 dark:bg-white rounded-full flex-shrink-0" />
+                <span className="font-semibold text-neutral-800 dark:text-neutral-200 text-xs sm:text-sm uppercase tracking-wider">
+                  {skill}
+                </span>
+              </div>
             ))}
           </div>
         </section>
 
-        <section className="space-y-16">
-          <SectionHeader title="Events & Speaking" subtitle="Community Engagement & Networking" />
+        {/* Events & Meetups */}
+        <section className="space-y-12">
+          <SectionHeader
+            eyebrow="Community Activity"
+            title="Events &amp; Meetups"
+            subtitle="Tech conferences, hackathons, and industry events attended."
+          />
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
             {EVENTS.map((event: Event, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: true, margin: "-60px" }}
-                whileHover={{ y: -6 }}
-                className="p-8 border border-gray-200 rounded-3xl bg-white hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all duration-300 group overflow-hidden relative"
+                transition={{ delay: index * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true, margin: "-40px" }}
+                whileHover={{ y: -4 }}
+                className="p-6 sm:p-8 border border-neutral-200 dark:border-neutral-800 rounded-3xl bg-white dark:bg-neutral-900/60 hover:border-neutral-900 dark:hover:border-white transition-all duration-300 group flex flex-col justify-between"
               >
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-6">
-                    <span className="text-4xl font-black">{event.badge}</span>
-                    <span className="text-xs font-bold text-gray-600 group-hover:text-gray-300 uppercase tracking-widest bg-gray-100 group-hover:bg-white/20 px-3 py-1 rounded-full border border-gray-200 group-hover:border-white/30 transition-all duration-300">
+                <div>
+                  <div className="flex items-start justify-between mb-4">
+                    <span className="text-3xl font-black">{event.badge}</span>
+                    <span className="text-[10px] font-bold text-neutral-600 dark:text-neutral-400 uppercase tracking-widest bg-neutral-100 dark:bg-neutral-800 px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-700">
                       {event.year}
                     </span>
                   </div>
-                  <h3 className="text-2xl font-black text-slate-900 group-hover:text-white mb-3 transition-colors duration-300">
+                  <h3 className="text-xl font-black text-neutral-900 dark:text-white mb-1.5">
                     {event.name}
                   </h3>
-                  <p className="text-sm font-bold text-gray-600 group-hover:text-gray-300 mb-4 uppercase tracking-wider transition-colors duration-300">
+                  <p className="text-xs font-bold text-neutral-500 dark:text-neutral-400 mb-3 uppercase tracking-wider font-mono">
                     {event.location}
                   </p>
-                  <p className="text-base font-bold text-slate-900 group-hover:text-white border-b border-gray-200 group-hover:border-white/30 pb-3 inline-block mb-4 transition-all duration-300">
+                  <p className="text-sm font-bold text-neutral-900 dark:text-neutral-200 border-b border-neutral-100 dark:border-neutral-800 pb-2.5 inline-block mb-3">
                     {event.role}
                   </p>
-                  <p className="text-sm text-gray-700 group-hover:text-gray-200 leading-relaxed font-medium transition-colors duration-300">
+                  <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed font-normal">
                     {event.description}
                   </p>
                 </div>

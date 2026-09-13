@@ -11,17 +11,21 @@ interface SkillCardProps {
 }
 
 export function SkillCard({ skill, index }: SkillCardProps) {
+  const faMap = FaIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+  const siMap = SiIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+  const cgMap = CgIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+
   const getIcon = (iconId: string) => {
-    if (iconId.startsWith("Fa") && (FaIcons as any)[iconId]) {
-      const Icon = (FaIcons as any)[iconId];
+    if (iconId.startsWith("Fa") && faMap[iconId]) {
+      const Icon = faMap[iconId];
       return <Icon />;
     }
-    if (iconId.startsWith("Si") && (SiIcons as any)[iconId]) {
-      const Icon = (SiIcons as any)[iconId];
+    if (iconId.startsWith("Si") && siMap[iconId]) {
+      const Icon = siMap[iconId];
       return <Icon />;
     }
-    if (iconId.startsWith("Cg") && (CgIcons as any)[iconId]) {
-      const Icon = (CgIcons as any)[iconId];
+    if (iconId.startsWith("Cg") && cgMap[iconId]) {
+      const Icon = cgMap[iconId];
       return <Icon />;
     }
     return null;

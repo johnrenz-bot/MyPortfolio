@@ -26,8 +26,8 @@ export const WEB_DEVELOPMENT: Project[] = [
     id: "tp-client-portal",
     title: "TP Client Portal",
     href: "https://tpclientportal.vercel.app/",
-    image: "/Image/TP.png", // Using an existing placeholder image path
-    description: "New system where I am the main programmer. A client portal system.",
+    image: "/Image/TP.png",
+    description: "Client portal web application built with Next.js, React, and Tailwind CSS for client communications, requests, and service management.",
     techStack: ["Next.js", "React", "TailwindCSS"],
     workType: "web-development",
     featured: true,
@@ -521,36 +521,33 @@ export const CERTS: Project[] = [
 
 export const WORK_CATEGORIES = [
   {
-    key: "certificates",
-    label: "Certificates",
-    sub: "Creds",
-    count: CERTS.length,
-    featured: CERTS[0],
-  },
-  {
     key: "web-dev",
-    label: "Development",
-    sub: "Full-stack",
+    label: "Web Development",
+    sub: "Web Systems",
     count: WEB_DEVELOPMENT.length,
     featured: WEB_DEVELOPMENT[0],
   },
-
-  {
-    key: "ui-ux",
-    label: "UI/UX",
-    sub: "Design",
-    count: UI_UX_DESIGNS.length,
-    featured: UI_UX_DESIGNS[0],
-  },
-
   {
     key: "website-design",
-    label: "Frontend Design",
-    sub: "UI/UX",
+    label: "Website Design",
+    sub: "Web Apps",
     count: WEBSITE_DESIGN.length,
     featured: WEBSITE_DESIGN[0],
   },
-
+  {
+    key: "ui-ux",
+    label: "UI/UX",
+    sub: "Design Systems",
+    count: UI_UX_DESIGNS.length,
+    featured: UI_UX_DESIGNS[0],
+  },
+  {
+    key: "certificates",
+    label: "Certificates",
+    sub: "Credentials",
+    count: CERTS.length,
+    featured: CERTS[0],
+  },
   {
     key: "mockups",
     label: "Mockups",
@@ -561,21 +558,21 @@ export const WORK_CATEGORIES = [
   {
     key: "posters",
     label: "Posters",
-    sub: "Marketing",
+    sub: "Creative",
     count: POSTERS.length,
     featured: POSTERS[0],
   },
   {
     key: "merchandise",
-    label: "Merch",
-    sub: "Fashion",
+    label: "Merchandise",
+    sub: "Apparel",
     count: MERCHANDISE_DESIGNS.length,
     featured: MERCHANDISE_DESIGNS[0],
   },
   {
     key: "graphic-design",
     label: "Graphics",
-    sub: "Design",
+    sub: "Visual Design",
     count: GRAPHIC_DESIGNS.length,
     featured: GRAPHIC_DESIGNS[0],
   },

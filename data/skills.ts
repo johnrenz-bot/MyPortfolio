@@ -161,7 +161,7 @@ export const DEV_TOOLS: Skill[] = [
     description: "Version controls, team development lifecycles",
   },
   {
-    iconId: "SiGithubIcon",
+    iconId: "SiGithub",
     name: "GitHub",
     proficiency: "Advanced",
     description: "Remote repositories management, deployment pipelines",

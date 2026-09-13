@@ -8,13 +8,16 @@ import * as HiIcons from "react-icons/hi";
 import styles from "./AboutSection.module.css";
 
 export function AboutSection() {
+  const mdMap = MdIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+  const hiMap = HiIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+
   const getIcon = (iconId: string) => {
-    if (iconId.startsWith("Md") && (MdIcons as any)[iconId]) {
-      const Icon = (MdIcons as any)[iconId];
+    if (iconId.startsWith("Md") && mdMap[iconId]) {
+      const Icon = mdMap[iconId];
       return <Icon />;
     }
-    if (iconId.startsWith("Hi") && (HiIcons as any)[iconId]) {
-      const Icon = (HiIcons as any)[iconId];
+    if (iconId.startsWith("Hi") && hiMap[iconId]) {
+      const Icon = hiMap[iconId];
       return <Icon />;
     }
     return null;

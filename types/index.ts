@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export interface HeroData {
   title: string;
   subtitle: string;
