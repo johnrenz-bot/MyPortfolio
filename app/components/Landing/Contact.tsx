@@ -61,7 +61,7 @@ export default function Contact() {
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen w-full bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900 overflow-x-hidden transition-colors duration-300"
+      className="relative w-full bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900 overflow-x-hidden transition-colors duration-300"
     >
       <style jsx global>{`
         .aos { opacity: 0; transform: translateY(24px); transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -92,7 +92,7 @@ export default function Contact() {
         }
       `}</style>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 py-20 sm:py-24 md:py-32 space-y-20 sm:space-y-24">
+      <main className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 py-12 md:py-16 space-y-16 md:space-y-20">
         {/* Section Header */}
         <section className="space-y-6">
           <div className="aos sd1 flex items-center gap-3">

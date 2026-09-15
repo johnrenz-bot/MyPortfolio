@@ -441,7 +441,7 @@ export default function PortfolioSection() {
         }
       `}</style>
 
-      <div className="relative z-10 w-full flex justify-center py-20 sm:py-24 md:py-32 bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 overflow-hidden transition-colors duration-300">
+      <div className="relative z-10 w-full flex justify-center py-12 sm:py-16 md:py-20 bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 overflow-hidden transition-colors duration-300">
         <div className="w-full max-w-7xl px-4 sm:px-6 md:px-8 relative z-10">
           <AnimatePresence mode="wait">
             {view === "categories" ? (

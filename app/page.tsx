@@ -4,9 +4,11 @@ import { useEffect, useState, useRef } from "react";
 import Main from "./components/Landing/main";
 import About from "./components/Landing/about";
 import Project from "./components/Landing/project";
+import AdditionalSections from "./components/Landing/additional";
 import Contact from "./components/Landing/Contact";
+import Experience from "./components/Landing/experience";
 
-const SECTIONS = ["main", "about", "project", "contact"] as const;
+const SECTIONS = ["main", "about", "project", "experience", "more", "contact"] as const;
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string>("main");
@@ -85,15 +87,23 @@ export default function Home() {
           <Main />
         </section>
 
-        <section id="about" className="min-h-screen animate-fadeIn flex flex-col items-center justify-center">
+        <section id="about" className="animate-fadeIn w-full">
           <About />
         </section>
 
-        <section id="project" className="min-h-screen animate-fadeIn flex flex-col items-center justify-center">
+        <section id="project" className="animate-fadeIn w-full">
           <Project />
         </section>
 
-        <section id="contact" className="min-h-screen animate-fadeIn flex flex-col items-center justify-center">
+        <section id="experience" className="animate-fadeIn w-full">
+          <Experience />
+        </section>
+
+        <section id="more" className="animate-fadeIn w-full">
+          <AdditionalSections />
+        </section>
+
+        <section id="contact" className="animate-fadeIn w-full">
           <Contact />
         </section>
       </main>

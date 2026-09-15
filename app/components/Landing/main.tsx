@@ -21,27 +21,17 @@ const NavBtn = ({
     href={href}
     target={external || href.startsWith("http") || href.endsWith(".pdf") ? "_blank" : undefined}
     rel={external || href.startsWith("http") || href.endsWith(".pdf") ? "noopener noreferrer" : undefined}
-    className={`inline-flex items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border shadow-sm ${
-      primary
-        ? "bg-neutral-900 text-white border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:shadow-md hover:-translate-y-0.5"
-        : "bg-white/80 dark:bg-neutral-900/80 text-neutral-800 dark:text-neutral-200 border-black/10 dark:border-white/10 hover:bg-white dark:hover:bg-neutral-800 hover:border-black/20 dark:hover:border-white/20 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-md"
-    }`}
+    className={`inline-flex items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 border shadow-sm ${primary
+      ? "bg-neutral-900 text-white border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:shadow-md hover:-translate-y-0.5"
+      : "bg-white/80 dark:bg-neutral-900/80 text-neutral-800 dark:text-neutral-200 border-black/10 dark:border-white/10 hover:bg-white dark:hover:bg-neutral-800 hover:border-black/20 dark:hover:border-white/20 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-md"
+      }`}
   >
     {label}
     {icon}
   </a>
 );
 
-const StatBlock = ({ value, label }: { value: string; label: string }) => (
-  <div className="flex flex-col gap-0.5">
-    <span className="font-mono text-base sm:text-lg font-bold text-neutral-900 dark:text-white">
-      {value}
-    </span>
-    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
-      {label}
-    </span>
-  </div>
-);
+
 
 export default function Main() {
   const [ready, setReady] = useState(false);
@@ -156,6 +146,7 @@ export default function Main() {
           .deck-card {
             transform: none !important;
             filter: none !important;
+            top: 0 !important;
           }
         }
       `}</style>
@@ -223,16 +214,6 @@ export default function Main() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center max-w-7xl w-full mx-auto">
             {/* Left Column: Bio and CTAs */}
             <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left gap-6 sm:gap-7">
-              {/* Availability Badge */}
-              <div className={`a d1 ${g} inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white dark:bg-neutral-900 shadow-sm`}>
-                <span className="relative flex h-2 w-2">
-                  <span className="pulse-dot absolute inline-flex h-full w-full rounded-full bg-neutral-900 dark:bg-white" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-neutral-900 dark:bg-white" />
-                </span>
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-700 dark:text-neutral-300">
-                  Open to Work · Entry-Level SWE / Web Developer
-                </span>
-              </div>
 
               {/* Main H1 Title */}
               <h1 className={`a d2 ${g} hero-title font-black leading-[0.88] tracking-tighter uppercase bg-clip-text text-transparent bg-gradient-to-b from-neutral-950 via-neutral-800 to-neutral-500 dark:from-white dark:via-neutral-200 dark:to-neutral-400`}>
@@ -243,17 +224,12 @@ export default function Main() {
 
               {/* Core Role / Tech Stacks */}
               <p className={`a d3 ${g} font-mono text-[11px] sm:text-xs font-bold tracking-[0.22em] uppercase text-neutral-500 dark:text-neutral-400`}>
-                Software Engineer · Web Developer · Full-Stack Developer
+                Web Developer · UI/UX Designer
               </p>
 
               {/* Factual Summary */}
               <p className={`a d4 ${g} text-base sm:text-lg font-normal leading-relaxed max-w-xl text-neutral-600 dark:text-neutral-300`}>
-                Recent BS Information Technology graduate with hands-on internship experience in full-stack web development, UI/UX systems, and quality assurance. Experienced in building production web applications using <strong>Next.js, React, TypeScript, PHP/Laravel, and Supabase</strong> — seeking entry-level Software Engineer or Web Developer opportunities.
-              </p>
-
-              {/* Quote */}
-              <p className={`a d4 ${g} text-xs sm:text-sm font-medium italic text-neutral-500 dark:text-neutral-400 max-w-lg`}>
-                &ldquo;Collaborating with cross-functional teams throughout the software development lifecycle. Passionate about creating scalable, user-focused applications and continuously learning modern technologies.&rdquo;
+                Recent BSIT graduate with internship experience in software development, UI/UX design, and quality assurance. Experienced in building responsive web applications using Next.js, React, TypeScript, and Supabase. Passionate about creating scalable, user-focused applications and continuously learning modern technologies.
               </p>
 
               {/* Action Buttons */}
@@ -263,13 +239,7 @@ export default function Main() {
                 <NavBtn label="Get in Touch" href="#contact" />
               </div>
 
-              {/* Stat Blocks */}
-              <div className={`a d6 ${g} grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mt-4 pt-6 border-t border-black/5 dark:border-white/10 w-full max-w-lg text-center sm:text-left`}>
-                <StatBlock value="4" label="Systems Built" />
-                <StatBlock value="3" label="Industry Roles" />
-                <StatBlock value="5" label="Certifications" />
-                <StatBlock value="Bulacan, PH" label="Based In" />
-              </div>
+
             </div>
 
             {/* Right Column: Tech Journey Stacked Cards */}
@@ -284,11 +254,11 @@ export default function Main() {
               </div>
 
               {/* Responsive Deck of Cards */}
-              <div className="deck-perspective relative flex flex-col sm:grid sm:grid-cols-2 lg:flex lg:flex-col gap-4 lg:gap-0 lg:h-[760px] justify-center items-stretch lg:items-end w-full">
+              <div className="deck-perspective relative grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-col gap-3 sm:gap-4 lg:gap-0 lg:h-[760px] justify-center items-stretch lg:items-end w-full">
                 {journeyImages.map((img, idx) => (
                   <div
                     key={idx}
-                    className="aos deck-card relative w-full sm:w-auto lg:w-[340px] aspect-[4/3] rounded-2xl overflow-hidden border border-black/10 dark:border-white/15 bg-neutral-100 dark:bg-neutral-900 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] lg:absolute group"
+                    className="aos deck-card relative w-full lg:w-[340px] aspect-square sm:aspect-[4/3] rounded-2xl overflow-hidden border border-black/10 dark:border-white/15 bg-neutral-100 dark:bg-neutral-900 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] lg:absolute group"
                     style={{
                       transitionDelay: `${idx * 0.05}s`,
                       top: `${idx * 90}px`,
@@ -320,7 +290,9 @@ export default function Main() {
 
         {/* Footer Sub-strip */}
         <footer className="foot-wrap relative z-10 flex flex-col sm:flex-row gap-2 items-center justify-between text-neutral-400 dark:text-neutral-500 border-t border-black/5 dark:border-white/10 bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl">
-          <span className="text-[9px] uppercase tracking-[0.5em]">EST 2026</span>
+          <span className="font-mono text-[9px] uppercase tracking-[0.25em]">
+            Software Engineer &amp; Full-Stack Developer
+          </span>
           <span className="font-mono text-[9px] uppercase tracking-[0.25em]">
             Marilao, Bulacan · Philippines
           </span>
