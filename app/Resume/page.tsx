@@ -62,7 +62,7 @@ export default function Resume() {
             SUMMARY
           </h2>
           <p className="text-xs sm:text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-            Recent BS Information Technology graduate with internship experience in full-stack web development, UI/UX design, and quality assurance. Skilled in building responsive web applications with Next.js, React, TypeScript, and Supabase, with a working foundation in relational databases and Agile team collaboration. Approaches new challenges with humility and a strong willingness to learn, with the goal of growing into a well-rounded Software Engineer.
+            Recent BS Information Technology graduate with internship experience in full-stack web development, UI/UX design, and quality assurance. Skilled in building responsive web applications with Next.js, React, TypeScript, and Supabase, with a working foundation in relational databases and Agile team collaboration. Approaches new challenges with humility and a strong willingness to learn.
           </p>
         </section>
 

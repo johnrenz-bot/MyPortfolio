@@ -1,7 +1,7 @@
 export const BRAND = {
   name: "John Renz Bandianon",
   shortName: "RΣNZ",
-  role: "Software Engineer · Frontend Developer · UI/UX Designer",
+  role: "Frontend Developer · UI/UX Designer",
   location: "Marilao, Bulacan, Philippines",
   email: "johnrenzbandianon@gmail.com",
   phone: "+63 966 798 7702",

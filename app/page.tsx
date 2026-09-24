@@ -1,23 +1,62 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import Main from "./components/Landing/main";
-import About from "./components/Landing/about";
-import Project from "./components/Landing/project";
-import AdditionalSections from "./components/Landing/additional";
-import Contact from "./components/Landing/Contact";
-import Experience from "./components/Landing/experience";
+import { useEffect, useRef, useState, useCallback } from "react";
+import HeroSection from "./components/Landing/HeroSection";
+import ProjectsSection from "./components/Landing/ProjectsSection";
+import AboutSection from "./components/Landing/AboutSection";
+import ExperienceSection from "./components/Landing/ExperienceSection";
+import SkillsSection from "./components/Landing/SkillsSection";
+import TimelineSection from "./components/Landing/TimelineSection";
+import EducationSection from "./components/Landing/EducationSection";
+import CommunitySection from "./components/Landing/CommunitySection";
+import NetworkSection from "./components/Landing/NetworkSection";
+import ContactSection from "./components/Landing/ContactSection";
+import { AnimatedBackground } from "./components/AnimatedBackground";
 
-const SECTIONS = ["main", "about", "project", "experience", "more", "contact"] as const;
+const NAV_ITEMS = [
+  { id: "hero", label: "Home" },
+  { id: "projects", label: "Work" },
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "journey", label: "Journey" },
+  { id: "education", label: "Education" },
+  { id: "community", label: "Community" },
+  { id: "network", label: "Network" },
+  { id: "contact", label: "Contact" },
+] as const;
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState<string>("main");
+  const [activeSection, setActiveSection] = useState("hero");
   const observerRef = useRef<IntersectionObserver | null>(null);
 
+  // Scroll reveal system
+  const setupRevealObserver = useCallback(() => {
+    const revealObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -60px 0px" },
+    );
+
+    document
+      .querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale")
+      .forEach((el) => {
+        revealObs.observe(el);
+      });
+
+    return revealObs;
+  }, []);
+
   useEffect(() => {
+    // Section spy
     const options = {
       root: null,
-      rootMargin: "-25% 0px -35% 0px",
+      rootMargin: "-30% 0px -40% 0px",
       threshold: 0,
     };
 
@@ -29,82 +68,112 @@ export default function Home() {
       });
     }, options);
 
-    SECTIONS.forEach((id) => {
+    NAV_ITEMS.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (el) observerRef.current?.observe(el);
     });
 
-    return () => observerRef.current?.disconnect();
-  }, []);
+    // Scroll reveals
+    const revealObs = setupRevealObserver();
+
+    // Re-observe after DOM updates (for dynamic content)
+    const mutationObs = new MutationObserver(() => {
+      document
+        .querySelectorAll(
+          ".reveal:not(.revealed), .reveal-left:not(.revealed), .reveal-right:not(.revealed), .reveal-scale:not(.revealed)",
+        )
+        .forEach((el) => {
+          revealObs.observe(el);
+        });
+    });
+    mutationObs.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observerRef.current?.disconnect();
+      revealObs.disconnect();
+      mutationObs.disconnect();
+    };
+  }, [setupRevealObserver]);
 
   return (
-    <div className="relative min-h-screen bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 transition-colors duration-300 font-sans overflow-x-hidden selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950">
-      {/* Subtle grid background for modern feel */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.04] bg-[linear-gradient(to_right,#80808014_1px,transparent_1px),linear-gradient(to_bottom,#80808014_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff12_1px,transparent_1px),linear-gradient(to_bottom,#ffffff12_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-
-      {/* Floating Section Spy Navigation (hidden on mobile to prevent blocking content) */}
+    <div className="relative min-h-screen bg-transparent text-neutral-900 dark:text-neutral-100 transition-colors duration-300 font-[family-name:var(--font-inter)] overflow-x-hidden">
+      <AnimatedBackground />
+      {/* Minimal section spy - right edge */}
       <nav
         aria-label="Section navigation"
-        className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-6 z-40"
+        className="fixed right-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4 z-40"
       >
-        {SECTIONS.map((section) => {
-          const isActive = activeSection === section;
+        {NAV_ITEMS.map(({ id, label }) => {
+          const isActive = activeSection === id;
           return (
             <a
-              key={section}
-              href={`#${section}`}
-              className={`group flex items-center justify-end transition-all duration-300 ${
-                isActive ? "opacity-100" : "opacity-40 hover:opacity-90"
+              key={id}
+              href={`#${id}`}
+              className={`group flex items-center justify-end gap-3 transition-all duration-300 ${
+                isActive ? "opacity-100" : "opacity-30 hover:opacity-80"
               }`}
-              aria-label={`Scroll to ${section}`}
+              aria-label={`Scroll to ${label}`}
             >
-              <div className="flex items-center gap-4">
-                <span
-                  className={`text-[9px] tracking-[0.35em] uppercase font-bold text-neutral-900 dark:text-neutral-200 transition-all duration-300 ${
-                    isActive
-                      ? "translate-x-0 opacity-100"
-                      : "translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
-                  }`}
-                >
-                  {section}
-                </span>
-
-                <span
-                  className={`h-[2px] transition-all duration-300 origin-right rounded-full ${
-                    isActive
-                      ? "w-10 bg-neutral-900 dark:bg-white shadow-[0_0_8px_rgba(0,0,0,0.1)] dark:shadow-[0_0_8px_rgba(255,255,255,0.2)]"
-                      : "w-3 bg-neutral-400 dark:bg-neutral-600 group-hover:w-6 group-hover:bg-neutral-600 dark:group-hover:bg-neutral-400"
-                  }`}
-                />
-              </div>
+              <span
+                className={`text-[9px] tracking-[0.3em] uppercase font-semibold transition-all duration-300 ${
+                  isActive
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"
+                }`}
+              >
+                {label}
+              </span>
+              <span
+                className={`h-[1.5px] rounded-full transition-all duration-300 ${
+                  isActive
+                    ? "w-8 bg-neutral-900 dark:bg-white"
+                    : "w-2 bg-neutral-400 dark:bg-neutral-600 group-hover:w-5"
+                }`}
+              />
             </a>
           );
         })}
       </nav>
 
-      <main className="relative z-10 flex flex-col">
-        <section id="main" className="min-h-screen animate-fadeIn flex flex-col items-center justify-center">
-          <Main />
+      <main className="relative z-10">
+        <section id="hero">
+          <HeroSection />
         </section>
 
-        <section id="about" className="animate-fadeIn w-full">
-          <About />
+        <section id="projects">
+          <ProjectsSection />
         </section>
 
-        <section id="project" className="animate-fadeIn w-full">
-          <Project />
+        <section id="about">
+          <AboutSection />
         </section>
 
-        <section id="experience" className="animate-fadeIn w-full">
-          <Experience />
+        <section id="experience">
+          <ExperienceSection />
         </section>
 
-        <section id="more" className="animate-fadeIn w-full">
-          <AdditionalSections />
+        <section id="skills">
+          <SkillsSection />
         </section>
 
-        <section id="contact" className="animate-fadeIn w-full">
-          <Contact />
+        <section id="journey">
+          <TimelineSection />
+        </section>
+
+        <section id="education">
+          <EducationSection />
+        </section>
+
+        <section id="community">
+          <CommunitySection />
+        </section>
+
+        <section id="network">
+          <NetworkSection />
+        </section>
+
+        <section id="contact">
+          <ContactSection />
         </section>
       </main>
     </div>

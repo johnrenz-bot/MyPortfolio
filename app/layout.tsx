@@ -27,14 +27,13 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "John Renz Bandianon | Software Engineer & Web Developer",
+    default: "John Renz Bandianon | Web Developer",
     template: "%s | John Renz Bandianon",
   },
   description:
-    "Portfolio of John Renz Bandianon — Entry-Level Software Engineer & Web Developer. Experienced in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
+    "Portfolio of John Renz Bandianon — Entry-Level Web Developer. Experienced in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
   keywords: [
     "John Renz Bandianon",
-    "Software Engineer",
     "Web Developer",
     "Full-Stack Developer",
     "Frontend Developer",
@@ -56,9 +55,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_PH",
     url: "https://johnrenz.dev",
-    title: "John Renz Bandianon | Software Engineer & Web Developer",
+    title: "John Renz Bandianon | Web Developer",
     description:
-      "Entry-level Software Engineer & Web Developer with experience in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
+      "Entry-level Web Developer with experience in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
     siteName: "John Renz Bandianon Portfolio",
     images: [
       {
@@ -71,9 +70,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "John Renz Bandianon | Software Engineer & Web Developer",
+    title: "John Renz Bandianon | Web Developer",
     description:
-      "Entry-level Software Engineer & Web Developer with experience in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
+      "Entry-level Web Developer with experience in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
     creator: "@JohnRen94949414",
     images: ["/twitter-image.png"],
   },

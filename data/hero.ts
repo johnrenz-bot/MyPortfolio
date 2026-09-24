@@ -1,7 +1,7 @@
 import { HeroData } from "../types";
 
 export const HERO_DATA: HeroData = {
-  title: "Software Engineer",
+  title: "",
   subtitle: "Full-Stack Developer & UI/UX Designer",
   location: "Marilao, Bulacan, Philippines",
   email: "johnrenzbandianon9@gmail.com",
