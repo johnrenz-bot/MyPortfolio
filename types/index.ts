@@ -19,6 +19,13 @@ export interface WorkExperience {
   logo: string;
   link?: string;
   certificate?: string;
+  /** Presentation hint for the certificate panel (source aspect + caption). */
+  certificateMeta?: {
+    /** "landscape" docs get a wide panel, "portrait" docs a tall one. */
+    orientation: "landscape" | "portrait";
+    /** Short caption shown under the certificate preview. */
+    caption: string;
+  };
   description: string;
   highlights: string[];
   timeline: string;

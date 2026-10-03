@@ -1,521 +1,784 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import SubPageHeader from "../components/shared/SubPageHeader";
+import RevealOnScroll from "../components/shared/RevealOnScroll";
+import {
+  REEFER_SECTIONS,
+  REEFER_META,
+  REEFER_STATS,
+  REEFER_CHALLENGES,
+  REEFER_REFERENCES,
+  REEFER_REFERENCES_NOTE,
+  REEFER_PROCESS,
+  REEFER_ARCHITECTURE,
+  REEFER_FEATURES,
+  REEFER_ADDITIONAL_PAGES,
+  REEFER_PALETTE,
+  REEFER_TYPOGRAPHY,
+  REEFER_SPACING,
+  REEFER_COMPONENTS,
+  REEFER_DELIVERABLES,
+  REEFER_LEARNINGS,
+  REEFER_GUIDELINES,
+  REEFER_SHOWCASE,
+} from "../../data/reefer";
+
+/* ─── Shared section heading ─── */
+function SectionTitle({
+  index,
+  label,
+  title,
+  lede,
+}: {
+  index: string;
+  label: string;
+  title: string;
+  lede?: string;
+}) {
+  return (
+    <div className="reveal flex flex-col gap-4 mb-10 sm:mb-14">
+      <div className="flex items-center gap-3">
+        <span className="label-mono text-neutral-400 dark:text-neutral-500">
+          {index}
+        </span>
+        <div className="h-[1.5px] w-8 bg-neutral-900 dark:bg-white" />
+        <span className="label-mono text-neutral-500 dark:text-neutral-400">
+          {label}
+        </span>
+      </div>
+      <h2 className="heading-section text-3xl sm:text-4xl lg:text-5xl text-neutral-950 dark:text-white">
+        {title}
+      </h2>
+      {lede && (
+        <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-2xl">
+          {lede}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ─── Showcase artwork card ─── */
+function ShowcaseCard({
+  item,
+  index,
+}: {
+  item: (typeof REEFER_SHOWCASE)[0];
+  index: number;
+}) {
+  const wide = index % 3 === 0;
+
+  return (
+    <figure
+      className={`reveal delay-${(index % 4) + 1} group relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] ${
+        wide ? "sm:col-span-2" : ""
+      }`}
+    >
+      <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-neutral-900">
+        <Image
+          src={item.src}
+          alt={item.alt}
+          fill
+          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 600px"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+        />
+      </div>
+      <figcaption className="px-4 sm:px-5 py-3.5 flex items-center gap-2.5 border-t border-neutral-200 dark:border-neutral-800">
+        <span className="label-mono text-neutral-400 dark:text-neutral-500">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <span className="text-sm font-bold text-neutral-800 dark:text-neutral-200">
+          {item.caption}
+        </span>
+      </figcaption>
+    </figure>
+  );
+}
 
 export default function ReeferCaseStudy() {
+  const [progress, setProgress] = useState(0);
+  const [active, setActive] = useState(0);
+
+  /* Reading progress, same idiom as /Journey */
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      setProgress(max > 0 ? (doc.scrollTop / max) * 100 : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /* Section spy for the sticky rail */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const i = REEFER_SECTIONS.findIndex(
+              (s) => s.id === entry.target.id,
+            );
+            if (i !== -1) setActive(i);
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+    REEFER_SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-gray-500 hover:text-neutral-900 py-8 transition group"
-        >
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition" />
-          <span className="text-sm font-medium">Back to Projects</span>
-        </Link>
+    <div className="relative min-h-screen bg-[#f9fafb] dark:bg-[#111111] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+      <RevealOnScroll />
+      <SubPageHeader section="Case Study" title="REEFER" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 py-16 border-b border-black\/5">
-          <div className="lg:col-span-2">
-            <p className="text-xs tracking-widest text-gray-400 uppercase mb-4 font-semibold">Case Study</p>
-            <h1 className="text-6xl lg:text-7xl font-bold text-neutral-900 leading-tight mb-6">REEFER</h1>
-            <p className="text-lg text-neutral-500 leading-relaxed max-w-2xl">
-              A modern e-commerce platform designed to deliver engaging shopping experiences through thoughtful interface design and user-centered workflows for contemporary urban fashion.
-            </p>
-          </div>
+      {/* Reading progress */}
+      <div className="fixed top-0 left-0 right-0 h-[2px] bg-transparent z-50">
+        <div
+          className="h-full bg-neutral-900 dark:bg-white transition-[width] duration-150 ease-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
 
-          <div className="space-y-6">
-            <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Role</p>
-              <p className="text-neutral-900 font-medium">UI/UX Designer & Team Lead</p>
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Timeline</p>
-              <p className="text-neutral-900 font-medium">6 Weeks</p>
-              <p className="text-sm text-gray-500">March – April 2026</p>
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Deliverables</p>
-              <p className="text-neutral-900 font-medium">20+ Screens, Design System</p>
-            </div>
-          </div>
+      {/* Hero */}
+      <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-24 pb-12 sm:pb-16">
+        <div className="reveal flex items-center gap-3 mb-6">
+          <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
+          <span className="label-mono text-neutral-500 dark:text-neutral-400">
+            {REEFER_META.kicker}
+          </span>
         </div>
 
-        <section className="py-20 border-b border-black\/5">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-6">Overview</h2>
-              <div className="space-y-4">
-                <p className="text-neutral-500 leading-relaxed">
-                  REEFER is a modern e-commerce platform designed to connect contemporary urban fashion with younger demographics that value both aesthetics and seamless user experiences. The platform balances bold visual direction with clean, structured navigation.
-                </p>
-                <p className="text-neutral-500 leading-relaxed">
-                  As a self-taught UI/UX designer promoted to Team Lead, I bridged raw cultural identity with professional e-commerce standards. I developed the complete design system, managed cross-functional workflows, and translated stakeholder requirements into an optimized user journey ready for development.
-                </p>
-              </div>
-            </div>
+        <h1 className="reveal delay-1 heading-display text-[clamp(46px,10vw,120px)] text-neutral-950 dark:text-white mb-8">
+          {REEFER_META.title}
+        </h1>
 
-            <div className="flex items-center justify-center bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl border border-amber-200 aspect-square">
-              <div className="text-center">
-                <div className="w-24 h-24 mx-auto mb-4 bg-white rounded-xl flex items-center justify-center border border-gray-300 shadow-sm">
-                  <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-700 rounded-lg"></div>
-                </div>
-                <p className="text-gray-700 font-semibold">E-Commerce Platform</p>
-                <p className="text-gray-500 text-sm mt-2">Web Design</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-20 border-b border-black\/5">
-          <div className="mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-8">The Challenge</h2>
-            <div className="bg-neutral-50 rounded-xl p-8 sm:p-12 border border-black\/5">
-              <p className="text-gray-700 leading-relaxed mb-4">
-                <span className="font-semibold text-neutral-900">Problem:</span> Translating stakeholder vision into a structured user experience.
-              </p>
-              <p className="text-neutral-500 leading-relaxed">
-                As the sole UI/UX designer for REEFER, one of the key challenges was turning stakeholder feedback into a clear and intuitive shopping experience. The project initially lacked defined user flows and structured interface direction, requiring multiple design iterations to align usability, aesthetics, and business expectations. This cyclical process—design, review, revise, review again—was both the core challenge and the foundation of creating a cohesive system.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white border border-black\/5 rounded-xl p-6 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300">
-              <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">🎨</span>
-              </div>
-              <h3 className="font-semibold text-neutral-900 mb-2 text-sm">Design Iteration Cycle</h3>
-              <p className="text-sm text-neutral-500">
-                Managing continuous stakeholder updates while maintaining visual consistency and professional aesthetics.
-              </p>
-            </div>
-            <div className="bg-white border border-black\/5 rounded-xl p-6 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300">
-              <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">💎</span>
-              </div>
-              <h3 className="font-semibold text-neutral-900 mb-2 text-sm">Desktop-First Architecture</h3>
-              <p className="text-sm text-neutral-500">
-                Designing detailed e-commerce interfaces that preserve navigation hierarchy across desktop viewports.
-              </p>
-            </div>
-            <div className="bg-white border border-black\/5 rounded-xl p-6 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300">
-              <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-xl">🤝</span>
-              </div>
-              <h3 className="font-semibold text-neutral-900 mb-2 text-sm">Team Leadership</h3>
-              <p className="text-sm text-neutral-500">
-                Directing collaboration workflows and structural documentation within tight project sprint phases.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-20 border-b border-black\/5">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-12">Design References</h2>
-          
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            {[
-              "Free & Easy",
-              "HUF",
-              "PLEASURES",
-              "Vans",
-              "RVCA",
-              "Carrotsbyanwar",
-              "Fucking Awesome",
-              "Gnarly",
-              "Spades"
-            ].map((brand) => (
-              <div key={brand} className="bg-neutral-50 border border-black\/5 rounded-lg p-4 text-center hover:bg-neutral-100 transition">
-                <p className="text-sm font-medium text-neutral-900">{brand}</p>
-              </div>
-            ))}
-          </div>
-          
-          <p className="text-sm text-neutral-500 mt-8">
-            These industry-leading brands informed the aesthetic direction, layout strategies, and visual trends. The goal was to extract premium, high-impact design principles while avoiding cluttered, flashy layouts that disrupt user conversion funnels.
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-end">
+          <p className="reveal delay-2 lg:col-span-7 text-base sm:text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
+            {REEFER_META.summary}
           </p>
-        </section>
 
-        <section className="py-20 border-b border-black\/5">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-12">Design Process</h2>
-          
-          <div className="space-y-6">
-            {[
-              {
-                num: 1,
-                title: "Discovery & Research",
-                desc: "Conducted competitor profiling and mapped user expectations for consumers aged 18–35 to align cultural trends with seamless navigation mechanics."
-              },
-              {
-                num: 2,
-                title: "User Flows & Architecture",
-                desc: "Structured critical touchpoints including product filtering, sizing variables, cart management, and optimized checkout flows."
-              },
-              {
-                num: 3,
-                title: "Wireframing & Prototyping",
-                desc: "Produced low-fidelity outlines to test functional assumptions before defining high-fidelity UI systems."
-              },
-              {
-                num: 4,
-                title: "Visual Design & Iterations",
-                desc: "Executed visual iterations matching aesthetic standards with minimal typography, resolving feedback cycles without introducing layout clutter."
-              },
-              {
-                num: 5,
-                title: "Design System Development",
-                desc: "Constructed a robust atomic UI token library in Figma with reusable button states, input cards, navigation menus, and form templates."
-              },
-              {
-                num: 6,
-                title: "Documentation & Handoff",
-                desc: "Generated organized interface documentation with state specifications, interactive properties, and web grid patterns for engineering alignment."
-              }
-            ].map((step) => (
-              <div key={step.num} className="flex gap-6 sm:gap-8">
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 text-white font-bold flex-shrink-0 shadow-md">
-                  {step.num}
-                </div>
-                <div className="pt-1">
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">{step.title}</h3>
-                  <p className="text-neutral-500 leading-relaxed">{step.desc}</p>
-                </div>
-              </div>
+          {/* Fact panel */}
+          <div className="reveal delay-3 lg:col-span-5 flex flex-col gap-4">
+                      <div className="grid grid-cols-2 gap-px bg-neutral-200 dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
+                        {[
+                          { k: "Role", v: REEFER_META.role },
+                          {
+                            k: "Timeline",
+                            v: `${REEFER_META.timeline} · ${REEFER_META.timelineDetail}`,
+                          },
+                          { k: "Deliverables", v: REEFER_META.deliverables },
+                          { k: "Tool", v: `${REEFER_META.tool} · ${REEFER_META.discipline}` },
+                        ].map((item) => (
+                          <div
+                            key={item.k}
+                            className="bg-white dark:bg-[#171717] px-5 py-4 flex flex-col gap-1"
+                          >
+                            <span className="label-mono text-neutral-400 dark:text-neutral-500">
+                              {item.k}
+                            </span>
+                            <span className="text-sm font-bold text-neutral-900 dark:text-white leading-snug">
+                              {item.v}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Live Figma file */}
+                      <a
+                        href={REEFER_META.figmaUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center justify-between gap-3 px-5 py-3.5 rounded-2xl bg-neutral-900 text-white border border-neutral-900 dark:bg-white dark:text-neutral-950 dark:border-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                      >
+                        <span className="flex items-center gap-2.5 min-w-0">
+                          <svg
+                            className="w-4 h-4 shrink-0"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M9 3h3v6H9a3 3 0 0 1 0-6Z" />
+                            <path d="M12 3h3a3 3 0 1 1 0 6h-3V3Z" />
+                            <path d="M9 9h3v6H9a3 3 0 1 1 0-6Z" />
+                            <path d="M12 15h3a3 3 0 1 1-3 3v-3Z" />
+                            <path d="M9 15h3v3a3 3 0 1 1-3-3Z" />
+                          </svg>
+                          <span className="text-left min-w-0">
+                            <span className="block text-sm font-bold">
+                              Open in Figma
+                            </span>
+                            <span className="block text-[10px] uppercase tracking-widest opacity-60">
+                              End-to-end UI/UX file
+                            </span>
+                          </span>
+                        </span>
+                        <svg
+                          className="w-4 h-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                          <polyline points="12 5 19 12 12 19" />
+                        </svg>
+                      </a>
+                    </div>
+        </div>
+
+        {/* Hero artwork */}
+        <div className="reveal delay-4 mt-12 sm:mt-16 group relative overflow-hidden rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717]">
+          <div className="relative aspect-[16/9] overflow-hidden bg-neutral-100 dark:bg-neutral-900">
+            <Image
+              src={REEFER_SHOWCASE[0].src}
+              alt={REEFER_SHOWCASE[0].alt}
+              fill
+              priority
+              sizes="(max-width: 1400px) 100vw, 1400px"
+              className="object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
+            />
+          </div>
+          <div className="px-5 sm:px-7 py-4 flex flex-wrap items-center justify-between gap-3 border-t border-neutral-200 dark:border-neutral-800">
+            <div className="flex items-center gap-2.5">
+              <span className="label-mono text-neutral-400 dark:text-neutral-500">
+                {REEFER_META.category}
+              </span>
+              <span className="h-3 w-px bg-neutral-300 dark:bg-neutral-700" />
+              <span className="label-mono text-neutral-500 dark:text-neutral-400">
+                {REEFER_META.discipline}
+              </span>
+            </div>
+            <span className="label-mono text-neutral-400 dark:text-neutral-500">
+              {REEFER_SHOWCASE[0].caption}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Sticky section rail */}
+      <nav
+        aria-label="Case study sections"
+        className="sticky top-[73px] z-30 hidden lg:block"
+      >
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 py-4 border-y border-neutral-200 dark:border-neutral-800 bg-[#f9fafb]/85 dark:bg-[#111111]/85 backdrop-blur-md">
+            {REEFER_SECTIONS.map((s, i) => (
+              <li key={s.id}>
+                <a
+                  href={`#${s.id}`}
+                  className={`label-mono transition-colors ${
+                    active === i
+                      ? "text-neutral-900 dark:text-neutral-100"
+                      : "text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200"
+                  }`}
+                >
+                  {s.label}
+                </a>
+              </li>
             ))}
-          </div>
-        </section>
+          </ul>
+        </div>
+      </nav>
 
-        <section className="py-20 border-b border-black\/5">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-12">System Architecture</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-sm font-semibold text-neutral-900 uppercase tracking-widest mb-6">Public Pages</h3>
-              <ul className="space-y-3">
-                {["Landing Page", "About Page", "Shop Page", "Product Details", "Contact Page", "FAQ Page", "Terms & Conditions", "Privacy Policy"].map((page) => (
-                  <li key={page} className="flex items-center gap-3 text-neutral-500">
-                    <span className="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-                    {page}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold text-neutral-900 uppercase tracking-widest mb-6">Member Pages</h3>
-              <ul className="space-y-3">
-                {["Cart Page", "Checkout", "Order Confirmation", "Order Tracking", "Order History", "User Profile", "Wishlist", "Notifications"].map((page) => (
-                  <li key={page} className="flex items-center gap-3 text-neutral-500">
-                    <span className="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-                    {page}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-20 border-b border-black\/5">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-12">Key Features</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            <div className="border border-black\/5 rounded-xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-              <div className="w-full h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center border-b border-black\/5 group-hover:from-gray-200 group-hover:to-gray-300 transition">
-                <div className="text-center">
-                  <p className="text-gray-500 font-medium">Product Discovery Mockup</p>
-                  <p className="text-sm text-gray-400 mt-2">Upload image here</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="font-semibold text-neutral-900 mb-3">Product Discovery Experience</h3>
-                <p className="text-sm text-neutral-500">
-                  Clear catalog layout with comprehensive filtering tools. Product photography drives the grid with stripped-back typography, relying on visual aesthetics to influence purchasing decisions.
+      {/* Sections */}
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+        {/* 01 Overview */}
+        <section id="overview" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="01"
+            label="Overview"
+            title="What I was designing"
+          />
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
+            <div className="lg:col-span-7 space-y-5">
+              {REEFER_META.overview.map((para, i) => (
+                <p
+                  key={i}
+                  className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed"
+                >
+                  {para}
                 </p>
-              </div>
+              ))}
             </div>
-
-            <div className="border border-black\/5 rounded-xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-              <div className="w-full h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center border-b border-black\/5 group-hover:from-gray-200 group-hover:to-gray-300 transition">
-                <div className="text-center">
-                  <p className="text-gray-500 font-medium">Checkout Flow Mockup</p>
-                  <p className="text-sm text-gray-400 mt-2">Upload image here</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="font-semibold text-neutral-900 mb-3">Streamlined Checkout</h3>
-                <p className="text-sm text-neutral-500">
-                  Optimized single-page checkout with structural status nodes. Simplified flow reduces drop-off while building trust and transparency.
-                </p>
-              </div>
-            </div>
-
-            <div className="border border-black\/5 rounded-xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-              <div className="w-full h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center border-b border-black\/5 group-hover:from-gray-200 group-hover:to-gray-300 transition">
-                <div className="text-center">
-                  <p className="text-gray-500 font-medium">Navigation UI Mockup</p>
-                  <p className="text-sm text-gray-400 mt-2">Upload image here</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="font-semibold text-neutral-900 mb-3">Web Interface Layout</h3>
-                <p className="text-sm text-neutral-500">
-                  Reliable desktop layouts through structured interface grids. Components preserve legibility and interaction safety across desktop viewports.
-                </p>
-              </div>
-            </div>
-
-            <div className="border border-black\/5 rounded-xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-              <div className="w-full h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center border-b border-black\/5 group-hover:from-gray-200 group-hover:to-gray-300 transition">
-                <div className="text-center">
-                  <p className="text-gray-500 font-medium">Components Library Mockup</p>
-                  <p className="text-sm text-gray-400 mt-2">Upload image here</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="font-semibold text-neutral-900 mb-3">Component Library</h3>
-                <p className="text-sm text-neutral-500">
-                  Solid UI design system for uniform layout behaviors, button interaction phases, and product card variations across the platform.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-20 border-b border-black\/5">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-12">Design System</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-            <div className="border border-black\/5 rounded-xl p-8">
-              <h3 className="text-sm font-semibold text-neutral-900 uppercase tracking-widest mb-6">Color Palette</h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-amber-600 rounded-lg shadow-sm"></div>
-                  <div>
-                    <p className="text-xs font-medium text-gray-500">Primary</p>
-                    <p className="text-sm text-neutral-900 font-semibold">#B45309</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-neutral-900 rounded-lg shadow-sm"></div>
-                  <div>
-                    <p className="text-xs font-medium text-gray-500">Neutral</p>
-                    <p className="text-sm text-neutral-900 font-semibold">#111827</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-neutral-100 rounded-lg shadow-sm border border-black\/5"></div>
-                  <div>
-                    <p className="text-xs font-medium text-gray-500">Background</p>
-                    <p className="text-sm text-neutral-900 font-semibold">#F9FAFB</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="border border-black\/5 rounded-xl p-8">
-              <h3 className="text-sm font-semibold text-neutral-900 uppercase tracking-widest mb-6">Typography</h3>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-xs font-medium text-gray-500 mb-2">Heading</p>
-                  <p className="text-2xl font-bold text-neutral-900">Inter Bold</p>
-                  <p className="text-xs text-gray-500 mt-1">24px–72px</p>
-                </div>
-                <div>
-                  <p className="text-xs font-medium text-gray-500 mb-2">Body</p>
-                  <p className="text-base text-neutral-500">Inter Regular</p>
-                  <p className="text-xs text-gray-500 mt-1">14px–16px</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="border border-black\/5 rounded-xl p-8">
-              <h3 className="text-sm font-semibold text-neutral-900 uppercase tracking-widest mb-6">Spacing System</h3>
-              <div className="space-y-3">
-                {["4px", "8px", "12px", "16px", "24px", "32px", "48px", "64px"].map((size) => (
-                  <div key={size} className="flex items-center gap-3">
-                    <div className="w-12 bg-gray-200 h-px"></div>
-                    <p className="text-xs text-neutral-500 font-medium">{size}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-12">
-            <h3 className="text-sm font-semibold text-neutral-900 uppercase tracking-widest mb-6">Components</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { name: "Primary Button", color: "bg-amber-600 text-white" },
-                { name: "Secondary Button", color: "bg-neutral-100 text-neutral-900 border border-black\/5" },
-                { name: "Tertiary Button", color: "bg-transparent text-neutral-900 border border-black\/5" },
-                { name: "Disabled Button", color: "bg-gray-200 text-gray-400" }
-              ].map((btn) => (
-                <div key={btn.name} className="border border-black\/5 rounded-xl p-6">
-                  <button className={`w-full py-3 rounded-lg font-medium text-sm ${btn.color} transition`}>
-                    Button
-                  </button>
-                  <p className="text-xs text-neutral-500 mt-4">{btn.name}</p>
+            <div className="lg:col-span-5 grid grid-cols-2 gap-px self-start bg-neutral-200 dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
+              {REEFER_STATS.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="bg-white dark:bg-[#171717] px-5 py-6 flex flex-col gap-1"
+                >
+                  <span className="text-3xl font-black tracking-tight text-neutral-900 dark:text-white">
+                    {stat.value}
+                  </span>
+                  <span className="label-mono text-neutral-500 dark:text-neutral-400">
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="py-20 border-b border-black\/5">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-12">Additional Pages</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {[
-              { title: "Home Page", desc: "Hero, featured collections, and brand messaging" },
-              { title: "Product Details", desc: "Image gallery, sizing, reviews, and purchase flow" },
-              { title: "User Profile", desc: "Account settings, order history, and preferences" },
-              { title: "Order Tracking", desc: "Status updates, shipping information, and support" }
-            ].map((page) => (
-              <div key={page.title} className="border border-black\/5 rounded-xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-300 group">
-                <div className="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center border-b border-black\/5 group-hover:from-gray-200 group-hover:to-gray-300 transition">
-                  <div className="text-center">
-                    <p className="text-gray-500 font-medium text-sm">{page.title} Mockup</p>
-                    <p className="text-xs text-gray-400 mt-1">Upload image here</p>
+        {/* 02 Challenge */}
+        <section id="challenge" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="02"
+            label="Challenge"
+            title="Turning feedback into a system"
+          />
+          <div className="relative pl-5 sm:pl-6 border-l-2 border-neutral-900 dark:border-white mb-12">
+            <p className="label-mono text-neutral-400 dark:text-neutral-500 mb-3">
+              Problem
+            </p>
+            <p className="text-sm sm:text-base text-neutral-700 dark:text-neutral-200 leading-relaxed">
+              {REEFER_META.problem}
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            {REEFER_CHALLENGES.map((c, i) => (
+              <div
+                key={c.title}
+                className={`reveal delay-${i + 1} p-6 sm:p-7 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-300`}
+              >
+                <span className="label-mono text-neutral-400 dark:text-neutral-500 mb-3 block">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-base font-black text-neutral-900 dark:text-white tracking-tight mb-2">
+                  {c.title}
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                  {c.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 03 References */}
+        <section id="references" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="03"
+            label="References"
+            title="Design References"
+          />
+          <div className="flex flex-wrap gap-2 mb-8">
+            {REEFER_REFERENCES.map((brand, i) => (
+              <span
+                key={brand}
+                className={`reveal delay-${(i % 6) + 1} px-4 py-2.5 rounded-xl text-sm font-bold bg-white dark:bg-[#171717] border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors`}
+              >
+                {brand}
+              </span>
+            ))}
+          </div>
+          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-3xl border-l-2 border-neutral-300 dark:border-neutral-700 pl-4 italic">
+            {REEFER_REFERENCES_NOTE}
+          </p>
+        </section>
+
+        {/* 04 Process */}
+        <section id="process" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="04"
+            label="Process"
+            title="Design Process"
+          />
+          <div className="space-y-px bg-neutral-200 dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
+            {REEFER_PROCESS.map((step, i) => (
+              <div
+                key={step.num}
+                className={`reveal delay-${(i % 4) + 1} group grid sm:grid-cols-[auto_minmax(0,1fr)] gap-4 sm:gap-8 items-start bg-white dark:bg-[#171717] px-5 sm:px-7 py-6 transition-colors duration-300 hover:bg-neutral-50 dark:hover:bg-[#1c1c1c]`}
+              >
+                <span className="text-2xl font-black tracking-tight text-neutral-300 dark:text-neutral-600 transition-colors duration-300 group-hover:text-neutral-900 dark:group-hover:text-white w-12 shrink-0">
+                  {step.num}
+                </span>
+                <div className="min-w-0">
+                  <h3 className="text-base sm:text-lg font-black text-neutral-900 dark:text-white tracking-tight mb-1.5">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                    {step.body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 05 Architecture */}
+        <section id="architecture" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="05"
+            label="Architecture"
+            title="System Architecture"
+          />
+          <div className="grid md:grid-cols-2 gap-5 sm:gap-6">
+            {REEFER_ARCHITECTURE.map((group, gi) => (
+              <div
+                key={group.label}
+                className={`reveal delay-${gi + 1} p-6 sm:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717]`}
+              >
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="label-mono text-neutral-400 dark:text-neutral-500">
+                    {String(gi + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="text-sm font-black uppercase tracking-widest text-neutral-900 dark:text-white">
+                    {group.label}
+                  </h3>
+                </div>
+                <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-2.5">
+                  {group.pages.map((page) => (
+                    <li
+                      key={page}
+                      className="flex items-center gap-2.5 text-sm text-neutral-600 dark:text-neutral-300"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 dark:bg-white shrink-0" />
+                      {page}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 06 Features */}
+        <section id="features" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="06"
+            label="Features"
+            title="Key Features"
+          />
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+            {REEFER_FEATURES.map((feature, i) => (
+              <div
+                key={feature.title}
+                className={`reveal delay-${(i % 4) + 1} group p-6 sm:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-300`}
+              >
+                <span className="label-mono text-neutral-400 dark:text-neutral-500 mb-3 block">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-lg font-black text-neutral-900 dark:text-white tracking-tight mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                  {feature.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Brand artwork */}
+        <section className="reveal py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="07"
+            label="Brand Work"
+            title="Artwork & Apparel"
+            lede="Real REEFER brand output produced alongside the interface work."
+          />
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+            {REEFER_SHOWCASE.slice(1).map((item, i) => (
+              <ShowcaseCard key={item.src} item={item} index={i} />
+            ))}
+          </div>
+        </section>
+
+        {/* 08 Design System */}
+        <section id="system" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="08"
+            label="Design System"
+            title="Tokens & Components"
+          />
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-5 mb-6">
+            {/* Palette */}
+            <div className="p-6 sm:p-7 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717]">
+              <h3 className="label-mono text-neutral-400 dark:text-neutral-500 mb-5">
+                Color Palette
+              </h3>
+              <div className="space-y-3">
+                {REEFER_PALETTE.map((c) => (
+                  <div key={c.role} className="flex items-center gap-3">
+                    <span
+                      className="w-9 h-9 rounded-lg border border-neutral-200 dark:border-neutral-700 shrink-0"
+                      style={{ backgroundColor: c.hex }}
+                    />
+                    <div className="min-w-0">
+                      <p className="label-mono text-neutral-400 dark:text-neutral-500">
+                        {c.role}
+                      </p>
+                      <p className="text-sm font-bold text-neutral-900 dark:text-white">
+                        {c.hex}
+                      </p>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Typography */}
+            <div className="p-6 sm:p-7 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717]">
+              <h3 className="label-mono text-neutral-400 dark:text-neutral-500 mb-5">
+                Typography
+              </h3>
+              <div className="space-y-5">
+                {REEFER_TYPOGRAPHY.map((t) => (
+                  <div key={t.role}>
+                    <p className="label-mono text-neutral-400 dark:text-neutral-500 mb-1.5">
+                      {t.role}
+                    </p>
+                    <p
+                      className={`text-neutral-900 dark:text-white ${
+                        t.role === "Heading"
+                          ? "text-2xl font-black tracking-tight"
+                          : "text-base font-medium text-neutral-500 dark:text-neutral-400"
+                      }`}
+                    >
+                      {t.sample}
+                    </p>
+                    <p className="label-mono text-neutral-400 dark:text-neutral-500 mt-1">
+                      {t.scale}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Spacing */}
+            <div className="p-6 sm:p-7 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717]">
+              <h3 className="label-mono text-neutral-400 dark:text-neutral-500 mb-5">
+                Spacing System
+              </h3>
+              <div className="space-y-2.5">
+                {REEFER_SPACING.map((size) => (
+                  <div key={size} className="flex items-center gap-3">
+                    <span
+                      className="h-px bg-neutral-300 dark:bg-neutral-600 shrink-0"
+                      style={{ width: `${parseInt(size, 10)}px` }}
+                    />
+                    <span className="label-mono text-neutral-500 dark:text-neutral-400">
+                      {size}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Components */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {REEFER_COMPONENTS.map((c) => {
+              const tone =
+                c.tone === "primary"
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-950"
+                  : c.tone === "secondary"
+                    ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700"
+                    : c.tone === "tertiary"
+                      ? "bg-transparent text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700"
+                      : "bg-neutral-200 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-600 cursor-not-allowed";
+              return (
+                <div
+                  key={c.name}
+                  className="p-5 sm:p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717]"
+                >
+                  <button
+                    type="button"
+                    disabled={c.tone === "disabled"}
+                    className={`w-full py-3 rounded-lg text-sm font-bold transition-opacity ${tone}`}
+                  >
+                    Button
+                  </button>
+                  <p className="label-mono text-neutral-400 dark:text-neutral-500 mt-4">
+                    {c.name}
+                  </p>
                 </div>
-                <div className="p-6">
-                  <h3 className="font-semibold text-neutral-900 mb-2">{page.title}</h3>
-                  <p className="text-sm text-neutral-500">{page.desc}</p>
-                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Additional pages */}
+        <section className="reveal py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="09"
+            label="Scope"
+            title="Additional Pages"
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {REEFER_ADDITIONAL_PAGES.map((page, i) => (
+              <div
+                key={page.title}
+                className={`reveal delay-${i + 1} p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-300`}
+              >
+                <h3 className="text-base font-black text-neutral-900 dark:text-white tracking-tight mb-2">
+                  {page.title}
+                </h3>
+                <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                  {page.body}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="py-20 border-b border-black\/5">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-12">Outcomes & Impact</h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {/* 10 Outcomes */}
+        <section id="outcomes" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="10"
+            label="Outcomes"
+            title="Outcomes & Impact"
+          />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-neutral-200 dark:bg-neutral-800 rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 mb-6">
+            {REEFER_STATS.map((stat) => (
+              <div
+                key={stat.label}
+                className="bg-white dark:bg-[#171717] px-5 py-7 flex flex-col items-center text-center gap-1"
+              >
+                <span className="text-4xl font-black tracking-tight text-neutral-900 dark:text-white">
+                  {stat.value}
+                </span>
+                <span className="label-mono text-neutral-500 dark:text-neutral-400">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-5">
             {[
-              { label: "Design Screens", value: "20+" },
-              { label: "Components Built", value: "40+" },
-              { label: "Design System Pages", value: "8+" },
-              { label: "Feedback Iterations", value: "12+" }
-            ].map((metric) => (
-              <div key={metric.label} className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-8 border border-amber-200 text-center">
-                <p className="text-4xl font-bold text-amber-900 mb-2">{metric.value}</p>
-                <p className="text-sm font-medium text-amber-800">{metric.label}</p>
+              { title: "Deliverables", items: REEFER_DELIVERABLES },
+              { title: "Key Learnings", items: REEFER_LEARNINGS },
+            ].map((col, ci) => (
+              <div
+                key={col.title}
+                className={`reveal delay-${ci + 1} p-6 sm:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717]`}
+              >
+                <h3 className="label-mono text-neutral-400 dark:text-neutral-500 mb-5">
+                  {col.title}
+                </h3>
+                <ul className="space-y-3">
+                  {col.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm text-neutral-600 dark:text-neutral-300"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 dark:bg-white mt-1.5 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="font-semibold text-neutral-900 mb-6">Deliverables</h3>
-              <ul className="space-y-3">
-                {[
-                  "20+ high-fidelity desktop UI screens",
-                  "Complete UI design system with components",
-                  "Comprehensive design handoff documentation",
-                  "Multiple stakeholder feedback iterations",
-                  "Desktop web design layout specifications",
-                  "Component usage guidelines and specs"
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-neutral-500">
-                    <span className="text-amber-600 font-bold mt-0.5">✓</span>
-                    <span className="text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-neutral-900 mb-6">Key Learnings</h3>
-              <ul className="space-y-3">
-                {[
-                  "Iterative design requires flexibility and adaptability",
-                  "Clear documentation prevents production misunderstandings",
-                  "Regular communication maintains layout alignment",
-                  "Leadership clarifies decisions and removes obstacles",
-                  "Design systems create consistency at scale",
-                  "User research informs better design decisions"
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-neutral-500">
-                    <span className="text-amber-600 font-bold mt-0.5">→</span>
-                    <span className="text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </section>
 
-        <section className="py-20 border-b border-black\/5">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 mb-8">Guidelines for UI/UX Interns</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-neutral-900 mb-3">Brand Foundation</h3>
-                <p className="text-sm text-neutral-500 leading-relaxed">
-                  Understand REEFER&apos;s identity: modern, visually appealing, and user-centered. Study reference brands for inspiration while avoiding cluttered, flashy layouts that disrupt conversion funnels.
-                </p>
+        {/* 11 Guidelines */}
+        <section id="guidelines" className="reveal scroll-mt-32 py-16 sm:py-24 border-b border-neutral-200 dark:border-neutral-800">
+          <SectionTitle
+            index="11"
+            label="Handoff"
+            title="Guidelines for UI/UX Interns"
+          />
+          <div className="grid md:grid-cols-2 gap-5">
+            {REEFER_GUIDELINES.map((g, i) => (
+              <div
+                key={g.title}
+                className={`reveal delay-${(i % 4) + 1} p-6 sm:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717]`}
+              >
+                <span className="label-mono text-neutral-400 dark:text-neutral-500 mb-3 block">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-lg font-black text-neutral-900 dark:text-white tracking-tight mb-3">
+                  {g.title}
+                </h3>
+                {g.body && (
+                  <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                    {g.body}
+                  </p>
+                )}
+                {g.items && (
+                  <ul className="space-y-2.5 mt-4">
+                    {g.items.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2.5 text-sm text-neutral-600 dark:text-neutral-300"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-neutral-900 dark:bg-white mt-1.5 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <div>
-                <h3 className="font-semibold text-neutral-900 mb-3">Design Approach</h3>
-                <p className="text-sm text-neutral-500 leading-relaxed">
-                  Start with low-fidelity wireframes before moving to high-fidelity mockups. Annotate designs clearly. Collaborate with developers to ensure accurate implementation.
-                </p>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-neutral-900 mb-3">Key Responsibilities</h3>
-                <ul className="space-y-2">
-                  {[
-                    "Design wireframes, mockups, and prototypes",
-                    "Conduct user research on customer behavior",
-                    "Collaborate with developers for implementation",
-                    "Document design decisions clearly"
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-neutral-500">
-                      <span className="w-1 h-1 bg-amber-600 rounded-full"></span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-neutral-900 mb-3">Workflow Tips</h3>
-                <ul className="space-y-2">
-                  {[
-                    "Study competitor websites closely",
-                    "Use design tracking tools for progress",
-                    "Maintain consistent brand guidelines",
-                    "Iterate based on feedback cycles"
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-neutral-500">
-                      <span className="w-1 h-1 bg-amber-600 rounded-full"></span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            ))}
           </div>
-        </section>
-
-        <section className="py-16 flex flex-col sm:flex-row items-center justify-between gap-8">
-          <div>
-            <h3 className="text-3xl font-bold text-neutral-900 mb-2">Explore More Work</h3>
-            <p className="text-neutral-500">View additional projects and case studies.</p>
-          </div>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold transition whitespace-nowrap"
-          >
-            View All Projects
-            <ArrowRight size={20} />
-          </Link>
         </section>
       </div>
+
+      {/* Closing */}
+      <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-24">
+        <div className="reveal rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] p-8 sm:p-12 lg:p-16 text-center">
+          <p className="label-mono text-neutral-500 dark:text-neutral-400 mb-5">
+            Next step
+          </p>
+          <h2 className="heading-section text-3xl sm:text-4xl lg:text-5xl text-neutral-950 dark:text-white mb-5 max-w-3xl mx-auto">
+            Want the full breakdown of the work?
+          </h2>
+          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-2xl mx-auto mb-8">
+            The rest of the projects and case studies are one click away.
+          </p>
+          <div className="flex flex-wrap gap-3 justify-center">
+                      <a
+                        href={REEFER_META.figmaUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:-translate-y-0.5 hover:shadow-lg"
+                      >
+                        Open in Figma
+                      </a>
+                      <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-transparent text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-neutral-900 dark:hover:border-white hover:-translate-y-0.5"
+                      >
+                        View All Projects
+                      </Link>
+                    </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-neutral-200 dark:border-neutral-800">
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+          <p className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white">
+            RΣNZ
+          </p>
+          <p className="label-mono text-neutral-400 dark:text-neutral-500">
+            {REEFER_META.role} · {REEFER_META.timeline}
+          </p>
+          <Link
+            href="/"
+            className="label-mono text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
+          >
+            ← Back to Portfolio
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 }

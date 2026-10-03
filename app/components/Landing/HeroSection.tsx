@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { BRAND } from "../../../constants/brand";
 import { ThemeToggle } from "../theme/ThemeToggle";
 
 export default function HeroSection() {
@@ -22,12 +23,10 @@ export default function HeroSection() {
         >
           <ThemeToggle />
           <a
-            href="/resume/John_Renz_Bandianon_Resumee.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={BRAND.cvRequestHref}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-semibold tracking-wide transition-all duration-300 bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:-translate-y-0.5 hover:shadow-md"
           >
-            Resume
+            Request CV
             <svg
               className="w-3.5 h-3.5"
               viewBox="0 0 24 24"
@@ -36,11 +35,10 @@ export default function HeroSection() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
+              aria-hidden="true"
             >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="12" y1="18" x2="12" y2="12" />
-              <line x1="9" y1="15" x2="15" y2="15" />
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
             </svg>
           </a>
           <div className="hidden sm:flex items-center gap-2">

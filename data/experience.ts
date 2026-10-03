@@ -9,6 +9,11 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     period: "June 2026 – August 2026",
     logo: "/Image/CompanyLogo/phoenix.jpg",
     link: "https://www.facebook.com/phoenixpalmempire",
+    certificate: "/Image/Certificate/BizDev Certificate - John renz.png",
+    certificateMeta: {
+      orientation: "landscape",
+      caption: "Sun Life Certificate of Completion — Business Development Team, Team Padua",
+    },
     description: "Interned at the Team Padua Business Development Team as an ASA (Advisor Support Associate) intern. Supported the Advisor Services team at Sun Life Financial Philippines (Phoenix Palm Empire) with day-to-day administrative and operational workflows. Assisted in the documentation and organization of advisor-related records, client service requests, and internal process coordination. Contributed to improving team efficiency through structured tracking tools and digital support systems. Gained firsthand exposure to the operations of a major financial institution and its advisor support infrastructure.",
     highlights: [
       "Assisted Advisor Services team with operational workflows",
@@ -28,6 +33,10 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     period: "March 2026 – June 2026",
     logo: "/Image/CompanyLogo/Alpha.png",
     certificate: "/Image/Certificate/Alpha.jpg",
+    certificateMeta: {
+      orientation: "portrait",
+      caption: "Alpha Centauri Garments — UI/UX design internship certification",
+    },
     description: "Designed end-to-end UI/UX for an apparel e-commerce platform in Figma, creating wireframes and responsive prototypes that improved user experience and interface consistency. Collaborated with developers on design handoff and implementation, reducing rework. Led a small design-dev team, managing task delegation, documentation, and workflow. Maintained a consistent design system aligned with brand identity and usability goals.",
     highlights: [
       "Designed e-commerce wireframes and responsive prototypes in Figma",
@@ -47,6 +56,10 @@ export const WORK_EXPERIENCE: WorkExperience[] = [
     period: "March 2026 – May 2026",
     logo: "/Image/CompanyLogo/Boxhive.jpg",
     certificate: "/Image/Certificate/BoxHive.png",
+    certificateMeta: {
+      orientation: "landscape",
+      caption: "BoxHive Digital Solutions — UI/UX design and QA internship certification",
+    },
     description: "Designed web and mobile app screens in Figma, improving layout clarity, usability, and visual hierarchy. Created the Replica Icebreaker App UI with interactive prototype, including user flows and screen transitions. Supported QA efforts for Android app testing, documenting bugs and validating fixes. Demonstrated attention to detail and collaboration with developers.",
     highlights: [
       "Designed web and mobile application screens in Figma",
