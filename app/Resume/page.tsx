@@ -17,8 +17,8 @@ export default function Resume() {
         </Link>
 
         <a
-          href="/JohnRenz_Resume.pdf"
-          download="JohnRenz_Resume.pdf"
+          href="/resume/John_Renz_Bandianon_Resumee.pdf"
+          download="John_Renz_Bandianon_Resumee.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/15 bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 px-4 py-2 text-xs font-semibold shadow-sm hover:opacity-90 transition-opacity"

@@ -8,6 +8,6 @@ export const HERO_DATA: HeroData = {
   phone: "+63 966 798 7702",
   bio: "Full-stack developer specializing in Next.js, React, TypeScript, and Laravel. I build clean, high-performance web applications and digital systems focused on usability, reliability, and business results.",
   image: "/Image/grad-photo.jpg",
-  resume: "/JohnRenz_Resume.pdf",
+  resume: "/resume/John_Renz_Bandianon_Resumee.pdf",
   openToWork: true,
 };

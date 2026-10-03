@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { EVENTS } from "../../../data/events";
 import type { Event } from "../../../types";
 
@@ -15,9 +17,16 @@ export default function CommunitySection() {
             </span>
           </div>
           <h2 className="heading-section text-4xl sm:text-5xl lg:text-7xl text-neutral-950 dark:text-white">
-            Events & Meetups
-          </h2>
-        </div>
+                      Events &amp; Meetups
+                    </h2>
+                    <Link
+                      href="/Gallery"
+                      className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-white hover:opacity-70 transition-opacity"
+                    >
+                      See the photos
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {EVENTS.map((event: Event, index: number) => (

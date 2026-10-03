@@ -95,6 +95,15 @@ export interface SocialLink {
   image: string;
 }
 
+export interface GalleryItem {
+  src: string;
+  alt: string;
+  caption: string;
+  note: string;
+  tag: string;
+  span?: "normal" | "tall" | "wide";
+}
+
 export interface ContactDetail {
   label: string;
   value: string;
