@@ -29,97 +29,96 @@ const cgMap = CgIcons as unknown as Record<
   React.ComponentType<{ className?: string }>
 >;
 
-const SkillCard = ({
+const getIcon = (id: string) => {
+  if (id.startsWith("Fa") && faMap[id]) {
+    const Icon = faMap[id];
+    return <Icon />;
+  }
+  if (id.startsWith("Si") && siMap[id]) {
+    const Icon = siMap[id];
+    return <Icon />;
+  }
+  if (id.startsWith("Cg") && cgMap[id]) {
+    const Icon = cgMap[id];
+    return <Icon />;
+  }
+  return null;
+};
+
+/* ─── Clean icon-only tech card ─── */
+const TechIconCard = ({
   iconId,
   name,
-  proficiency,
-  description,
   index,
-}: Skill & { index: number }) => {
-  const getIcon = (id: string) => {
-    if (id.startsWith("Fa") && faMap[id]) {
-      const Icon = faMap[id];
-      return <Icon />;
-    }
-    if (id.startsWith("Si") && siMap[id]) {
-      const Icon = siMap[id];
-      return <Icon />;
-    }
-    if (id.startsWith("Cg") && cgMap[id]) {
-      const Icon = cgMap[id];
-      return <Icon />;
-    }
-    return null;
-  };
-
+}: Pick<Skill, "iconId" | "name"> & { index: number }) => {
   return (
     <div
-      className={`reveal delay-${(index % 4) + 1} p-6 sm:p-8 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors`}
+      className={`reveal delay-${(index % 6) + 1} skill-icon-card group flex flex-col items-center justify-center gap-3 p-5 sm:p-6 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-800/80 cursor-default`}
     >
-      <div className="text-neutral-900 dark:text-white text-3xl mb-4">
+      <div className="text-neutral-700 dark:text-neutral-300 text-2xl sm:text-3xl group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
         {getIcon(iconId)}
       </div>
-      <h3 className="font-bold text-neutral-900 dark:text-white mb-1 text-lg">
+      <span className="text-xs font-bold text-neutral-700 dark:text-neutral-300 tracking-wide text-center group-hover:text-neutral-900 dark:group-hover:text-white transition-colors duration-300">
         {name}
-      </h3>
-      <p className="label-mono text-neutral-500 dark:text-neutral-400 mb-3">
-        {proficiency}
-      </p>
-      <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
-        {description}
-      </p>
+      </span>
     </div>
   );
 };
 
-export default function SkillsSection() {
-  const sections = [
-    {
-      eyebrow: "Core Competencies",
-      title: "Frontend Stack",
-      items: FRONTEND_TECH,
-    },
-    {
-      eyebrow: "Architecture",
-      title: "Backend & Databases",
-      items: BACKEND_TECH,
-    },
-    {
-      eyebrow: "UI/UX Engineering",
-      title: "Design Tools",
-      items: DESIGN_TOOLS,
-    },
-    {
-      eyebrow: "Workflow",
-      title: "Developer Tools",
-      items: [...DEV_TOOLS, ...MANAGEMENT_TOOLS],
-    },
-  ];
+/* ─── All technologies as a flat list for the unified grid ─── */
+const ALL_TECH: Pick<Skill, "iconId" | "name">[] = [
+  // Frontend
+  ...FRONTEND_TECH.map(({ iconId, name }) => ({ iconId, name })),
+  // Backend
+  ...BACKEND_TECH.map(({ iconId, name }) => ({ iconId, name })),
+  // Design Tools
+  ...DESIGN_TOOLS.map(({ iconId, name }) => ({ iconId, name })),
+  // Dev Tools
+  ...DEV_TOOLS.map(({ iconId, name }) => ({ iconId, name })),
+];
 
+/* ─── Category-based display for organized view ─── */
+const TECH_CATEGORIES = [
+  {
+    eyebrow: "Core Competencies",
+    title: "Technologies & Tools",
+    items: [
+      ...FRONTEND_TECH,
+      ...BACKEND_TECH,
+      ...DESIGN_TOOLS,
+      ...DEV_TOOLS,
+      ...MANAGEMENT_TOOLS,
+    ],
+  },
+];
+
+export default function SkillsSection() {
   return (
     <div className="relative w-full bg-transparent transition-colors duration-300 py-16 sm:py-24 lg:py-32">
-      <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 space-y-20 sm:space-y-32">
-        {sections.map((section, idx) => (
-          <div key={idx} className="space-y-8 sm:space-y-12">
-            <div className="reveal flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
-                <span className="label-mono text-neutral-500 dark:text-neutral-400">
-                  {section.eyebrow}
-                </span>
-              </div>
-              <h2 className="heading-section text-3xl sm:text-4xl lg:text-5xl text-neutral-950 dark:text-white">
-                {section.title}
-              </h2>
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 space-y-20 sm:space-y-28">
+        {/* Technologies Grid — Icon only, no descriptions */}
+        <div className="space-y-8 sm:space-y-12">
+          <div className="reveal flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
+              <span className="label-mono text-neutral-500 dark:text-neutral-400">
+                Core Competencies
+              </span>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {section.items.map((skill, i) => (
-                <SkillCard key={i} index={i} {...skill} />
-              ))}
-            </div>
+            <h2 className="heading-section text-3xl sm:text-4xl lg:text-5xl text-neutral-950 dark:text-white">
+              Technologies & Tools
+            </h2>
           </div>
-        ))}
 
+          {/* Icon Grid */}
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-3 sm:gap-4">
+            {TECH_CATEGORIES[0].items.map((skill, i) => (
+              <TechIconCard key={i} index={i} iconId={skill.iconId} name={skill.name} />
+            ))}
+          </div>
+        </div>
+
+        {/* Hard Skills + Soft Skills */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="space-y-8">
             <div className="reveal flex flex-col gap-4">

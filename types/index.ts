@@ -85,6 +85,7 @@ export interface Project {
   workType?: string;
   featured?: boolean;
   tags?: string[];
+  screenshots?: string[];
 }
 
 export interface Category {

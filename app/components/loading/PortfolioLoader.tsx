@@ -37,7 +37,7 @@ export default function PortfolioLoader({
     }
     // Fonts are part of "ready" too — the display face swapping in after the
     // fade is a visible pop.
-    document.fonts?.ready.then(markReady).catch(() => {});
+    document.fonts?.ready.then(markReady).catch(() => { });
 
     let shown = 1;
 
@@ -101,7 +101,7 @@ export default function PortfolioLoader({
           className="text-center"
         >
           <p className="heading-display text-4xl md:text-6xl text-white tracking-widest">
-            R<span className="text-neutral-500 font-light">Σ</span>NZ
+            R<span className="text-neutral-500 font-light">Σ</span>
           </p>
         </motion.div>
       </div>

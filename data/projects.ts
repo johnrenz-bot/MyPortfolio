@@ -4,8 +4,8 @@ export const WEB_DEVELOPMENT: Project[] = [
   {
     id: "capstone",
     title: "Groove (Capstone Project)",
-    href: "https://groove-sand.vercel.app/",
-    image: "/Image/Groove.png",
+    href: "https://grooveph.vercel.app/",
+    image: "/Image/GroovePH.png",
     description:
       "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.",
     techStack: [
@@ -21,6 +21,13 @@ export const WEB_DEVELOPMENT: Project[] = [
     workType: "web-development",
     featured: true,
     tags: ["Agency"],
+    screenshots: [
+      "/Image/GroovePH.png",
+      "/Image/Groove/Desktop1.png",
+      "/Image/Groove/GrooveLogin.png",
+      "/Image/Groove/blur.png",
+      "/Image/Groove/42.png",
+    ],
   },
   {
     id: "tp-client-portal",
@@ -32,8 +39,34 @@ export const WEB_DEVELOPMENT: Project[] = [
     workType: "web-development",
     featured: true,
     tags: ["Portal"],
-  }
+    screenshots: [
+      "/Image/TP/TP.png",
+      "/Image/TP/MAIN.png",
+      "/Image/TP/TPLOGIN.png",
+      "/Image/TP/TP2.png",
+      "/Image/TP/TP3.png",
+    ],
+  },
+  {
+    id: "reefer-frontend",
+    title: "Reefer",
+    href: "/Reefer",
+    image: "/Image/UI/Reefer.png",
+    description: "Modern mobile application interface with intuitive user experience design for a streetwear brand.",
+    techStack: ["Figma", "UI/UX Design"],
+    workType: "web-development",
+    featured: true,
+    tags: ["Design Systems"],
+    screenshots: [
+      "/Image/UI/Reefer.png",
+      "/Image/Reefer/REEFERLAND.png",
+      "/Image/Reefer/REEFERR.png",
+      "/Image/Reefer/Poster.png",
+      "/Image/Reefer/REEFER.png",
+    ],
+  },
 ];
+
 
 export const WEBSITE_DESIGN: Project[] = [
   {

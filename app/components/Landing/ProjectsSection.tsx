@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import { FaGithub, FaExternalLinkAlt, FaPlay } from "react-icons/fa";
 import { RxArrowRight, RxArrowLeft } from "react-icons/rx";
+import { HiChevronDown } from "react-icons/hi";
 
 import {
   WEB_DEVELOPMENT,
@@ -23,10 +24,192 @@ import type { Project } from "../../../types";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-/* ─── Featured Projects (case-study style) ─── */
+const SW_CSS = `
+.sw-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 2rem;
+  background: #060709;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.85);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+.sw-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9), 0 0 80px -40px rgba(16, 185, 129, 0.35);
+}
+.sw-card-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 40% at 50% 100%, rgba(16, 185, 129, 0.07), transparent 70%),
+    radial-gradient(50% 35% at 85% 55%, rgba(99, 102, 241, 0.06), transparent 70%),
+    #060709;
+}
+.sw-gallery {
+  position: relative;
+  z-index: 1;
+  background: #060709;
+}
+.sw-main {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+.sw-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(6, 7, 9, 0) 62%, rgba(6, 7, 9, 0.75) 88%, #060709 100%),
+    radial-gradient(120% 100% at 50% 40%, transparent 60%, rgba(6, 7, 9, 0.35) 100%);
+}
+.sw-thumbs {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.25rem 1rem 1.25rem;
+  overflow-x: auto;
+  background: linear-gradient(to bottom, #060709, #08090c);
+  scrollbar-width: none;
+}
+.sw-thumbs::-webkit-scrollbar {
+  display: none;
+}
+.sw-thumb {
+  position: relative;
+  flex: 0 0 clamp(150px, 24%, 240px);
+  overflow: hidden;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 0.75rem;
+  background: #0b0d10;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  opacity: 0.55;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease,
+    border-color 0.35s ease, box-shadow 0.45s ease;
+}
+.sw-thumb img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sw-thumb:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.9), 0 0 24px -8px rgba(16, 185, 129, 0.35);
+}
+.sw-thumb:hover img {
+  transform: scale(1.07);
+}
+.sw-thumb--active {
+  opacity: 1;
+  border-color: rgba(52, 211, 153, 0.7);
+  box-shadow: 0 0 28px -8px rgba(16, 185, 129, 0.45);
+}
+.sw-thumb-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.35s ease;
+}
+.sw-thumb-bar--active {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+.sw-info {
+  position: relative;
+  z-index: 1;
+  background:
+    radial-gradient(70% 90% at 0% 0%, rgba(16, 185, 129, 0.06), transparent 65%),
+    radial-gradient(60% 80% at 100% 100%, rgba(99, 102, 241, 0.05), transparent 65%),
+    linear-gradient(to bottom, #08090c 0%, #07080a 55%, #050608 100%);
+}
+.sw-badge {
+  display: inline-block;
+  padding: 0.3rem 0.65rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #d4d4d8;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  cursor: default;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease,
+    background 0.3s ease, border-color 0.3s ease, box-shadow 0.35s ease;
+}
+.sw-badge:hover {
+  transform: translateY(-2px);
+  color: #ffffff;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(52, 211, 153, 0.45);
+  box-shadow: 0 8px 20px -8px rgba(16, 185, 129, 0.45);
+}
+.sw-btn-primary,
+.sw-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-decoration: none;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.4s ease, color 0.3s ease;
+}
+.sw-btn-primary {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+}
+.sw-btn-primary:hover {
+  background: rgba(16, 185, 129, 0.22);
+  border-color: rgba(52, 211, 153, 0.75);
+  box-shadow: 0 0 30px -6px rgba(16, 185, 129, 0.55);
+}
+.sw-btn-secondary {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.sw-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 26px -8px rgba(255, 255, 255, 0.25);
+}
+.sw-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.5rem;
+  margin-left: -0.5rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: 1px solid transparent;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #8a8a93;
+  cursor: pointer;
+  transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+.sw-toggle:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+`;
+
 const FEATURED_PROJECTS = [
   {
-    ...WEB_DEVELOPMENT[0], // Groove
+    ...WEB_DEVELOPMENT[0],
     role: "Full-Stack Developer & Team Lead",
     problem:
       "Performing arts communities in Bulacan lacked a centralized platform for discovering events, managing bookings, and connecting with local artists.",
@@ -43,8 +226,8 @@ const FEATURED_PROJECTS = [
       "Capstone project demonstrating full-stack engineering from planning through deployment, with real users and stakeholders.",
   },
   {
-    ...WEB_DEVELOPMENT[1], // TP Client Portal
-    role: "Frontend Developer",
+    ...WEB_DEVELOPMENT[1],
+    role: "Full-Stack Developer",
     problem:
       "A service team needed a centralized client portal for managing communications, requests, and service workflows.",
     solution:
@@ -59,8 +242,8 @@ const FEATURED_PROJECTS = [
       "Practical client-facing web application with real-world business utility.",
   },
   {
-    ...UI_UX_DESIGNS[0], // Reefer
-    role: "UI/UX Designer",
+    ...WEB_DEVELOPMENT[2],
+    role: "Frontend Developer",
     problem:
       "A streetwear brand needed a cohesive, modern mobile application interface that reflected its identity.",
     solution:
@@ -76,6 +259,80 @@ const FEATURED_PROJECTS = [
   },
 ];
 
+function CinematicGallery({
+  screenshots,
+  title,
+}: {
+  screenshots: string[];
+  title: string;
+}) {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const thumbScrollRef = useRef<HTMLDivElement>(null);
+
+  if (!screenshots || screenshots.length === 0) return null;
+
+  const mainSrc = screenshots[activeIdx];
+  const thumbIndices = screenshots.map((_, i) => i);
+
+  return (
+    <div className="sw-gallery">
+      <div className="sw-main">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIdx}
+            initial={{ opacity: 0, scale: 1.01 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="relative w-full aspect-[16/9] sm:aspect-[16/8] lg:aspect-[21/9]"
+          >
+            <Image
+              src={mainSrc}
+              alt={`${title} – screenshot ${activeIdx + 1}`}
+              fill
+              sizes="(max-width: 768px) 100vw, 1400px"
+              className="object-cover"
+              priority
+            />
+            <div className="sw-vignette" />
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="absolute bottom-4 right-4 z-10">
+          <span className="px-2.5 py-1 rounded-lg bg-neutral-950/70 backdrop-blur-md text-white/80 text-[10px] font-mono font-bold tracking-widest border border-white/10">
+            {String(activeIdx + 1).padStart(2, "0")} /{" "}
+            {String(screenshots.length).padStart(2, "0")}
+          </span>
+        </div>
+      </div>
+
+      <div ref={thumbScrollRef} className="sw-thumbs">
+        {thumbIndices.map((i) => (
+          <button
+            key={i}
+            onClick={() => setActiveIdx(i)}
+            className={`sw-thumb ${i === activeIdx ? "sw-thumb--active" : ""}`}
+            aria-label={`View screenshot ${i + 1}`}
+          >
+            <div className="relative w-full aspect-[16/10] overflow-hidden">
+              <Image
+                src={screenshots[i]}
+                alt={`${title} thumb ${i + 1}`}
+                fill
+                sizes="240px"
+                className="object-cover"
+              />
+            </div>
+            <div
+              className={`sw-thumb-bar ${i === activeIdx ? "sw-thumb-bar--active" : ""}`}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function FeaturedProjectCard({
   project,
   index,
@@ -83,126 +340,203 @@ function FeaturedProjectCard({
   project: (typeof FEATURED_PROJECTS)[0];
   index: number;
 }) {
-  const isEven = index % 2 === 0;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-60px" });
+  const infoRef = useRef<HTMLDivElement>(null);
+  const infoInView = useInView(infoRef, { once: true, margin: "-30px" });
+  const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <div
-      className={`reveal delay-${index + 1} grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start py-12 sm:py-16 ${index > 0 ? "border-t border-neutral-200 dark:border-neutral-800" : ""}`}
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: index * 0.15, ease: EASE }}
+      className="sw-card group"
     >
-      {/* Image */}
-      <div className={`relative group ${isEven ? "" : "lg:order-2"}`}>
-        <div className="relative aspect-[16/10] rounded-[2rem] overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </div>
+      <div className="sw-card-glow" />
 
-        {/* Quick action links overlay */}
-        <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-          {project.href && project.href !== "" && (
-            <a
-              href={project.href}
-              target={project.href.startsWith("http") ? "_blank" : undefined}
-              rel={
-                project.href.startsWith("http")
-                  ? "noopener noreferrer"
-                  : undefined
-              }
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white text-[10px] font-bold uppercase tracking-wider rounded-lg border border-neutral-200 dark:border-neutral-700 shadow-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            >
-              <FaExternalLinkAlt className="text-[9px]" />
-              Live Demo
-            </a>
-          )}
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white text-[10px] font-bold uppercase tracking-wider rounded-lg border border-neutral-200 dark:border-neutral-700 shadow-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            >
-              <FaGithub className="text-xs" />
-              Code
-            </a>
-          )}
-        </div>
-      </div>
+      {project.screenshots && project.screenshots.length > 0 && (
+        <CinematicGallery
+          screenshots={project.screenshots}
+          title={project.title}
+        />
+      )}
 
-      {/* Content */}
-      <div className={`flex flex-col gap-5 ${isEven ? "" : "lg:order-1"}`}>
-        {/* Meta */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="label-mono text-neutral-500 dark:text-neutral-400">
-            {project.role}
-          </span>
-        </div>
+      <div ref={infoRef} className="sw-info">
+        <div className="relative z-10 px-6 sm:px-8 lg:px-10 py-6 sm:py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={infoInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
+            className="flex items-center gap-2 mb-3"
+          >
+            <div className="w-2 h-2 rounded-full bg-emerald-400 expand-pulse" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+              {project.role}
+            </span>
+          </motion.div>
 
-        {/* Title */}
-        <h3 className="heading-section text-2xl sm:text-3xl lg:text-4xl text-neutral-900 dark:text-white">
-          {project.title}
-        </h3>
+          <motion.h3
+            initial={{ opacity: 0, y: 14 }}
+            animate={infoInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
+            className="heading-section text-2xl sm:text-3xl lg:text-4xl text-white mb-2"
+          >
+            {project.title}
+          </motion.h3>
 
-        {/* Problem & Solution */}
-        <div className="space-y-3">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">
-              The Challenge
-            </p>
-            <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed">
-              {project.problem}
-            </p>
-          </div>
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500 mb-1">
-              What I Built
-            </p>
-            <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed">
-              {project.solution}
-            </p>
-          </div>
-        </div>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={infoInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
+            className="text-sm sm:text-base text-neutral-400 max-w-3xl leading-relaxed mb-5"
+          >
+            {project.description}
+          </motion.p>
 
-        {/* Key Contributions */}
-        <div className="space-y-2">
-          {project.highlights.slice(0, 4).map((h, i) => (
-            <div key={i} className="flex items-start gap-2.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-neutral-900 dark:bg-white mt-1.5 flex-shrink-0" />
-              <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                {h}
-              </span>
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={infoInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
+            className="flex flex-wrap items-center gap-3"
+          >
+            <div className="flex flex-wrap gap-1.5">
+              {(project.techStack || []).slice(0, 6).map((tech) => (
+                <span key={tech} className="sw-badge">
+                  {tech}
+                </span>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Tech Stack */}
-        {project.techStack && project.techStack.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 pt-1">
-            {project.techStack.map((tech) => (
-              <span
-                key={tech}
-                className="px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-[10px] font-mono font-semibold tracking-wider uppercase border border-neutral-200 dark:border-neutral-700"
+            <div className="flex-1" />
+
+            <div className="flex items-center gap-2.5">
+              {project.href && project.href !== "" && (
+                <motion.a
+                  href={project.href}
+                  target={project.href.startsWith("http") ? "_blank" : "_self"}
+                  rel={
+                    project.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  className="sw-btn-primary"
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                >
+                  <FaPlay className="text-[8px]" />
+                  View Project
+                </motion.a>
+              )}
+              {project.github && (
+                <motion.a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="sw-btn-secondary"
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                >
+                  <FaGithub className="text-xs" />
+                  Code
+                </motion.a>
+              )}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={infoInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.3, ease: EASE }}
+            className="mt-6 border-t border-white/[0.06] pt-4"
+          >
+            <motion.button
+              onClick={() => setShowDetails(!showDetails)}
+              className="sw-toggle"
+              whileHover={{ x: 2 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <motion.div
+                animate={{ rotate: showDetails ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
               >
-                {tech}
-              </span>
-            ))}
-          </div>
-        )}
+                <HiChevronDown className="w-4 h-4" />
+              </motion.div>
+              {showDetails ? "Hide Details" : "Case Study"}
+            </motion.button>
+          </motion.div>
 
-        {/* Takeaway */}
-        <p className="text-xs text-neutral-500 dark:text-neutral-400 italic border-l-2 border-neutral-300 dark:border-neutral-700 pl-3">
-          {project.takeaway}
-        </p>
+          <AnimatePresence>
+            {showDetails && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.45, ease: EASE }}
+                className="overflow-hidden"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
+                  <div className="space-y-5">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-2">
+                        The Challenge
+                      </p>
+                      <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
+                        {project.problem}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-2">
+                        What I Built
+                      </p>
+                      <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
+                        {project.solution}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-3">
+                      Key Contributions
+                    </p>
+                    <div className="space-y-2.5">
+                      {project.highlights.slice(0, 5).map((h, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: -8 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
+                          className="flex items-start gap-2.5"
+                        >
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 mt-1.5 flex-shrink-0" />
+                          <span className="text-sm text-neutral-300">{h}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.4, delay: 0.4 }}
+                      className="mt-5 text-xs text-neutral-500 italic border-l-2 border-neutral-700 pl-3"
+                    >
+                      {project.takeaway}
+                    </motion.p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-/* ─── Category Gallery Modal ─── */
 function ProjectModal({
   project,
   onClose,
@@ -314,7 +648,6 @@ function ProjectModal({
   );
 }
 
-/* ─── Category Gallery View ─── */
 function GalleryProjectCard({
   item,
   onClick,
@@ -336,9 +669,7 @@ function GalleryProjectCard({
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
       />
-      {/* Scrim */}
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-neutral-950/90 via-neutral-950/40 to-transparent transition-opacity duration-300" />
-      {/* Info */}
       <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10">
         <h4 className="text-sm sm:text-base font-bold text-white tracking-tight mb-1 truncate group-hover:-translate-y-0.5 transition-transform duration-300">
           {item.title}
@@ -429,11 +760,11 @@ function CategoryView({
   );
 }
 
-/* ─── Main Section ─── */
 export default function ProjectsSection() {
   const [view, setView] = useState<"featured" | "gallery">("featured");
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryKey>("web-dev");
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: "left" | "right") => {
@@ -451,6 +782,7 @@ export default function ProjectsSection() {
 
   return (
     <div className="relative w-full bg-transparent transition-colors duration-300 py-16 sm:py-24 lg:py-32">
+      <style>{SW_CSS}</style>
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
         <AnimatePresence mode="wait">
           {view === "featured" ? (
@@ -461,8 +793,7 @@ export default function ProjectsSection() {
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.3 }}
             >
-              {/* Section Header */}
-              <div className="reveal flex flex-col gap-6 mb-8">
+              <div className="reveal flex flex-col gap-6 mb-12">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
                   <span className="label-mono text-neutral-500 dark:text-neutral-400">
@@ -480,17 +811,17 @@ export default function ProjectsSection() {
                 </div>
               </div>
 
-              {/* Featured Case Studies */}
-              {FEATURED_PROJECTS.map((project, index) => (
-                <FeaturedProjectCard
-                  key={project.id}
-                  project={project}
-                  index={index}
-                />
-              ))}
+              <div className="space-y-10">
+                {FEATURED_PROJECTS.map((project, index) => (
+                  <FeaturedProjectCard
+                    key={project.id}
+                    project={project}
+                    index={index}
+                  />
+                ))}
+              </div>
 
-              {/* Category Gallery Browser */}
-              <div className="reveal pt-16 sm:pt-24 border-t border-neutral-200 dark:border-neutral-800">
+              <div className="reveal pt-16 sm:pt-24 border-t border-neutral-200 dark:border-neutral-800 mt-16">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
                   <div>
                     <h3 className="heading-section text-2xl sm:text-3xl text-neutral-900 dark:text-white">

@@ -279,6 +279,302 @@ img {
   }
 }
 
+/* ============================================
+   CINEMATIC GALLERY — Featured Projects
+   ============================================ */
+
+/* Featured project card container */
+.featured-card {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(10, 10, 10, 0.85);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.featured-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 20px 80px -20px rgba(0, 0, 0, 0.6),
+    0 0 60px -30px rgba(52, 211, 153, 0.06);
+}
+
+/* Ambient glow behind each card */
+.featured-card-glow {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(52, 211, 153, 0.04) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.featured-card:hover .featured-card-glow {
+  opacity: 1;
+}
+
+/* Dark info area below gallery */
+.featured-card-info {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.95) 0%,
+    rgba(14, 14, 14, 0.98) 40%,
+    rgba(18, 18, 18, 1) 100%
+  );
+}
+
+/* Gradient bridge — blends gallery bottom into info */
+.featured-card-info-gradient {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(10, 10, 10, 0.95)
+  );
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Gallery wrapper */
+.cinematic-gallery {
+  position: relative;
+}
+
+/* Large main image */
+.cinematic-main-image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1.5rem 1.5rem 0 0;
+  background: #0a0a0a;
+}
+
+/* Subtle vignette over the main image */
+.cinematic-vignette {
+  background:
+    radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.3) 100%),
+    linear-gradient(to top, rgba(10,10,10,0.4) 0%, transparent 40%);
+}
+
+/* Thumbnail strip */
+.cinematic-thumb-strip {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(10, 10, 10, 0.7);
+}
+
+.cinematic-thumb-strip::-webkit-scrollbar {
+  height: 0;
+  display: none;
+}
+
+/* Individual thumbnail */
+.cinematic-thumb {
+  position: relative;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: calc(25% - 5px);
+  min-width: 120px;
+  border-radius: 0.625rem;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.45;
+  background: #0a0a0a;
+}
+
+.cinematic-thumb:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.cinematic-thumb--active {
+  opacity: 1;
+  border-color: rgba(52, 211, 153, 0.4);
+  box-shadow: 0 0 24px rgba(52, 211, 153, 0.08);
+}
+
+.cinematic-thumb--active:hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Active indicator bar below thumb */
+.cinematic-thumb-bar {
+  height: 2px;
+  width: 100%;
+  background: transparent;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cinematic-thumb-bar--active {
+  background: linear-gradient(90deg, rgba(52, 211, 153, 0.9), rgba(52, 211, 153, 0.2));
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.3);
+}
+
+/* ── Tech badge with hover lift + glow ── */
+.featured-tech-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: default;
+}
+
+.featured-tech-badge:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 12px rgba(52, 211, 153, 0.06);
+}
+
+/* ── Primary action button (View Project) ── */
+.featured-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.95));
+  color: #0a0a0a;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.featured-btn-primary:hover {
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.08);
+}
+
+/* ── Secondary action button (Code) ── */
+.featured-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.featured-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: white;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.04);
+}
+
+/* Cinematic image shine effect on hover */
+.cinematic-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.cinematic-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  transition: left 0.8s ease;
+  pointer-events: none;
+}
+
+.cinematic-shine:hover::after {
+  left: 100%;
+}
+
+/* Skill icon hover glow */
+.skill-icon-card {
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skill-icon-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.dark .skill-icon-card:hover {
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.05);
+}
+
+/* Featured project card entrance */
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-entrance {
+  animation: cardSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Project expand indicator pulse */
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.expand-pulse {
+  animation: subtlePulse 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
