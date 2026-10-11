@@ -5,9 +5,9 @@ export const WEB_DEVELOPMENT: Project[] = [
     id: "capstone",
     title: "Groove (Capstone Project)",
     href: "https://grooveph.vercel.app/",
-    image: "/Image/GroovePH.png",
+    image: "/Image/Groove/GroovePH.png",
     description:
-      "A Bulacan all-in-one performing arts hub with smart chat support and real-time event management.",
+      "A Bulacan all-in-one performing arts hub — connecting artists, studios, coaches, and audiences with real-time event management, appointment scheduling, role-based access, and an artist directory.",
     techStack: [
       "Next.js",
       "Supabase",
@@ -20,9 +20,9 @@ export const WEB_DEVELOPMENT: Project[] = [
     github: "https://github.com/johnrenzbandianonteampadua-a11y/Groove",
     workType: "web-development",
     featured: true,
-    tags: ["Agency"],
+    tags: ["Capstone"],
     screenshots: [
-      "/Image/GroovePH.png",
+      "/Image/Groove/GroovePH.png",
       "/Image/Groove/Desktop1.png",
       "/Image/Groove/GrooveLogin.png",
       "/Image/Groove/blur.png",
@@ -30,10 +30,26 @@ export const WEB_DEVELOPMENT: Project[] = [
     ],
   },
   {
+    id: "grooveyyph-chatbot",
+    title: "GrooveyyPH — AI Chatbot",
+    href: "https://grooveyph.vercel.app/",
+    image: "/Image/GDG/GDG DevFest GrooveyAI.png",
+    description:
+      "An AI chatbot focused on Philippine performing arts — helping users explore cultural events, arts communities, and relevant performing arts information. Showcased at GDG DevFest Philippines.",
+    techStack: ["AI Chatbot", "Philippine Performing Arts"],
+    github: "https://github.com/johnrenz-bot/GroooveyAI-",
+    workType: "web-development",
+    featured: true,
+    tags: ["AI", "GDG"],
+    screenshots: [
+      "/Image/GDG/GDG DevFest GrooveyAI.png",
+    ],
+  },
+  {
     id: "tp-client-portal",
     title: "TP Client Portal",
     href: "https://tpclientportal.vercel.app/",
-    image: "/Image/TP.png",
+    image: "/Image/TP/TP.png",
     description: "Client portal web application built with Next.js, React, and Tailwind CSS for client communications, requests, and service management.",
     techStack: ["Next.js", "React", "TailwindCSS"],
     workType: "web-development",
@@ -549,6 +565,14 @@ export const CERTS: Project[] = [
     image: "/Image/Certificate/oracle.jpg",
     description:
       "Certification in Oracle database fundamentals, including data management, SQL queries, and database structure operations.",
+  },
+  {
+    id: "c-gdg",
+    title: "GDG on Campus Certificate",
+    href: "/Image/Certificate/Certificate - gdg Google Delopever Group.jpg",
+    image: "/Image/Certificate/Certificate - gdg Google Delopever Group.jpg",
+    description:
+      "Certificate of participation from Google Developer Groups (GDG) on Campus, recognizing active involvement in the developer community and GDG DevFest events.",
   },
 ];
 

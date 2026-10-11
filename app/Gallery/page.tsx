@@ -259,6 +259,20 @@ export default function GalleryPage() {
           <p className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white">
             RΣNZ
           </p>
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="/gdg"
+              className="label-mono text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
+            >
+              GDG →
+            </Link>
+            <Link
+              href="/devcon"
+              className="label-mono text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
+            >
+              Devcon →
+            </Link>
+          </div>
           <Link
             href="/Journey"
             className="label-mono text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"

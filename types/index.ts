@@ -63,6 +63,8 @@ export interface Event {
   role: string;
   description: string;
   badge: string;
+  href?: string;
+  logo?: string;
 }
 
 export interface Education {

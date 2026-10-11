@@ -279,7 +279,7 @@ export default function Groove() {
 
             <div className="relative overflow-hidden rounded-[2rem] border border-[var(--text)]/10 aspect-video sm:aspect-[21/9]">
               <Image
-                src="/Image/Groove.png"
+                src="/Image/Groove/GroovePH.png"
                 alt="Groove Platform Hero"
                 fill
                 className="object-cover"

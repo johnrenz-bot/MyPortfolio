@@ -6,6 +6,8 @@ import { AnimatePresence, motion, useInView } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt, FaPlay } from "react-icons/fa";
 import { RxArrowRight, RxArrowLeft } from "react-icons/rx";
 import { HiChevronDown } from "react-icons/hi";
+import { MagneticButton } from "../../../components/animations/MagneticButton/MagneticButton";
+import { RevealText } from "../../../components/animations/RevealText/RevealText";
 
 import {
   WEB_DEVELOPMENT,
@@ -48,6 +50,22 @@ const SW_CSS = `
     radial-gradient(60% 40% at 50% 100%, rgba(16, 185, 129, 0.07), transparent 70%),
     radial-gradient(50% 35% at 85% 55%, rgba(99, 102, 241, 0.06), transparent 70%),
     #060709;
+}
+.sw-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--mouse-x) var(--mouse-y),
+    rgba(16, 185, 129, 0.15),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.sw-card:hover .sw-spotlight {
+  opacity: 1;
 }
 .sw-gallery {
   position: relative;
@@ -210,52 +228,115 @@ const SW_CSS = `
 const FEATURED_PROJECTS = [
   {
     ...WEB_DEVELOPMENT[0],
+    href: "https://grooveph.vercel.app/",
+    description:
+      "Groove is a Bulacan all-in-one performing arts hub built as my BSIT capstone project at STI College. It connects artists, studios, coaches, and audiences through real-time event management, appointment scheduling, and role-based access for different user types.",
+    techStack: [
+      "Next.js",
+      "Supabase",
+      "TypeScript",
+      "TailwindCSS",
+      "Laravel",
+      "MySQL",
+      "XAMPP",
+    ],
+    screenshots: [
+      "/Image/Groove/GroovePH.png",
+      "/Image/Groove/Desktop1.png",
+      "/Image/Groove/GrooveLogin.png",
+      "/Image/Groove/blur.png",
+      "/Image/Groove/42.png",
+    ],
     role: "Full-Stack Developer & Team Lead",
     problem:
-      "Performing arts communities in Bulacan lacked a centralized platform for discovering events, managing bookings, and connecting with local artists.",
+      "Performing arts communities in Bulacan lacked a centralized platform for discovering events, managing bookings, and connecting with local artists and coaches.",
     solution:
-      "Built a full-stack performing arts hub with smart AI chat support, real-time event management, appointment scheduling, and a comprehensive artist directory.",
+      "Built a full-stack performing arts hub with real-time event management, appointment scheduling, role-based access control, an artist directory, and Google Maps integration — capstone project at STI College, validated with 152 survey responses.",
     highlights: [
       "Led a 3-person development team using Agile-style coordination",
-      "Integrated AI chatbot for user support and event recommendations",
-      "Built real-time appointment scheduling and event management systems",
-      "Developed responsive frontend with Next.js and TailwindCSS",
-      "Implemented backend API with Laravel and MySQL via XAMPP",
+      "Surveyed 152 users to shape requirements before writing any code",
+      "Implemented real-time appointment scheduling and event management",
+      "Built role-based access control across multiple user types",
+      "Developed backend API with Laravel and MySQL via XAMPP",
     ],
     takeaway:
-      "Capstone project demonstrating full-stack engineering from planning through deployment, with real users and stakeholders.",
+      "Capstone project held to ISO/IEC 25010:2014 quality standards — from survey to deployment with real stakeholders.",
   },
   {
     ...WEB_DEVELOPMENT[1],
-    role: "Full-Stack Developer",
+    href: "https://grooveyph.vercel.app/",
+    github: "https://github.com/johnrenz-bot/GroooveyAI-",
+    description:
+      "GrooveyyPH is an AI chatbot focused on Philippine performing arts — helping users explore cultural events, arts communities, and relevant performing arts information. Showcased as a student project at GDG DevFest Philippines.",
+    techStack: ["AI Chatbot", "Philippine Performing Arts"],
+    screenshots: [
+      "/Image/GDG/GDG DevFest GrooveyA.png",
+      "/Image/GDG/GDG DevFest GrooveyAII.png",
+      "/Image/GDG/GDG DevFest GrooveyAI3.png",
+      "/Image/GDG/GDG DevFest GrooveyAI4.png",
+      "/Image/GDG/GDG DevFest GrooveyAI5.png",
+    ],
+    role: "AI Chatbot Project",
     problem:
-      "A service team needed a centralized client portal for managing communications, requests, and service workflows.",
+      "There was no conversational tool that could answer questions specifically about Philippine performing arts — its history, communities, upcoming events, and cultural context.",
     solution:
-      "Developed a clean, responsive client portal web application focused on intuitive navigation, clear communication flows, and organized service management.",
+      "Developed GrooveyyPH as an AI chatbot focused on Philippine performing arts, giving users a natural-language interface to explore arts culture and relevant community information.",
     highlights: [
-      "Built with Next.js and React for a fast, modern user experience",
-      "Implemented responsive UI with Tailwind CSS",
-      "Designed client communication and request management flows",
-      "Focused on usability and clear information hierarchy",
+      "AI chatbot focused on Philippine performing arts and cultural events",
+      "Showcased at GDG DevFest Philippines as a student project",
+      "Designed to complement the Groove platform ecosystem",
     ],
     takeaway:
-      "Practical client-facing web application with real-world business utility.",
+      "A separate AI project built alongside the Groove capstone — exploring how conversational AI can connect people with Philippine arts culture.",
   },
   {
     ...WEB_DEVELOPMENT[2],
-    role: "Frontend Developer",
+    description:
+      "Team Padua Client Management Portal — built during the Sun Life internship. Manages clients, advisors, interns, tasks, attendance, birthday greetings, a CPST prospect tracker, an analytics dashboard, and internal messaging with role-based access for Admin, Advisor, and Intern.",
+    techStack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "Supabase",
+      "PostgreSQL",
+      "Vercel",
+    ],
+    role: "Full-Stack Developer — Sun Life, Team Padua",
     problem:
-      "A streetwear brand needed a cohesive, modern mobile application interface that reflected its identity.",
+      "Team Padua at Sun Life Financial Philippines needed a centralized portal to manage client servicing, advisor coordination, intern onboarding, and day-to-day operations.",
     solution:
-      "Designed a complete mobile app UI in Figma with intuitive navigation, brand-aligned visual language, and interactive prototype for developer handoff.",
+      "Designed and deployed a full-stack client management portal with authentication, RBAC (Admin / Advisor / Intern), real-time data sync via Supabase, and a complete business operations suite.",
     highlights: [
-      "Designed end-to-end mobile app interface in Figma",
-      "Created interactive prototype with user flows and screen transitions",
-      "Maintained consistent design system aligned with brand identity",
-      "Focused on intuitive UX and visual hierarchy",
+      "Implemented authentication with role-based access (Admin / Advisor / Intern)",
+      "Built client servicing tracking, task management, and attendance modules",
+      "Added birthday greetings, CPST prospect tracker, and analytics dashboard",
+      "Integrated real-time data syncing and internal messaging via Supabase",
+      "Deployed to Vercel; used by real advisors and staff during the internship",
     ],
     takeaway:
-      "Demonstrates end-to-end UI/UX design process from wireframes to interactive prototype.",
+      "Production portal used by real Sun Life advisors — shipping to actual users during an internship was the most direct feedback loop I've had.",
+  },
+  {
+    ...WEB_DEVELOPMENT[3],
+    href: "/Reefer",
+    description:
+      "End-to-end UI/UX website system design for a streetwear brand, built entirely in Figma — covering screens, user flows, interactive prototypes, and a consistent design system from concept to handoff.",
+    techStack: ["Figma", "UI/UX Design", "Prototyping", "Design Systems"],
+    role: "UI/UX Designer",
+    problem:
+      "A streetwear brand needed a cohesive website design system — not just screens, but a documented set of flows, components, and interactions ready for developer handoff.",
+    solution:
+      "Designed the full website end-to-end in Figma: homepage, product pages, navigation flows, interactive prototypes with screen transitions, and a design system with reusable components and consistent spacing and type rules.",
+    highlights: [
+      "Designed all screens end-to-end in Figma — homepage, product, checkout flows",
+      "Built interactive prototype with user flows and screen transitions",
+      "Maintained a design system with reusable components and design tokens",
+      "Applied consistent visual language aligned with the streetwear brand identity",
+      "Prepared design for developer handoff with annotated specs",
+    ],
+    takeaway:
+      "Demonstrates the full UI/UX design process: research, wireframes, high-fidelity screens, interactive prototype, and a handoff-ready design system.",
   },
 ];
 
@@ -345,16 +426,39 @@ function FeaturedProjectCard({
   const infoRef = useRef<HTMLDivElement>(null);
   const infoInView = useInView(infoRef, { once: true, margin: "-30px" });
   const [showDetails, setShowDetails] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
 
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 60 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: index * 0.15, ease: EASE }}
+      onMouseMove={handleMouseMove}
+      initial={{ opacity: 0, scale: 0.95, y: 40 }}
+      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+      transition={{
+        duration: 0.8,
+        delay: index * 0.15,
+        ease: EASE,
+        type: "spring",
+        stiffness: 100,
+        damping: 20
+      }}
       className="sw-card group"
+      style={{
+        "--mouse-x": `${mousePos.x}px`,
+        "--mouse-y": `${mousePos.y}px`,
+      } as React.CSSProperties}
     >
       <div className="sw-card-glow" />
+      <div className="sw-spotlight" />
 
       {project.screenshots && project.screenshots.length > 0 && (
         <CinematicGallery
@@ -377,14 +481,14 @@ function FeaturedProjectCard({
             </span>
           </motion.div>
 
-          <motion.h3
+          <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={infoInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
             className="heading-section text-2xl sm:text-3xl lg:text-4xl text-white mb-2"
           >
-            {project.title}
-          </motion.h3>
+            <RevealText text={project.title} />
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 14 }}
@@ -413,36 +517,22 @@ function FeaturedProjectCard({
 
             <div className="flex items-center gap-2.5">
               {project.href && project.href !== "" && (
-                <motion.a
+                <MagneticButton
                   href={project.href}
-                  target={project.href.startsWith("http") ? "_blank" : "_self"}
-                  rel={
-                    project.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
                   className="sw-btn-primary"
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
                   <FaPlay className="text-[8px]" />
                   View Project
-                </motion.a>
+                </MagneticButton>
               )}
               {project.github && (
-                <motion.a
+                <MagneticButton
                   href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="sw-btn-secondary"
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
                   <FaGithub className="text-xs" />
                   Code
-                </motion.a>
+                </MagneticButton>
               )}
             </div>
           </motion.div>

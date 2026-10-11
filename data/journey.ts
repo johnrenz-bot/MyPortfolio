@@ -71,7 +71,7 @@ export const JOURNEY_CHAPTERS: Chapter[] = [
     layout: "landscape-right",
     images: [
       {
-        src: "/Image/Groove/GR2.png",
+        src: "/Image/Groove/Desktop1.png",
         alt: "Login and registration screen with role-based access on a full-stack web application",
         ratio: "aspect-[16/10]",
       },
@@ -100,7 +100,7 @@ export const JOURNEY_CHAPTERS: Chapter[] = [
         tilt: "rotate-1",
       },
       {
-        src: "/Image/Groove.png",
+        src: "/Image/Groove/GroovePH.png",
         alt: "Groove capstone platform landing page UI",
         ratio: "aspect-[4/3]",
         tilt: "rotate-2",
@@ -222,23 +222,23 @@ export const JOURNEY_CHAPTERS: Chapter[] = [
     layout: "stack",
     images: [
       {
-        src: "/Image/Journey/SunLifeIntern.jpg",
+        src: "/Image/Sunlife/SunLifeIntern.jpg",
         alt: "Phoenix team members in uniform posing on tiered seating in the office lounge",
         ratio: "aspect-[3/2]",
       },
       {
-        src: "/Image/Journey/SunlifeIntern2.jpg",
+        src: "/Image/Sunlife/SunlifeIntern2.jpg",
         alt: "Group selfie in front of the Sun Life event backdrop reading Let's Get Loud",
         ratio: "aspect-[3/2]",
         tilt: "rotate-1",
       },
       {
-        src: "/Image/Journey/SunLifeIntern3.jpg",
+        src: "/Image/Sunlife/SunLifeIntern3.jpg",
         alt: "Large team on the steps at an I Got Gold Sun Life event in matching uniforms",
         ratio: "aspect-[3/2]",
       },
       {
-        src: "/Image/Journey/SunLife4.jpg",
+        src: "/Image/Sunlife/SunLife4.jpg",
         alt: "Team gathered around a decorated cake for a workplace celebration",
         ratio: "aspect-[3/2]",
         tilt: "-rotate-1",
@@ -267,7 +267,7 @@ export const JOURNEY_CHAPTERS: Chapter[] = [
         ratio: "aspect-[3/2]",
       },
       {
-        src: "/Image/Gallery/Devcon.jpg",
+        src: "/Image/Devcon/Devcon.jpg",
         alt: "Around sixty participants posing around the worktables at the Hermes Agent Camp Run hackathon",
         ratio: "aspect-[3/2]",
         tilt: "rotate-1",
@@ -307,7 +307,71 @@ export const JOURNEY_CHAPTERS: Chapter[] = [
 
 export const GALLERY_ITEMS: GalleryItem[] = [
   {
-    src: "/Image/Gallery/Devcon.jpg",
+    src: "/Image/GDG/GDG DevFest GrooveyAI.png",
+    alt: "GrooveyPH AI-powered performing arts discovery platform featured at GDG DevFest",
+    caption: "GrooveyPH at GDG DevFest",
+    note: "AI chatbot + performing arts hub",
+    tag: "GDG",
+    span: "wide",
+  },
+  {
+    src: "/Image/GDG/GDG DevFest AppBuild.png",
+    alt: "App Build session at GDG DevFest",
+    caption: "GDG DevFest — App Build",
+    note: "Google Developer Groups, Philippines",
+    tag: "GDG",
+    span: "normal",
+  },
+  {
+    src: "/Image/GDG/GDG DevFest Online.png",
+    alt: "GDG DevFest Online session",
+    caption: "GDG DevFest Online",
+    note: "Google Developer Groups, Philippines",
+    tag: "GDG",
+    span: "normal",
+  },
+  {
+    src: "/Image/GDG/GDG DevFest Online1.png",
+    alt: "GDG DevFest Online event slide",
+    caption: "GDG DevFest Online — session",
+    note: "Google Developer Groups, Philippines",
+    tag: "GDG",
+    span: "tall",
+  },
+  {
+    src: "/Image/GDG/GDG DevFest Stitch.png",
+    alt: "GDG DevFest Stitch event materials",
+    caption: "GDG DevFest — Stitch",
+    note: "Google Developer Groups, Philippines",
+    tag: "GDG",
+    span: "normal",
+  },
+  {
+    src: "/Image/Devcon/Devcon.jpg",
+    alt: "Opening keynote by Winston Damarillo, Founder and President of DEVCON Philippines",
+    caption: "Opening keynote",
+    note: "Founder & President, DEVCON Philippines",
+    tag: "Community",
+    span: "tall",
+  },
+  {
+    src: "/Image/Devcon/DEvcon2.jpg",
+    alt: "Elevated view over the hackathon floor with a countdown projected on the wall",
+    caption: "The room mid-build",
+    note: "Camp Run: Go Agentic with Hermes Agent",
+    tag: "Community",
+    span: "normal",
+  },
+  {
+    src: "/Image/Devcon/Devcon3.jpg",
+    alt: "DEVCON Manila Camp Run participants gathered at the event",
+    caption: "Camp Run, DEVCON Manila",
+    note: "Hermes Agent hackathon",
+    tag: "Community",
+    span: "normal",
+  },
+  {
+    src: "/Image/Devcon/Devcon.jpg",
     alt: "Participants posing around worktables at the Hermes Agent Camp Run hackathon",
     caption: "Camp Run, end of the night",
     note: "DEVCON Manila workshop + mini hackathon",
@@ -315,7 +379,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     span: "tall",
   },
   {
-    src: "/Image/Gallery/Devcon3.jpg",
+    src: "/Image/Devcon/Devcon3.jpg",
     alt: "Opening keynote by Winston Damarillo, Founder and President of DEVCON Philippines",
     caption: "Opening keynote",
     note: "Founder & President, DEVCON Philippines",
@@ -331,7 +395,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     span: "wide",
   },
   {
-    src: "/Image/Gallery/DEvcon2.jpg",
+    src: "/Image/Devcon/DEvcon2.jpg",
     alt: "Elevated view over the hackathon floor with a countdown projected on the wall",
     caption: "The room mid-build",
     note: "Tables, laptops, cables, snacks",
@@ -387,7 +451,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     span: "normal",
   },
   {
-    src: "/Image/Journey/SunLifeIntern.jpg",
+    src: "/Image/Sunlife/SunLifeIntern.jpg",
     alt: "Phoenix team in uniform on tiered seating in the office lounge",
     caption: "Team Padua, end of the internship",
     note: "Sun Life · Phoenix Palm Empire",
@@ -395,7 +459,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     span: "wide",
   },
   {
-    src: "/Image/Journey/SunlifeIntern2.jpg",
+    src: "/Image/Sunlife/SunlifeIntern2.jpg",
     alt: "Group selfie in front of the Sun Life Let's Get Loud backdrop",
     caption: "Company event",
     note: "Sun Life, in uniform",
@@ -403,7 +467,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     span: "normal",
   },
   {
-    src: "/Image/Journey/SunLifeIntern3.jpg",
+    src: "/Image/Sunlife/SunLifeIntern3.jpg",
     alt: "Large team on outdoor steps beneath an I Got Gold event arch",
     caption: "Everyone at once",
     note: "Fifty-plus people and one wide lens",
@@ -411,7 +475,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     span: "wide",
   },
   {
-    src: "/Image/Journey/SunLife4.jpg",
+    src: "/Image/Sunlife/SunLife4.jpg",
     alt: "Team gathered around a decorated cake",
     caption: "Someone's celebration, all of ours",
     note: "Cake first, questions later",
@@ -478,6 +542,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 
 export const GALLERY_TAGS = [
   "All",
+  "GDG",
   "Community",
   "Events",
   "Meetups",
