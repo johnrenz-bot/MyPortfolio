@@ -12,8 +12,8 @@
   --border: rgba(0, 0, 0, 0.08);
   --border-subtle: rgba(0, 0, 0, 0.04);
   --accent: #0a0a0a;
-  --accent-gold: var(--color-amber-500, #f59e0b);
-  --accent-gold-light: var(--color-amber-300, #fcd34d);
+  --accent-gold: #ffffff;
+  --accent-gold-light: #e5e5e5;
 }
 
 .dark {
@@ -548,7 +548,8 @@ img {
 }
 
 .dark .skill-icon-card:hover {
-  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* Featured project card entrance */
