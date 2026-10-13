@@ -24,6 +24,10 @@ import type { Project } from "../../../types";
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const SW_CSS = `
+:root {
+  --accent-gold: var(--color-amber-500, #f59e0b);
+  --accent-gold-light: var(--color-amber-300, #fcd34d);
+}
 .sw-card {
   position: relative;
   isolation: isolate;
@@ -36,7 +40,7 @@ const SW_CSS = `
 }
 .sw-card:hover {
   border-color: rgba(255, 255, 255, 0.14);
-  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9), 0 0 80px -40px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9), 0 0 80px -40px color-mix(in srgb, var(--accent-gold) 25%, transparent);
 }
 .sw-card-glow {
   position: absolute;
@@ -44,7 +48,7 @@ const SW_CSS = `
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(60% 40% at 50% 100%, rgba(16, 185, 129, 0.07), transparent 70%),
+    radial-gradient(60% 40% at 50% 100%, color-mix(in srgb, var(--accent-gold) 6%, transparent), transparent 70%),
     radial-gradient(50% 35% at 85% 55%, rgba(99, 102, 241, 0.06), transparent 70%),
     #060709;
 }
@@ -55,7 +59,7 @@ const SW_CSS = `
   pointer-events: none;
   background: radial-gradient(
     600px circle at var(--mouse-x) var(--mouse-y),
-    rgba(16, 185, 129, 0.15),
+    color-mix(in srgb, var(--accent-gold) 12%, transparent),
     transparent 40%
   );
   opacity: 0;
@@ -72,6 +76,11 @@ const SW_CSS = `
     linear-gradient(to bottom, rgba(6, 7, 9, 0) 62%, rgba(6, 7, 9, 0.75) 88%, #060709 100%),
     radial-gradient(120% 100% at 50% 40%, transparent 60%, rgba(6, 7, 9, 0.35) 100%);
 }
+.sw-thumb--active {
+  border: 1px solid var(--accent-gold) !important;
+  box-shadow: 0 0 0 1px var(--accent-gold), 0 0 18px color-mix(in srgb, var(--accent-gold) 35%, transparent) !important;
+  opacity: 1 !important;
+}
 @keyframes sw-progress-fill {
   0% {
     width: 0%;
@@ -85,8 +94,8 @@ const SW_CSS = `
   bottom: 0;
   left: 0;
   height: 2.5px;
-  background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-light));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent-gold) 50%, transparent);
   z-index: 20;
   pointer-events: none;
   animation: sw-progress-fill 4s linear forwards;
@@ -314,9 +323,8 @@ function FeaturedProjectCard({
         {/* Counter bottom-right (e.g. 01 / 05) */}
         <div className="absolute bottom-4 right-4 z-20 pointer-events-none select-none">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-950/80 backdrop-blur-md text-xs font-mono font-bold tracking-widest border border-white/10 shadow-xl">
-            <span className="text-emerald-400">{formattedCurrent}</span>
-            <span className="text-white/30">/</span>
-            <span className="text-white/70">{formattedTotal}</span>
+            <span className="text-amber-500 font-extrabold">{formattedCurrent}</span>
+            <span className="text-neutral-500 font-normal">/ {formattedTotal}</span>
           </div>
         </div>
       </div>
@@ -330,9 +338,9 @@ function FeaturedProjectCard({
               key={i}
               type="button"
               onClick={() => handleThumbClick(i)}
-              className={`group/thumb relative aspect-[16/10] overflow-hidden rounded-lg sm:rounded-xl cursor-pointer transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
+              className={`group/thumb relative aspect-[16/10] overflow-hidden rounded-lg sm:rounded-xl cursor-pointer transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 ${
                 isActive
-                  ? "border-2 border-emerald-400 shadow-[0_0_20px_-3px_rgba(16,185,129,0.5)] opacity-100 scale-[1.02]"
+                  ? "sw-thumb--active scale-[1.02]"
                   : "border border-white/10 hover:border-white/30 opacity-55 hover:opacity-100 hover:scale-[1.01]"
               }`}
               aria-label={`View image ${i + 1}`}
@@ -743,9 +751,9 @@ export default function ProjectsSection() {
                   id={`category-card-${cat.key}`}
                   type="button"
                   onClick={(e) => handleCategoryClick(e, cat.key)}
-                  className={`group shrink-0 snap-start relative w-56 sm:w-64 lg:w-72 aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer bg-neutral-900 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
+                  className={`group shrink-0 snap-start relative w-56 sm:w-64 lg:w-72 aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer bg-neutral-900 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 ${
                     isActive
-                      ? "border-emerald-400 ring-2 ring-emerald-400/50 shadow-[0_0_30px_-5px_rgba(16,185,129,0.4)]"
+                      ? "border-amber-500 ring-2 ring-amber-500/50 shadow-[0_0_30px_-5px_rgba(245,158,11,0.4)]"
                       : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600"
                   }`}
                 >
@@ -762,7 +770,7 @@ export default function ProjectsSection() {
                       <span
                         className={`px-2 py-0.5 rounded backdrop-blur text-[10px] font-bold ${
                           isActive
-                            ? "bg-emerald-400 text-black font-extrabold"
+                            ? "bg-amber-500 text-black font-extrabold"
                             : "bg-white/80 dark:bg-neutral-900/80 text-neutral-900 dark:text-white"
                         }`}
                       >

@@ -12,6 +12,8 @@
   --border: rgba(0, 0, 0, 0.08);
   --border-subtle: rgba(0, 0, 0, 0.04);
   --accent: #0a0a0a;
+  --accent-gold: var(--color-amber-500, #f59e0b);
+  --accent-gold-light: var(--color-amber-300, #fcd34d);
 }
 
 .dark {
