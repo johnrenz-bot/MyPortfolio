@@ -1,13 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, useInView } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt, FaPlay } from "react-icons/fa";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { RxArrowRight, RxArrowLeft } from "react-icons/rx";
-import { HiChevronDown } from "react-icons/hi";
-import { MagneticButton } from "../../../components/animations/MagneticButton/MagneticButton";
-import { RevealText } from "../../../components/animations/RevealText/RevealText";
 
 import {
   WEB_DEVELOPMENT,
@@ -67,16 +64,6 @@ const SW_CSS = `
 .sw-card:hover .sw-spotlight {
   opacity: 1;
 }
-.sw-gallery {
-  position: relative;
-  z-index: 1;
-  background: #060709;
-}
-.sw-main {
-  position: relative;
-  overflow: hidden;
-  background: #000;
-}
 .sw-vignette {
   position: absolute;
   inset: 0;
@@ -85,161 +72,39 @@ const SW_CSS = `
     linear-gradient(to bottom, rgba(6, 7, 9, 0) 62%, rgba(6, 7, 9, 0.75) 88%, #060709 100%),
     radial-gradient(120% 100% at 50% 40%, transparent 60%, rgba(6, 7, 9, 0.35) 100%);
 }
-.sw-thumbs {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  gap: 0.75rem;
-  padding: 0.25rem 1rem 1.25rem;
-  overflow-x: auto;
-  background: linear-gradient(to bottom, #060709, #08090c);
-  scrollbar-width: none;
+@keyframes sw-progress-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }
-.sw-thumbs::-webkit-scrollbar {
-  display: none;
-}
-.sw-thumb {
-  position: relative;
-  flex: 0 0 clamp(150px, 24%, 240px);
-  overflow: hidden;
-  padding: 0;
-  cursor: pointer;
-  border-radius: 0.75rem;
-  background: #0b0d10;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  opacity: 0.55;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease,
-    border-color 0.35s ease, box-shadow 0.45s ease;
-}
-.sw-thumb img {
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.sw-thumb:hover {
-  opacity: 1;
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.9), 0 0 24px -8px rgba(16, 185, 129, 0.35);
-}
-.sw-thumb:hover img {
-  transform: scale(1.07);
-}
-.sw-thumb--active {
-  opacity: 1;
-  border-color: rgba(52, 211, 153, 0.7);
-  box-shadow: 0 0 28px -8px rgba(16, 185, 129, 0.45);
-}
-.sw-thumb-bar {
+.sw-gold-progress {
   position: absolute;
-  left: 0;
-  right: 0;
   bottom: 0;
-  height: 2px;
-  background: transparent;
-  transition: background 0.35s ease;
+  left: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.7);
+  z-index: 20;
+  pointer-events: none;
+  animation: sw-progress-fill 4s linear forwards;
 }
-.sw-thumb-bar--active {
-  background: linear-gradient(90deg, #10b981, #34d399);
+.sw-card:hover .sw-gold-progress {
+  animation-play-state: paused;
 }
-.sw-info {
-  position: relative;
-  z-index: 1;
-  background:
-    radial-gradient(70% 90% at 0% 0%, rgba(16, 185, 129, 0.06), transparent 65%),
-    radial-gradient(60% 80% at 100% 100%, rgba(99, 102, 241, 0.05), transparent 65%),
-    linear-gradient(to bottom, #08090c 0%, #07080a 55%, #050608 100%);
-}
-.sw-badge {
-  display: inline-block;
-  padding: 0.3rem 0.65rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: #d4d4d8;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  cursor: default;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease,
-    background 0.3s ease, border-color 0.3s ease, box-shadow 0.35s ease;
-}
-.sw-badge:hover {
-  transform: translateY(-2px);
-  color: #ffffff;
-  background: rgba(16, 185, 129, 0.1);
-  border-color: rgba(52, 211, 153, 0.45);
-  box-shadow: 0 8px 20px -8px rgba(16, 185, 129, 0.45);
-}
-.sw-btn-primary,
-.sw-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 1.1rem;
-  border-radius: 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: #ffffff;
-  text-decoration: none;
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.4s ease, color 0.3s ease;
-}
-.sw-btn-primary {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(52, 211, 153, 0.35);
-}
-.sw-btn-primary:hover {
-  background: rgba(16, 185, 129, 0.22);
-  border-color: rgba(52, 211, 153, 0.75);
-  box-shadow: 0 0 30px -6px rgba(16, 185, 129, 0.55);
-}
-.sw-btn-secondary {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-}
-.sw-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 0 26px -8px rgba(255, 255, 255, 0.25);
-}
-.sw-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.75rem 0.35rem 0.5rem;
-  margin-left: -0.5rem;
-  border-radius: 0.5rem;
-  background: transparent;
-  border: 1px solid transparent;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: #8a8a93;
-  cursor: pointer;
-  transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
-}
-.sw-toggle:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.1);
+@media (prefers-reduced-motion: reduce) {
+  .sw-gold-progress {
+    animation: none !important;
+    width: 100% !important;
+  }
 }
 `;
 
 const FEATURED_PROJECTS = [
   {
     ...WEB_DEVELOPMENT[0],
-    href: "https://grooveph.vercel.app/",
-    description:
-      "Groove is a Bulacan all-in-one performing arts hub built as my BSIT capstone project at STI College. It connects artists, studios, coaches, and audiences through real-time event management, appointment scheduling, and role-based access for different user types.",
-    techStack: [
-      "Next.js",
-      "Supabase",
-      "TypeScript",
-      "TailwindCSS",
-      "Laravel",
-      "MySQL",
-      "XAMPP",
-    ],
     screenshots: [
       "/Image/Groove/GroovePH.png",
       "/Image/Groove/Desktop1.png",
@@ -247,28 +112,9 @@ const FEATURED_PROJECTS = [
       "/Image/Groove/blur.png",
       "/Image/Groove/42.png",
     ],
-    role: "Full-Stack Developer & Team Lead",
-    problem:
-      "Performing arts communities in Bulacan lacked a centralized platform for discovering events, managing bookings, and connecting with local artists and coaches.",
-    solution:
-      "Built a full-stack performing arts hub with real-time event management, appointment scheduling, role-based access control, an artist directory, and Google Maps integration — capstone project at STI College, validated with 152 survey responses.",
-    highlights: [
-      "Led a 3-person development team using Agile-style coordination",
-      "Surveyed 152 users to shape requirements before writing any code",
-      "Implemented real-time appointment scheduling and event management",
-      "Built role-based access control across multiple user types",
-      "Developed backend API with Laravel and MySQL via XAMPP",
-    ],
-    takeaway:
-      "Capstone project held to ISO/IEC 25010:2014 quality standards — from survey to deployment with real stakeholders.",
   },
   {
     ...WEB_DEVELOPMENT[1],
-    href: "https://grooveyph.vercel.app/",
-    github: "https://github.com/johnrenz-bot/GroooveyAI-",
-    description:
-      "GrooveyyPH is an AI chatbot focused on Philippine performing arts — helping users explore cultural events, arts communities, and relevant performing arts information. Showcased as a student project at GDG DevFest Philippines.",
-    techStack: ["AI Chatbot", "Philippine Performing Arts"],
     screenshots: [
       "/Image/GDG/GDG DevFest GrooveyA.png",
       "/Image/GDG/GDG DevFest GrooveyAII.png",
@@ -276,143 +122,28 @@ const FEATURED_PROJECTS = [
       "/Image/GDG/GDG DevFest GrooveyAI4.png",
       "/Image/GDG/GDG DevFest GrooveyAI5.png",
     ],
-    role: "AI Chatbot Project",
-    problem:
-      "There was no conversational tool that could answer questions specifically about Philippine performing arts — its history, communities, upcoming events, and cultural context.",
-    solution:
-      "Developed GrooveyyPH as an AI chatbot focused on Philippine performing arts, giving users a natural-language interface to explore arts culture and relevant community information.",
-    highlights: [
-      "AI chatbot focused on Philippine performing arts and cultural events",
-      "Showcased at GDG DevFest Philippines as a student project",
-      "Designed to complement the Groove platform ecosystem",
-    ],
-    takeaway:
-      "A separate AI project built alongside the Groove capstone — exploring how conversational AI can connect people with Philippine arts culture.",
   },
   {
     ...WEB_DEVELOPMENT[2],
-    description:
-      "Team Padua Client Management Portal — built during the Sun Life internship. Manages clients, advisors, interns, tasks, attendance, birthday greetings, a CPST prospect tracker, an analytics dashboard, and internal messaging with role-based access for Admin, Advisor, and Intern.",
-    techStack: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "TailwindCSS",
-      "Supabase",
-      "PostgreSQL",
-      "Vercel",
+    screenshots: [
+      "/Image/TP/TP.png",
+      "/Image/TP/MAIN.png",
+      "/Image/TP/TPLOGIN.png",
+      "/Image/TP/TP2.png",
+      "/Image/TP/TP3.png",
     ],
-    role: "Full-Stack Developer — Sun Life, Team Padua",
-    problem:
-      "Team Padua at Sun Life Financial Philippines needed a centralized portal to manage client servicing, advisor coordination, intern onboarding, and day-to-day operations.",
-    solution:
-      "Designed and deployed a full-stack client management portal with authentication, RBAC (Admin / Advisor / Intern), real-time data sync via Supabase, and a complete business operations suite.",
-    highlights: [
-      "Implemented authentication with role-based access (Admin / Advisor / Intern)",
-      "Built client servicing tracking, task management, and attendance modules",
-      "Added birthday greetings, CPST prospect tracker, and analytics dashboard",
-      "Integrated real-time data syncing and internal messaging via Supabase",
-      "Deployed to Vercel; used by real advisors and staff during the internship",
-    ],
-    takeaway:
-      "Production portal used by real Sun Life advisors — shipping to actual users during an internship was the most direct feedback loop I've had.",
   },
   {
     ...WEB_DEVELOPMENT[3],
-    href: "/Reefer",
-    description:
-      "End-to-end UI/UX website system design for a streetwear brand, built entirely in Figma — covering screens, user flows, interactive prototypes, and a consistent design system from concept to handoff.",
-    techStack: ["Figma", "UI/UX Design", "Prototyping", "Design Systems"],
-    role: "UI/UX Designer",
-    problem:
-      "A streetwear brand needed a cohesive website design system — not just screens, but a documented set of flows, components, and interactions ready for developer handoff.",
-    solution:
-      "Designed the full website end-to-end in Figma: homepage, product pages, navigation flows, interactive prototypes with screen transitions, and a design system with reusable components and consistent spacing and type rules.",
-    highlights: [
-      "Designed all screens end-to-end in Figma — homepage, product, checkout flows",
-      "Built interactive prototype with user flows and screen transitions",
-      "Maintained a design system with reusable components and design tokens",
-      "Applied consistent visual language aligned with the streetwear brand identity",
-      "Prepared design for developer handoff with annotated specs",
+    screenshots: [
+      "/Image/UI/Reefer.png",
+      "/Image/Reefer/REEFERLAND.png",
+      "/Image/Reefer/REEFERR.png",
+      "/Image/Reefer/Poster.png",
+      "/Image/Reefer/REEFER.png",
     ],
-    takeaway:
-      "Demonstrates the full UI/UX design process: research, wireframes, high-fidelity screens, interactive prototype, and a handoff-ready design system.",
   },
 ];
-
-function CinematicGallery({
-  screenshots,
-  title,
-}: {
-  screenshots: string[];
-  title: string;
-}) {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const thumbScrollRef = useRef<HTMLDivElement>(null);
-
-  if (!screenshots || screenshots.length === 0) return null;
-
-  const mainSrc = screenshots[activeIdx];
-  const thumbIndices = screenshots.map((_, i) => i);
-
-  return (
-    <div className="sw-gallery">
-      <div className="sw-main">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIdx}
-            initial={{ opacity: 0, scale: 1.01 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="relative w-full aspect-[16/9] sm:aspect-[16/8] lg:aspect-[21/9]"
-          >
-            <Image
-              src={mainSrc}
-              alt={`${title} – screenshot ${activeIdx + 1}`}
-              fill
-              sizes="(max-width: 768px) 100vw, 1400px"
-              className="object-cover"
-              priority
-            />
-            <div className="sw-vignette" />
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="absolute bottom-4 right-4 z-10">
-          <span className="px-2.5 py-1 rounded-lg bg-neutral-950/70 backdrop-blur-md text-white/80 text-[10px] font-mono font-bold tracking-widest border border-white/10">
-            {String(activeIdx + 1).padStart(2, "0")} /{" "}
-            {String(screenshots.length).padStart(2, "0")}
-          </span>
-        </div>
-      </div>
-
-      <div ref={thumbScrollRef} className="sw-thumbs">
-        {thumbIndices.map((i) => (
-          <button
-            key={i}
-            onClick={() => setActiveIdx(i)}
-            className={`sw-thumb ${i === activeIdx ? "sw-thumb--active" : ""}`}
-            aria-label={`View screenshot ${i + 1}`}
-          >
-            <div className="relative w-full aspect-[16/10] overflow-hidden">
-              <Image
-                src={screenshots[i]}
-                alt={`${title} thumb ${i + 1}`}
-                fill
-                sizes="240px"
-                className="object-cover"
-              />
-            </div>
-            <div
-              className={`sw-thumb-bar ${i === activeIdx ? "sw-thumb-bar--active" : ""}`}
-            />
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function FeaturedProjectCard({
   project,
@@ -422,11 +153,74 @@ function FeaturedProjectCard({
   index: number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(cardRef, { once: true, margin: "-60px" });
-  const infoRef = useRef<HTMLDivElement>(null);
-  const infoInView = useInView(infoRef, { once: true, margin: "-30px" });
-  const [showDetails, setShowDetails] = useState(false);
+  const isInView = useInView(cardRef, { margin: "50px" });
+  const shouldReduceMotion = useReducedMotion();
+
+  const images = (
+    project.screenshots && project.screenshots.length > 0
+      ? project.screenshots
+      : [project.image]
+  ).slice(0, 5);
+
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isHovered, setIsHovered] = useState(false);
+  const [keyTrigger, setKeyTrigger] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const total = images.length;
+  const AUTOPLAY_MS = 4000;
+  const startTimeRef = useRef<number>(0);
+  const remainingRef = useRef<number>(AUTOPLAY_MS);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const goToSlide = useCallback((targetIdx: number, dir?: number) => {
+    clearTimer();
+    const nextDir = dir !== undefined ? dir : targetIdx >= activeIdx ? 1 : -1;
+    setDirection(nextDir);
+    setActiveIdx(targetIdx);
+    setKeyTrigger((k) => k + 1);
+    remainingRef.current = AUTOPLAY_MS;
+    startTimeRef.current = Date.now();
+  }, [activeIdx, clearTimer]);
+
+  const advanceNext = useCallback(() => {
+    goToSlide((activeIdx + 1) % total, 1);
+  }, [activeIdx, total, goToSlide]);
+
+  // Autoplay management
+  useEffect(() => {
+    if (shouldReduceMotion || !isInView || total <= 1) {
+      clearTimer();
+      return;
+    }
+
+    if (isHovered) {
+      clearTimer();
+      const elapsed = Date.now() - (startTimeRef.current || Date.now());
+      remainingRef.current = Math.max(0, remainingRef.current - elapsed);
+    } else {
+      clearTimer();
+      startTimeRef.current = Date.now();
+      const delay = remainingRef.current > 0 ? remainingRef.current : AUTOPLAY_MS;
+      timerRef.current = setTimeout(() => {
+        advanceNext();
+      }, delay);
+    }
+
+    return () => clearTimer();
+  }, [activeIdx, isHovered, isInView, shouldReduceMotion, keyTrigger, total, advanceNext, clearTimer]);
+
+  const handleThumbClick = (i: number) => {
+    goToSlide(i, i >= activeIdx ? 1 : -1);
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -437,191 +231,138 @@ function FeaturedProjectCard({
     });
   };
 
+  const formattedCurrent = String(activeIdx + 1).padStart(2, "0");
+  const formattedTotal = String(total).padStart(2, "0");
+
   return (
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       initial={{ opacity: 0, scale: 0.95, y: 40 }}
       animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
       transition={{
         duration: 0.8,
-        delay: index * 0.15,
+        delay: index * 0.12,
         ease: EASE,
-        type: "spring",
-        stiffness: 100,
-        damping: 20
       }}
       className="sw-card group"
-      style={{
-        "--mouse-x": `${mousePos.x}px`,
-        "--mouse-y": `${mousePos.y}px`,
-      } as React.CSSProperties}
+      style={
+        {
+          "--mouse-x": `${mousePos.x}px`,
+          "--mouse-y": `${mousePos.y}px`,
+        } as React.CSSProperties
+      }
     >
       <div className="sw-card-glow" />
       <div className="sw-spotlight" />
 
-      {project.screenshots && project.screenshots.length > 0 && (
-        <CinematicGallery
-          screenshots={project.screenshots}
-          title={project.title}
-        />
-      )}
-
-      <div ref={infoRef} className="sw-info">
-        <div className="relative z-10 px-6 sm:px-8 lg:px-10 py-6 sm:py-8">
+      {/* Large Hero Image */}
+      <div className="relative w-full aspect-[16/9] sm:aspect-[16/8.5] lg:aspect-[21/9] overflow-hidden bg-black z-10">
+        <AnimatePresence initial={false} custom={direction}>
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={infoInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.05, ease: EASE }}
-            className="flex items-center gap-2 mb-3"
+            key={activeIdx}
+            custom={direction}
+            variants={{
+              enter: (dir: number) => ({
+                opacity: 0,
+                x: shouldReduceMotion ? 0 : dir * 28,
+                scale: shouldReduceMotion ? 1 : 1.05,
+                zIndex: 1,
+              }),
+              center: {
+                opacity: 1,
+                x: 0,
+                scale: 1,
+                zIndex: 1,
+                transition: {
+                  opacity: { duration: 0.7, ease: EASE },
+                  x: { duration: 1.0, ease: EASE },
+                  scale: { duration: 1.0, ease: EASE },
+                },
+              },
+              exit: (dir: number) => ({
+                opacity: 0,
+                x: shouldReduceMotion ? 0 : dir * -20,
+                scale: shouldReduceMotion ? 1 : 0.98,
+                zIndex: 0,
+                transition: {
+                  opacity: { duration: 0.7, ease: EASE },
+                  x: { duration: 1.0, ease: EASE },
+                  scale: { duration: 1.0, ease: EASE },
+                },
+              }),
+            }}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute inset-0"
           >
-            <div className="w-2 h-2 rounded-full bg-emerald-400 expand-pulse" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
-              {project.role}
-            </span>
+            <Image
+              src={images[activeIdx]}
+              alt={`${project.title} – slide ${activeIdx + 1}`}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1400px) 95vw, 1400px"
+              className="object-cover"
+              priority={index === 0 && activeIdx === 0}
+            />
+            <div className="sw-vignette" />
           </motion.div>
+        </AnimatePresence>
 
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={infoInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
-            className="heading-section text-2xl sm:text-3xl lg:text-4xl text-white mb-2"
-          >
-            <RevealText text={project.title} />
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={infoInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.15, ease: EASE }}
-            className="text-sm sm:text-base text-neutral-400 max-w-3xl leading-relaxed mb-5"
-          >
-            {project.description}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={infoInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
-            className="flex flex-wrap items-center gap-3"
-          >
-            <div className="flex flex-wrap gap-1.5">
-              {(project.techStack || []).slice(0, 6).map((tech) => (
-                <span key={tech} className="sw-badge">
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex-1" />
-
-            <div className="flex items-center gap-2.5">
-              {project.href && project.href !== "" && (
-                <MagneticButton
-                  href={project.href}
-                  className="sw-btn-primary"
-                >
-                  <FaPlay className="text-[8px]" />
-                  View Project
-                </MagneticButton>
-              )}
-              {project.github && (
-                <MagneticButton
-                  href={project.github}
-                  className="sw-btn-secondary"
-                >
-                  <FaGithub className="text-xs" />
-                  Code
-                </MagneticButton>
-              )}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={infoInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.3, ease: EASE }}
-            className="mt-6 border-t border-white/[0.06] pt-4"
-          >
-            <motion.button
-              onClick={() => setShowDetails(!showDetails)}
-              className="sw-toggle"
-              whileHover={{ x: 2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <motion.div
-                animate={{ rotate: showDetails ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <HiChevronDown className="w-4 h-4" />
-              </motion.div>
-              {showDetails ? "Hide Details" : "Case Study"}
-            </motion.button>
-          </motion.div>
-
-          <AnimatePresence>
-            {showDetails && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.45, ease: EASE }}
-                className="overflow-hidden"
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
-                  <div className="space-y-5">
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-2">
-                        The Challenge
-                      </p>
-                      <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
-                        {project.problem}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-2">
-                        What I Built
-                      </p>
-                      <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
-                        {project.solution}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-3">
-                      Key Contributions
-                    </p>
-                    <div className="space-y-2.5">
-                      {project.highlights.slice(0, 5).map((h, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, x: -8 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
-                          className="flex items-start gap-2.5"
-                        >
-                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 mt-1.5 flex-shrink-0" />
-                          <span className="text-sm text-neutral-300">{h}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.4, delay: 0.4 }}
-                      className="mt-5 text-xs text-neutral-500 italic border-l-2 border-neutral-700 pl-3"
-                    >
-                      {project.takeaway}
-                    </motion.p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+        {/* Counter bottom-right (e.g. 01 / 05) */}
+        <div className="absolute bottom-4 right-4 z-20 pointer-events-none select-none">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-950/80 backdrop-blur-md text-xs font-mono font-bold tracking-widest border border-white/10 shadow-xl">
+            <span className="text-emerald-400">{formattedCurrent}</span>
+            <span className="text-white/30">/</span>
+            <span className="text-white/70">{formattedTotal}</span>
+          </div>
         </div>
+      </div>
+
+      {/* 5 Thumbnails in a row below the Hero */}
+      <div className="relative z-10 grid grid-cols-5 gap-2 sm:gap-3.5 p-3 sm:p-5 bg-gradient-to-b from-[#060709] to-[#08090c] border-t border-white/[0.06]">
+        {images.map((src, i) => {
+          const isActive = i === activeIdx;
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={() => handleThumbClick(i)}
+              className={`group/thumb relative aspect-[16/10] overflow-hidden rounded-lg sm:rounded-xl cursor-pointer transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
+                isActive
+                  ? "border-2 border-emerald-400 shadow-[0_0_20px_-3px_rgba(16,185,129,0.5)] opacity-100 scale-[1.02]"
+                  : "border border-white/10 hover:border-white/30 opacity-55 hover:opacity-100 hover:scale-[1.01]"
+              }`}
+              aria-label={`View image ${i + 1}`}
+              aria-current={isActive ? "true" : undefined}
+            >
+              <Image
+                src={src}
+                alt={`${project.title} thumb ${i + 1}`}
+                fill
+                sizes="(max-width: 640px) 20vw, 240px"
+                className="object-cover transition-transform duration-500 group-hover/thumb:scale-105"
+              />
+
+              {!isActive && (
+                <div className="absolute inset-0 bg-black/20 group-hover/thumb:bg-transparent transition-colors duration-200" />
+              )}
+
+              {/* Active thumbnail thin gold progress bar */}
+              {isActive && (
+                <div
+                  key={`progress-${activeIdx}-${keyTrigger}`}
+                  className="sw-gold-progress"
+                  style={{
+                    animationPlayState: isHovered ? "paused" : "running",
+                  }}
+                />
+              )}
+            </button>
+          );
+        })}
       </div>
     </motion.div>
   );
@@ -783,10 +524,10 @@ function GalleryProjectCard({
 
 function CategoryView({
   category,
-  onBack,
+  onClose,
 }: {
   category: Category;
-  onBack: () => void;
+  onClose: () => void;
 }) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -801,33 +542,44 @@ function CategoryView({
       "graphic-design": GRAPHIC_DESIGNS,
       certificates: CERTS,
     };
-    return map[category.key];
+    return map[category.key] || [];
   };
 
   const items = getItems();
 
   return (
     <>
-      <div className="space-y-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <button
-            onClick={onBack}
-            className="group inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-white transition-all text-xs font-bold uppercase tracking-wider"
-          >
-            <RxArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-            All Categories
-          </button>
-          <div>
-            <h3 className="text-2xl sm:text-3xl font-black text-neutral-900 dark:text-white tracking-tight">
-              {category.label}
-            </h3>
-            <p className="label-mono text-neutral-500 dark:text-neutral-400 mt-1">
-              {category.sub} · {items.length} Works
-            </p>
+      <div
+        id={`category-${category.key}`}
+        style={{ scrollMarginTop: "120px" }}
+        className="space-y-8 scroll-mt-28 sm:scroll-mt-36 pt-10 border-t border-neutral-200 dark:border-neutral-800 transition-all duration-300"
+      >
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-white transition-all text-xs font-bold uppercase tracking-wider"
+              aria-label="Close category view"
+            >
+              <RxArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+              All Categories
+            </button>
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-black text-neutral-900 dark:text-white tracking-tight">
+                {category.label}
+              </h3>
+              <p className="label-mono text-neutral-500 dark:text-neutral-400 mt-0.5">
+                {category.sub} · {items.length} Works
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div
+          id={`category-grid-${category.key}`}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+        >
           {items.map((item) => (
             <GalleryProjectCard
               key={item.id}
@@ -851,9 +603,9 @@ function CategoryView({
 }
 
 export default function ProjectsSection() {
-  const [view, setView] = useState<"featured" | "gallery">("featured");
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryKey>("web-dev");
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -870,137 +622,186 @@ export default function ProjectsSection() {
     (c: Category) => c.key === selectedCategory,
   );
 
+  const handleCategoryClick = (e: React.MouseEvent, catKey: CategoryKey) => {
+    e.preventDefault();
+    const targetId = `category-${catKey}`;
+    setSelectedCategory(catKey);
+    setIsCategoryOpen(true);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el =
+          document.getElementById(targetId) ||
+          document.getElementById(`category-grid-${catKey}`);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      });
+    });
+  };
+
+  const handleCloseCategory = () => {
+    setIsCategoryOpen(false);
+    const allWorkHeader = document.getElementById("all-work-heading");
+    allWorkHeader?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  };
+
+  useEffect(() => {
+    if (isCategoryOpen && selectedCategory) {
+      const targetId = `category-${selectedCategory}`;
+      const frameId = requestAnimationFrame(() => {
+        const el =
+          document.getElementById(targetId) ||
+          document.getElementById(`category-grid-${selectedCategory}`);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      });
+      return () => cancelAnimationFrame(frameId);
+    }
+  }, [selectedCategory, isCategoryOpen]);
+
   return (
     <div className="relative w-full bg-transparent transition-colors duration-300 py-16 sm:py-24 lg:py-32">
       <style>{SW_CSS}</style>
       <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
-        <AnimatePresence mode="wait">
-          {view === "featured" ? (
-            <motion.div
-              key="featured"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="reveal flex flex-col gap-6 mb-12">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
-                  <span className="label-mono text-neutral-500 dark:text-neutral-400">
-                    Selected Work
-                  </span>
-                </div>
-                <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-                  <h2 className="heading-section text-4xl sm:text-5xl lg:text-7xl text-neutral-950 dark:text-white">
-                    Featured Projects
-                  </h2>
-                  <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-base max-w-md leading-relaxed">
-                    Full-stack web applications, UI/UX design systems, and
-                    client projects built with modern technologies.
-                  </p>
-                </div>
-              </div>
+        <div className="reveal flex flex-col gap-6 mb-12">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
+            <span className="label-mono text-neutral-500 dark:text-neutral-400">
+              Selected Work
+            </span>
+          </div>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <h2 className="heading-section text-4xl sm:text-5xl lg:text-7xl text-neutral-950 dark:text-white">
+              Featured Projects
+            </h2>
+            <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-base max-w-md leading-relaxed">
+              Full-stack web applications, UI/UX design systems, and
+              client projects built with modern technologies.
+            </p>
+          </div>
+        </div>
 
-              <div className="space-y-10">
-                {FEATURED_PROJECTS.map((project, index) => (
-                  <FeaturedProjectCard
-                    key={project.id}
-                    project={project}
-                    index={index}
-                  />
-                ))}
-              </div>
+        <div className="space-y-10">
+          {FEATURED_PROJECTS.map((project, index) => (
+            <FeaturedProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+            />
+          ))}
+        </div>
 
-              <div className="reveal pt-16 sm:pt-24 border-t border-neutral-200 dark:border-neutral-800 mt-16">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-                  <div>
-                    <h3 className="heading-section text-2xl sm:text-3xl text-neutral-900 dark:text-white">
-                      All Work
-                    </h3>
-                    <p className="label-mono text-neutral-500 dark:text-neutral-400 mt-1.5">
-                      {WORK_CATEGORIES.reduce(
-                        (sum: number, c: Category) => sum + c.count,
-                        0,
-                      )}{" "}
-                      Total Works · {WORK_CATEGORIES.length} Categories
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => scroll("left")}
-                      aria-label="Scroll left"
-                      className="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
-                    >
-                      <RxArrowLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => scroll("right")}
-                      aria-label="Scroll right"
-                      className="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
-                    >
-                      <RxArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
+        <div
+          id="all-work-heading"
+          style={{ scrollMarginTop: "100px" }}
+          className="reveal pt-16 sm:pt-24 border-t border-neutral-200 dark:border-neutral-800 mt-16 scroll-mt-28"
+        >
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <h3 className="heading-section text-2xl sm:text-3xl text-neutral-900 dark:text-white">
+                All Work
+              </h3>
+              <p className="label-mono text-neutral-500 dark:text-neutral-400 mt-1.5">
+                {WORK_CATEGORIES.reduce(
+                  (sum: number, c: Category) => sum + c.count,
+                  0,
+                )}{" "}
+                Total Works · {WORK_CATEGORIES.length} Categories
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => scroll("left")}
+                aria-label="Scroll left"
+                className="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+              >
+                <RxArrowLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scroll("right")}
+                aria-label="Scroll right"
+                className="w-9 h-9 flex items-center justify-center rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+              >
+                <RxArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
 
-                <div
-                  ref={scrollRef}
-                  className="flex gap-4 overflow-x-auto no-scrollbar py-2 snap-x snap-mandatory"
+          <div
+            ref={scrollRef}
+            className="flex gap-4 overflow-x-auto no-scrollbar py-2 snap-x snap-mandatory"
+          >
+            {WORK_CATEGORIES.map((cat: Category) => {
+              const isActive = isCategoryOpen && selectedCategory === cat.key;
+              return (
+                <button
+                  key={cat.key}
+                  id={`category-card-${cat.key}`}
+                  type="button"
+                  onClick={(e) => handleCategoryClick(e, cat.key)}
+                  className={`group shrink-0 snap-start relative w-56 sm:w-64 lg:w-72 aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer bg-neutral-900 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
+                    isActive
+                      ? "border-emerald-400 ring-2 ring-emerald-400/50 shadow-[0_0_30px_-5px_rgba(16,185,129,0.4)]"
+                      : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600"
+                  }`}
                 >
-                  {WORK_CATEGORIES.map((cat: Category) => (
-                    <button
-                      key={cat.key}
-                      onClick={() => {
-                        setSelectedCategory(cat.key);
-                        setView("gallery");
-                      }}
-                      className="group shrink-0 snap-start relative w-56 sm:w-64 lg:w-72 aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-white"
-                    >
-                      <Image
-                        src={cat.featured.image}
-                        alt={cat.label}
-                        fill
-                        sizes="288px"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/30 to-transparent" />
-                      <div className="absolute inset-0 flex flex-col justify-between p-5 z-10">
-                        <div className="flex justify-end">
-                          <span className="px-2 py-0.5 rounded bg-white/80 dark:bg-neutral-900/80 backdrop-blur text-neutral-900 dark:text-white text-[10px] font-bold">
-                            {String(cat.count).padStart(2, "0")}
-                          </span>
-                        </div>
-                        <div>
-                          <h4 className="text-lg sm:text-xl font-black text-white tracking-tight">
-                            {cat.label}
-                          </h4>
-                          <p className="text-neutral-400 text-xs mt-0.5">
-                            {cat.sub}
-                          </p>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ) : (
-            currentCategory && (
+                  <Image
+                    src={cat.featured.image}
+                    alt={cat.label}
+                    fill
+                    sizes="288px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/30 to-transparent" />
+                  <div className="absolute inset-0 flex flex-col justify-between p-5 z-10">
+                    <div className="flex justify-end">
+                      <span
+                        className={`px-2 py-0.5 rounded backdrop-blur text-[10px] font-bold ${
+                          isActive
+                            ? "bg-emerald-400 text-black font-extrabold"
+                            : "bg-white/80 dark:bg-neutral-900/80 text-neutral-900 dark:text-white"
+                        }`}
+                      >
+                        {String(cat.count).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                        {cat.label}
+                      </h4>
+                      <p className="text-neutral-400 text-xs mt-0.5">
+                        {cat.sub}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Inline Active Category Grid */}
+          <AnimatePresence mode="wait">
+            {isCategoryOpen && currentCategory && (
               <motion.div
-                key="gallery"
-                initial={{ opacity: 0, y: 12 }}
+                key={currentCategory.key}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
+                exit={{ opacity: 0, y: 16 }}
                 transition={{ duration: 0.35, ease: EASE }}
+                className="mt-12"
               >
                 <CategoryView
                   category={currentCategory}
-                  onBack={() => setView("featured")}
+                  onClose={handleCloseCategory}
                 />
               </motion.div>
-            )
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
