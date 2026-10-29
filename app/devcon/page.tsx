@@ -47,6 +47,126 @@ const HIGHLIGHTS = [
   "Supported ~50 participants across the Camp Run mini hackathon",
 ];
 
+type VolunteerEntry = {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  highlights?: string[];
+  quote?: string;
+  details?: { label: string; value: string }[];
+};
+
+const VOLUNTEER_EXPERIENCES: VolunteerEntry[] = [
+  {
+    id: "camp-run",
+    title: "Camp Run: Go Agentic with Hermes Agent",
+    description:
+      "An overnight workshop and mini hackathon organized by DEVCON Manila, Avtica, and Amihan. The format was learn → build → run: participants worked with Hermes Agent to build agentic AI workflows in a single session.",
+    tags: ["DEVCON Manila", "Avtica", "Amihan", "Hermes Agent", "Hackathon", "AV & Demo Support"],
+    highlights: HIGHLIGHTS,
+    quote:
+      "Most of my most useful work has been at the edges of someone else's event, making sure the demo doesn't die in front of a crowd.",
+  },
+  {
+    id: "core-ai",
+    title: "CORE-AI: Beyond the Skills",
+    description:
+      "A technical seminar-workshop by Letran Information Technology Society (Official) in partnership with DEVCON Manila Chapter.",
+    tags: ["DEVCON Manila", "Letran ITS", "CORE-AI", "Seminar-Workshop"],
+    details: [
+      { label: "Role", value: "Tech Volunteer" },
+      {
+        label: "Venue",
+        value: "Colegio de San Juan de Letran, Intramuros, Manila",
+      },
+      { label: "Date", value: "October 29, 2026" },
+    ],
+  },
+];
+
+function VolunteerCard({
+  entry,
+  index,
+}: {
+  entry: VolunteerEntry;
+  index: number;
+}) {
+  return (
+    <div
+      className={`reveal delay-${(index % 3) + 1} rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] p-8 sm:p-10 lg:p-12`}
+    >
+      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div>
+          <h2 className="heading-section text-2xl sm:text-3xl text-neutral-950 dark:text-white mb-4">
+            {entry.title}
+          </h2>
+          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
+            {entry.description}
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {entry.tags.map((t) => (
+              <span
+                key={t}
+                className="px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 text-[10px] font-mono font-semibold tracking-wider uppercase"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          {entry.highlights && (
+            <>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-4">
+                What I Did
+              </p>
+              <div className="space-y-3">
+                {entry.highlights.map((h, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-500 mt-1.5 flex-shrink-0" />
+                    <span className="text-sm text-neutral-600 dark:text-neutral-300">{h}</span>
+                  </div>
+                ))}
+              </div>
+
+              {entry.quote && (
+                <p className="mt-6 text-xs text-neutral-500 italic border-l-2 border-neutral-300 dark:border-neutral-700 pl-3">
+                  {entry.quote}
+                </p>
+              )}
+            </>
+          )}
+
+          {entry.details && (
+            <>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-4">
+                Event Details
+              </p>
+              <div className="space-y-3">
+                {entry.details.map((detail) => (
+                  <div
+                    key={detail.label}
+                    className="px-5 py-4 bg-white dark:bg-[#171717] border border-neutral-200 dark:border-neutral-800 rounded-xl"
+                  >
+                    <div className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-1">
+                      {detail.label}
+                    </div>
+                    <div className="text-sm font-black text-neutral-900 dark:text-white">
+                      {detail.value}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function DevconPage() {
   return (
     <div className="relative min-h-screen bg-[#f9fafb] dark:bg-[#111111] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
@@ -162,48 +282,10 @@ export default function DevconPage() {
           <span className="label-mono text-neutral-500 dark:text-neutral-400">Volunteer Contributions</span>
         </div>
 
-        <div className="reveal rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] p-8 sm:p-10 lg:p-12">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            <div>
-              <h2 className="heading-section text-2xl sm:text-3xl text-neutral-950 dark:text-white mb-4">
-                Camp Run: Go Agentic with Hermes Agent
-              </h2>
-              <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-6">
-                An overnight workshop and mini hackathon organized by DEVCON Manila, Avtica, and Amihan.
-                The format was learn → build → run: participants worked with Hermes Agent to build
-                agentic AI workflows in a single session.
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {["DEVCON Manila", "Avtica", "Amihan", "Hermes Agent", "Hackathon", "AV & Demo Support"].map((t) => (
-                  <span
-                    key={t}
-                    className="px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 text-[10px] font-mono font-semibold tracking-wider uppercase"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-4">
-                What I Did
-              </p>
-              <div className="space-y-3">
-                {HIGHLIGHTS.map((h, i) => (
-                  <div key={i} className="flex items-start gap-2.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-500 mt-1.5 flex-shrink-0" />
-                    <span className="text-sm text-neutral-600 dark:text-neutral-300">{h}</span>
-                  </div>
-                ))}
-              </div>
-
-              <p className="mt-6 text-xs text-neutral-500 italic border-l-2 border-neutral-300 dark:border-neutral-700 pl-3">
-                Most of my most useful work has been at the edges of someone else&apos;s event, making
-                sure the demo doesn&apos;t die in front of a crowd.
-              </p>
-            </div>
-          </div>
+        <div className="space-y-6">
+          {VOLUNTEER_EXPERIENCES.map((entry, index) => (
+            <VolunteerCard key={entry.id} entry={entry} index={index} />
+          ))}
         </div>
       </section>
 

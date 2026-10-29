@@ -275,8 +275,30 @@ export const JOURNEY_CHAPTERS: Chapter[] = [
     ],
   },
   {
-    id: "now",
+    id: "core-ai",
     chapter: "09",
+    period: "October 29, 2026",
+    title: "A day at CORE-AI: Beyond the Skills",
+    kicker: "Tech Volunteer — DEVCON Manila, CORE-AI: Beyond the Skills",
+    story: [
+      "CORE-AI: Beyond the Skills was a technical seminar-workshop by Letran Information Technology Society (Official) in partnership with DEVCON Manila Chapter, held at Colegio de San Juan de Letran in Intramuros, Manila.",
+      "I joined as a Tech Volunteer for the event on October 29, 2026. It was the same DEVCON Manila community I had volunteered with at Camp Run earlier in the month, this time in a university computer lab instead of an overnight hackathon hall.",
+    ],
+    takeaway:
+      "Takeaway: volunteering is the fastest way to see how a community actually works — not just the talks, but the people making them happen.",
+    tags: ["DEVCON Manila", "Letran ITS", "CORE-AI", "Tech Volunteer"],
+    layout: "landscape-right",
+    images: [
+      {
+        src: "/Image/Certificate/CORE-AI-Agent-Lab-Certificate-John-renz-Bandianon.png",
+        alt: "CORE-AI Agent Lab certificate of completion for John Renz Bandianon",
+        ratio: "aspect-[1.414/1]",
+      },
+    ],
+  },
+  {
+    id: "now",
+    chapter: "10",
     period: "Now",
     title: "Fresh out, looking for somewhere to be useful",
     kicker: "Open to opportunities",

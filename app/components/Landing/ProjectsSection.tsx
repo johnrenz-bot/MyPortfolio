@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
@@ -20,6 +21,7 @@ import {
   type CategoryKey,
 } from "../../../data/projects";
 import type { Project } from "../../../types";
+import CertificateShowcase from "./Certificate3DShowcase";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -75,6 +77,30 @@ const SW_CSS = `
   background:
     linear-gradient(to bottom, rgba(6, 7, 9, 0) 62%, rgba(6, 7, 9, 0.75) 88%, #060709 100%),
     radial-gradient(120% 100% at 50% 40%, transparent 60%, rgba(6, 7, 9, 0.35) 100%);
+}
+@media (hover: none) {
+  .sw-overlay {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .sw-overlay > div > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sw-card .sw-overlay,
+  .sw-card .sw-overlay > div > * {
+    transition: none !important;
+    transform: none !important;
+  }
+  .sw-card img {
+    transition: none !important;
+    transform: none !important;
+  }
+  .sw-card .absolute.inset-0 {
+    transition: none !important;
+  }
 }
 .sw-thumb--active {
   border: 1px solid #ffffff !important;
@@ -153,6 +179,17 @@ const FEATURED_PROJECTS = [
     ],
   },
 ];
+
+const FEATURED_DESCRIPTIONS: Record<string, string> = {
+  capstone:
+    "A unified performing-arts platform connecting artists, studios, coaches, and audiences through real-time event management, scheduling, and role-based access.",
+  "grooveyyph-chatbot":
+    "An AI assistant for Philippine performing arts that helps users discover cultural events, communities, and relevant arts information.",
+  "tp-client-portal":
+    "A client portal for streamlined communication, service requests, and account management in a clean, modern interface.",
+  "reefer-frontend":
+    "A streetwear-focused mobile app experience with intuitive navigation, product discovery, and a cohesive visual identity.",
+};
 
 function FeaturedProjectCard({
   project,
@@ -313,10 +350,34 @@ function FeaturedProjectCard({
               alt={`${project.title} – slide ${activeIdx + 1}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1400px) 95vw, 1400px"
-              className="object-cover"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
               priority={index === 0 && activeIdx === 0}
             />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-500" />
             <div className="sw-vignette" />
+
+            {/* Hover/focus info overlay for the featured system */}
+            <div className="sw-overlay absolute inset-0 z-20 flex flex-col justify-end p-4 sm:p-6 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300 ease-out pointer-events-none">
+              <div className="max-w-xl space-y-2">
+                <h3 className="text-lg sm:text-2xl font-black text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300 delay-75">
+                  {project.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed line-clamp-2 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)] opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300 delay-100">
+                  {FEATURED_DESCRIPTIONS[project.id] || project.description}
+                </p>
+                {project.href && (
+                  <a
+                    href={project.href}
+                    target={project.href.startsWith("http") ? "_blank" : undefined}
+                    rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    onClick={(e) => e.stopPropagation()}
+                    className="pointer-events-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 text-white border border-white/20 hover:bg-white hover:text-neutral-950 transition-all duration-300 text-xs font-bold uppercase tracking-wider shadow-lg hover:shadow-xl hover:-translate-y-0.5 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0 delay-150"
+                  >
+                    View System <FaExternalLinkAlt className="text-[10px]" />
+                  </a>
+                )}
+              </div>
+            </div>
           </motion.div>
         </AnimatePresence>
 
@@ -584,18 +645,22 @@ function CategoryView({
           </div>
         </div>
 
-        <div
-          id={`category-grid-${category.key}`}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-        >
-          {items.map((item) => (
-            <GalleryProjectCard
-              key={item.id}
-              item={item}
-              onClick={() => setSelectedProject(item)}
-            />
-          ))}
-        </div>
+        {category.key === "certificates" ? (
+          <CertificateShowcase certificates={items} />
+        ) : (
+          <div
+            id={`category-grid-${category.key}`}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+          >
+            {items.map((item) => (
+              <GalleryProjectCard
+                key={item.id}
+                item={item}
+                onClick={() => setSelectedProject(item)}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <AnimatePresence>

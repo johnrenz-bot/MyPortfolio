@@ -233,7 +233,7 @@ export default function JourneyPage() {
             {[
               { k: "Chapters", v: String(JOURNEY_CHAPTERS.length) },
               { k: "Internships", v: "2" },
-              { k: "Volunteer work", v: "2" },
+              { k: "Volunteer work", v: "3" },
             ].map((s) => (
               <div
                 key={s.k}

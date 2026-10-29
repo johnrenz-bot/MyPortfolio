@@ -495,6 +495,14 @@ export const GRAPHIC_DESIGNS: Project[] = [
 
 export const CERTS: Project[] = [
   {
+    id: "c-core-ai",
+    title: "CORE-AI Agent Lab Certificate",
+    href: "/Image/Certificate/CORE-AI-Agent-Lab-Certificate-John-renz-Bandianon.png",
+    image: "/Image/Certificate/CORE-AI-Agent-Lab-Certificate-John-renz-Bandianon.png",
+    description:
+      "Certificate of Completion for Agent Lab: Building AI Agents with Purpose at CORE-AI: Beyond the Skills, covering agent design, the agent loop, prompt-injection testing, and AI guardrails. Issued October 29, 2026.",
+  },
+  {
     id: "c1",
     title: "Google UX Certification",
     href: "/Image/Certificate/GoogleUX.jpg",
