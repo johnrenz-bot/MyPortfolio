@@ -582,6 +582,22 @@ export const CERTS: Project[] = [
     description:
       "Certificate of participation from Google Developer Groups (GDG) on Campus, recognizing active involvement in the developer community and GDG DevFest events.",
   },
+  {
+  id: "c-datacamp-snowflake",
+  title: "Introduction to Snowflake - DataCamp",
+  href: "/Image/Certificate/certificate-datacamp(snowflake).png",
+  image: "/Image/Certificate/certificate-datacamp(snowflake).png",
+  description:
+    "Statement of Accomplishment from DataCamp for successfully completing the 2-hour Introduction to Snowflake course on October 30, 2026.",
+},
+{
+  id: "c-datacamp-snowflake-sql",
+  title: "Introduction to Snowflake SQL - DataCamp",
+  href: "/Image/Certificate/certificate-datacamp(snowflakeSQL).png",
+  image: "/Image/Certificate/certificate-datacamp(snowflakeSQL).png",
+  description:
+    "Statement of Accomplishment from DataCamp for successfully completing the 2-hour Introduction to Snowflake SQL course on October 30, 2026.",
+},
 ];
 
 export const WORK_CATEGORIES = [
