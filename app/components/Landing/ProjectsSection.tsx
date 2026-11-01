@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import { RxArrowRight, RxArrowLeft } from "react-icons/rx";
 
 import {
@@ -21,7 +21,7 @@ import {
   type CategoryKey,
 } from "../../../data/projects";
 import type { Project } from "../../../types";
-import CertificateShowcase from "./Certificate3DShowcase";
+import CertificateShowcase, { CertificateLightbox } from "./Certificate3DShowcase";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -437,116 +437,6 @@ function FeaturedProjectCard({
   );
 }
 
-function ProjectModal({
-  project,
-  onClose,
-}: {
-  project: Project;
-  onClose: () => void;
-}) {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleEsc);
-    };
-  }, [onClose]);
-
-  const stack = project.techStack || project.uiTools || [];
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-[150] flex items-center justify-center p-4 sm:p-6 bg-neutral-950/80 backdrop-blur-xl overflow-y-auto"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 12 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.98, y: 8 }}
-        transition={{ duration: 0.3, ease: EASE }}
-        className="relative w-full max-w-4xl flex flex-col items-center my-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="self-end mb-3 px-3 py-1.5 text-neutral-400 hover:text-white transition-colors font-mono uppercase tracking-widest text-xs flex items-center gap-2 rounded-lg bg-neutral-900/60 border border-white/10"
-        >
-          Close <span className="text-sm">✕</span>
-        </button>
-
-        <div className="relative rounded-[2rem] overflow-hidden border border-neutral-800 shadow-2xl bg-neutral-900 flex items-center justify-center w-full max-h-[60vh] min-h-[200px]">
-          <Image
-            src={project.image}
-            alt={project.title}
-            width={1200}
-            height={750}
-            className="object-contain w-full h-full max-h-[60vh]"
-            priority
-          />
-        </div>
-
-        <div className="mt-4 flex flex-col items-center text-center space-y-4 max-w-2xl w-full px-6 py-6 bg-white dark:bg-neutral-900 rounded-[2rem] border border-neutral-200 dark:border-neutral-800 shadow-xl text-neutral-900 dark:text-white">
-          <h3 className="text-xl sm:text-2xl font-black tracking-tight">
-            {project.title}
-          </h3>
-          <p className="text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed">
-            {project.description}
-          </p>
-
-          {stack.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-1.5">
-              {stack.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-2.5 py-1 bg-neutral-100 dark:bg-neutral-800 rounded-md text-neutral-700 dark:text-neutral-300 text-[10px] font-mono font-semibold tracking-wider uppercase border border-neutral-200 dark:border-neutral-700"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          )}
-
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            {project.href && project.href !== "" && (
-              <a
-                href={project.href}
-                target={project.href.startsWith("http") ? "_blank" : undefined}
-                rel={
-                  project.href.startsWith("http")
-                    ? "noopener noreferrer"
-                    : undefined
-                }
-                className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 text-xs font-bold tracking-wider uppercase hover:opacity-90 transition-opacity shadow-md"
-              >
-                <FaExternalLinkAlt className="text-[10px]" />
-                View Project
-              </a>
-            )}
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white text-xs font-bold tracking-wider uppercase hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-              >
-                <FaGithub className="text-sm" />
-                Repository
-              </a>
-            )}
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
 
 function GalleryProjectCard({
   item,
@@ -598,7 +488,13 @@ function CategoryView({
   category: Category;
   onClose: () => void;
 }) {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const handleClose = useCallback(() => setSelectedIndex(null), []);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const getItems = (): Project[] => {
     const map: Record<CategoryKey, Project[]> = {
@@ -652,25 +548,32 @@ function CategoryView({
             id={`category-grid-${category.key}`}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
           >
-            {items.map((item) => (
+            {items.map((item, i) => (
               <GalleryProjectCard
                 key={item.id}
                 item={item}
-                onClick={() => setSelectedProject(item)}
+                onClick={() => setSelectedIndex(i)}
               />
             ))}
           </div>
         )}
       </div>
 
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
+      {category.key !== "certificates" &&
+        mounted &&
+        createPortal(
+          <AnimatePresence>
+            {selectedIndex !== null && (
+              <CertificateLightbox
+                items={items}
+                currentIndex={selectedIndex}
+                onClose={handleClose}
+                onSelectIndex={setSelectedIndex}
+              />
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </>
   );
 }

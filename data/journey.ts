@@ -294,6 +294,12 @@ export const JOURNEY_CHAPTERS: Chapter[] = [
         alt: "CORE-AI Agent Lab certificate of completion for John Renz Bandianon",
         ratio: "aspect-[1.414/1]",
       },
+      {
+        src: "/Image/Devcon/DEVCONAI.jpg",
+        alt: "CORE-AI: Beyond the Skills seminar-workshop poster by DEVCON Manila and Letran ITS",
+        ratio: "aspect-[4/3]",
+        tilt: "-rotate-1",
+      },
     ],
   },
   {
@@ -383,6 +389,14 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     note: "Camp Run: Go Agentic with Hermes Agent",
     tag: "Community",
     span: "normal",
+  },
+  {
+    src: "/Image/Devcon/DEVCONAI.jpg",
+    alt: "CORE-AI: Beyond the Skills seminar-workshop poster by DEVCON Manila and Letran ITS",
+    caption: "CORE-AI: Beyond the Skills",
+    note: "Tech Volunteer · Letran ITS × DEVCON Manila",
+    tag: "Community",
+    span: "wide",
   },
   {
     src: "/Image/Devcon/Devcon3.jpg",

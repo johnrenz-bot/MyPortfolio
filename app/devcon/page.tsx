@@ -8,6 +8,12 @@ import RevealOnScroll from "../components/shared/RevealOnScroll";
 
 const DEVCON_IMAGES = [
   {
+    src: "/Image/Devcon/DEVCONAI.jpg",
+    alt: "CORE-AI: Beyond the Skills seminar-workshop poster by DEVCON Manila and Letran ITS",
+    caption: "CORE-AI: Beyond the Skills",
+    span: "wide" as const,
+  },
+  {
     src: "/Image/Devcon/Devcon.jpg",
     alt: "Opening keynote by Winston Damarillo, Founder and President of DEVCON Philippines",
     caption: "Opening keynote — DEVCON Philippines",
@@ -55,6 +61,7 @@ type VolunteerEntry = {
   highlights?: string[];
   quote?: string;
   details?: { label: string; value: string }[];
+  link?: { href: string; label: string };
 };
 
 const VOLUNTEER_EXPERIENCES: VolunteerEntry[] = [
@@ -82,6 +89,10 @@ const VOLUNTEER_EXPERIENCES: VolunteerEntry[] = [
       },
       { label: "Date", value: "October 29, 2026" },
     ],
+    link: {
+      href: "https://www.facebook.com/share/p/1CYkf14dBD/",
+      label: "View Facebook Post",
+    },
   },
 ];
 
@@ -139,6 +150,18 @@ function VolunteerCard({
             </>
           )}
 
+          {entry.link && (
+            <a
+              href={entry.link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              {entry.link.label}
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          )}
+
           {entry.details && (
             <>
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-4">
@@ -160,6 +183,18 @@ function VolunteerCard({
                 ))}
               </div>
             </>
+          )}
+
+          {entry.link && (
+            <a
+              href={entry.link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:-translate-y-0.5 hover:shadow-md"
+            >
+              {entry.link.label}
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
           )}
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { flushSync } from "react-dom";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
@@ -214,23 +215,28 @@ export function Certificate3DCard({
 }
 
 interface CertificateLightboxProps {
-  certificates: Project[];
+  items: Project[];
   currentIndex: number;
   onClose: () => void;
   onSelectIndex: (index: number) => void;
 }
 
 export function CertificateLightbox({
-  certificates,
+  items,
   currentIndex,
   onClose,
   onSelectIndex,
 }: CertificateLightboxProps) {
   const [isZoomed, setIsZoomed] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const cert = certificates[currentIndex];
-  const total = certificates.length;
+  const cert = items[currentIndex];
+  const zoomContainerRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef({ active: false, startX: 0, startY: 0, scrollLeft: 0, scrollTop: 0, moved: false });
+  const suppressClickRef = useRef(false);
+  const total = items.length;
+  const stack = cert?.techStack || cert?.uiTools || [];
 
   const handlePrev = useCallback(() => {
     setIsZoomed(false);
@@ -241,6 +247,15 @@ export function CertificateLightbox({
     setIsZoomed(false);
     onSelectIndex((currentIndex + 1) % total);
   }, [currentIndex, onSelectIndex, total]);
+
+  const onCloseRef = useRef(onClose);
+  const handlePrevRef = useRef(handlePrev);
+  const handleNextRef = useRef(handleNext);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+    handlePrevRef.current = handlePrev;
+    handleNextRef.current = handleNext;
+  });
 
   useEffect(() => {
     setTilt({ x: 0, y: 0 });
@@ -264,11 +279,77 @@ export function CertificateLightbox({
     setTilt({ x: 0, y: 0 });
   }, []);
 
+  const handlePanDown = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!isZoomed) return;
+      const el = zoomContainerRef.current;
+      if (!el) return;
+      dragRef.current = {
+        active: true,
+        startX: e.clientX,
+        startY: e.clientY,
+        scrollLeft: el.scrollLeft,
+        scrollTop: el.scrollTop,
+        moved: false,
+      };
+      try {
+        el.setPointerCapture(e.pointerId);
+      } catch {}
+      setIsDragging(true);
+    },
+    [isZoomed],
+  );
+
+  const handlePanMove = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!isZoomed || !dragRef.current.active) return;
+      const el = zoomContainerRef.current;
+      if (!el) return;
+      const dx = e.clientX - dragRef.current.startX;
+      const dy = e.clientY - dragRef.current.startY;
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) dragRef.current.moved = true;
+      el.scrollLeft = dragRef.current.scrollLeft - dx;
+      el.scrollTop = dragRef.current.scrollTop - dy;
+    },
+    [isZoomed],
+  );
+
+  const handlePanUp = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!isZoomed) return;
+      const el = zoomContainerRef.current;
+      if (el) {
+        try {
+          el.releasePointerCapture(e.pointerId);
+        } catch {}
+      }
+      const wasDrag = dragRef.current.moved;
+      dragRef.current.active = false;
+      setIsDragging(false);
+      if (wasDrag) suppressClickRef.current = true;
+    },
+    [isZoomed],
+  );
+
+  // Center the scroll position when entering zoom mode
+  useEffect(() => {
+    if (!isZoomed) return;
+    const el = zoomContainerRef.current;
+    if (!el) return;
+    const raf = requestAnimationFrame(() => {
+      el.scrollLeft = Math.max(0, (el.scrollWidth - el.clientWidth) / 2);
+      el.scrollTop = Math.max(0, (el.scrollHeight - el.clientHeight) / 2);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [isZoomed]);
+
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") handlePrev();
-      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "Escape") {
+        flushSync(() => { onCloseRef.current(); });
+      }
+      if (e.key === "ArrowLeft") handlePrevRef.current();
+      if (e.key === "ArrowRight") handleNextRef.current();
     };
 
     const prevOverflow = document.body.style.overflow;
@@ -279,7 +360,7 @@ export function CertificateLightbox({
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", handleKey);
     };
-  }, [onClose, handlePrev, handleNext]);
+  }, []);
 
   if (!cert) return null;
 
@@ -299,6 +380,22 @@ export function CertificateLightbox({
       className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-2xl select-none"
       onClick={onClose}
     >
+      <style>{`
+        .zoom-container {
+          overflow: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          cursor: grab;
+          user-select: none;
+          touch-action: none;
+        }
+        .zoom-container::-webkit-scrollbar {
+          display: none;
+        }
+        .zoom-container.dragging {
+          cursor: grabbing;
+        }
+      `}</style>
       {/* Top action toolbar */}
       <div
         className="absolute top-3 sm:top-6 inset-x-4 sm:inset-x-8 flex items-center justify-between z-30 pointer-events-auto"
@@ -362,18 +459,30 @@ export function CertificateLightbox({
       >
         {/* Certificate Display Screen */}
         <div
-          className={`relative w-full flex items-center justify-center transition-all duration-300 ${
+          ref={zoomContainerRef}
+          className={`relative w-full transition-all duration-300 ${
             isZoomed
-              ? "max-h-[82vh] overflow-auto cursor-zoom-out"
-              : "max-h-[68vh] sm:max-h-[72vh] cursor-zoom-in"
+              ? `zoom-container h-[82vh] overflow-auto ${isDragging ? "dragging" : ""}`
+              : "flex items-center justify-center max-h-[68vh] sm:max-h-[72vh] cursor-zoom-in"
           }`}
-          onClick={() => setIsZoomed(!isZoomed)}
+          onClick={() => {
+            if (suppressClickRef.current) {
+              suppressClickRef.current = false;
+              return;
+            }
+            setIsZoomed(!isZoomed);
+          }}
+          onPointerDown={handlePanDown}
+          onPointerMove={handlePanMove}
+          onPointerUp={handlePanUp}
+          onPointerCancel={handlePanUp}
+          onPointerLeave={handlePanUp}
         >
           <motion.div
-            className={`relative flex items-center justify-center transition-all duration-300 ${
+            className={`relative transition-all duration-300 ${
               isZoomed
                 ? "w-[125%] h-[125%] min-h-[700px]"
-                : "w-full h-[52vh] sm:h-[62vh]"
+                : "flex items-center justify-center w-full h-[52vh] sm:h-[62vh]"
             }`}
             style={{ perspective: "1400px" }}
             onPointerMove={handlePointerMove}
@@ -404,8 +513,9 @@ export function CertificateLightbox({
                 alt={cert.title}
                 fill
                 quality={100}
-                sizes="(max-width: 1200px) 96vw, 1200px"
+                sizes="(max-width: 1200px) 100vw, 1500px"
                 className="object-contain"
+                draggable={false}
                 priority
               />
             </div>
@@ -413,29 +523,55 @@ export function CertificateLightbox({
         </div>
 
         {/* Caption and external credential verification */}
-        <div className="mt-4 w-full max-w-3xl px-5 py-4 rounded-xl bg-neutral-900/90 border border-white/10 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-left">
-          <div className="space-y-1">
-            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
-              {cert.title}
-            </h3>
-            <p className="text-xs text-neutral-300 leading-relaxed max-w-xl">
-              {cert.description}
-            </p>
+        <div className="mt-4 w-full max-w-3xl px-5 py-4 rounded-xl bg-neutral-900/90 border border-white/10 backdrop-blur-md flex flex-col gap-3 text-left">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                {cert.title}
+              </h3>
+              <p className="text-xs text-neutral-300 leading-relaxed max-w-xl">
+                {cert.description}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              {cert.github && (
+                <a
+                  href={cert.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/20 text-white hover:bg-white/10 transition-colors text-xs font-bold uppercase tracking-wider shadow-md"
+                >
+                  <span>Repository</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {cert.href && (
+                <a
+                  href={cert.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-neutral-950 hover:bg-neutral-200 transition-colors text-xs font-bold uppercase tracking-wider shadow-md"
+                >
+                  <span>{isExternalLink ? "Verify Online" : "View Full File"}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            {cert.href && (
-              <a
-                href={cert.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-neutral-950 hover:bg-neutral-200 transition-colors text-xs font-bold uppercase tracking-wider shadow-md"
-              >
-                <span>{isExternalLink ? "Verify Online" : "View Full File"}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            )}
-          </div>
+          {stack.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {stack.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-2.5 py-1 bg-white/10 text-white/80 rounded-md text-[10px] font-mono font-semibold tracking-wider uppercase border border-white/15"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </motion.div>
 
@@ -490,7 +626,7 @@ export default function CertificateShowcase({
           <AnimatePresence>
             {selectedIndex !== null && (
               <CertificateLightbox
-                certificates={certificates}
+                items={certificates}
                 currentIndex={selectedIndex}
                 onClose={() => setSelectedIndex(null)}
                 onSelectIndex={setSelectedIndex}
