@@ -13,6 +13,7 @@ import {
   SiXampp,
 } from "react-icons/si";
 import Loader from "./loader";
+import VisitorCounter from "../components/ui/VisitorCounter";
 
 const STACK = [
   { label: "Laravel", icon: <SiLaravel /> },
@@ -429,7 +430,7 @@ export default function Groove() {
               {PROCESS_PHASES.map((phase) => (
                 <div
                   key={phase.phase}
-                  className="p-7 rounded-2xl border border-[var(--text)]/8 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 bg-white hover:border-[var(--text)]/10 transition-all duration-300 space-y-4"
+                  className="p-7 rounded-2xl border border-[var(--text)]/8 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 bg-white hover:border-[#444444] transition-all duration-300 space-y-4"
                 >
                   <span className="text-3xl cs-serif font-light text-[var(--text)]/20">{phase.phase}</span>
                   <h3 className="text-base font-bold">{phase.title}</h3>
@@ -505,7 +506,7 @@ export default function Groove() {
                 {SYSTEM_SCREENS.map((screen) => (
                   <div
                     key={screen.id}
-                    className="screen-card group rounded-2xl border border-[var(--text)]/8 overflow-hidden hover:border-[var(--text)]/20 transition-colors cursor-zoom-in"
+                    className="screen-card group rounded-2xl border border-[var(--text)]/8 overflow-hidden hover:border-[#444444] transition-colors cursor-zoom-in"
                     onClick={() => setModalImage(screen.image)}
                   >
                     <div className="relative aspect-[16/10] overflow-hidden bg-[var(--text)]/5">
@@ -615,6 +616,7 @@ export default function Groove() {
             <p className="text-[0.42rem] cs-mono uppercase tracking-[0.3em] text-[var(--text)]/25">
               Groove · Capstone Project · STI College San Jose Del Monte · October 2025
             </p>
+            <VisitorCounter />
             <p className="text-[0.42rem] cs-mono uppercase tracking-[0.3em] text-[var(--text)]/25">
               John Renz C. Bandianon · Lead Developer & UI Designer
             </p>

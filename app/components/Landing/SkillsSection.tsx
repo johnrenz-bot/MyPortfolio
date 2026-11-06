@@ -62,7 +62,7 @@ const TechIconCard = ({
 }: Pick<Skill, "iconId" | "name"> & { index: number }) => {
   return (
     <div
-      className={`reveal delay-${(index % 6) + 1} skill-icon-card group flex flex-col items-center justify-center gap-3 p-5 sm:p-6 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-800/90 hover:border-neutral-400 dark:hover:border-white/50 hover:shadow-md dark:hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] cursor-default transition-all duration-300 hover:-translate-y-1`}
+      className={`reveal delay-${(index % 6) + 1} skill-icon-card group flex flex-col items-center justify-center gap-3 p-5 sm:p-6 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-800/90 hover:border-[#444444] dark:hover:border-[#444444] hover:shadow-md dark:hover:shadow-[0_0_25px_rgba(255,255,255,0.08)] cursor-default transition-all duration-300 hover:-translate-y-1`}
     >
       <div className="text-neutral-700 dark:text-neutral-300 text-2xl sm:text-3xl group-hover:text-neutral-950 dark:group-hover:text-white transition-colors duration-300">
         {getIcon(iconId)}
@@ -172,7 +172,7 @@ export default function SkillsSection() {
               {HARD_SKILLS.map((skill, index) => (
                 <div
                   key={index}
-                  className={`reveal delay-${(index % 4) + 1} px-4 py-3.5 border border-neutral-200 dark:border-neutral-800 rounded-xl bg-neutral-50 dark:bg-neutral-900/50 flex items-center gap-3 transition-colors duration-300 hover:border-neutral-400 dark:hover:border-white/40`}
+                  className={`reveal delay-${(index % 4) + 1} px-4 py-3.5 border border-neutral-200 dark:border-neutral-800 rounded-xl bg-neutral-50 dark:bg-neutral-900/50 flex items-center gap-3 transition-colors duration-300 hover:border-[#444444] dark:hover:border-[#444444]`}
                 >
                   <div className="w-1.5 h-1.5 bg-neutral-900 dark:bg-white rounded-full shrink-0" />
                   <span className="text-xs sm:text-sm font-bold text-neutral-800 dark:text-neutral-200 uppercase tracking-wider">
@@ -192,7 +192,7 @@ export default function SkillsSection() {
               {SOFT_SKILLS.map((skill, index) => (
                 <div
                   key={index}
-                  className={`reveal delay-${(index % 4) + 1} px-4 py-3.5 border border-neutral-200 dark:border-neutral-800 rounded-xl bg-neutral-50 dark:bg-neutral-900/50 flex items-center gap-3 transition-colors duration-300 hover:border-neutral-400 dark:hover:border-white/40`}
+                  className={`reveal delay-${(index % 4) + 1} px-4 py-3.5 border border-neutral-200 dark:border-neutral-800 rounded-xl bg-neutral-50 dark:bg-neutral-900/50 flex items-center gap-3 transition-colors duration-300 hover:border-[#444444] dark:hover:border-[#444444]`}
                 >
                   <div className="w-1.5 h-1.5 bg-neutral-900 dark:bg-white rounded-full shrink-0" />
                   <span className="text-xs sm:text-sm font-bold text-neutral-800 dark:text-neutral-200 uppercase tracking-wider">

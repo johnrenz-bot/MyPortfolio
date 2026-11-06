@@ -275,6 +275,25 @@ img {
   outline-offset: 2px;
 }
 
+/* ============================================
+   GLOBAL HOVER BORDER (#444444)
+   ============================================ */
+:root {
+  --hover-border: #444444;
+}
+
+/* Consistent hover border (#444444) across cards, buttons, badges, and interactive elements */
+[class*="hover:border-"]:hover,
+[class*="hover:border-\["]:hover,
+.sw-card:hover,
+.featured-card:hover,
+.skill-icon-card:hover,
+.hover-border-44:hover,
+.hover\:border-\[\#444444\]:hover,
+.group:hover [class*="group-hover:border-"] {
+  border-color: #444444 !important;
+}
+
 @layer utilities {
   .glass-panel {
     @apply bg-white/70 dark:bg-neutral-900/70 backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)];

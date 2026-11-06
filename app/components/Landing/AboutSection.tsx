@@ -57,8 +57,8 @@ export default function AboutSection() {
                     href: `tel:${HERO_DATA.phone}`,
                   },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center text-neutral-900 dark:text-white bg-neutral-50 dark:bg-neutral-900 shrink-0">
+                  <div key={i} className="flex items-center gap-4 group/item">
+                    <div className="w-10 h-10 rounded-full border border-neutral-200 dark:border-neutral-800 group-hover/item:border-[#444444] flex items-center justify-center text-neutral-900 dark:text-white bg-neutral-50 dark:bg-neutral-900 shrink-0 transition-colors duration-300">
                       {item.icon}
                     </div>
                     {item.href ? (

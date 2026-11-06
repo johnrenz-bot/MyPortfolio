@@ -41,7 +41,7 @@ const SW_CSS = `
   transition: border-color 0.5s ease, box-shadow 0.5s ease;
 }
 .sw-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: #444444;
   box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9), 0 0 80px -40px rgba(255, 255, 255, 0.25);
 }
 .sw-card-glow {
@@ -133,6 +133,93 @@ const SW_CSS = `
   .sw-gold-progress {
     animation: none !important;
     width: 100% !important;
+  }
+}
+
+/* ============================================
+   MOCKUP PEEK & REVEAL STYLES (Mockups only)
+   ============================================ */
+.mockup-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: radial-gradient(circle at 50% 25%, #181922 0%, #0d0e13 60%, #060709 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mockup-card:hover {
+  border-color: #444444 !important;
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 255, 255, 0.04);
+}
+
+.mockup-device-wrapper {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* Peek direction variations for desktop pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  /* Peek Right */
+  .peek-right .mockup-device-wrapper {
+    transform: translateX(24%) translateY(3%) rotate(5deg) scale(0.95);
+  }
+  .peek-right:hover .mockup-device-wrapper {
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1.02);
+  }
+
+  /* Peek Left */
+  .peek-left .mockup-device-wrapper {
+    transform: translateX(-24%) translateY(3%) rotate(-5deg) scale(0.95);
+  }
+  .peek-left:hover .mockup-device-wrapper {
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1.02);
+  }
+
+  /* Peek Bottom-Right */
+  .peek-bottom-right .mockup-device-wrapper {
+    transform: translateX(18%) translateY(18%) rotate(4deg) scale(0.93);
+  }
+  .peek-bottom-right:hover .mockup-device-wrapper {
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1.02);
+  }
+
+  /* Peek Bottom-Left */
+  .peek-bottom-left .mockup-device-wrapper {
+    transform: translateX(-18%) translateY(18%) rotate(-4deg) scale(0.93);
+  }
+  .peek-bottom-left:hover .mockup-device-wrapper {
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1.02);
+  }
+}
+
+/* Touch and mobile devices: disable peek effects; display centered mockups instead */
+@media (hover: none), (pointer: coarse), (max-width: 640px) {
+  .mockup-device-wrapper {
+    transform: none !important;
+  }
+}
+
+/* Floating animation for Mockup Lightbox Modal */
+@keyframes mockupModalFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.mockup-floating-device {
+  animation: mockupModalFloat 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mockup-floating-device {
+    animation: none !important;
+  }
+  .mockup-device-wrapper {
+    transition: none !important;
+    transform: none !important;
   }
 }
 `;
@@ -450,7 +537,7 @@ function GalleryProjectCard({
   return (
     <button
       onClick={onClick}
-      className="group relative w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-300 hover:shadow-xl text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-white"
+      className="group relative w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-[#444444] dark:hover:border-[#444444] transition-all duration-300 hover:shadow-xl text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-white"
     >
       <Image
         src={item.image}
@@ -478,6 +565,238 @@ function GalleryProjectCard({
         )}
       </div>
     </button>
+  );
+}
+
+function MockupProjectCard({
+  item,
+  index,
+  onClick,
+}: {
+  item: Project;
+  index: number;
+  onClick: () => void;
+}) {
+  const PEEK_VARIANTS = [
+    "peek-right",
+    "peek-left",
+    "peek-bottom-right",
+    "peek-bottom-left",
+  ];
+  const peekClass = PEEK_VARIANTS[index % PEEK_VARIANTS.length];
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group mockup-card ${peekClass} relative w-full aspect-[4/5] sm:aspect-[3/4] p-4 flex flex-col justify-between cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white`}
+      aria-label={`View mockup: ${item.title}`}
+    >
+      {/* Top badges */}
+      <div className="relative z-10 flex items-center justify-between w-full">
+        <span className="label-mono px-2.5 py-1 rounded-md bg-white/10 text-white/90 text-[10px] backdrop-blur-md border border-white/10">
+          Device Mockup
+        </span>
+        <span className="label-mono text-neutral-400 text-[10px]">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+
+      {/* Device mockup image with peek & reveal */}
+      <div className="relative w-full h-[65%] sm:h-[68%] my-auto flex items-center justify-center pointer-events-none">
+        <div className="mockup-device-wrapper relative w-full h-full flex items-center justify-center">
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.7)]"
+            priority={index === 0}
+          />
+        </div>
+      </div>
+
+      {/* Bottom info banner */}
+      <div className="relative z-10 pt-2 border-t border-white/[0.08]">
+        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0">
+            <h4 className="text-sm sm:text-base font-bold text-white tracking-tight truncate group-hover:text-white transition-colors">
+              {item.title}
+            </h4>
+            <p className="text-xs text-neutral-400 truncate mt-0.5">
+              {item.description || "Interactive device preview"}
+            </p>
+          </div>
+          <span className="shrink-0 text-[10px] font-mono uppercase tracking-wider text-neutral-300 px-2 py-1 rounded bg-white/5 border border-white/10 group-hover:border-[#444444] transition-colors">
+            Tap to view
+          </span>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function MockupLightbox({
+  items,
+  currentIndex,
+  onClose,
+  onSelectIndex,
+}: {
+  items: Project[];
+  currentIndex: number;
+  onClose: () => void;
+  onSelectIndex: (index: number) => void;
+}) {
+  const current = items[currentIndex];
+  const total = items.length;
+
+  const handlePrev = useCallback(() => {
+    onSelectIndex((currentIndex - 1 + total) % total);
+  }, [currentIndex, onSelectIndex, total]);
+
+  const handleNext = useCallback(() => {
+    onSelectIndex((currentIndex + 1) % total);
+  }, [currentIndex, onSelectIndex, total]);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
+    };
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [onClose, handlePrev, handleNext]);
+
+  if (!current) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Device mockup preview: ${current.title}`}
+      className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-6 select-none"
+      style={{
+        background: "radial-gradient(circle at 50% 45%, #181920 0%, #0d0e12 55%, #050608 100%)",
+        backdropFilter: "blur(20px)",
+      }}
+      onClick={onClose}
+    >
+      {/* Top Action Toolbar */}
+      <div
+        className="absolute top-4 sm:top-6 inset-x-4 sm:inset-x-8 flex items-center justify-between z-30 pointer-events-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center gap-3">
+          <span className="label-mono px-3 py-1.5 rounded-full bg-white/10 text-white text-xs border border-white/15 backdrop-blur-md">
+            {String(currentIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          </span>
+          <span className="hidden sm:inline-block text-xs font-mono text-neutral-400">
+            Device Mockup Presentation · Use ← → arrows
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close mockup preview"
+          className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 hover:border-[#444444] flex items-center justify-center text-white transition-all hover:scale-105 active:scale-95"
+        >
+          <span className="text-lg leading-none font-bold">✕</span>
+        </button>
+      </div>
+
+      {/* Prev / Next controls */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          handlePrev();
+        }}
+        aria-label="Previous mockup"
+        className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 border border-white/20 hover:border-[#444444] text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 backdrop-blur-md"
+      >
+        <RxArrowLeft className="w-5 h-5" />
+      </button>
+
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleNext();
+        }}
+        aria-label="Next mockup"
+        className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 border border-white/20 hover:border-[#444444] text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 backdrop-blur-md"
+      >
+        <RxArrowRight className="w-5 h-5" />
+      </button>
+
+      {/* Center presentation stage */}
+      <motion.div
+        key={current.id}
+        initial={{ opacity: 0, scale: 0.94 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.96 }}
+        transition={{ duration: 0.3, ease: EASE }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative flex flex-col items-center justify-center max-w-lg w-full max-h-[88vh] my-auto"
+      >
+        {/* Floating device container with realistic drop shadow */}
+        <div className="mockup-floating-device relative w-full h-[52vh] sm:h-[62vh] max-h-[640px] flex items-center justify-center px-4">
+          <div className="relative w-full h-full">
+            <Image
+              src={current.image}
+              alt={current.title}
+              fill
+              quality={100}
+              sizes="(max-width: 640px) 90vw, 500px"
+              className="object-contain drop-shadow-[0_28px_45px_rgba(0,0,0,0.9)] drop-shadow-[0_12px_20px_rgba(0,0,0,0.65)]"
+              draggable={false}
+              priority
+            />
+          </div>
+        </div>
+
+        {/* Project Info Card */}
+        <div className="mt-4 w-full px-5 py-4 rounded-2xl bg-neutral-900/90 border border-white/10 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-left shadow-2xl">
+          <div className="space-y-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="label-mono px-2 py-0.5 rounded bg-white/10 text-[10px] text-white border border-white/15">
+                {current.category || "Mockup"}
+              </span>
+              <h3 className="text-base font-bold text-white tracking-tight truncate">
+                {current.title}
+              </h3>
+            </div>
+            <p className="text-xs text-neutral-300 leading-relaxed line-clamp-2">
+              {current.description || "High-fidelity digital mockup demonstration."}
+            </p>
+          </div>
+
+          {current.uiTools && current.uiTools.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 shrink-0">
+              {current.uiTools.map((tool) => (
+                <span
+                  key={tool}
+                  className="px-2 py-1 rounded-md bg-white/5 border border-white/10 text-[10px] font-mono text-neutral-300"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -524,7 +843,7 @@ function CategoryView({
             <button
               type="button"
               onClick={onClose}
-              className="group inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-white transition-all text-xs font-bold uppercase tracking-wider"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700 hover:border-[#444444] dark:hover:border-[#444444] text-neutral-900 dark:text-white transition-all text-xs font-bold uppercase tracking-wider"
               aria-label="Close category view"
             >
               <RxArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
@@ -543,6 +862,20 @@ function CategoryView({
 
         {category.key === "certificates" ? (
           <CertificateShowcase certificates={items} />
+        ) : category.key === "mockups" ? (
+          <div
+            id={`category-grid-${category.key}`}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+          >
+            {items.map((item, i) => (
+              <MockupProjectCard
+                key={item.id}
+                item={item}
+                index={i}
+                onClick={() => setSelectedIndex(i)}
+              />
+            ))}
+          </div>
         ) : (
           <div
             id={`category-grid-${category.key}`}
@@ -563,14 +896,22 @@ function CategoryView({
         mounted &&
         createPortal(
           <AnimatePresence>
-            {selectedIndex !== null && (
-              <CertificateLightbox
-                items={items}
-                currentIndex={selectedIndex}
-                onClose={handleClose}
-                onSelectIndex={setSelectedIndex}
-              />
-            )}
+            {selectedIndex !== null &&
+              (category.key === "mockups" ? (
+                <MockupLightbox
+                  items={items}
+                  currentIndex={selectedIndex}
+                  onClose={handleClose}
+                  onSelectIndex={setSelectedIndex}
+                />
+              ) : (
+                <CertificateLightbox
+                  items={items}
+                  currentIndex={selectedIndex}
+                  onClose={handleClose}
+                  onSelectIndex={setSelectedIndex}
+                />
+              ))}
           </AnimatePresence>,
           document.body,
         )}
@@ -722,7 +1063,7 @@ export default function ProjectsSection() {
                   className={`group shrink-0 snap-start relative w-56 sm:w-64 lg:w-72 aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer bg-neutral-900 border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${
                     isActive
                       ? "border-white ring-2 ring-white/50 shadow-[0_0_30px_-5px_rgba(255,255,255,0.4)]"
-                      : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600"
+                      : "border-neutral-200 dark:border-neutral-800 hover:border-[#444444] dark:hover:border-[#444444]"
                   }`}
                 >
                   <Image

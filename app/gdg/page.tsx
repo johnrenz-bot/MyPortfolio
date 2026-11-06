@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import VisitorCounter from "../components/ui/VisitorCounter";
 import { ExternalLink } from "lucide-react";
 import SubPageHeader from "../components/shared/SubPageHeader";
 import RevealOnScroll from "../components/shared/RevealOnScroll";
@@ -197,7 +198,7 @@ export default function GDGPage() {
                 href="https://github.com/johnrenz-bot/GroooveyAI-"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-transparent text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-neutral-900 dark:hover:border-white hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-transparent text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-[#444444] dark:hover:border-[#444444] hover:-translate-y-0.5"
               >
                 <FaGithub className="w-3.5 h-3.5" />
                 GitHub
@@ -209,9 +210,21 @@ export default function GDGPage() {
 
       <footer className="border-t border-neutral-200 dark:border-neutral-800">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-          <p className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white">
-            RΣNZ
-          </p>
+          <Link href="/" className="group flex items-center gap-2.5">
+            <div className="relative w-7 h-7 shrink-0">
+              <Image
+                src="/Image/Favicon/Favicon.png"
+                alt="Official Logo"
+                width={28}
+                height={28}
+                className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <p className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white group-hover:opacity-80 transition-opacity">
+              RΣNZ
+            </p>
+          </Link>
+          <VisitorCounter />
           <Link
             href="/devcon"
             className="label-mono text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"

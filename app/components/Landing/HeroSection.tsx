@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { BRAND } from "../../../constants/brand";
 import { ThemeToggle } from "../theme/ThemeToggle";
 
 export default function HeroSection() {
@@ -11,10 +10,22 @@ export default function HeroSection() {
       <header className="hero-enter hero-enter-d1 w-full relative z-30 flex justify-between items-center px-5 sm:px-8 lg:px-12 py-5 sm:py-6">
         <a
           href="#hero"
-          className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase select-none text-neutral-900 dark:text-white hover:opacity-70 transition-opacity"
+          className="group flex items-center gap-2.5 select-none"
           aria-label="Home"
         >
-          RΣNZ
+          <div className="relative w-7 h-7 sm:w-8 sm:h-8 shrink-0">
+            <Image
+              src="/Image/Favicon/Favicon.png"
+              alt="Official Logo"
+              width={32}
+              height={32}
+              priority
+              className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+          <span className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white group-hover:opacity-80 transition-opacity">
+            RΣNZ
+          </span>
         </a>
 
         <nav
@@ -23,10 +34,12 @@ export default function HeroSection() {
         >
           <ThemeToggle />
           <a
-            href={BRAND.cvRequestHref}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-semibold tracking-wide transition-all duration-300 bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:-translate-y-0.5 hover:shadow-md"
+            href="/CV/John_Renz_Bandianon_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-semibold tracking-wide transition-all duration-300 bg-neutral-900 text-white border border-neutral-900 hover:border-[#444444] hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:border-[#444444] dark:hover:bg-neutral-200 hover:-translate-y-0.5 hover:shadow-md"
           >
-            Request CV
+            View CV
             <svg
               className="w-3.5 h-3.5"
               viewBox="0 0 24 24"
@@ -37,8 +50,11 @@ export default function HeroSection() {
               strokeLinejoin="round"
               aria-hidden="true"
             >
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-              <polyline points="22,6 12,13 2,6" />
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
             </svg>
           </a>
           <div className="hidden sm:flex items-center gap-2">
@@ -46,7 +62,7 @@ export default function HeroSection() {
               href="https://www.linkedin.com/in/john-renz-96a77728b/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-semibold tracking-wide transition-all duration-300 bg-white/80 dark:bg-neutral-900/80 text-neutral-800 dark:text-neutral-200 border border-black/8 dark:border-white/10 hover:bg-white dark:hover:bg-neutral-800 hover:-translate-y-0.5 hover:shadow-md backdrop-blur-md"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-semibold tracking-wide transition-all duration-300 bg-white/80 dark:bg-neutral-900/80 text-neutral-800 dark:text-neutral-200 border border-black/8 dark:border-white/10 hover:border-[#444444] dark:hover:border-[#444444] hover:bg-white dark:hover:bg-neutral-800 hover:-translate-y-0.5 hover:shadow-md backdrop-blur-md"
             >
               LinkedIn
             </a>
@@ -54,7 +70,7 @@ export default function HeroSection() {
               href="https://github.com/johnrenz-bot"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-semibold tracking-wide transition-all duration-300 bg-white/80 dark:bg-neutral-900/80 text-neutral-800 dark:text-neutral-200 border border-black/8 dark:border-white/10 hover:bg-white dark:hover:bg-neutral-800 hover:-translate-y-0.5 hover:shadow-md backdrop-blur-md"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-semibold tracking-wide transition-all duration-300 bg-white/80 dark:bg-neutral-900/80 text-neutral-800 dark:text-neutral-200 border border-black/8 dark:border-white/10 hover:border-[#444444] dark:hover:border-[#444444] hover:bg-white dark:hover:bg-neutral-800 hover:-translate-y-0.5 hover:shadow-md backdrop-blur-md"
             >
               GitHub
             </a>
@@ -108,7 +124,7 @@ export default function HeroSection() {
               <div className="hero-enter hero-enter-d5 flex flex-wrap gap-3 justify-center lg:justify-start">
                 <a
                   href="#projects"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:bg-neutral-200 hover:-translate-y-0.5 hover:shadow-lg"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-neutral-900 text-white border border-neutral-900 hover:border-[#444444] hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:border-[#444444] dark:hover:bg-neutral-200 hover:-translate-y-0.5 hover:shadow-lg"
                 >
                   View Projects
                   <svg
@@ -126,7 +142,7 @@ export default function HeroSection() {
                 </a>
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-transparent text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-neutral-900 dark:hover:border-white hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-transparent text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-[#444444] dark:hover:border-[#444444] hover:-translate-y-0.5"
                 >
                   Get in Touch
                 </a>

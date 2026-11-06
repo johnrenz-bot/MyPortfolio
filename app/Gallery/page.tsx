@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ArrowLeft, X, ZoomIn } from "lucide-react";
 import SubPageHeader from "../components/shared/SubPageHeader";
 import RevealOnScroll from "../components/shared/RevealOnScroll";
+import VisitorCounter from "../components/ui/VisitorCounter";
 import { GALLERY_ITEMS, GALLERY_TAGS } from "../../data/journey";
 import type { GalleryItem } from "../../types";
 
@@ -36,7 +37,7 @@ function Tile({
       type="button"
       onClick={() => onOpen(index)}
       aria-label={`Open image: ${item.caption}`}
-      className={`reveal delay-${(index % 4) + 1} group relative text-left w-full rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 focus-visible:outline-2 ${SPAN_CLASS[span]}`}
+      className={`reveal delay-${(index % 4) + 1} group relative text-left w-full rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-[#444444] dark:hover:border-[#444444] bg-neutral-100 dark:bg-neutral-900 focus-visible:outline-2 transition-all duration-300 ${SPAN_CLASS[span]}`}
     >
       <div className={`relative w-full ${RATIO[span]}`}>
         <Image
@@ -159,7 +160,7 @@ export default function GalleryPage() {
               className={`shrink-0 px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-300 border ${
                 filter === tag
                   ? "bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 border-neutral-900 dark:border-white"
-                  : "bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600"
+                  : "bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 hover:border-[#444444] dark:hover:border-[#444444]"
               }`}
             >
               {tag}
@@ -256,9 +257,21 @@ export default function GalleryPage() {
 
       <footer className="border-t border-neutral-200 dark:border-neutral-800">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-          <p className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white">
-            RΣNZ
-          </p>
+          <Link href="/" className="group flex items-center gap-2.5">
+            <div className="relative w-7 h-7 shrink-0">
+              <Image
+                src="/Image/Favicon/Favicon.png"
+                alt="Official Logo"
+                width={28}
+                height={28}
+                className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <p className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white group-hover:opacity-80 transition-opacity">
+              RΣNZ
+            </p>
+          </Link>
+          <VisitorCounter />
           <div className="flex flex-wrap gap-4">
             <Link
               href="/gdg"

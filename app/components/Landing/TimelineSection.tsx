@@ -27,7 +27,7 @@ export default function TimelineSection() {
 
           <Link
             href="/Journey"
-            className="group inline-flex items-center gap-2.5 self-start lg:self-end px-6 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] bg-neutral-900 text-white border border-neutral-900 dark:bg-white dark:text-neutral-950 dark:border-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+            className="group inline-flex items-center gap-2.5 self-start lg:self-end px-6 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] bg-neutral-900 text-white border border-neutral-900 hover:border-[#444444] dark:bg-white dark:text-neutral-950 dark:border-white dark:hover:border-[#444444] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
           >
             Read the full story
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -52,7 +52,7 @@ export default function TimelineSection() {
               >
                 <span
                   aria-hidden
-                  className="absolute left-0 top-0 flex h-[2.875rem] w-[2.875rem] items-center justify-center rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] text-[11px] font-black tracking-tight text-neutral-900 dark:text-white transition-colors duration-300 hover:border-neutral-900 dark:hover:border-white"
+                  className="absolute left-0 top-0 flex h-[2.875rem] w-[2.875rem] items-center justify-center rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] text-[11px] font-black tracking-tight text-neutral-900 dark:text-white transition-colors duration-300 hover:border-[#444444] dark:hover:border-[#444444]"
                 >
                   {chapter.chapter}
                 </span>
@@ -87,7 +87,7 @@ export default function TimelineSection() {
         <div className="reveal mt-12 sm:mt-14 max-w-4xl">
           <Link
             href="/Journey"
-            className="group inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-neutral-900 dark:text-white border-b border-neutral-900/25 dark:border-white/25 hover:border-neutral-900 dark:hover:border-white pb-1.5 transition-colors duration-300"
+            className="group inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-neutral-900 dark:text-white border-b border-neutral-900/25 dark:border-white/25 hover:border-[#444444] dark:hover:border-[#444444] pb-1.5 transition-colors duration-300"
           >
             Read the full story
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />

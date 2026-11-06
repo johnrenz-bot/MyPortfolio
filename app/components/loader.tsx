@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface LoaderProps {
@@ -59,8 +60,18 @@ export default function Loader({ onComplete }: LoaderProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="mb-16 text-center"
+              className="mb-14 flex flex-col items-center text-center"
             >
+              <div className="relative w-14 h-14 mb-4 drop-shadow-[0_0_20px_rgba(0,0,0,0.1)]">
+                <Image
+                  src="/Image/Favicon/Favicon.png"
+                  alt="Official Logo"
+                  width={56}
+                  height={56}
+                  priority
+                  className="object-contain w-full h-full"
+                />
+              </div>
               <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900">
                 R<span className="text-neutral-400 font-light">Σ</span>NZ
               </h1>

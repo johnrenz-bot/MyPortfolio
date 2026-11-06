@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 /** Short enough to feel instant, long enough for the counter to read. */
@@ -95,13 +96,23 @@ export default function PortfolioLoader({
       {/* Centered Logo */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center"
+          className="flex flex-col items-center gap-4 text-center"
         >
-          <p className="heading-display text-4xl md:text-6xl text-white tracking-widest">
-            R<span className="text-neutral-500 font-light">Σ</span>
+          <div className="relative w-16 h-16 sm:w-20 sm:h-20 drop-shadow-[0_0_25px_rgba(255,255,255,0.15)]">
+            <Image
+              src="/Image/Favicon/Favicon.png"
+              alt="Official Logo"
+              fill
+              sizes="80px"
+              priority
+              className="object-contain"
+            />
+          </div>
+          <p className="heading-display text-2xl sm:text-3xl text-white tracking-[0.2em] uppercase font-bold">
+            R<span className="text-neutral-500 font-light">Σ</span>NZ
           </p>
         </motion.div>
       </div>

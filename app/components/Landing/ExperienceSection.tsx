@@ -106,7 +106,7 @@ function CertificatePanel({
         </span>
         <button
           onClick={onOpen}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-[#444444] dark:hover:border-[#444444] hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
         >
           Open Full
         </button>
@@ -115,7 +115,7 @@ function CertificatePanel({
       <button
         onClick={onOpen}
         aria-label={`View ${exp.company} certificate`}
-        className={`group relative w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-600 transition-all duration-300 hover:shadow-lg ${
+        className={`group relative w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 hover:border-[#444444] dark:hover:border-[#444444] transition-all duration-300 hover:shadow-lg ${
           isPortrait ? "aspect-[4/5] max-w-[280px]" : "aspect-[1.414/1]"
         }`}
       >
@@ -155,7 +155,7 @@ function ExperienceCard({
 
   return (
     <article
-      className={`reveal delay-${(index % 4) + 1} group relative overflow-hidden rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] transition-all duration-300 hover:border-neutral-400 dark:hover:border-neutral-600 hover:shadow-xl`}
+      className={`reveal delay-${(index % 4) + 1} group relative overflow-hidden rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] transition-all duration-300 hover:border-[#444444] dark:hover:border-[#444444] hover:shadow-xl`}
     >
       {/* Index rail — keeps every card visually identical regardless of content */}
       <div className="hidden lg:flex absolute left-0 top-0 bottom-0 w-14 flex-col items-center justify-center border-r border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40">

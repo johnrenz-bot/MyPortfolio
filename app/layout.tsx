@@ -3,6 +3,7 @@ import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import InitialLoaderProvider from "./components/loading/InitialLoaderProvider";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
+import SmoothScroll from "./components/scroll/SmoothScroll";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -47,6 +48,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "John Renz Bandianon" }],
   creator: "John Renz Bandianon",
+  icons: {
+    icon: [
+      { url: "/Image/Favicon/Favicon.png", type: "image/png" },
+    ],
+    shortcut: "/Image/Favicon/Favicon.png",
+    apple: "/Image/Favicon/Favicon.png",
+  },
   metadataBase: new URL("https://johnrenz.dev"),
   alternates: {
     canonical: "/",
@@ -93,6 +101,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable}`}>
       <head>
+        <link rel="icon" href="/Image/Favicon/Favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/Image/Favicon/Favicon.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('rznz_theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();`,
@@ -101,6 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950 transition-colors duration-300">
         <ThemeProvider>
+          <SmoothScroll />
           <InitialLoaderProvider>
             {children}
           </InitialLoaderProvider>

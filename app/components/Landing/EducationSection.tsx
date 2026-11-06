@@ -26,10 +26,10 @@ export default function EducationSection() {
             {EDUCATION.map((edu: Education, index: number) => (
               <div
                 key={index}
-                className={`reveal delay-${index + 1} p-6 sm:p-8 bg-white dark:bg-[#171717] border border-neutral-200 dark:border-neutral-800 rounded-2xl`}
+                className={`reveal delay-${index + 1} p-6 sm:p-8 bg-white dark:bg-[#171717] border border-neutral-200 dark:border-neutral-800 hover:border-[#444444] dark:hover:border-[#444444] rounded-2xl transition-all duration-300 hover:shadow-md`}
               >
                 <div className="flex items-start gap-4 sm:gap-6 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center text-neutral-900 dark:text-white text-xl shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200/50 dark:border-neutral-700/50 flex items-center justify-center text-neutral-900 dark:text-white text-xl shrink-0">
                     <FaGraduationCap />
                   </div>
                   <div>
@@ -69,7 +69,7 @@ export default function EducationSection() {
             {CERTIFICATES.map((cert: string, index: number) => (
               <div
                 key={index}
-                className={`reveal delay-${(index % 4) + 1} p-4 sm:p-5 border border-neutral-200 dark:border-neutral-800 rounded-xl bg-white dark:bg-[#171717] flex items-center gap-4`}
+                className={`reveal delay-${(index % 4) + 1} p-4 sm:p-5 border border-neutral-200 dark:border-neutral-800 hover:border-[#444444] dark:hover:border-[#444444] rounded-xl bg-white dark:bg-[#171717] flex items-center gap-4 transition-all duration-300 hover:shadow-sm`}
               >
                 <div className="w-2 h-2 bg-neutral-900 dark:bg-white rounded-full shrink-0" />
                 <p className="text-sm font-bold text-neutral-800 dark:text-neutral-200 leading-snug">

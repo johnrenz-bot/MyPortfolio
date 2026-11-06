@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { FaCaretLeft, FaDownload } from "react-icons/fa";
 
 export default function Resume() {
@@ -10,21 +11,30 @@ export default function Resume() {
       <div className="fixed top-4 left-4 right-4 max-w-4xl mx-auto flex items-center justify-between z-30 pointer-events-none">
         <Link
           href="/"
-          className="pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-black/10 dark:border-white/15 bg-white/90 dark:bg-neutral-900/90 px-4 py-2 text-xs font-semibold shadow-sm hover:bg-white dark:hover:bg-neutral-800 transition-all"
+          className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/15 bg-white/90 dark:bg-neutral-900/90 px-3.5 py-1.5 text-xs font-semibold shadow-sm hover:border-[#444444] hover:bg-white dark:hover:bg-neutral-800 transition-all group"
         >
-          <FaCaretLeft className="text-sm" />
+          <FaCaretLeft className="text-sm transition-transform group-hover:-translate-x-0.5" />
+          <div className="relative w-4 h-4 shrink-0">
+            <Image
+              src="/Image/Favicon/Favicon.png"
+              alt="Official Logo"
+              width={16}
+              height={16}
+              className="object-contain w-full h-full"
+            />
+          </div>
           <span>Back to Portfolio</span>
         </Link>
 
         <a
-          href="/resume/John_Renz_Bandianon_Resumee.pdf"
-          download="John_Renz_Bandianon_Resumee.pdf"
+          href="/CV/John_Renz_Bandianon_CV.pdf"
+          download="John_Renz_Bandianon_CV.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/15 bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 px-4 py-2 text-xs font-semibold shadow-sm hover:opacity-90 transition-opacity"
+          className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/15 bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 px-4 py-2 text-xs font-semibold shadow-sm hover:border-[#444444] hover:opacity-90 transition-all"
         >
           <FaDownload className="text-xs" />
-          <span>Download PDF</span>
+          <span>Download CV</span>
         </a>
       </div>
 

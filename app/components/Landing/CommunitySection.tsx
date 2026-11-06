@@ -110,7 +110,7 @@ export default function CommunitySection() {
               >
                 <Link
                   href={event.href || "#"}
-                  className="group relative h-full flex flex-col justify-between p-8 sm:p-10 lg:p-12 rounded-[2rem] bg-[#060709] border border-neutral-200 dark:border-white/[0.08] hover:border-neutral-400 dark:hover:border-white/80 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_35px_-8px_rgba(255,255,255,0.2)] transition-all duration-300 hover:-translate-y-1.5 overflow-hidden block"
+                  className="group relative h-full flex flex-col justify-between p-8 sm:p-10 lg:p-12 rounded-[2rem] bg-[#060709] border border-neutral-200 dark:border-white/[0.08] hover:border-[#444444] dark:hover:border-[#444444] hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_35px_-8px_rgba(255,255,255,0.2)] transition-all duration-300 hover:-translate-y-1.5 overflow-hidden block"
                   aria-label={`View ${event.name} page`}
                 >
                   {/* Subtle Spotlight / Ambient Glow */}
@@ -200,7 +200,7 @@ export default function CommunitySection() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {secondaryEvents.map((event: Event, index: number) => {
               const cardInner = (
-                <div className="h-full flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-neutral-50 dark:bg-[#08090c] border border-neutral-200 dark:border-white/[0.07] hover:border-neutral-400 dark:hover:border-white/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group">
+                <div className="h-full flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-neutral-50 dark:bg-[#08090c] border border-neutral-200 dark:border-white/[0.07] hover:border-[#444444] dark:hover:border-[#444444] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group">
                   <div className="space-y-5">
                     {/* Top Row: Logo + Year */}
                     <div className="flex items-start justify-between gap-3">

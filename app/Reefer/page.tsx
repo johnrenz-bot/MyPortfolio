@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import VisitorCounter from "../components/ui/VisitorCounter";
 import SubPageHeader from "../components/shared/SubPageHeader";
 import RevealOnScroll from "../components/shared/RevealOnScroll";
 import {
@@ -354,7 +355,7 @@ export default function ReeferCaseStudy() {
             {REEFER_CHALLENGES.map((c, i) => (
               <div
                 key={c.title}
-                className={`reveal delay-${i + 1} p-6 sm:p-7 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-300`}
+                className={`reveal delay-${i + 1} p-6 sm:p-7 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-[#444444] dark:hover:border-[#444444] transition-colors duration-300`}
               >
                 <span className="label-mono text-neutral-400 dark:text-neutral-500 mb-3 block">
                   {String(i + 1).padStart(2, "0")}
@@ -381,7 +382,7 @@ export default function ReeferCaseStudy() {
             {REEFER_REFERENCES.map((brand, i) => (
               <span
                 key={brand}
-                className={`reveal delay-${(i % 6) + 1} px-4 py-2.5 rounded-xl text-sm font-bold bg-white dark:bg-[#171717] border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors`}
+                className={`reveal delay-${(i % 6) + 1} px-4 py-2.5 rounded-xl text-sm font-bold bg-white dark:bg-[#171717] border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:border-[#444444] dark:hover:border-[#444444] transition-colors`}
               >
                 {brand}
               </span>
@@ -469,7 +470,7 @@ export default function ReeferCaseStudy() {
             {REEFER_FEATURES.map((feature, i) => (
               <div
                 key={feature.title}
-                className={`reveal delay-${(i % 4) + 1} group p-6 sm:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-300`}
+                className={`reveal delay-${(i % 4) + 1} group p-6 sm:p-8 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-[#444444] dark:hover:border-[#444444] transition-colors duration-300`}
               >
                 <span className="label-mono text-neutral-400 dark:text-neutral-500 mb-3 block">
                   {String(i + 1).padStart(2, "0")}
@@ -625,7 +626,7 @@ export default function ReeferCaseStudy() {
             {REEFER_ADDITIONAL_PAGES.map((page, i) => (
               <div
                 key={page.title}
-                className={`reveal delay-${i + 1} p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors duration-300`}
+                className={`reveal delay-${i + 1} p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] hover:border-[#444444] dark:hover:border-[#444444] transition-colors duration-300`}
               >
                 <h3 className="text-base font-black text-neutral-900 dark:text-white tracking-tight mb-2">
                   {page.title}
@@ -755,7 +756,7 @@ export default function ReeferCaseStudy() {
                       </a>
                       <Link
                         href="/"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-transparent text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-neutral-900 dark:hover:border-white hover:-translate-y-0.5"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold tracking-wider uppercase transition-all duration-300 bg-transparent text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-[#444444] dark:hover:border-[#444444] hover:-translate-y-0.5"
                       >
                         View All Projects
                       </Link>
@@ -765,9 +766,21 @@ export default function ReeferCaseStudy() {
 
       <footer className="border-t border-neutral-200 dark:border-neutral-800">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-          <p className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white">
-            RΣNZ
-          </p>
+          <Link href="/" className="group flex items-center gap-2.5">
+            <div className="relative w-7 h-7 shrink-0">
+              <Image
+                src="/Image/Favicon/Favicon.png"
+                alt="Official Logo"
+                width={28}
+                height={28}
+                className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <p className="text-lg sm:text-xl font-black tracking-[-0.06em] uppercase text-neutral-900 dark:text-white group-hover:opacity-80 transition-opacity">
+              RΣNZ
+            </p>
+          </Link>
+          <VisitorCounter />
           <p className="label-mono text-neutral-400 dark:text-neutral-500">
             {REEFER_META.role} · {REEFER_META.timeline}
           </p>
