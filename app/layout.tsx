@@ -51,10 +51,12 @@ export const metadata: Metadata = {
   creator: "John Renz Bandianon",
   icons: {
     icon: [
-      { url: "/Image/Favicon/Favicon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
     ],
-    shortcut: "/Image/Favicon/Favicon.png",
-    apple: "/Image/Favicon/Favicon.png",
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
   metadataBase: new URL("https://johnrenz.dev"),
   alternates: {
@@ -102,8 +104,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable}`}>
       <head>
-        <link rel="icon" href="/Image/Favicon/Favicon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/Image/Favicon/Favicon.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('rznz_theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}}catch(e){}})();`,
