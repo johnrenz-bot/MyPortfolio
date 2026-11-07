@@ -104,7 +104,7 @@ export default function NetworkSection() {
               href={s.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`reveal delay-${(idx % 5) + 1} group relative aspect-[4/5] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden block shadow-sm hover:border-[#444444] dark:hover:border-[#444444] transition-all duration-300`}
+              className={`reveal delay-${(idx % 5) + 1} group relative aspect-[4/5] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden block shadow-sm hover:-translate-y-1 hover:shadow-lg hover:border-[#444444] dark:hover:border-[#444444] transition-all duration-300 motion-reduce:transform-none`}
             >
               <div className="absolute inset-0 w-full h-full">
                 <Image

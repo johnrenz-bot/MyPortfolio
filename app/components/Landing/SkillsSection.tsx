@@ -12,6 +12,7 @@ import {
   PROGRAMMING_LANGUAGES,
   DESIGN_TOOLS,
   MANAGEMENT_DEV_TOOLS,
+  TESTING_QA_TECH,
   SOFT_SKILLS,
   HARD_SKILLS,
 } from "../../../data/skills";
@@ -90,6 +91,11 @@ const TECH_GROUPS = [
     category: "Databases",
     description: "Relational data structures, cloud backends & real-time storage",
     items: DATABASES_TECH,
+  },
+  {
+    category: "Testing & QA",
+    description: "Manual testing, unit testing, debugging & defect tracking",
+    items: TESTING_QA_TECH,
   },
   {
     category: "Programming Languages",

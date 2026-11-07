@@ -455,7 +455,7 @@ export function CertificateLightbox({
         exit={{ opacity: 0, scale: 0.98 }}
         transition={{ duration: 0.28, ease: EASE }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl flex flex-col items-center max-h-[90vh] my-auto"
+        className="relative w-full max-w-5xl flex flex-col items-center max-h-[90vh] overflow-y-auto no-scrollbar my-auto gap-4 px-1"
       >
         {/* Certificate Display Screen */}
         <div
@@ -463,7 +463,7 @@ export function CertificateLightbox({
           className={`relative w-full transition-all duration-300 ${
             isZoomed
               ? `zoom-container h-[82vh] overflow-auto ${isDragging ? "dragging" : ""}`
-              : "flex items-center justify-center max-h-[68vh] sm:max-h-[72vh] cursor-zoom-in"
+              : "flex items-center justify-center max-h-[50vh] sm:max-h-[55vh] cursor-zoom-in"
           }`}
           onClick={() => {
             if (suppressClickRef.current) {
@@ -523,55 +523,67 @@ export function CertificateLightbox({
         </div>
 
         {/* Caption and external credential verification */}
-        <div className="mt-4 w-full max-w-3xl px-5 py-4 rounded-xl bg-neutral-900/90 border border-white/10 backdrop-blur-md flex flex-col gap-3 text-left">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                {cert.title}
-              </h3>
-              <p className="text-xs text-neutral-300 leading-relaxed max-w-xl">
-                {cert.description}
-              </p>
+        <div className="mt-4 w-full max-w-4xl rounded-2xl bg-neutral-900/90 border border-white/10 backdrop-blur-xl shadow-2xl">
+          <div className="p-6 sm:p-7 flex flex-col gap-5">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5">
+              <div className="space-y-3 min-w-0 flex-1">
+                <div className="flex items-center gap-2.5">
+                  <span className="label-mono px-3 py-1.5 rounded-full bg-white/10 text-white text-[10px] border border-white/15">
+                    {String(currentIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+                  </span>
+                  <span className="label-mono text-neutral-500">Project Details</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-tight">
+                  {cert.title}
+                </h3>
+                {cert.description && (
+                  <p className="text-sm sm:text-base text-neutral-300 leading-relaxed max-w-3xl">
+                    {cert.description}
+                  </p>
+                )}
+              </div>
+
+              {(cert.github || cert.href) && (
+                <div className="flex flex-wrap items-center gap-2.5 shrink-0 sm:pt-1">
+                  {cert.github && (
+                    <a
+                      href={cert.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-white/20 hover:border-[#444444] text-white hover:bg-white/10 transition-all duration-200 text-xs font-bold uppercase tracking-wider shadow-md hover:-translate-y-0.5"
+                    >
+                      <span>Repository</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {cert.href && (
+                    <a
+                      href={cert.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white text-neutral-950 hover:bg-neutral-200 transition-all duration-200 text-xs font-bold uppercase tracking-wider shadow-md hover:-translate-y-0.5"
+                    >
+                      <span>{isExternalLink ? "Verify Online" : "View Full File"}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
-              {cert.github && (
-                <a
-                  href={cert.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/20 hover:border-[#444444] text-white hover:bg-white/10 transition-colors text-xs font-bold uppercase tracking-wider shadow-md"
-                >
-                  <span>Repository</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              )}
-              {cert.href && (
-                <a
-                  href={cert.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-neutral-950 hover:bg-neutral-200 transition-colors text-xs font-bold uppercase tracking-wider shadow-md"
-                >
-                  <span>{isExternalLink ? "Verify Online" : "View Full File"}</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              )}
-            </div>
+            {stack.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+                {stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1.5 rounded-full bg-white/5 text-white/90 text-[10px] font-mono font-semibold tracking-wider uppercase border border-white/15 hover:bg-white/10 transition-colors"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
-
-          {stack.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {stack.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-2.5 py-1 bg-white/10 text-white/80 rounded-md text-[10px] font-mono font-semibold tracking-wider uppercase border border-white/15"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
       </motion.div>
 

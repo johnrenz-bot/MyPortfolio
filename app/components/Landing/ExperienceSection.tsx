@@ -2,160 +2,45 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
 import { WORK_EXPERIENCE } from "../../../data/experience";
-import type { WorkExperience } from "../../../types";
+import type { WorkExperience, Project } from "../../../types";
+import { Certificate3DCard, CertificateLightbox } from "./Certificate3DShowcase";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-/* ─── Certificate lightbox ─── */
-function CertificateModal({
-  certificate,
-  company,
-  caption,
-  onClose,
-}: {
-  certificate: string;
-  company: string;
-  caption?: string;
-  onClose: () => void;
-}) {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleEsc);
-    };
-  }, [onClose]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label={`${company} certificate`}
-      className="fixed inset-0 z-[150] flex items-center justify-center p-4 sm:p-6 bg-neutral-950/85 backdrop-blur-xl overflow-y-auto"
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 12 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.98, y: 8 }}
-        transition={{ duration: 0.3, ease: EASE }}
-        onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-4xl flex flex-col items-center my-auto"
-      >
-        <button
-          onClick={onClose}
-          className="self-end mb-3 px-3 py-1.5 text-neutral-400 hover:text-white transition-colors font-mono uppercase tracking-widest text-xs flex items-center gap-2 rounded-lg bg-neutral-900/60 border border-white/10"
-        >
-          Close <span className="text-sm">✕</span>
-        </button>
-
-        <div className="relative w-full rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl bg-neutral-900 flex items-center justify-center">
-          <Image
-            src={certificate}
-            alt={`${company} Certificate`}
-            width={1600}
-            height={1200}
-            className="object-contain w-full max-h-[70vh]"
-            priority
-          />
-        </div>
-
-        <div className="mt-4 w-full px-6 py-5 bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-xl">
-          <h3 className="text-base font-black tracking-tight text-neutral-900 dark:text-white mb-1">
-            {company}
-          </h3>
-          {caption && (
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              {caption}
-            </p>
-          )}
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ─── Inline certificate panel ─── */
-function CertificatePanel({
-  exp,
-  onOpen,
-}: {
-  exp: WorkExperience;
-  onOpen: () => void;
-}) {
-  if (!exp.certificate) return null;
-
-  const isPortrait = exp.certificateMeta?.orientation === "portrait";
-
-  return (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center justify-between gap-3">
-        <span className="label-mono text-neutral-400 dark:text-neutral-500">
-          Certificate
-        </span>
-        <button
-          onClick={onOpen}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-[#444444] dark:hover:border-[#444444] hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
-        >
-          Open Full
-        </button>
-      </div>
-
-      <button
-        onClick={onOpen}
-        aria-label={`View ${exp.company} certificate`}
-        className={`group relative w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 hover:border-[#444444] dark:hover:border-[#444444] transition-all duration-300 hover:shadow-lg ${
-          isPortrait ? "aspect-[4/5] max-w-[280px]" : "aspect-[1.414/1]"
-        }`}
-      >
-        <Image
-          src={exp.certificate}
-          alt={`${exp.company} Certificate`}
-          fill
-          sizes="(max-width: 1024px) 90vw, 300px"
-          className="object-contain p-2 transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-        <div className="absolute inset-0 bg-neutral-950/0 group-hover:bg-neutral-950/10 transition-colors duration-300" />
-        <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/90 dark:bg-neutral-900/90 backdrop-blur border border-neutral-200 dark:border-neutral-700 text-[9px] font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-200 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-          Expand
-        </span>
-      </button>
-
-      {exp.certificateMeta?.caption && (
-        <p className="text-[11px] leading-snug text-neutral-500 dark:text-neutral-400">
-          {exp.certificateMeta.caption}
-        </p>
-      )}
-    </div>
-  );
+/* ─── Work-experience certificate mapped to Project shape (reuses All Work certificate UI) ─── */
+function toCertProject(exp: WorkExperience): Project {
+  return {
+    id: `${exp.company}-certificate`,
+    title: `${exp.company} Certificate`,
+    href: exp.certificate || "",
+    image: exp.certificate || "",
+    description: exp.certificateMeta?.caption || "",
+    techStack: [],
+    category: "Certificate",
+  };
 }
 
 /* ─── Experience card ─── */
 function ExperienceCard({
   exp,
   index,
+  certIndex,
   onOpenCertificate,
 }: {
   exp: WorkExperience;
   index: number;
-  onOpenCertificate: (exp: WorkExperience) => void;
+  certIndex?: number;
+  onOpenCertificate: (certIndex: number) => void;
 }) {
   const hasCertificate = Boolean(exp.certificate);
+  const certProject = hasCertificate ? toCertProject(exp) : null;
 
   return (
     <article
-      className={`reveal delay-${(index % 4) + 1} group relative overflow-hidden rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] transition-all duration-300 hover:border-[#444444] dark:hover:border-[#444444] hover:shadow-xl`}
+      className={`reveal delay-${(index % 4) + 1} group relative overflow-hidden rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#171717] transition-all duration-300 hover:-translate-y-1 hover:border-[#444444] dark:hover:border-[#444444] hover:shadow-xl motion-reduce:transform-none`}
     >
       {/* Index rail — keeps every card visually identical regardless of content */}
       <div className="hidden lg:flex absolute left-0 top-0 bottom-0 w-14 flex-col items-center justify-center border-r border-neutral-200 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40">
@@ -176,13 +61,13 @@ function ExperienceCard({
           <div className="flex flex-col gap-6 min-w-0">
             {/* Identity row */}
             <div className="flex items-start gap-4 sm:gap-5">
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 flex items-center justify-center overflow-hidden">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 logo-hover animate-fade-in-up">
                 <Image
                   src={exp.logo}
                   alt={exp.company}
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="96px"
+                  className="object-contain"
                 />
               </div>
 
@@ -248,12 +133,17 @@ function ExperienceCard({
             </div>
           </div>
 
-          {/* Certificate column — only for roles that have one */}
-          {hasCertificate && (
-            <div className="lg:border-l lg:border-neutral-200 dark:lg:border-neutral-800 lg:pl-8">
-              <CertificatePanel
-                exp={exp}
-                onOpen={() => onOpenCertificate(exp)}
+          {/* Certificate column — reuses the premium certificate card from All Work */}
+          {hasCertificate && certProject && certIndex !== undefined && (
+            <div className="lg:border-l lg:border-neutral-200 dark:lg:border-neutral-800 lg:pl-8 space-y-3">
+              <span className="label-mono text-neutral-400 dark:text-neutral-500">
+                Certificate
+              </span>
+              <Certificate3DCard
+                item={certProject}
+                index={0}
+                total={1}
+                onClick={() => onOpenCertificate(certIndex)}
               />
             </div>
           )}
@@ -265,9 +155,22 @@ function ExperienceCard({
 
 /* ─── Main Section ─── */
 export default function ExperienceSection() {
-  const [activeCert, setActiveCert] = useState<WorkExperience | null>(null);
+  const certItems = WORK_EXPERIENCE.filter((e) => e.certificate).map((e) => ({
+    exp: e,
+    project: toCertProject(e),
+  }));
+  const certIndexMap = new Map<number, number>();
+  let ci = 0;
+  WORK_EXPERIENCE.forEach((exp, i) => {
+    if (exp.certificate) {
+      certIndexMap.set(i, ci);
+      ci += 1;
+    }
+  });
 
-  const closeCert = useCallback(() => setActiveCert(null), []);
+  const [activeCertIndex, setActiveCertIndex] = useState<number | null>(null);
+
+  const closeCert = useCallback(() => setActiveCertIndex(null), []);
 
   return (
     <div className="relative w-full bg-transparent transition-colors duration-300 py-16 sm:py-24 lg:py-32">
@@ -296,19 +199,20 @@ export default function ExperienceSection() {
               key={`${exp.company}-${exp.period}`}
               exp={exp}
               index={index}
-              onOpenCertificate={setActiveCert}
+              certIndex={certIndexMap.get(index)}
+              onOpenCertificate={setActiveCertIndex}
             />
           ))}
         </div>
       </div>
 
       <AnimatePresence>
-        {activeCert?.certificate && (
-          <CertificateModal
-            certificate={activeCert.certificate}
-            company={activeCert.company}
-            caption={activeCert.certificateMeta?.caption}
+        {activeCertIndex !== null && certItems[activeCertIndex] && (
+          <CertificateLightbox
+            items={[certItems[activeCertIndex].project]}
+            currentIndex={0}
             onClose={closeCert}
+            onSelectIndex={() => {}}
           />
         )}
       </AnimatePresence>

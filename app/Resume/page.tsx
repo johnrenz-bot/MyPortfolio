@@ -83,19 +83,19 @@ export default function Resume() {
           </h2>
           <div className="space-y-1.5 text-xs sm:text-sm">
             <p>
-              <strong className="text-neutral-950 dark:text-white">Languages:</strong> JavaScript (ES6+), TypeScript, PHP, Java, C#, Python
+              <strong className="text-neutral-950 dark:text-white">Languages:</strong> JavaScript (ES6+), TypeScript, PHP, Java, C#, Python, SQL
             </p>
             <p>
               <strong className="text-neutral-950 dark:text-white">Frameworks/Libraries:</strong> React, Next.js, Laravel (MVC), Node.js, Express.js, Vite.js, Tailwind CSS, Bootstrap
             </p>
             <p>
-              <strong className="text-neutral-950 dark:text-white">Databases &amp; Cloud:</strong> MySQL, PostgreSQL, Prisma ORM, Supabase, XAMPP, Hostinger, REST API Integration
+              <strong className="text-neutral-950 dark:text-white">Databases &amp; Cloud:</strong> MySQL, PostgreSQL, Prisma ORM, Supabase, XAMPP, Hostinger, REST API Integration, Database Schema Design, Authentication, RBAC
             </p>
             <p>
-              <strong className="text-neutral-950 dark:text-white">Tools &amp; Platforms:</strong> Git, GitHub, Vercel, Figma, Notion, ClickUp, Trello, Jira, Monday.com
+              <strong className="text-neutral-950 dark:text-white">Tools &amp; Platforms:</strong> Git, GitHub, Vercel, Figma, Notion, ClickUp, Trello, Jira, Monday.com, Agile, Canva, Photoshop
             </p>
             <p>
-              <strong className="text-neutral-950 dark:text-white">Quality Assurance:</strong> Bug Checking, Design Review, Layout Inspection based on ISO/IEC 25010:2014
+              <strong className="text-neutral-950 dark:text-white">Quality Assurance:</strong> Bug Checking, Design Review, Layout Inspection based on ISO/IEC 25010:2014, Manual Testing, Unit Testing, Debugging, Defect Reporting, Bug Tracking
             </p>
           </div>
         </section>

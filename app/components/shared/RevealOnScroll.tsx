@@ -22,10 +22,11 @@ export default function RevealOnScroll({
       ".reveal, .reveal-left, .reveal-right, .reveal-scale";
 
     const observer = new IntersectionObserver(
-      (entries) => {
+      (entries, obs) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("revealed");
+            obs.unobserve(entry.target);
           }
         });
       },

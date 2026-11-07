@@ -385,13 +385,13 @@ function MongoDBSection() {
                 key={logo.label}
                 className="flex flex-col items-center gap-1.5"
               >
-                <div className="relative w-14 h-14 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 overflow-hidden flex items-center justify-center p-2 shadow-sm">
+                <div className="relative w-20 h-20 logo-hover animate-fade-in-up">
                   <Image
                     src={logo.src}
                     alt={logo.alt}
                     fill
-                    sizes="56px"
-                    className="object-contain p-2"
+                    sizes="80px"
+                    className="object-contain"
                   />
                 </div>
                 <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
@@ -476,13 +476,13 @@ export default function DevconPage() {
 
         {/* Logo + heading */}
         <div className="flex items-center gap-5 mb-10">
-          <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-2xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 overflow-hidden flex items-center justify-center shadow-sm">
+          <div className="relative w-20 h-20 sm:w-28 sm:h-28 shrink-0 logo-hover animate-fade-in-up">
             <Image
               src="/Image/Community/devcon17-logo.png"
               alt="DEVCON17 logo"
               fill
-              sizes="80px"
-              className="object-contain p-2"
+              sizes="112px"
+              className="object-contain"
               priority
             />
           </div>
@@ -539,14 +539,14 @@ export default function DevconPage() {
           ].map((logo) => (
             <div
               key={logo.alt}
-              className="relative w-10 h-10 rounded-lg bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 overflow-hidden flex items-center justify-center p-1.5"
+              className="relative w-14 h-14 logo-hover animate-fade-in-up"
             >
               <Image
                 src={logo.src}
                 alt={logo.alt}
                 fill
-                sizes="40px"
-                className="object-contain p-1.5"
+                sizes="56px"
+                className="object-contain"
               />
             </div>
           ))}

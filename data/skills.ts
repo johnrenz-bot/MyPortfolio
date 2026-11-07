@@ -37,6 +37,12 @@ export const FRONTEND_TECH: Skill[] = [
     proficiency: "Advanced",
     description: "Responsive layouts, Flexbox, Grid, keyframe animations & styling",
   },
+  {
+    iconId: "SiVite",
+    name: "Vite.js",
+    proficiency: "Intermediate",
+    description: "Fast frontend tooling, dev server & optimized production builds",
+  },
 ];
 
 export const BACKEND_TECH: Skill[] = [
@@ -63,6 +69,30 @@ export const BACKEND_TECH: Skill[] = [
     name: "REST APIs",
     proficiency: "Advanced",
     description: "API design, endpoint integration, HTTP methods & data exchange",
+  },
+  {
+    iconId: "FaLock",
+    name: "Authentication",
+    proficiency: "Advanced",
+    description: "User authentication, session handling & secure access flows",
+  },
+  {
+    iconId: "FaUserShield",
+    name: "Role-Based Access Control (RBAC)",
+    proficiency: "Advanced",
+    description: "Role-based permissions, access levels & authorization rules",
+  },
+  {
+    iconId: "FaDatabase",
+    name: "Database Schema Design",
+    proficiency: "Advanced",
+    description: "Relational schema planning, normalization & data modeling",
+  },
+  {
+    iconId: "SiPrisma",
+    name: "Prisma ORM",
+    proficiency: "Intermediate",
+    description: "Type-safe database access, schema migrations & ORM workflows",
   },
 ];
 
@@ -138,6 +168,12 @@ export const PROGRAMMING_LANGUAGES: Skill[] = [
     proficiency: "Intermediate",
     description: "Scripting, algorithm implementations & data processing tasks",
   },
+  {
+    iconId: "FaDatabase",
+    name: "SQL",
+    proficiency: "Advanced",
+    description: "Relational queries, joins, aggregations & database scripting",
+  },
 ];
 
 export const DESIGN_TOOLS: Skill[] = [
@@ -176,6 +212,39 @@ export const DESIGN_TOOLS: Skill[] = [
     name: "Dribbble",
     proficiency: "Advanced",
     description: "Visual design snippets, UI components & creative networking",
+  },
+];
+
+export const TESTING_QA_TECH: Skill[] = [
+  {
+    iconId: "FaSearch",
+    name: "Manual Testing",
+    proficiency: "Advanced",
+    description: "Manual test execution, exploratory testing & validation of user flows",
+  },
+  {
+    iconId: "FaVial",
+    name: "Unit Testing",
+    proficiency: "Intermediate",
+    description: "Unit-level test cases, component testing & regression checks",
+  },
+  {
+    iconId: "FaBug",
+    name: "Debugging",
+    proficiency: "Advanced",
+    description: "Issue diagnosis, root-cause analysis & fix verification",
+  },
+  {
+    iconId: "FaClipboardList",
+    name: "Defect Reporting",
+    proficiency: "Advanced",
+    description: "Bug documentation, reproduction steps & tracking",
+  },
+  {
+    iconId: "FaTasks",
+    name: "Bug Tracking",
+    proficiency: "Advanced",
+    description: "Issue tracking workflows, prioritization & resolution follow-through",
   },
 ];
 
@@ -234,6 +303,30 @@ export const MANAGEMENT_DEV_TOOLS: Skill[] = [
     proficiency: "Advanced",
     description: "Operational management, resource tracking & team dashboards",
   },
+  {
+    iconId: "SiVercel",
+    name: "Vercel",
+    proficiency: "Advanced",
+    description: "Deployment, hosting, previews & frontend delivery workflows",
+  },
+  {
+    iconId: "FaTasks",
+    name: "Agile",
+    proficiency: "Advanced",
+    description: "Agile ceremonies, sprint planning & iterative delivery",
+  },
+  {
+    iconId: "SiXampp",
+    name: "XAMPP",
+    proficiency: "Intermediate",
+    description: "Local development environment for Apache, MySQL & PHP",
+  },
+  {
+    iconId: "FaGlobe",
+    name: "Hostinger",
+    proficiency: "Intermediate",
+    description: "Web hosting, deployment & domain management",
+  },
 ];
 
 /* ─── Backwards-compatible aliases ─── */
@@ -251,6 +344,8 @@ export const SOFT_SKILLS: string[] = [
   "Adaptability",
   "Critical thinking",
   "Creativity",
+  "Teamwork",
+  "Willingness to Learn",
 ];
 
 export const HARD_SKILLS: string[] = [
@@ -263,4 +358,9 @@ export const HARD_SKILLS: string[] = [
   "Backend & Databases",
   "API integration & System architecture",
   "QA Testing & Bug documenting",
+  "Web Applications",
+  "Database Schema Design",
+  "Bug Checking",
+  "Design Review",
+  "Layout Inspection (ISO/IEC 25010:2014)",
 ];

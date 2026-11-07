@@ -121,17 +121,15 @@ export default function CommunitySection() {
                     {/* Header: Logo + Badges */}
                     <div className="flex items-start justify-between gap-4">
                       {/* Big Logo (72–96px) with soft glow */}
-                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] dark:bg-neutral-900 border border-black/5 dark:border-white/10 shadow-lg group-hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] group-hover:border-white/40 transition-all duration-300 flex items-center justify-center shrink-0">
+                      <div className="relative w-24 h-24 sm:w-32 sm:h-32 shrink-0 logo-hover animate-fade-in-up">
                         {event.logo ? (
-                          <div className="relative w-full h-full">
-                            <Image
-                              src={event.logo}
-                              alt={`${event.name} logo`}
-                              fill
-                              sizes="96px"
-                              className="object-contain transition-transform duration-500 group-hover:scale-105"
-                            />
-                          </div>
+                          <Image
+                            src={event.logo}
+                            alt={`${event.name} logo`}
+                            fill
+                            sizes="128px"
+                            className="object-contain transition-transform duration-500 group-hover:scale-105"
+                          />
                         ) : (
                           <span className="text-3xl leading-none">
                             {event.badge}
@@ -204,17 +202,15 @@ export default function CommunitySection() {
                   <div className="space-y-5">
                     {/* Top Row: Logo + Year */}
                     <div className="flex items-start justify-between gap-3">
-                      <div className="relative w-12 h-12 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-2 flex items-center justify-center shrink-0 overflow-hidden group-hover:border-white/40 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all">
+                      <div className="relative w-16 h-16 shrink-0 logo-hover animate-fade-in-up">
                         {event.logo ? (
-                          <div className="relative w-full h-full">
-                            <Image
-                              src={event.logo}
-                              alt={`${event.name} logo`}
-                              fill
-                              sizes="48px"
-                              className="object-contain transition-transform duration-300 group-hover:scale-105"
-                            />
-                          </div>
+                          <Image
+                            src={event.logo}
+                            alt={`${event.name} logo`}
+                            fill
+                            sizes="64px"
+                            className="object-contain transition-transform duration-300 group-hover:scale-105"
+                          />
                         ) : (
                           <span className="text-xl leading-none">
                             {event.badge}

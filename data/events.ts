@@ -51,5 +51,6 @@ export const EVENTS: Event[] = [
     description:
       "Attended a GitHub-focused academic seminar on collaboration workflows, version control best practices, and software development processes.",
     badge: "💻",
+    logo: "/Image/CompanyLogo/STI.png",
   },
 ];

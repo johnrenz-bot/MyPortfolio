@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import HeroSection from "./components/Landing/HeroSection";
 import ProjectsSection from "./components/Landing/ProjectsSection";
 import AboutSection from "./components/Landing/AboutSection";
@@ -28,17 +28,17 @@ const NAV_ITEMS = [
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   // Smooth scroll helper
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const el = document.getElementById(id);
     if (el) {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const top = el.getBoundingClientRect().top + window.pageYOffset - 30;
       window.scrollTo({
         top: Math.max(0, top),
-        behavior: "smooth",
+        behavior: reduceMotion ? "auto" : "smooth",
       });
       history.pushState(null, "", `#${id}`);
       setActiveSection(id);
@@ -48,10 +48,11 @@ export default function Home() {
   // Scroll reveal system
   const setupRevealObserver = useCallback(() => {
     const revealObs = new IntersectionObserver(
-      (entries) => {
+      (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
           }
         });
       },
@@ -120,7 +121,6 @@ export default function Home() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      observerRef.current?.disconnect();
       revealObs.disconnect();
       mutationObs.disconnect();
     };
@@ -130,47 +130,43 @@ export default function Home() {
     <div className="relative min-h-screen bg-transparent text-neutral-900 dark:text-neutral-100 transition-colors duration-300 font-[family-name:var(--font-inter)] overflow-x-hidden">
       <AnimatedBackground />
 
-      {/* Desktop & Tablet: Clear, Minimal Section Navigation (Right Side) */}
+      {/* Desktop & Tablet: Slim Fixed Vertical Navigation Dock (Right Edge) */}
       <nav
         aria-label="Section navigation"
-        className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 hidden md:flex flex-col gap-3.5 z-40 pointer-events-auto"
+        className="fixed top-1/2 -translate-y-1/2 right-0 hidden md:flex z-40 pointer-events-auto"
       >
-        {NAV_ITEMS.map(({ id, label }) => {
-          const isActive = activeSection === id;
-          return (
-            <a
-              key={id}
-              href={`#${id}`}
-              onClick={(e) => scrollToSection(e, id)}
-              className="group flex items-center justify-end gap-3 py-0.5 transition-colors duration-300 ease-out select-none"
-              aria-label={`Scroll to ${label}`}
-              aria-current={isActive ? "true" : undefined}
-            >
-              <span
-                className={`text-[10px] sm:text-[11px] tracking-[0.25em] uppercase transition-all duration-300 ease-out ${
+        <div className="flex flex-col gap-1 py-4 px-2.5 rounded-l-2xl bg-[#151515]/85 backdrop-blur-xl border border-r-0 border-[#303030] shadow-[-10px_0_30px_rgba(0,0,0,0.45)]">
+          {NAV_ITEMS.map(({ id, label }) => {
+            const isActive = activeSection === id;
+            return (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => scrollToSection(e, id)}
+                className={`group relative flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ease-out select-none ${
                   isActive
-                    ? "text-[#D3D3D3] font-bold opacity-100 translate-x-0"
-                    : "text-[#808080] font-semibold opacity-85 group-hover:text-[#D3D3D3] group-hover:opacity-100"
+                    ? "bg-[#1A1A1A] text-[#FFFFFF]"
+                    : "text-[#707070] hover:bg-[#252525] hover:text-[#D0D0D0]"
                 }`}
+                aria-label={`Scroll to ${label}`}
+                aria-current={isActive ? "true" : undefined}
               >
-                {label}
-              </span>
-              <span
-                className={`h-[1.5px] rounded-full transition-all duration-300 ease-out ${
-                  isActive
-                    ? "w-7 sm:w-8 bg-[#D3D3D3] shadow-[0_0_8px_rgba(211,211,211,0.5)]"
-                    : "w-2 sm:w-2.5 bg-[#808080]/60 group-hover:w-4 sm:group-hover:w-5 group-hover:bg-[#D3D3D3]"
-                }`}
-              />
-            </a>
-          );
-        })}
+                {isActive && (
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 rounded-r-full bg-[#FFFFFF]" />
+                )}
+                <span className="text-[10px] tracking-[0.2em] uppercase font-semibold whitespace-nowrap">
+                  {label}
+                </span>
+              </a>
+            );
+          })}
+        </div>
       </nav>
 
       {/* Mobile: Accessible Section Navigation Dock */}
       <nav
         aria-label="Mobile section navigation"
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 md:hidden z-40 flex items-center gap-1.5 px-3 py-1.5 max-w-[94vw] overflow-x-auto no-scrollbar"
+        className="fixed bottom-4 left-1/2 -translate-x-1/2 md:hidden z-40 flex items-center gap-1.5 px-3 py-1.5 max-w-[94vw] overflow-x-auto no-scrollbar rounded-full bg-[#151515]/85 backdrop-blur-md border border-[#303030] shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
       >
         {NAV_ITEMS.map(({ id, label }) => {
           const isActive = activeSection === id;
@@ -179,24 +175,19 @@ export default function Home() {
               key={id}
               href={`#${id}`}
               onClick={(e) => scrollToSection(e, id)}
-              className={`shrink-0 flex flex-col items-center gap-1 px-2 py-1 text-[10px] tracking-wider uppercase font-semibold transition-colors duration-300 ease-out select-none ${
+              className={`shrink-0 flex items-center px-2 py-1 text-[10px] tracking-wider uppercase font-semibold transition-colors duration-200 ease-out select-none rounded-md ${
                 isActive
-                  ? "text-[#D3D3D3] font-bold"
-                  : "text-[#808080] hover:text-[#D3D3D3]"
+                  ? "text-[#FFFFFF] bg-[#1A1A1A]"
+                  : "text-[#707070] hover:text-[#D0D0D0] hover:bg-[#252525]"
               }`}
             >
               <span>{label}</span>
-              <span
-                className={`h-[1.5px] rounded-full transition-all duration-300 ease-out ${
-                  isActive ? "w-4 bg-[#D3D3D3]" : "w-1 bg-[#808080]/40"
-                }`}
-              />
             </a>
           );
         })}
       </nav>
 
-      <main className="relative z-10">
+      <main className="relative z-10 md:pr-28 lg:pr-32">
         <section id="hero">
           <HeroSection />
         </section>

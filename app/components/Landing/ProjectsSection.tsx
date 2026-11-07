@@ -537,7 +537,7 @@ function GalleryProjectCard({
   return (
     <button
       onClick={onClick}
-      className="group relative w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-[#444444] dark:hover:border-[#444444] transition-all duration-300 hover:shadow-xl text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-white"
+      className="group relative w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-[#444444] dark:hover:border-[#444444] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 dark:focus-visible:ring-white motion-reduce:transform-none"
     >
       <Image
         src={item.image}
@@ -546,17 +546,17 @@ function GalleryProjectCard({
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
       />
-      <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-neutral-950/90 via-neutral-950/40 to-transparent transition-opacity duration-300" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-neutral-950/95 via-neutral-950/50 to-transparent transition-opacity duration-300" />
       <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 z-10">
-        <h4 className="text-sm sm:text-base font-bold text-white tracking-tight mb-1 truncate group-hover:-translate-y-0.5 transition-transform duration-300">
+        <h4 className="text-sm sm:text-base font-bold text-white tracking-tight mb-2 truncate group-hover:-translate-y-0.5 transition-transform duration-300">
           {item.title}
         </h4>
         {stack.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {stack.slice(0, 3).map((t) => (
+          <div className="flex flex-wrap gap-1.5">
+            {stack.slice(0, 4).map((t) => (
               <span
                 key={t}
-                className="px-1.5 py-0.5 rounded bg-white/15 text-white/80 text-[9px] font-mono tracking-wider"
+                className="px-2 py-0.5 rounded-md bg-white/15 text-white/90 text-[9px] font-mono tracking-wider border border-white/10"
               >
                 {t}
               </span>
@@ -589,7 +589,7 @@ function MockupProjectCard({
     <button
       type="button"
       onClick={onClick}
-      className={`group mockup-card ${peekClass} relative w-full aspect-[4/5] sm:aspect-[3/4] p-4 flex flex-col justify-between cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white`}
+      className={`group mockup-card ${peekClass} relative w-full aspect-[4/5] sm:aspect-[3/4] p-4 flex flex-col justify-between cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white transition-transform duration-300 hover:-translate-y-1 motion-reduce:transform-none`}
       aria-label={`View mockup: ${item.title}`}
     >
       {/* Top badges */}
@@ -748,10 +748,10 @@ function MockupLightbox({
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.3, ease: EASE }}
         onClick={(e) => e.stopPropagation()}
-        className="relative flex flex-col items-center justify-center max-w-lg w-full max-h-[88vh] my-auto"
+        className="relative flex flex-col items-center justify-center max-w-lg w-full max-h-[90vh] overflow-y-auto no-scrollbar my-auto gap-4"
       >
         {/* Floating device container with realistic drop shadow */}
-        <div className="mockup-floating-device relative w-full h-[52vh] sm:h-[62vh] max-h-[640px] flex items-center justify-center px-4">
+        <div className="mockup-floating-device relative w-full h-[42vh] sm:h-[50vh] max-h-[520px] flex items-center justify-center px-4">
           <div className="relative w-full h-full">
             <Image
               src={current.image}
@@ -773,11 +773,11 @@ function MockupLightbox({
               <span className="label-mono px-2 py-0.5 rounded bg-white/10 text-[10px] text-white border border-white/15">
                 {current.category || "Mockup"}
               </span>
-              <h3 className="text-base font-bold text-white tracking-tight truncate">
+              <h3 className="text-base font-bold text-white tracking-tight">
                 {current.title}
               </h3>
             </div>
-            <p className="text-xs text-neutral-300 leading-relaxed line-clamp-2">
+            <p className="text-xs text-neutral-300 leading-relaxed">
               {current.description || "High-fidelity digital mockup demonstration."}
             </p>
           </div>

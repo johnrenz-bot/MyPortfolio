@@ -70,13 +70,13 @@ export default function GDGPage() {
           {/* GDG Logo + title */}
           <div className="lg:col-span-8 flex flex-col gap-6">
             <div className="flex items-center gap-5">
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-2xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 overflow-hidden flex items-center justify-center p-2">
+              <div className="relative w-20 h-20 sm:w-28 sm:h-28 shrink-0 logo-hover animate-fade-in-up">
                 <Image
                   src="/Image/Community/gdg-logo.png"
                   alt="Google Developer Groups logo"
                   fill
-                  sizes="80px"
-                  className="object-contain p-2"
+                  sizes="112px"
+                  className="object-contain"
                   priority
                 />
               </div>

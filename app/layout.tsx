@@ -2,8 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import InitialLoaderProvider from "./components/loading/InitialLoaderProvider";
+import { OrgTransitionProvider } from "./components/transitions/OrgTransitionProvider";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
-import SmoothScroll from "./components/scroll/SmoothScroll";
+import BackToTop from "./components/scroll/BackToTop";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -111,9 +112,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950 transition-colors duration-300">
         <ThemeProvider>
-          <SmoothScroll />
+          <BackToTop />
           <InitialLoaderProvider>
-            {children}
+            <OrgTransitionProvider>{children}</OrgTransitionProvider>
           </InitialLoaderProvider>
         </ThemeProvider>
       </body>
