@@ -27,13 +27,17 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const SITE_URL = "https://johnrenz.vercel.app";
+
+const SITE_DESCRIPTION =
+  "Portfolio of John Renz Bandianon, a software developer specializing in full-stack web development, UI/UX design, and quality assurance. Explore his projects, technical experience, and creative work.";
+
 export const metadata: Metadata = {
   title: {
-    default: "John Renz Bandianon | Web Developer",
+    default: "John Renz Bandianon | Software Developer",
     template: "%s | John Renz Bandianon",
   },
-  description:
-    "Portfolio of John Renz Bandianon — Entry-Level Web Developer. Experienced in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
+  description: SITE_DESCRIPTION,
   keywords: [
     "John Renz Bandianon",
     "Web Developer",
@@ -58,34 +62,38 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
-  metadataBase: new URL("https://johnrenz.dev"),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
-    locale: "en_PH",
-    url: "https://johnrenz.dev",
-    title: "John Renz Bandianon | Web Developer",
-    description:
-      "Entry-level Web Developer with experience in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
+    locale: "en_US",
+    url: SITE_URL,
+    title: "John Renz Bandianon | Software Developer",
+    description: SITE_DESCRIPTION,
     siteName: "John Renz Bandianon Portfolio",
     images: [
       {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "John Renz Bandianon Portfolio",
+        url: "/Image/Preview/ss.png",
+        width: 1899,
+        height: 934,
+        type: "image/png",
+        alt: "John Renz Bandianon - Software Developer Portfolio Preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "John Renz Bandianon | Web Developer",
-    description:
-      "Entry-level Web Developer with experience in Next.js, React, TypeScript, PHP/Laravel, and Supabase.",
+    title: "John Renz Bandianon | Software Developer",
+    description: SITE_DESCRIPTION,
     creator: "@JohnRen94949414",
-    images: ["/twitter-image.png"],
+    images: [
+      {
+        url: "/Image/Preview/ss.png",
+        alt: "John Renz Bandianon - Software Developer Portfolio Preview",
+      },
+    ],
   },
   robots: {
     index: true,
