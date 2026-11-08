@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import VisitorCounter from "../components/ui/VisitorCounter";
 import { ExternalLink } from "lucide-react";
-import SubPageHeader from "../components/shared/SubPageHeader";
 import RevealOnScroll from "../components/shared/RevealOnScroll";
 import { FaGithub } from "react-icons/fa";
 
@@ -55,12 +54,11 @@ const RATIO: Record<"normal" | "wide" | "tall", string> = {
 
 export default function GDGPage() {
   return (
-    <div className="relative min-h-screen bg-[#f9fafb] dark:bg-[#111111] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+    <div>
       <RevealOnScroll />
-      <SubPageHeader section="Community" title="Google Developer Groups" />
 
       {/* Intro */}
-      <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-24 pb-12 sm:pb-20">
+      <section className="w-full pt-16 sm:pt-24 pb-12 sm:pb-20">
         <div className="reveal flex items-center gap-3 mb-6">
           <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
           <span className="label-mono text-neutral-500 dark:text-neutral-400">GDG</span>
@@ -108,7 +106,7 @@ export default function GDGPage() {
       </section>
 
       {/* Image gallery */}
-      <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pb-16 sm:pb-20">
+      <section className="w-full pb-16 sm:pb-20">
         <div className="reveal flex items-center gap-3 mb-8">
           <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
           <span className="label-mono text-neutral-500 dark:text-neutral-400">Event Photos</span>
@@ -139,7 +137,7 @@ export default function GDGPage() {
       </section>
 
       {/* GrooveyyPH highlight */}
-      <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pb-16 sm:pb-24">
+      <section className="w-full pb-16 sm:pb-24">
         <div className="reveal flex items-center gap-3 mb-8">
           <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
           <span className="label-mono text-neutral-500 dark:text-neutral-400">Featured Project</span>
@@ -209,7 +207,7 @@ export default function GDGPage() {
       </section>
 
       <footer className="border-t border-neutral-200 dark:border-neutral-800">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+        <div className="w-full py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
           <Link href="/" className="group flex items-center gap-2.5">
             <div className="relative w-7 h-7 shrink-0">
               <Image

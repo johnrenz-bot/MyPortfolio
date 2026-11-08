@@ -5,6 +5,9 @@ import InitialLoaderProvider from "./components/loading/InitialLoaderProvider";
 import { OrgTransitionProvider } from "./components/transitions/OrgTransitionProvider";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
 import BackToTop from "./components/scroll/BackToTop";
+import SiteShell from "@/components/portfolio/layout/SiteShell";
+import CvModalProvider from "@/components/portfolio/CvModalProvider";
+import SmoothScroll from "@/components/portfolio/layout/SmoothScroll";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -20,8 +23,8 @@ const outfit = Outfit({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -118,11 +121,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="antialiased bg-white dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-950 transition-colors duration-300">
+      <body className="antialiased isolate bg-bg text-ink font-sans selection:bg-ink selection:text-bg">
+        <div className="global-dot-grid" aria-hidden="true" />
         <ThemeProvider>
           <BackToTop />
           <InitialLoaderProvider>
-            <OrgTransitionProvider>{children}</OrgTransitionProvider>
+            <OrgTransitionProvider>
+              <CvModalProvider>
+                <SmoothScroll>
+                  <SiteShell>{children}</SiteShell>
+                </SmoothScroll>
+              </CvModalProvider>
+            </OrgTransitionProvider>
           </InitialLoaderProvider>
         </ThemeProvider>
       </body>

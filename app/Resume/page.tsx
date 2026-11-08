@@ -3,8 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaCaretLeft, FaDownload } from "react-icons/fa";
+import { useCvModal } from "@/components/portfolio/CvModalProvider";
 
 export default function Resume() {
+  const { open: openCv } = useCvModal();
   return (
     <div className="relative min-h-screen w-full bg-neutral-100 dark:bg-[#09090b] text-neutral-900 dark:text-neutral-100 flex justify-center py-10 px-4 transition-colors duration-300">
       {/* Top Action Bar */}
@@ -26,16 +28,14 @@ export default function Resume() {
           <span>Back to Portfolio</span>
         </Link>
 
-        <a
-          href="/CV/John_Renz_Bandianon_CV.pdf"
-          download="John_Renz_Bandianon_CV.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={(e) => openCv(e.currentTarget)}
           className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/15 bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 px-4 py-2 text-xs font-semibold shadow-sm hover:border-[#444444] hover:opacity-90 transition-all"
         >
           <FaDownload className="text-xs" />
           <span>Download CV</span>
-        </a>
+        </button>
       </div>
 
       {/* Main Resume Sheet */}

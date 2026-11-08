@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import VisitorCounter from "../components/ui/VisitorCounter";
 import { ExternalLink, Calendar, Clock, MapPin, User, Mic } from "lucide-react";
-import SubPageHeader from "../components/shared/SubPageHeader";
 import RevealOnScroll from "../components/shared/RevealOnScroll";
 
 /* ─────────────────────────────────────────────
@@ -186,7 +185,7 @@ function CampRunSection() {
   ];
 
   return (
-    <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-24">
+    <section className="w-full py-16 sm:py-24">
       {/* Divider */}
       <div className="border-t border-neutral-200 dark:border-neutral-800 mb-16 sm:mb-24" />
 
@@ -272,7 +271,7 @@ function CampRunSection() {
 /* ─── EVENT 02: CORE-AI ─── */
 function CoreAISection() {
   return (
-    <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-24">
+    <section className="w-full py-16 sm:py-24">
       <div className="border-t border-neutral-200 dark:border-neutral-800 mb-16 sm:mb-24" />
 
       <EventBadge number="02" label="CORE-AI" />
@@ -343,7 +342,7 @@ function MongoDBSection() {
   ];
 
   return (
-    <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-16 sm:py-24">
+    <section className="w-full py-16 sm:py-24">
       <div className="border-t border-neutral-200 dark:border-neutral-800 mb-16 sm:mb-24" />
 
       {/* NEW badge */}
@@ -463,12 +462,11 @@ function MongoDBSection() {
 
 export default function DevconPage() {
   return (
-    <div className="relative min-h-screen bg-[#f9fafb] dark:bg-[#111111] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+    <div>
       <RevealOnScroll />
-      <SubPageHeader section="Community" title="DEVCON Manila" />
 
       {/* ── HERO ── */}
-      <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-24 pb-12 sm:pb-20">
+      <section className="w-full pt-16 sm:pt-24 pb-12 sm:pb-20">
         <div className="reveal flex items-center gap-3 mb-6">
           <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
           <span className="label-mono text-neutral-500 dark:text-neutral-400">Developer Community Events</span>
@@ -560,7 +558,7 @@ export default function DevconPage() {
 
       {/* ── FOOTER ── */}
       <footer className="border-t border-neutral-200 dark:border-neutral-800">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+        <div className="w-full py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
           <Link href="/" className="group flex items-center gap-2.5">
             <div className="relative w-7 h-7 shrink-0">
               <Image

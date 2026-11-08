@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { ArrowLeft, X, ZoomIn } from "lucide-react";
-import SubPageHeader from "../components/shared/SubPageHeader";
 import RevealOnScroll from "../components/shared/RevealOnScroll";
 import VisitorCounter from "../components/ui/VisitorCounter";
 import { GALLERY_ITEMS, GALLERY_TAGS } from "../../data/journey";
@@ -111,12 +110,11 @@ export default function GalleryPage() {
   const current = lightbox !== null ? items[lightbox] : null;
 
   return (
-    <div className="relative min-h-screen bg-[#f9fafb] dark:bg-[#111111] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+    <div>
       <RevealOnScroll />
-      <SubPageHeader section="Gallery" title="Moments, not logos" />
 
       {/* Intro */}
-      <section className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-24 pb-10 sm:pb-14">
+      <section className="w-full pt-16 sm:pt-24 pb-10 sm:pb-14">
         <div className="reveal flex items-center gap-3 mb-6">
           <div className="w-8 h-[1.5px] bg-neutral-900 dark:bg-white" />
           <span className="label-mono text-neutral-500 dark:text-neutral-400">
@@ -147,8 +145,8 @@ export default function GalleryPage() {
       </section>
 
       {/* Filters */}
-      <div className="sticky top-[73px] z-30 border-y border-neutral-200 dark:border-neutral-800 bg-[#f9fafb]/85 dark:bg-[#111111]/85 backdrop-blur-md">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-3.5 flex items-center gap-2 overflow-x-auto no-scrollbar">
+      <div className="sticky top-4 z-30 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white/85 dark:bg-[#141414]/85 backdrop-blur-md">
+        <div className="w-full py-3.5 flex items-center gap-2 overflow-x-auto no-scrollbar">
           {GALLERY_TAGS.map((tag) => (
             <button
               key={tag}
@@ -175,7 +173,7 @@ export default function GalleryPage() {
       {/* Masonry-ish grid */}
       <section
         key={filter}
-        className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-12 sm:py-16 lg:py-20"
+        className="w-full py-12 sm:py-16 lg:py-20"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 auto-rows-[minmax(0,1fr)] lg:auto-rows-[220px]">
           {items.map((item, i) => (
@@ -256,7 +254,7 @@ export default function GalleryPage() {
       )}
 
       <footer className="border-t border-neutral-200 dark:border-neutral-800">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+        <div className="w-full py-10 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
           <Link href="/" className="group flex items-center gap-2.5">
             <div className="relative w-7 h-7 shrink-0">
               <Image

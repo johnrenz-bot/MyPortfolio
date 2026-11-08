@@ -334,6 +334,60 @@ export const DEV_TOOLS: Skill[] = MANAGEMENT_DEV_TOOLS.slice(0, 2);
 export const MANAGEMENT_TOOLS: Skill[] = MANAGEMENT_DEV_TOOLS.slice(4);
 export const PORTFOLIO_PLATFORMS: Skill[] = DESIGN_TOOLS.slice(4);
 
+export const AI_CODING_TOOLS: Skill[] = [
+  {
+    iconId: "SiOpenai",
+    name: "OpenAI Codex",
+    proficiency: "Active",
+    description: "AI pair-programming & code generation for rapid full-stack builds",
+  },
+  {
+    iconId: "SiGoogle",
+    name: "Google Antigravity",
+    proficiency: "Active",
+    description: "Agentic IDE for building and shipping web apps with AI",
+  },
+  {
+    iconId: "SiClaude",
+    name: "Claude Code",
+    proficiency: "Active",
+    description: "Terminal AI coding agent for features, edits & refactors",
+  },
+  {
+    iconId: "TbCursorText",
+    name: "Cursor",
+    proficiency: "Active",
+    description: "AI-first editor with inline chat, autocomplete & codebase context",
+  },
+  {
+    iconId: "TbWind",
+    name: "Windsurf",
+    proficiency: "Active",
+    description: "Agentic editor for multi-file generation and flows",
+  },
+  {
+    iconId: "SiGithubcopilot",
+    name: "GitHub Copilot",
+    proficiency: "Advanced",
+    description: "Code completion & chat assistance inside the editor",
+  },
+  {
+    iconId: "SiGoogle",
+    name: "Gemini",
+    proficiency: "Active",
+    description: "Google AI models for coding help, reasoning & generation",
+  },
+];
+
+export const IDE_TOOLS: Skill[] = [
+  {
+    iconId: "TbBrandVscode",
+    name: "Visual Studio Code",
+    proficiency: "Advanced",
+    description: "Primary source editor, debugging, extensions & workspace tooling",
+  },
+];
+
 export const SOFT_SKILLS: string[] = [
   "Project management",
   "Team leadership",

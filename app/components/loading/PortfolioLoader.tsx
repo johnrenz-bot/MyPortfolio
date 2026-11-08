@@ -5,11 +5,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 /** Short enough to feel instant, long enough for the counter to read. */
-const MIN_VISIBLE_MS = 7500;
+const MIN_VISIBLE_MS = 1600;
 /** Ceiling the counter creeps toward while real assets are still loading. */
 const PENDING_CEILING = 92;
 /** Pause on 100 before the overlay fades, so it never blinks out. */
-const HOLD_MS = 900;
+const HOLD_MS = 450;
 
 type Point = { x: number; y: number };
 
@@ -36,15 +36,17 @@ function easeInOutCubic(t: number) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-function buildTrails(w: number, h: number): Trail[] {
+function buildTrails(w: number, h: number, dark = true): Trail[] {
   const cx = w / 2;
   const cy = h / 2;
   const trails: Trail[] = [];
+  const stroke = dark ? "rgba(232,232,232,0.32)" : "rgba(60,60,60,0.32)";
+  const secondary = dark ? "rgba(180,180,180,0.18)" : "rgba(100,100,100,0.18)";
   const add = (
     pts: Point[],
     delay = 0.2,
     duration = 0.75,
-    color = "rgba(255,255,255,0.85)",
+    color = stroke,
     width = 1.2,
     opacity = 1,
   ) => trails.push({ points: pts, delay, duration, color, width, opacity });
@@ -135,7 +137,7 @@ function buildTrails(w: number, h: number): Trail[] {
     ],
     0.3,
     0.8,
-    "rgba(200,200,200,0.55)",
+    secondary,
     0.8,
     0.7,
   );
@@ -148,7 +150,7 @@ function buildTrails(w: number, h: number): Trail[] {
     ],
     0.3,
     0.8,
-    "rgba(200,200,200,0.55)",
+    secondary,
     0.8,
     0.7,
   );
@@ -220,6 +222,7 @@ export default function PortfolioLoader({
 }: Props) {
   const [progress, setProgress] = useState(1);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const finished = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const progressRef = useRef(progress);
@@ -239,8 +242,18 @@ export default function PortfolioLoader({
   }, []);
 
   useEffect(() => {
+    const update = () => setIsDark(document.documentElement.classList.contains("dark"));
+    update();
+    window.addEventListener("theme-change", update);
+    window.addEventListener("storage", update);
+    return () => {
+      window.removeEventListener("theme-change", update);
+      window.removeEventListener("storage", update);
+    };
+  }, []);
+
+  useEffect(() => {
     const startedAt = performance.now();
-    let frame = 0;
     let assetsReady = document.readyState === "complete";
 
     const markReady = () => {
@@ -250,37 +263,50 @@ export default function PortfolioLoader({
     if (!assetsReady) {
       window.addEventListener("load", markReady, { once: true });
     }
-    document.fonts?.ready.then(markReady).catch(() => {});
+    try {
+      document.fonts?.ready.then(markReady).catch(() => {});
+    } catch {
+      // Fonts API unavailable — treat as ready so the loader never sticks.
+      assetsReady = true;
+    }
 
     let shown = 1;
+    let done = false;
 
     const tick = () => {
+      if (done) return;
       const elapsed = performance.now() - startedAt;
 
       const creep = 1 + (elapsed / 4000) * (PENDING_CEILING - 1);
       const target = assetsReady && elapsed >= minDuration ? 100 : creep;
 
-      if (target > shown) {
-        shown += Math.max(0.3, (target - shown) * 0.08);
-        if (target === 100 && shown > 99.4) shown = 100;
+      // Time-derived (not frame-counted) so a throttled background tab still
+      // advances with wall-clock time instead of sticking.
+      if (target === 100) {
+        if (shown < 100) {
+          shown = Math.min(100, shown + Math.max(1.2, (100 - shown) * 0.18));
+          if (shown > 99.4) shown = 100;
+        }
+      } else {
+        shown = Math.min(PENDING_CEILING, creep);
       }
 
       setProgress(Math.min(100, shown));
 
       if (shown >= 100 && !finished.current) {
+        done = true;
         finished.current = true;
         window.removeEventListener("load", markReady);
         window.setTimeout(() => onDone?.(), HOLD_MS);
-        return;
       }
-
-      frame = window.requestAnimationFrame(tick);
     };
 
-    frame = window.requestAnimationFrame(tick);
+    tick();
+    const id = window.setInterval(tick, 80);
 
     return () => {
-      window.cancelAnimationFrame(frame);
+      done = true;
+      window.clearInterval(id);
       window.removeEventListener("load", markReady);
     };
   }, [onDone, minDuration]);
@@ -300,7 +326,7 @@ export default function PortfolioLoader({
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       sizeRef.current = { w, h, dpr };
-      trailsRef.current = buildTrails(w, h);
+      trailsRef.current = buildTrails(w, h, isDark);
     };
 
     rebuild();
@@ -322,8 +348,8 @@ export default function PortfolioLoader({
         const centerGlow = clamp(p * 1.2, 0, 1) * (p < 0.9 ? 1 : Math.max(0, 1 - (p - 0.9) / 0.1));
         if (centerGlow > 0) {
           const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.28);
-          grad.addColorStop(0, `rgba(255,255,255,${0.18 * centerGlow})`);
-          grad.addColorStop(0.5, `rgba(220,220,220,${0.06 * centerGlow})`);
+          if (isDark) grad.addColorStop(0, `rgba(210,210,210,${0.07 * centerGlow})`); else grad.addColorStop(0, `rgba(60,60,60,${0.06 * centerGlow})`);
+          if (isDark) grad.addColorStop(0.5, `rgba(160,160,160,${0.025 * centerGlow})`); else grad.addColorStop(0.5, `rgba(120,120,120,${0.02 * centerGlow})`);
           grad.addColorStop(1, "rgba(255,255,255,0)");
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, w, h);
@@ -344,55 +370,55 @@ export default function PortfolioLoader({
             ctx.lineWidth = trail.width;
             ctx.lineCap = "round";
             ctx.lineJoin = "round";
-            ctx.shadowBlur = 10;
+            ctx.shadowBlur = 5;
             ctx.shadowColor = trail.color;
 
             ctx.beginPath();
             drawPartial(ctx, trail.points, tp);
             ctx.stroke();
 
-            // Traveling pulse at head
+            // Traveling pulse at head — small & restrained, not neon.
             if (tp > 0 && tp < 0.999) {
               const head = pointAlong(trail.points, tp);
-              ctx.shadowBlur = 18;
-              ctx.shadowColor = "#ffffff";
-              ctx.fillStyle = "rgba(255,255,255,0.95)";
+              ctx.shadowBlur = 6;
+              ctx.shadowColor = trail.color;
+              ctx.fillStyle = trail.color;
               ctx.beginPath();
-              ctx.arc(head.x, head.y, 2.6, 0, Math.PI * 2);
+              ctx.arc(head.x, head.y, 2, 0, Math.PI * 2);
               ctx.fill();
-              // outer glow
-              ctx.globalAlpha = trailFade * trail.opacity * 0.35;
-              ctx.fillStyle = "rgba(255,255,255,0.6)";
+              // outer glow — very subtle
+              ctx.globalAlpha = trailFade * trail.opacity * 0.2;
+              ctx.fillStyle = trail.color;
               ctx.beginPath();
-              ctx.arc(head.x, head.y, 7, 0, Math.PI * 2);
+              ctx.arc(head.x, head.y, 5, 0, Math.PI * 2);
               ctx.fill();
             }
             ctx.restore();
           }
         }
 
-        // Final synchronized pulse across logo arrangement
+        // Final synchronized sweep across the logo arrangement.
         if (p >= 0.82 && p <= 0.97) {
           const t = easeInOutCubic((p - 0.82) / 0.15);
           const x = cx - 90 + t * 180;
           ctx.save();
-          ctx.shadowBlur = 22;
-          ctx.shadowColor = "#ffffff";
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = isDark ? "rgba(232,232,232,0.32)" : "rgba(60,60,60,0.32)";
           // horizontal sweep
           const grad = ctx.createLinearGradient(x - 40, cy, x + 40, cy);
           grad.addColorStop(0, "rgba(255,255,255,0)");
-          grad.addColorStop(0.5, "rgba(255,255,255,0.9)");
+          grad.addColorStop(0.5, isDark ? "rgba(232,232,232,0.35)" : "rgba(60,60,60,0.35)");
           grad.addColorStop(1, "rgba(255,255,255,0)");
           ctx.strokeStyle = grad;
-          ctx.lineWidth = 2;
+          ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.moveTo(cx - 100, cy);
           ctx.lineTo(cx + 100, cy);
           ctx.stroke();
-          // bright dot
-          ctx.fillStyle = "rgba(255,255,255,0.95)";
+          // bright dot — soft, not stark
+          ctx.fillStyle = isDark ? "rgba(232,232,232,0.55)" : "rgba(60,60,60,0.5)";
           ctx.beginPath();
-          ctx.arc(x, cy, 3.5, 0, Math.PI * 2);
+          ctx.arc(x, cy, 2.5, 0, Math.PI * 2);
           ctx.fill();
           ctx.restore();
         }
@@ -407,25 +433,32 @@ export default function PortfolioLoader({
       window.cancelAnimationFrame(raf);
       window.removeEventListener("resize", rebuild);
     };
-  }, []);
-
+  }, [isDark]);
+  
   const p = progress / 100;
   const jrActive = reducedMotion || p >= 0.55;
   const renzActive = reducedMotion || p >= 0.72;
 
   const logoFilter = jrActive
-    ? "drop-shadow(0 0 24px rgba(255,255,255,0.35))"
-    : "grayscale(1) brightness(0.55) drop-shadow(0 0 10px rgba(255,255,255,0.08))";
+    ? isDark
+      ? "drop-shadow(0 0 12px rgba(220,220,220,0.18))"
+      : "drop-shadow(0 0 12px rgba(60,60,60,0.15))"
+    : isDark
+      ? "grayscale(1) brightness(0.6) drop-shadow(0 0 6px rgba(220,220,220,0.06))"
+      : "grayscale(1) brightness(1.2) drop-shadow(0 0 6px rgba(60,60,60,0.06))";
   const wordmarkFilter = renzActive
-    ? "drop-shadow(0 0 16px rgba(255,255,255,0.3))"
-    : "grayscale(1) brightness(0.55)";
+    ? isDark
+      ? "drop-shadow(0 0 8px rgba(220,220,220,0.16))"
+      : "drop-shadow(0 0 8px rgba(60,60,60,0.14))"
+    : "grayscale(1) brightness(0.6)";
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed inset-0 z-[100] bg-[#09090b] overflow-hidden"
+      exit={{ opacity: 0, scale: reducedMotion ? 1 : 1.02, transition: { duration: reducedMotion ? 0 : 0.8, ease: [0.16, 1, 0.3, 1] } }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      suppressHydrationWarning
+      className="fixed inset-0 z-[100] bg-bg overflow-hidden"
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={100}
@@ -435,7 +468,12 @@ export default function PortfolioLoader({
       {/* Faint grid — texture without noise */}
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_72%)]"
+        suppressHydrationWarning
+        className={`absolute inset-0 opacity-[0.06] bg-[size:28px_28px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_72%)] ${
+          isDark
+            ? "bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)]"
+            : "bg-[linear-gradient(to_right,#0000001a_1px,transparent_1px),linear-gradient(to_bottom,#0000001a_1px,transparent_1px)]"
+        }`}
       />
 
       {/* Light trace canvas */}
@@ -472,27 +510,37 @@ export default function PortfolioLoader({
             />
           </div>
           <p
-            className="heading-display text-2xl sm:text-3xl text-white tracking-[0.2em] uppercase font-bold transition-all duration-1000"
+            className="heading-display text-2xl sm:text-3xl text-ink tracking-[0.2em] uppercase font-bold transition-all duration-1000"
             style={{
               filter: wordmarkFilter,
               opacity: renzActive ? 1 : 0.55,
               textShadow: renzActive
-                ? "0 0 18px rgba(255,255,255,0.35)"
-                : "0 0 6px rgba(255,255,255,0.08)",
+                ? isDark ? "0 0 18px rgba(255,255,255,0.35)" : "0 0 18px rgba(23,23,23,0.2)"
+                : isDark ? "0 0 6px rgba(255,255,255,0.08)" : "0 0 6px rgba(23,23,23,0.08)",
             }}
           >
-            R<span className="text-neutral-500 font-light">Σ</span>NZ
+            R<span className="text-neutral-500 font-light">II</span>NZ
           </p>
         </motion.div>
       </div>
 
-      {/* Percentage on the right */}
+      {/* Percentage on the right — muted gray-white with ambient glow */}
       <div className="absolute bottom-8 right-8 md:bottom-12 md:right-16 flex flex-col items-end pointer-events-none z-10">
-        <div className="flex items-baseline tabular-nums select-none">
-          <span className="heading-display text-[clamp(5rem,15vw,12rem)] leading-none text-white tracking-tighter">
+        <div
+          className="flex items-baseline tabular-nums select-none"
+          style={{
+            textShadow: isDark
+              ? "0 0 28px rgba(190,190,190,0.14), 0 0 60px rgba(160,160,160,0.06)"
+              : "0 0 28px rgba(80,80,80,0.12), 0 0 60px rgba(80,80,80,0.05)",
+          }}
+        >
+          <span
+            className="heading-display text-[clamp(5rem,15vw,12rem)] leading-none tracking-tighter"
+            style={{ color: isDark ? "rgba(235,235,235,0.58)" : "rgba(70,70,70,0.55)" }}
+          >
             {String(Math.round(progress)).padStart(2, "0")}
           </span>
-          <span className="heading-display text-[clamp(1.5rem,5vw,3rem)] leading-none text-neutral-600 ml-2">
+          <span className="heading-display text-[clamp(1.5rem,5vw,3rem)] leading-none text-subtle ml-2">
             %
           </span>
         </div>
